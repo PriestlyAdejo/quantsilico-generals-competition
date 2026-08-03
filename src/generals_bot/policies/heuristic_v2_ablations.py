@@ -18,7 +18,7 @@ from generals_bot.policies.general_garrison import (
     reinforcement_proposals,
 )
 from generals_bot.policies.heuristic_v2f_reference import HeuristicV2FReferencePolicy
-from generals_bot.policies.hunter_intercept import intercept_proposals
+from generals_bot.policies.hunter_intercept import corridor_intercept_proposals_v2, intercept_proposals
 from generals_bot.policies.threat_assessment import ThreatMemory, assess_threat
 from generals_bot.risk.shield import SurvivalShield
 
@@ -29,11 +29,16 @@ class AblationFlags:
     use_planner: bool = False
     use_garrison: bool = False
     use_intercept: bool = False
+    use_intercept_v2: bool = False
     # When True, use credible threat assessor instead of v2f raw threatened→EMERGENCY
     use_credible_threat: bool = False
 
     def config_hash(self) -> str:
-        payload = json.dumps(asdict(self), sort_keys=True)
+        payload_obj = asdict(self)
+        # Preserve historical hashes for candidates that do not use v2 intercept.
+        if not payload_obj.get("use_intercept_v2"):
+            payload_obj.pop("use_intercept_v2", None)
+        payload = json.dumps(payload_obj, sort_keys=True)
         return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
 
 
@@ -47,6 +52,7 @@ V2F_PLUS_GARRISON = "heuristic_v2f_plus_garrison"
 V2F_PLUS_INTERCEPT = "heuristic_v2f_plus_hunter_intercept"
 V2F_PLUS_PLANNER_GARRISON = "heuristic_v2f_plus_planner_plus_garrison"
 V2F_PLUS_PLANNER_INTERCEPT = "heuristic_v2f_plus_planner_plus_intercept"
+V2F_PLANNER_CORRIDOR_V2 = "heuristic_v2f_planner_plus_corridor_intercept_v2"
 V2F_COMBINED = "heuristic_v2f_plus_planner_plus_garrison_plus_intercept"
 V2_EXPLORE_ONLY = "heuristic_v2_explore_only"
 V2_DEFENCE_ONLY = "heuristic_v2_defence_only"
@@ -66,6 +72,12 @@ FLAGS: dict[str, AblationFlags] = {
         name=V2F_PLUS_PLANNER_INTERCEPT,
         use_planner=True,
         use_intercept=True,
+        use_credible_threat=True,
+    ),
+    V2F_PLANNER_CORRIDOR_V2: AblationFlags(
+        name=V2F_PLANNER_CORRIDOR_V2,
+        use_planner=True,
+        use_intercept_v2=True,
         use_credible_threat=True,
     ),
     V2F_COMBINED: AblationFlags(
@@ -149,6 +161,8 @@ class HeuristicV2AblationPolicy:
         # Inject modules
         if self.flags.use_intercept:
             proposals.extend(intercept_proposals(observation, legal))
+        if self.flags.use_intercept_v2:
+            proposals.extend(corridor_intercept_proposals_v2(observation, legal))
 
         if self.flags.use_garrison:
             threatened = threat.emergency or threat.caution
