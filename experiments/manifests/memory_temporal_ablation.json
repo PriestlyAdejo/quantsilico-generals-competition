@@ -1,0 +1,33 @@
+{
+  "architecture": "recurrent_cnn_v2",
+  "original_action": 444,
+  "memory_ablation": {
+    "status": "VERIFIED",
+    "new_action": 444,
+    "logit_margin_change": 1.8157758712768555,
+    "value_change": 2.5719404220581055e-05,
+    "risk_change": -8.314847946166992e-06,
+    "opponent_posterior_change_l1": 7.957220077514648e-06,
+    "channels_cleared": [
+      "owner_me",
+      "owner_opp",
+      "army_norm"
+    ]
+  },
+  "temporal_ablation": {
+    "status": "VERIFIED",
+    "new_action": 444,
+    "logit_margin_change": 0.0,
+    "value_change": 0.0,
+    "note": "Reset recurrent hidden to zeros (no earlier evidence)."
+  },
+  "fidelity": {
+    "memory_channel_ablation": "VERIFIED",
+    "temporal_window_ablation": "PARTIAL",
+    "top_feature_deletion": "PARTIAL",
+    "bottom_feature_deletion": "NOT_EVALUATED",
+    "sufficiency": "NOT_EVALUATED",
+    "necessity": "NOT_EVALUATED",
+    "small_perturbation_stability": "NOT_EVALUATED"
+  }
+}
