@@ -30,6 +30,9 @@ dashboard = [
 training = [
   "captum>=0.7",
 ]
+explain = [
+  "captum>=0.7",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]

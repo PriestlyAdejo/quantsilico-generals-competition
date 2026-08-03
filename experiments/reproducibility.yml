@@ -17,16 +17,42 @@ official_engine:
   commit: "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462"
   branch: master
   requirements: third_party/generals-bots/competition/requirements.txt
+competition_environment:
+  path: .venv
+  python: "3.12.10"
+  torch: "2.13.0+cpu"
+  jax: "0.11.0"
+training_environment:
+  path: .venv-training
+  python: "3.12.10"
+  torch: "2.13.0+cu126"
+  cuda: "12.6"
+  gpu: "NVIDIA GeForce RTX 3070 Laptop GPU"
+  driver: "581.42"
+  fastapi: "0.141.1"
+  pydantic: "2.13.4"
+  uvicorn: "0.52.1"
+  captum: "0.9.0"
+  jax: "0.11.0"
+  numpy: "2.4.6"
+  lockfile: environments/training-win-py312.lock.txt
+  lockfile_sha256: "1d79a40eebb3d06f62a059f670ad3089d89c440bac81b7c5a715dbf8f1e54f21"
+  cuda_smoke: PASS
 seed_splits:
   manifest: experiments/seeds/MANIFEST.sha256
   train: experiments/seeds/train.txt
   validation: experiments/seeds/validation.txt
   promotion_holdout: experiments/seeds/promotion_holdout.txt
   package_smoke: experiments/seeds/package_smoke.txt
+champion:
+  id: heuristic_v1
+  status: PACKAGED
+  package: submission/packages/heuristic_v1_packaged.zip
 rules:
   - pin the official engine as a submodule
   - do not fabricate experiment results
   - do not claim Linux sandbox parity from Windows/Git-Bash smoke tests
   - record seeds, commits, and commands for every real experiment
   - CUDA failure blocks GPU training only
+  - FastAPI and Captum live in .venv-training only
 experiments: []
