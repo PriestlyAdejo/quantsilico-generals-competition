@@ -18,6 +18,23 @@ MOVE_OFFSET = BUILD_OFFSET + BUILD_COUNT
 MOVE_COUNT = MAX_HW * MAX_HW * NUM_DIRECTIONS * NUM_SPLITS
 ACTION_DIM = MOVE_OFFSET + MOVE_COUNT
 
+__all__ = [
+    "ACTION_DIM",
+    "BUILD_COUNT",
+    "BUILD_OFFSET",
+    "MAX_HW",
+    "MOVE_COUNT",
+    "MOVE_OFFSET",
+    "NUM_DIRECTIONS",
+    "NUM_SPLITS",
+    "PASS_INDEX",
+    "action_to_index",
+    "build_index",
+    "direction_deltas",
+    "index_to_action",
+    "move_index",
+]
+
 
 def build_index(row: int, col: int) -> int:
     return BUILD_OFFSET + row * MAX_HW + col

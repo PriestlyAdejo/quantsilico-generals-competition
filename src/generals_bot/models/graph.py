@@ -1,4 +1,4 @@
-"""Recurrent graph-belief actor–critic using pure PyTorch tensor shifts."""
+"""Recurrent graph-belief — v1 flat actor + v2 factorised spatial actor."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ import torch
 from torch import Tensor, nn
 
 from generals_bot.models.action_index import ACTION_DIM
+from generals_bot.models.factorised_action import FactorisedActionHead
 from generals_bot.models.heads import AuxiliaryHeads, HeadConfig, StrategicMixtureGate
 from generals_bot.models.observation_encoder import (
     GLOBAL_DIM,
@@ -21,10 +22,6 @@ from generals_bot.observation import Observation
 
 
 def _shift(x: Tensor, direction: str) -> Tensor:
-    """Shift spatial tensor (B, C, H, W) so each cell receives its neighbour.
-
-    Pad spec for 4D tensors is (left, right, top, bottom).
-    """
     if direction == "self":
         return x
     if direction == "north":
@@ -62,13 +59,22 @@ class GraphConfig:
     recurrent_channels: int = 24
     global_dim: int = GLOBAL_DIM
     recurrent: int = 96
-    architecture: str = "recurrent_graph_belief_v1"
+    architecture: str = "recurrent_graph_belief_v2"
+    action_head: str = "factorised_spatial_v2"
+    schema_version: int = 2
+
+
+def _is_factorised(cfg: GraphConfig) -> bool:
+    return cfg.architecture.endswith("_v2") or cfg.action_head.startswith("factorised")
 
 
 class RecurrentGraphBeliefPolicy(nn.Module):
     def __init__(self, config: GraphConfig | None = None) -> None:
         super().__init__()
         self.config = config or GraphConfig()
+        if self.config.architecture == "recurrent_graph_belief_v1":
+            self.config.action_head = "flat_linear_v1"
+            self.config.schema_version = 1
         c = self.config.channels
         rc = self.config.recurrent_channels
         self.input_proj = nn.Sequential(
@@ -87,9 +93,13 @@ class RecurrentGraphBeliefPolicy(nn.Module):
         self.rnn = nn.GRUCell(self.config.recurrent, self.config.recurrent)
         self.mixture = StrategicMixtureGate(self.config.recurrent)
         emb = self.mixture.option_embed.embedding_dim
-        self.actor = nn.Linear(self.config.recurrent + emb, ACTION_DIM)
+        self.factorised = _is_factorised(self.config)
+        if self.factorised:
+            self.spatial_proj = nn.Conv2d(rc, c, kernel_size=1)
+            self.actor = FactorisedActionHead(c, context_dim=self.config.recurrent + emb)
+        else:
+            self.actor = nn.Linear(self.config.recurrent + emb, ACTION_DIM)
         self.aux = AuxiliaryHeads(HeadConfig(recurrent=self.config.recurrent))
-        # Warm static topology cache (deterministic).
         neighbour_index_tables()
 
     def initial_hidden(self, batch: int = 1, device: torch.device | None = None) -> Tensor:
@@ -98,13 +108,7 @@ class RecurrentGraphBeliefPolicy(nn.Module):
 
     def initial_cell_memory(self, batch: int = 1, device: torch.device | None = None) -> Tensor:
         device = device or next(self.parameters()).device
-        return torch.zeros(
-            batch,
-            self.config.recurrent_channels,
-            MAX_HW,
-            MAX_HW,
-            device=device,
-        )
+        return torch.zeros(batch, self.config.recurrent_channels, MAX_HW, MAX_HW, device=device)
 
     def forward_tensors(
         self,
@@ -137,10 +141,9 @@ class RecurrentGraphBeliefPolicy(nn.Module):
             deterministic=deterministic,
             teacher_option=teacher_option,
         )
-        logits = self.actor(torch.cat([h, opt_emb], dim=-1))
+        context = torch.cat([h, opt_emb], dim=-1)
         aux = self.aux(h)
-        return {
-            "logits": logits,
+        result: dict[str, Tensor] = {
             "value": aux["value"],
             "hidden": h,
             "cell_memory": cell_memory,
@@ -152,6 +155,14 @@ class RecurrentGraphBeliefPolicy(nn.Module):
             "opponent_style": aux["opponent_style"],
             "concepts": aux["concepts"],
         }
+        if self.factorised:
+            spatial = self.spatial_proj(x)
+            actor_out = self.actor(spatial, context)
+            result.update(actor_out)
+            result["spatial_features"] = spatial
+        else:
+            result["logits"] = self.actor(context)
+        return result
 
     def forward_obs(
         self,

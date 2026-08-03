@@ -14,6 +14,7 @@ from torch.nn import functional as F
 from generals_bot.models.checkpoint import save_checkpoint
 from generals_bot.models.cnn import RecurrentCNNPolicy
 from generals_bot.models.factory import build_model
+from generals_bot.models.factorised_action import FactorisedLossWeights, component_metrics, factorised_bc_loss
 from generals_bot.models.graph import RecurrentGraphBeliefPolicy
 from generals_bot.models.legal_mask import apply_action_mask
 from generals_bot.models.mlp import RecurrentMLPPolicy
@@ -103,9 +104,23 @@ def train_bc(
                 )
             # Joint action + option imitation with legal masking.
             masked_logits = apply_action_mask(out["logits"], masks)
-            loss = F.cross_entropy(masked_logits, targets) + 0.5 * F.cross_entropy(
-                out["mixture_logits"], options
-            )
+            use_factorised = bool(getattr(model, "factorised", False)) and "source_logits" in out
+            if use_factorised:
+                # Keep mask on exact head by writing -inf into out copy for CE
+                out_loss = dict(out)
+                out_loss["logits"] = masked_logits
+                loss, loss_stats = factorised_bc_loss(
+                    out_loss,
+                    targets,
+                    options,
+                    out.get("mixture_logits"),
+                    FactorisedLossWeights(),
+                )
+            else:
+                loss = F.cross_entropy(masked_logits, targets) + 0.5 * F.cross_entropy(
+                    out["mixture_logits"], options
+                )
+                loss_stats = {}
             opt.zero_grad(set_to_none=True)
             loss.backward()
             nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -118,6 +133,7 @@ def train_bc(
             "epoch": float(epoch),
             "train_loss": total_loss / max(seen, 1),
             "train_action_acc": correct / max(seen, 1),
+            **{f"train_{k}": v for k, v in loss_stats.items()},
         }
         if val is not None:
             row.update(_eval_split(model, val, torch_device))
@@ -156,6 +172,8 @@ def _eval_split(model: nn.Module, data: dict[str, torch.Tensor], device: torch.d
     n = data["cells"].shape[0]
     correct = 0
     option_correct = 0
+    comp_sums: dict[str, float] = {}
+    comp_counts: dict[str, int] = {}
     for start in range(0, n, 64):
         sl = slice(start, start + 64)
         cells = data["cells"][sl]
@@ -180,11 +198,21 @@ def _eval_split(model: nn.Module, data: dict[str, torch.Tensor], device: torch.d
         pred = masked.argmax(dim=-1)
         correct += int((pred == targets).sum().item())
         option_correct += int((out["option_index"] == options).sum().item())
+        comps = component_metrics(out["logits"], targets, masks)
+        for k, v in comps.items():
+            if k not in comp_sums:
+                comp_sums[k] = 0.0
+            if v == v:  # not NaN
+                comp_sums[k] += float(v) * b
+                comp_counts[k] = comp_counts.get(k, 0) + b
     model.train()
-    return {
+    out_metrics = {
         "val_action_acc": correct / max(n, 1),
         "val_option_acc": option_correct / max(n, 1),
     }
+    for k, total in comp_sums.items():
+        out_metrics[f"val_{k}"] = total / max(comp_counts.get(k, 1), 1)
+    return out_metrics
 
 
 def run_bc_pipeline(
@@ -211,9 +239,8 @@ def run_bc_pipeline(
     val_path = save_dataset(val_samples, data_root / ("tiny_val.npz" if tiny else "smoke_val.npz"))
 
     architectures = architectures or [
-        "recurrent_mlp_v1",
-        "recurrent_cnn_v1",
-        "recurrent_graph_belief_v1",
+        "recurrent_cnn_v2",
+        "recurrent_graph_belief_v2",
     ]
     reports = {}
     for arch in architectures:

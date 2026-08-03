@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "before": {
+    "MLP": "flat Linear over absolute ACTION_DIM (~3970)",
+    "CNN_v1": "flat Linear over absolute ACTION_DIM after global pool",
+    "graph_v1": "flat Linear over absolute ACTION_DIM after global pool",
+    "issue": "~98% validation action indices unseen in training; exact flat CE cannot generalise"
+  },
+  "after": {
+    "MLP": "unchanged flat control; limitation labelled in MLPConfig",
+    "CNN_v2": "FactorisedActionHead: shared Conv source/build/direction/split → assembled ACTION_DIM",
+    "graph_v2": "same FactorisedActionHead on node/spatial features after message passing",
+    "schema": "recurrent_cnn_v2 / recurrent_graph_belief_v2 (schema_version=2)",
+    "legacy": "recurrent_*_v1 remains loadable with flat_linear_v1"
+  },
+  "losses": {
+    "exact_legal_ce": 1.0,
+    "source": 0.5,
+    "action_type": 0.3,
+    "direction": 0.3,
+    "split": 0.2,
+    "option": 0.5
+  }
+}

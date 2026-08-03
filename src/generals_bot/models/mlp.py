@@ -25,6 +25,12 @@ class MLPConfig:
     recurrent: int = 64
     global_dim: int = GLOBAL_DIM
     architecture: str = "recurrent_mlp_v1"
+    action_head: str = "flat_linear_v1"
+    schema_version: int = 1
+    limitation: str = (
+        "MLP uses a flat absolute ACTION_DIM linear actor; "
+        "it is a weak control and does not share spatial parameters."
+    )
 
 
 class RecurrentMLPPolicy(nn.Module):
