@@ -3,7 +3,7 @@
   "kind": "PHASE_9Q_STATUS",
   "status": "DEVELOPMENT_GATE_FAILED",
   "starting_commit": "2350dac",
-  "ending_commit_pending": true,
+  "ending_commit_pending": false,
   "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
   "linux_parity": {
     "root_cause": "Docker mounted missing gitignored ZIP path as directory /pkg/package.zip",
@@ -20,9 +20,16 @@
     "historical_8w_gap": "Not current-run variance; freeze reproduces 4W on current runtime"
   },
   "screening": {
-    "pass": ["heuristic_v2f_plus_planner", "heuristic_v2f_plus_planner_plus_intercept"],
-    "fail_hunter": ["heuristic_v2f_plus_hunter_intercept"],
-    "reject": ["garrison variants"]
+    "pass": [
+      "heuristic_v2f_plus_planner",
+      "heuristic_v2f_plus_planner_plus_intercept"
+    ],
+    "fail_hunter": [
+      "heuristic_v2f_plus_hunter_intercept"
+    ],
+    "reject": [
+      "garrison variants"
+    ]
   },
   "development_abc": {
     "heuristic_v2f_plus_planner": "11/37/0 FAIL",
@@ -34,7 +41,23 @@
       "DEATHTOUCH_NOT_EXPLOITED dominant among discovered-not-converted"
     ]
   },
-  "blocked": ["holdout", "UPLOAD_READY", "Phase_10", "PPO"],
+  "blocked": [
+    "holdout",
+    "UPLOAD_READY",
+    "Phase_10",
+    "PPO"
+  ],
   "next_incomplete_gate": "DEVELOPMENT_GATE",
-  "exact_next_action": "Fix post-discovery Deathtouch conversion and fog discovery before re-running A/B/C; screen corridor_intercept_v2 on Hunter micro."
+  "exact_next_action": "Fix post-discovery Deathtouch conversion and fog discovery before re-running A/B/C; screen corridor_intercept_v2 on Hunter micro.",
+  "corridor_v2_screening": {
+    "candidate": "heuristic_v2f_planner_plus_corridor_intercept_v2",
+    "config_hash": "79dbf464c8d5643e",
+    "expander": "5/11/0",
+    "hunter": "2/1/5",
+    "discovery": 0.5,
+    "post_discovery": 0.625,
+    "screening": "PASS",
+    "note": "Hunter improved vs legacy intercept 0/8; still below v1 3/5 wins"
+  },
+  "last_verified_commit": "717c4df"
 }
