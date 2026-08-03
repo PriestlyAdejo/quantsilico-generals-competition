@@ -1,0 +1,62 @@
+# Phase 9Q three-level qualification gates
+# Screening is NOT upload readiness. Do not confuse the two.
+
+schema_version: 1
+kind: QUALIFICATION_GATE_CONFIG
+engine_commit: 9e3b9d13cca51caa1bb07db48bb85c9e90ce0462
+
+screening_smoke:
+  purpose: Decide whether a candidate deserves development A/B/C evaluation.
+  games: 16
+  paired_positions: true
+  opponent: official_expander
+  hunter_games: 8
+  hunter_opponent: official_hunter
+  require:
+    protocol_faults: 0
+    legal_action_rate: 1.0
+    max_expander_losses: 1
+    min_expander_wins: 4
+    min_discovery_rate: 0.35
+    hunter_not_zero_and_eight: true
+  note: Not portal qualification. Promising candidates may still draw heavily.
+
+development_gate:
+  purpose: Estimate consistency across fixed seed groups A/B/C.
+  games_per_group: 16
+  groups: [development_a, development_b, development_c]
+  require:
+    min_combined_expander_win_rate: 0.50
+    min_group_expander_win_rate: 0.375
+    max_expander_loss_rate: 0.10
+    min_discovery_rate: 0.60
+    min_post_discovery_conversion: 0.80
+    hunter_at_least_comparable_to_v1: true
+    protocol_faults: 0
+    legal_action_rate: 1.0
+  adjustment_policy: Committed config only; do not retune after seeing each group.
+
+upload_readiness_gate:
+  purpose: Immutable holdout after development passes.
+  require:
+    min_expander_win_rate: 0.75
+    desired_expander_win_rate: 0.90
+    low_draw_rate: true
+    very_low_or_zero_loss_rate: true
+    protocol_faults: 0
+    legal_action_rate: 1.0
+    no_severe_hunter_regression: true
+    source_package_parity: true
+    windows_package_validation: true
+    docker_linux_parity: true
+
+rejected_modules:
+  - current_general_garrison_implementation
+
+screening_progress_expected:
+  - heuristic_v2f_plus_planner
+  - heuristic_v2f_plus_planner_plus_intercept
+
+screening_fail_expected:
+  - heuristic_v2f_plus_garrison
+  - heuristic_v2f_plus_hunter_intercept  # Hunter 0/8

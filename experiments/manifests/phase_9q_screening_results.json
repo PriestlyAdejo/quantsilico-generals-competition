@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "kind": "SCREENING_SMOKE_FROM_ABLATION_MATRIX",
+  "gate_config": "configs/evaluation/qualification_gates.yml",
+  "determinism": {
+    "same_process_seed0_swap": "IDENTICAL",
+    "fresh_process_seed2": "IDENTICAL",
+    "note": "Historical 8W/8D vs current 4W/12D is not explained by current-run nondeterminism."
+  },
+  "results": {
+    "heuristic_v2f_plus_planner": "PASS",
+    "heuristic_v2f_plus_planner_plus_intercept": "PASS",
+    "heuristic_v2f_plus_hunter_intercept": "FAIL (hunter 0/8)",
+    "garrison_variants": "FAIL",
+    "v2f_frozen": "FAIL (discovery + hunter)",
+    "v1_reference": "FAIL (wins + discovery)"
+  },
+  "progress_to_development": [
+    "heuristic_v2f_plus_planner",
+    "heuristic_v2f_plus_planner_plus_intercept"
+  ]
+}

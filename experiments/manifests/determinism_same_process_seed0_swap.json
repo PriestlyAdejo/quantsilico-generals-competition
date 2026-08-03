@@ -1,0 +1,31 @@
+{
+  "mode": "same_process",
+  "policy": "heuristic_v2f_best_reference",
+  "opponent": "official_expander",
+  "seed": 0,
+  "swap": true,
+  "identical": true,
+  "divergence": null,
+  "a_terminal": {
+    "winner": null,
+    "turn": 1200,
+    "wdl": [
+      0,
+      1,
+      0
+    ]
+  },
+  "b_terminal": {
+    "winner": null,
+    "turn": 1200,
+    "wdl": [
+      0,
+      1,
+      0
+    ]
+  },
+  "board": {
+    "h": 21,
+    "w": 18
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "mode": "fresh_process",
+  "seed": 2,
+  "swap": false,
+  "identical": true,
+  "divergence": null,
+  "a_terminal": {
+    "winner": 0,
+    "turn": 1064
+  },
+  "b_terminal": {
+    "winner": 0,
+    "turn": 1064
+  }
+}
