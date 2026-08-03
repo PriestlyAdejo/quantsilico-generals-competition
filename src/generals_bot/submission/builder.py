@@ -18,6 +18,10 @@ POLICY_IMPORTS = {
         "from generals_bot.policies.heuristic_v0 import HeuristicV0Policy",
         "HeuristicV0Policy()",
     ),
+    "heuristic_v1": (
+        "from generals_bot.policies.heuristic_v1 import HeuristicV1Policy",
+        "HeuristicV1Policy()",
+    ),
     "pass": (
         "from generals_bot.policies.pass_policy import PassPolicy",
         "PassPolicy()",

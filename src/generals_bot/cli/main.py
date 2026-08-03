@@ -40,6 +40,11 @@ def cmd_match(args: argparse.Namespace) -> int:
         "pass_bot": REPO_ROOT / "baselines" / "pass_bot" / "main.py",
         "legal_random": REPO_ROOT / "baselines" / "legal_random" / "main.py",
         "heuristic_v0": REPO_ROOT / "baselines" / "heuristic_v0" / "main.py",
+        "heuristic_v1": REPO_ROOT / "baselines" / "heuristic_v1" / "main.py",
+        "heuristic_aggressive": REPO_ROOT / "baselines" / "heuristic_aggressive" / "main.py",
+        "heuristic_defensive": REPO_ROOT / "baselines" / "heuristic_defensive" / "main.py",
+        "heuristic_castle": REPO_ROOT / "baselines" / "heuristic_castle" / "main.py",
+        "heuristic_deathtouch": REPO_ROOT / "baselines" / "heuristic_deathtouch" / "main.py",
         "expander": (
             REPO_ROOT
             / "third_party"
