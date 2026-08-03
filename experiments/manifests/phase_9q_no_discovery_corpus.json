@@ -1,0 +1,729 @@
+{
+  "schema_version": 1,
+  "kind": "NO_DISCOVERY_CORPUS",
+  "baseline_policy": "heuristic_v2f_plus_planner_terminal_fix",
+  "baseline_config_hash": "4c5466776180217b",
+  "label": "PHASE_9Q_NO_DISCOVERY_AFTER_CONVERSION_FIX",
+  "games": [
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s0_p1",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 0,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 485,
+      "first_enemy_contact_turn": 460,
+      "candidate_general_cells_terminal": 51,
+      "remaining_enemy_land": 55,
+      "land_ratio_terminal": 0.5299145299145299,
+      "prior_extras": {
+        "scout_source": null,
+        "scout_target": null,
+        "scout_stall": 20,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "candidate_mask_size": 51,
+        "phase": "EMERGENCY_DEFENCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s1_p0",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 1,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 511,
+      "first_enemy_contact_turn": 511,
+      "candidate_general_cells_terminal": 30,
+      "remaining_enemy_land": 28,
+      "land_ratio_terminal": 0.72,
+      "prior_extras": {
+        "scout_source": [
+          5,
+          3
+        ],
+        "scout_target": [
+          0,
+          14
+        ],
+        "scout_stall": 688,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 30,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s1_p1",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 1,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 756,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 107,
+      "remaining_enemy_land": 16,
+      "land_ratio_terminal": 0.8632478632478633,
+      "prior_extras": {
+        "scout_source": [
+          9,
+          12
+        ],
+        "scout_target": [
+          9,
+          4
+        ],
+        "scout_stall": 443,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 107,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s4_p0",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 4,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 985,
+      "first_enemy_contact_turn": 753,
+      "candidate_general_cells_terminal": 42,
+      "remaining_enemy_land": 15,
+      "land_ratio_terminal": 0.9318181818181818,
+      "prior_extras": {
+        "scout_source": [
+          0,
+          12
+        ],
+        "scout_target": [
+          0,
+          0
+        ],
+        "scout_stall": 214,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 42,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s4_p1",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 4,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 767,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 90,
+      "remaining_enemy_land": 25,
+      "land_ratio_terminal": 0.8641304347826086,
+      "prior_extras": {
+        "scout_source": [
+          0,
+          10
+        ],
+        "scout_target": [
+          0,
+          12
+        ],
+        "scout_stall": 432,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 90,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s5_p1",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 5,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 766,
+      "first_enemy_contact_turn": 404,
+      "candidate_general_cells_terminal": 56,
+      "remaining_enemy_land": 88,
+      "land_ratio_terminal": 0.6036036036036037,
+      "prior_extras": {
+        "scout_source": null,
+        "scout_target": null,
+        "scout_stall": 40,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "candidate_mask_size": 56,
+        "phase": "EMERGENCY_DEFENCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s6_p1",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 6,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 259,
+      "first_enemy_contact_turn": 251,
+      "candidate_general_cells_terminal": 35,
+      "remaining_enemy_land": 47,
+      "land_ratio_terminal": 0.7025316455696202,
+      "prior_extras": {
+        "scout_source": null,
+        "scout_target": null,
+        "scout_stall": 14,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "candidate_mask_size": 35,
+        "phase": "EMERGENCY_DEFENCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s7_p0",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 7,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "GENERAL_NEVER_LOCATED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 90,
+      "first_enemy_contact_turn": 81,
+      "candidate_general_cells_terminal": 0,
+      "remaining_enemy_land": 62,
+      "land_ratio_terminal": 0.32608695652173914,
+      "prior_extras": {
+        "scout_source": null,
+        "scout_target": null,
+        "scout_stall": 20,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "candidate_mask_size": 0,
+        "phase": "EMERGENCY_DEFENCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s8_p0",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 8,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 762,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 102,
+      "remaining_enemy_land": 5,
+      "land_ratio_terminal": 0.9691358024691358,
+      "prior_extras": {
+        "scout_source": [
+          8,
+          0
+        ],
+        "scout_target": [
+          8,
+          12
+        ],
+        "scout_stall": 437,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 102,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s8_p1",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 8,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 1069,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 79,
+      "remaining_enemy_land": 10,
+      "land_ratio_terminal": 0.9456521739130435,
+      "prior_extras": {
+        "scout_source": [
+          8,
+          13
+        ],
+        "scout_target": [
+          8,
+          18
+        ],
+        "scout_stall": 130,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 79,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s9_p1",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 9,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 621,
+      "first_enemy_contact_turn": 254,
+      "candidate_general_cells_terminal": 8,
+      "remaining_enemy_land": 20,
+      "land_ratio_terminal": 0.6825396825396826,
+      "prior_extras": {
+        "scout_source": [
+          3,
+          1
+        ],
+        "scout_target": [
+          0,
+          7
+        ],
+        "scout_stall": 578,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 8,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s11_p1",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 11,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 774,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 92,
+      "remaining_enemy_land": 5,
+      "land_ratio_terminal": 0.9673202614379085,
+      "prior_extras": {
+        "scout_source": [
+          3,
+          8
+        ],
+        "scout_target": [
+          6,
+          1
+        ],
+        "scout_stall": 425,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 92,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s12_p0",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 12,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 762,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 140,
+      "remaining_enemy_land": 6,
+      "land_ratio_terminal": 0.9459459459459459,
+      "prior_extras": {
+        "scout_source": [
+          1,
+          2
+        ],
+        "scout_target": [
+          0,
+          14
+        ],
+        "scout_stall": 437,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 140,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s13_p0",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 13,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 1000,
+      "first_enemy_contact_turn": 611,
+      "candidate_general_cells_terminal": 33,
+      "remaining_enemy_land": 74,
+      "land_ratio_terminal": 0.5771428571428572,
+      "prior_extras": {
+        "scout_source": null,
+        "scout_target": null,
+        "scout_stall": 44,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "candidate_mask_size": 33,
+        "phase": "EMERGENCY_DEFENCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s14_p0",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 14,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 763,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 42,
+      "remaining_enemy_land": 7,
+      "land_ratio_terminal": 0.9704641350210971,
+      "prior_extras": {
+        "scout_source": [
+          10,
+          6
+        ],
+        "scout_target": [
+          10,
+          16
+        ],
+        "scout_stall": 436,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 42,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s14_p1",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 14,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 759,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 81,
+      "remaining_enemy_land": 6,
+      "land_ratio_terminal": 0.9664804469273743,
+      "prior_extras": {
+        "scout_source": [
+          0,
+          12
+        ],
+        "scout_target": [
+          0,
+          0
+        ],
+        "scout_stall": 440,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 81,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s15_p0",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 15,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 768,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 119,
+      "remaining_enemy_land": 6,
+      "land_ratio_terminal": 0.9662921348314607,
+      "prior_extras": {
+        "scout_source": [
+          15,
+          3
+        ],
+        "scout_target": [
+          0,
+          8
+        ],
+        "scout_stall": 431,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 119,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s15_p1",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 15,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 764,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 153,
+      "remaining_enemy_land": 6,
+      "land_ratio_terminal": 0.959731543624161,
+      "prior_extras": {
+        "scout_source": [
+          1,
+          11
+        ],
+        "scout_target": [
+          1,
+          2
+        ],
+        "scout_stall": 435,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 153,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s16_p0",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 16,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 771,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 118,
+      "remaining_enemy_land": 13,
+      "land_ratio_terminal": 0.9015151515151515,
+      "prior_extras": {
+        "scout_source": [
+          12,
+          2
+        ],
+        "scout_target": [
+          0,
+          4
+        ],
+        "scout_stall": 428,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 118,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s16_p1",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 16,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 766,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 111,
+      "remaining_enemy_land": 6,
+      "land_ratio_terminal": 0.953125,
+      "prior_extras": {
+        "scout_source": [
+          2,
+          14
+        ],
+        "scout_target": [
+          2,
+          0
+        ],
+        "scout_stall": 433,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 111,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s18_p0",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 18,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 594,
+      "first_enemy_contact_turn": 254,
+      "candidate_general_cells_terminal": 51,
+      "remaining_enemy_land": 69,
+      "land_ratio_terminal": 0.4566929133858268,
+      "prior_extras": {
+        "scout_source": [
+          2,
+          10
+        ],
+        "scout_target": [
+          0,
+          3
+        ],
+        "scout_stall": 605,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 51,
+        "phase": "EMERGENCY_DEFENCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s19_p0",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 19,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 960,
+      "first_enemy_contact_turn": 508,
+      "candidate_general_cells_terminal": 42,
+      "remaining_enemy_land": 28,
+      "land_ratio_terminal": 0.7956204379562044,
+      "prior_extras": {
+        "scout_source": [
+          8,
+          9
+        ],
+        "scout_target": [
+          4,
+          0
+        ],
+        "scout_stall": 239,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 42,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s20_p1",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 20,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 326,
+      "first_enemy_contact_turn": 207,
+      "candidate_general_cells_terminal": 61,
+      "remaining_enemy_land": 67,
+      "land_ratio_terminal": 0.42735042735042733,
+      "prior_extras": {
+        "scout_source": null,
+        "scout_target": null,
+        "scout_stall": 27,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "candidate_mask_size": 61,
+        "phase": "EMERGENCY_DEFENCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s21_p0",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 21,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 503,
+      "first_enemy_contact_turn": 81,
+      "candidate_general_cells_terminal": 78,
+      "remaining_enemy_land": 55,
+      "land_ratio_terminal": 0.6099290780141844,
+      "prior_extras": {
+        "scout_source": null,
+        "scout_target": null,
+        "scout_stall": 56,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "candidate_mask_size": 78,
+        "phase": "EMERGENCY_DEFENCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s22_p1",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 22,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "FOG_NOT_CLEARED",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 942,
+      "first_enemy_contact_turn": 266,
+      "candidate_general_cells_terminal": 71,
+      "remaining_enemy_land": 48,
+      "land_ratio_terminal": 0.7525773195876289,
+      "prior_extras": {
+        "scout_source": [
+          0,
+          7
+        ],
+        "scout_target": [
+          12,
+          0
+        ],
+        "scout_stall": 257,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 71,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s23_p0",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 23,
+      "position": 0,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 765,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 111,
+      "remaining_enemy_land": 16,
+      "land_ratio_terminal": 0.9135135135135135,
+      "prior_extras": {
+        "scout_source": [
+          8,
+          3
+        ],
+        "scout_target": [
+          0,
+          10
+        ],
+        "scout_stall": 434,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 111,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s23_p1",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "seed": 23,
+      "position": 1,
+      "opponent": "official_expander",
+      "failure_class": "NO_CONTACT_DRAW",
+      "terminal_turn": 1200,
+      "last_newly_scouted_turn": 765,
+      "first_enemy_contact_turn": null,
+      "candidate_general_cells_terminal": 145,
+      "remaining_enemy_land": 4,
+      "land_ratio_terminal": 0.9699248120300752,
+      "prior_extras": {
+        "scout_source": [
+          8,
+          12
+        ],
+        "scout_target": [
+          8,
+          2
+        ],
+        "scout_stall": 434,
+        "scout_abort_reason": "",
+        "candidate_mask_size": 145,
+        "phase": "DRAW_AVOIDANCE"
+      }
+    }
+  ],
+  "count": 27,
+  "failure_classes": {
+    "FOG_NOT_CLEARED": 12,
+    "NO_CONTACT_DRAW": 14,
+    "GENERAL_NEVER_LOCATED": 1
+  }
+}

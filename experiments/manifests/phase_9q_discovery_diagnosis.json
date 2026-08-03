@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE_9Q_DISCOVERY_DIAGNOSIS",
+  "label": "PHASE_9Q_DISCOVERY_BLOCKED_AFTER_CONVERSION",
+  "bot_commit_at_diagnosis": "53168c6",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "conversion_baseline": {
+    "policy": "heuristic_v2f_plus_planner_terminal_fix",
+    "config_hash": "4c5466776180217b",
+    "conversion_micro": "10/10",
+    "screening_expander": "8W/8D/0L",
+    "screening_hunter": "3W/0D/5L",
+    "development": "21W/27D/0L",
+    "discovery_rate": 0.4375,
+    "post_discovery_win_rate": 1.0,
+    "development_gate": "FAIL",
+    "fail_reasons": ["combined_win_rate=0.438<0.50", "discovery=0.438<0.60"]
+  },
+  "no_discovery_corpus": {
+    "path": "experiments/manifests/phase_9q_no_discovery_corpus.json",
+    "games": 27,
+    "failure_classes": {
+      "FOG_NOT_CLEARED": 12,
+      "NO_CONTACT_DRAW": 14,
+      "GENERAL_NEVER_LOCATED": 1
+    }
+  },
+  "root_causes": [
+    "BoundedScoutAssigner rebuilds a throwaway ExplorationState on every reassignment, so stall recovery and failed_targets never persist; scouts re-lock the same fog pocket for hundreds of turns (e.g. last_newly_scouted_turn=756 with scout_stall=443).",
+    "NO_CONTACT_DRAW games often reach dominant land (~0.86) with 100+ candidate general cells still unresolved — enemy isolated behind uncleared fog.",
+    "FOG_NOT_CLEARED games contact then stall scouting; terminal frames can show EMERGENCY_DEFENCE aborting scout.",
+    "Attempted dual-scout / expand-demotion / hard failed_targets fixes improved some no-discovery games (~5/27) but regressed conversion micro below 10/10; reverted to conversion-frozen scout."
+  ],
+  "attempted_fix_result": {
+    "config_hash_tried": "7916e24eac7d06b8",
+    "discovery_micro_on_27": "5/27",
+    "conversion_micro_best_during_attempt": "9/10",
+    "conversion_micro_after_aggressive_tweaks": "7-8/10",
+    "action": "REVERTED_TO_4c5466776180217b"
+  },
+  "next_incomplete_gate": "DEVELOPMENT_GATE (discovery >= 0.60 while keeping conversion micro >= 0.80 and post-discovery >= 0.80)",
+  "exact_next_action": "Implement persistent ExplorationState on policy state with soft region_attempts only (no permanent cell blacklist, no early expand demotion); dual-scout only after turn>=1050 AND stall>=40; gate each change with conversion micro 10/10 before discovery micro."
+}
