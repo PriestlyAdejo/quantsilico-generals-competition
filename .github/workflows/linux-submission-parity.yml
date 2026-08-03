@@ -6,12 +6,14 @@ on:
       candidate:
         description: Heuristic candidate to build and test (ZIPs are gitignored)
         required: true
-        default: heuristic_v1
+        default: heuristic_v2f_plus_planner_terminal_fix
   push:
     branches: [feature/full-research-platform-v0]
     paths:
       - "scripts/parity/**"
       - "src/generals_bot/submission/**"
+      - "src/generals_bot/policies/terminal_win_oracle.py"
+      - "src/generals_bot/policies/heuristic_v2_ablations.py"
       - ".github/workflows/linux-submission-parity.yml"
 
 jobs:
@@ -39,7 +41,7 @@ jobs:
       - name: Build submission package in job
         id: build
         env:
-          CANDIDATE: ${{ inputs.candidate || 'heuristic_v1' }}
+          CANDIDATE: ${{ inputs.candidate || 'heuristic_v2f_plus_planner_terminal_fix' }}
         run: |
           set -euo pipefail
           PKG_DIR="${RUNNER_TEMP}/parity-package"
@@ -49,14 +51,32 @@ jobs:
           import os
           from pathlib import Path
           from generals_bot.submission.builder import build_heuristic_package
+          from generals_bot.selector import create_policy
 
           candidate = os.environ["CANDIDATE"]
           out_dir = Path(os.environ["PKG_DIR"])
-          report = build_heuristic_package(candidate, out_dir=out_dir)
+          stem = candidate
+          if candidate == "heuristic_v2f_plus_planner_terminal_fix":
+              ch = create_policy(candidate).config_hash
+              stem = f"heuristic_v2_preppo_{ch}"
+          report = build_heuristic_package(
+              candidate, out_dir=out_dir, package_stem=stem, overwrite=True
+          )
           print(report)
           assert report.status == "PACKAGED", report
+          print("PACKAGE_STEM", stem)
           PY
-          PACKAGE_ZIP="$PKG_DIR/${CANDIDATE}_packaged.zip"
+          PACKAGE_ZIP="$(python - <<'PY'
+          import os
+          from pathlib import Path
+          from generals_bot.selector import create_policy
+          candidate = os.environ["CANDIDATE"]
+          stem = candidate
+          if candidate == "heuristic_v2f_plus_planner_terminal_fix":
+              stem = f"heuristic_v2_preppo_{create_policy(candidate).config_hash}"
+          print(Path(os.environ["PKG_DIR"]) / f"{stem}_packaged.zip")
+          PY
+          )"
           test -f "$PACKAGE_ZIP"
           test ! -d "$PACKAGE_ZIP"
           python scripts/parity/resolve_package_zip.py \
@@ -79,8 +99,6 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p experiments/manifests
-          # Mount the parent directory as /pkg — never mount a missing host path
-          # onto /pkg/package.zip (Docker would create a directory there).
           docker run --rm \
             --network=none \
             --cpus=1 \
@@ -99,11 +117,17 @@ jobs:
           name: linux-parity-report
           path: experiments/manifests/linux_parity_report.json
 
-      - name: Fail if parity failed
+      - name: Summarize
+        if: always()
         run: |
           python - <<'PY'
-          import json, sys
-          report = json.load(open("experiments/manifests/linux_parity_report.json", encoding="utf-8"))
-          print(json.dumps(report, indent=2)[:2000])
-          sys.exit(0 if report.get("passed") else 1)
+          import json
+          from pathlib import Path
+          p = Path("experiments/manifests/linux_parity_report.json")
+          if not p.exists():
+              raise SystemExit("missing linux_parity_report.json")
+          report = json.loads(p.read_text(encoding="utf-8"))
+          print(json.dumps(report, indent=2)[:4000])
+          if not report.get("passed"):
+              raise SystemExit(report.get("failure_reason") or "linux parity failed")
           PY
