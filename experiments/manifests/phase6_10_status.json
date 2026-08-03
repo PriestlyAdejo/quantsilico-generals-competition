@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "phase6": {
+    "bc_tiny": "experiments/manifests/bc_tiny.json",
+    "bc_smoke": "experiments/manifests/bc_smoke.json",
+    "ppo_smoke": "experiments/manifests/ppo_smoke.json",
+    "bridge_decision": "PASS",
+    "ppo_allowed": true,
+    "ppo_scope": "bounded smoke only"
+  },
+  "phase7": {
+    "pfsp": "implemented_smoke",
+    "payoff": "experiments/manifests/pfsp_smoke_payoff.json"
+  },
+  "phase8": {
+    "explain": "experiments/manifests/explain_smoke.json"
+  },
+  "phase9": {
+    "promotion": "experiments/manifests/promotion_decision.json",
+    "UPLOAD_READY": false,
+    "linux_parity": false
+  },
+  "phase10": {
+    "status": "BOUNDED_NOT_STARTED",
+    "note": "No overnight campaign; champion remains heuristic_v1"
+  },
+  "champion": "heuristic_v1",
+  "promotion_decision": "NO LEARNED CANDIDATE PROMOTED"
+}

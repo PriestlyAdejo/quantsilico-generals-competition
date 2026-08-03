@@ -74,14 +74,18 @@ class RecurrentCNNPolicy(nn.Module):
         *,
         deterministic: bool = True,
         previous_option: Tensor | None = None,
+        teacher_option: Tensor | None = None,
     ) -> dict[str, Tensor]:
         x = self.stem(cells)
         x = self.blocks(x)
         pooled = self.pool(x).flatten(1)
         fused = self.fuse(torch.cat([pooled, globals_], dim=-1))
         h = self.rnn(fused, hidden)
-        mix_probs, opt_idx, opt_emb = self.mixture(
-            h, previous_option=previous_option, deterministic=deterministic
+        mix_probs, opt_idx, opt_emb, mix_logits = self.mixture(
+            h,
+            previous_option=previous_option,
+            deterministic=deterministic,
+            teacher_option=teacher_option,
         )
         logits = self.actor(torch.cat([h, opt_emb], dim=-1))
         aux = self.aux(h)
@@ -90,6 +94,7 @@ class RecurrentCNNPolicy(nn.Module):
             "value": aux["value"],
             "hidden": h,
             "mixture_probs": mix_probs,
+            "mixture_logits": mix_logits,
             "option_index": opt_idx,
             "general_loss_risk": aux["general_loss_risk"],
             "belief": aux["belief"],

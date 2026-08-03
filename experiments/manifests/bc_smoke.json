@@ -1,0 +1,195 @@
+{
+  "tiny": false,
+  "train_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "val_seeds": [
+    10000,
+    10001,
+    10002,
+    10003
+  ],
+  "policies": [
+    "heuristic_v0",
+    "heuristic_v1",
+    "heuristic_aggressive",
+    "heuristic_defensive",
+    "heuristic_castle",
+    "heuristic_deathtouch"
+  ],
+  "reports": {
+    "recurrent_mlp_v1": {
+      "architecture": "recurrent_mlp_v1",
+      "device": "cuda",
+      "epochs": 6,
+      "train_n": 1440,
+      "val_n": 960,
+      "history": [
+        {
+          "epoch": 0.0,
+          "train_loss": 1.858916982014974,
+          "train_action_acc": 0.6111111111111112,
+          "val_action_acc": 0.3229166666666667,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 1.0,
+          "train_loss": 1.0818366050720214,
+          "train_action_acc": 0.7833333333333333,
+          "val_action_acc": 0.30416666666666664,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 2.0,
+          "train_loss": 0.9852056225140889,
+          "train_action_acc": 0.8041666666666667,
+          "val_action_acc": 0.309375,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 3.0,
+          "train_loss": 0.9323455161518521,
+          "train_action_acc": 0.8076388888888889,
+          "val_action_acc": 0.3104166666666667,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 4.0,
+          "train_loss": 0.8769892546865675,
+          "train_action_acc": 0.8111111111111111,
+          "val_action_acc": 0.30625,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 5.0,
+          "train_loss": 0.8283012138472663,
+          "train_action_acc": 0.8159722222222222,
+          "val_action_acc": 0.30625,
+          "val_option_acc": 1.0
+        }
+      ],
+      "elapsed_s": 17.41647469997406,
+      "checkpoint": "experiments\\checkpoints\\bc\\recurrent_mlp_v1\\model.json",
+      "parameter_count": 952820,
+      "final_train_action_acc": 0.8159722222222222,
+      "final_val_action_acc": 0.30625
+    },
+    "recurrent_cnn_v1": {
+      "architecture": "recurrent_cnn_v1",
+      "device": "cuda",
+      "epochs": 6,
+      "train_n": 1440,
+      "val_n": 960,
+      "history": [
+        {
+          "epoch": 0.0,
+          "train_loss": 1.7861247181892395,
+          "train_action_acc": 0.5972222222222222,
+          "val_action_acc": 0.29375,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 1.0,
+          "train_loss": 1.0808955603175694,
+          "train_action_acc": 0.7743055555555556,
+          "val_action_acc": 0.29375,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 2.0,
+          "train_loss": 0.9857481638590495,
+          "train_action_acc": 0.7916666666666666,
+          "val_action_acc": 0.29375,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 3.0,
+          "train_loss": 0.9353181600570679,
+          "train_action_acc": 0.7944444444444444,
+          "val_action_acc": 0.29375,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 4.0,
+          "train_loss": 0.9084418230586582,
+          "train_action_acc": 0.8034722222222223,
+          "val_action_acc": 0.29375,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 5.0,
+          "train_loss": 0.8871506161159939,
+          "train_action_acc": 0.8104166666666667,
+          "val_action_acc": 0.29375,
+          "val_option_acc": 1.0
+        }
+      ],
+      "elapsed_s": 21.482393599988427,
+      "checkpoint": "experiments\\checkpoints\\bc\\recurrent_cnn_v1\\model.json",
+      "parameter_count": 662756,
+      "final_train_action_acc": 0.8104166666666667,
+      "final_val_action_acc": 0.29375
+    },
+    "recurrent_graph_belief_v1": {
+      "architecture": "recurrent_graph_belief_v1",
+      "device": "cuda",
+      "epochs": 6,
+      "train_n": 1440,
+      "val_n": 960,
+      "history": [
+        {
+          "epoch": 0.0,
+          "train_loss": 1.9989495091968112,
+          "train_action_acc": 0.5618055555555556,
+          "val_action_acc": 0.3416666666666667,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 1.0,
+          "train_loss": 1.0529540565278794,
+          "train_action_acc": 0.7770833333333333,
+          "val_action_acc": 0.3541666666666667,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 2.0,
+          "train_loss": 0.9574197159873115,
+          "train_action_acc": 0.8,
+          "val_action_acc": 0.3541666666666667,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 3.0,
+          "train_loss": 0.9125904414388869,
+          "train_action_acc": 0.8020833333333334,
+          "val_action_acc": 0.3541666666666667,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 4.0,
+          "train_loss": 0.8941868835025364,
+          "train_action_acc": 0.8104166666666667,
+          "val_action_acc": 0.3541666666666667,
+          "val_option_acc": 1.0
+        },
+        {
+          "epoch": 5.0,
+          "train_loss": 0.8749519877963596,
+          "train_action_acc": 0.8159722222222222,
+          "val_action_acc": 0.3541666666666667,
+          "val_option_acc": 1.0
+        }
+      ],
+      "elapsed_s": 52.94800969999051,
+      "checkpoint": "experiments\\checkpoints\\bc\\recurrent_graph_belief_v1\\model.json",
+      "parameter_count": 599780,
+      "final_train_action_acc": 0.8159722222222222,
+      "final_val_action_acc": 0.3541666666666667
+    }
+  }
+}

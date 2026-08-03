@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "agents": [
+    "heuristic_v1",
+    "heuristic_v0"
+  ],
+  "note": "SMOKE synthetic payoff for pipeline wiring; not empirical match results.",
+  "payoff": {
+    "schema_version": 1,
+    "labels": [
+      "heuristic_v1",
+      "heuristic_v0"
+    ],
+    "matrix": [
+      [
+        0.0,
+        0.31590730834050645
+      ],
+      [
+        0.5808511506688411,
+        0.0
+      ]
+    ],
+    "counts": [
+      [
+        0,
+        3
+      ],
+      [
+        3,
+        0
+      ]
+    ]
+  }
+}

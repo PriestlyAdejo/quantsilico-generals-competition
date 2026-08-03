@@ -66,8 +66,9 @@ class StrategicMixtureGate(nn.Module):
         previous_option: Tensor | None = None,
         *,
         deterministic: bool = False,
+        teacher_option: Tensor | None = None,
     ) -> tuple[Tensor, Tensor, Tensor]:
-        """Return (mixture_probs, option_indices, option_embeddings)."""
+        """Return (mixture_probs, option_indices, option_embeddings, gate_logits)."""
         batch = recurrent_state.shape[0]
         device = recurrent_state.device
         if previous_option is None:
@@ -78,12 +79,14 @@ class StrategicMixtureGate(nn.Module):
             parts.insert(1, extras)
         logits = self.gate(torch.cat(parts, dim=-1))
         probs = F.softmax(logits, dim=-1)
-        if deterministic:
+        if teacher_option is not None:
+            indices = teacher_option.long()
+        elif deterministic:
             indices = torch.argmax(probs, dim=-1)
         else:
             indices = torch.multinomial(probs, num_samples=1).squeeze(-1)
         emb = self.option_embed(indices)
-        return probs, indices, emb
+        return probs, indices, emb, logits
 
 
 class OpponentStyleHead(nn.Module):

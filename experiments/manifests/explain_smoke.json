@@ -1,0 +1,10 @@
+{
+  "status": "OK",
+  "architecture": "recurrent_mlp_v1",
+  "attr_abs_mean": 9.666095866123214e-05,
+  "attr_shape": [
+    1,
+    4410
+  ],
+  "fidelity_note": "smoke attribution only; not a full fidelity study"
+}

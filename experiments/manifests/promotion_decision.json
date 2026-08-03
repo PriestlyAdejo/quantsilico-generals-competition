@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "champion": "heuristic_v1",
+  "challenger": null,
+  "decision": "NO LEARNED CANDIDATE PROMOTED",
+  "champion_status": "PACKAGED",
+  "UPLOAD_READY": false,
+  "reasons": [
+    "no learned challenger nominated",
+    "Linux parity not verified; Windows package cannot be UPLOAD_READY"
+  ],
+  "bridge_decision": "PASS",
+  "linux_parity": false
+}

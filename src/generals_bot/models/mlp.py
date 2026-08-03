@@ -55,6 +55,7 @@ class RecurrentMLPPolicy(nn.Module):
         *,
         deterministic: bool = True,
         previous_option: Tensor | None = None,
+        teacher_option: Tensor | None = None,
     ) -> dict[str, Tensor]:
         """Batched forward from pre-encoded tensors.
 
@@ -65,8 +66,11 @@ class RecurrentMLPPolicy(nn.Module):
             cells = cells.reshape(cells.shape[0], -1)
         x = self.encoder(torch.cat([cells, globals_], dim=-1))
         h = self.rnn(x, hidden)
-        mix_probs, opt_idx, opt_emb = self.mixture(
-            h, previous_option=previous_option, deterministic=deterministic
+        mix_probs, opt_idx, opt_emb, mix_logits = self.mixture(
+            h,
+            previous_option=previous_option,
+            deterministic=deterministic,
+            teacher_option=teacher_option,
         )
         logits = self.actor(torch.cat([h, opt_emb], dim=-1))
         aux = self.aux(h)
@@ -75,6 +79,7 @@ class RecurrentMLPPolicy(nn.Module):
             "value": aux["value"],
             "hidden": h,
             "mixture_probs": mix_probs,
+            "mixture_logits": mix_logits,
             "option_index": opt_idx,
             "general_loss_risk": aux["general_loss_risk"],
             "belief": aux["belief"],

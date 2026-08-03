@@ -115,6 +115,7 @@ class RecurrentGraphBeliefPolicy(nn.Module):
         *,
         deterministic: bool = True,
         previous_option: Tensor | None = None,
+        teacher_option: Tensor | None = None,
     ) -> dict[str, Tensor]:
         batch = cells.shape[0]
         device = cells.device
@@ -130,8 +131,11 @@ class RecurrentGraphBeliefPolicy(nn.Module):
         pooled = self.pool(x).flatten(1)
         fused = self.fuse(torch.cat([pooled, globals_], dim=-1))
         h = self.rnn(fused, hidden)
-        mix_probs, opt_idx, opt_emb = self.mixture(
-            h, previous_option=previous_option, deterministic=deterministic
+        mix_probs, opt_idx, opt_emb, mix_logits = self.mixture(
+            h,
+            previous_option=previous_option,
+            deterministic=deterministic,
+            teacher_option=teacher_option,
         )
         logits = self.actor(torch.cat([h, opt_emb], dim=-1))
         aux = self.aux(h)
@@ -141,6 +145,7 @@ class RecurrentGraphBeliefPolicy(nn.Module):
             "hidden": h,
             "cell_memory": cell_memory,
             "mixture_probs": mix_probs,
+            "mixture_logits": mix_logits,
             "option_index": opt_idx,
             "general_loss_risk": aux["general_loss_risk"],
             "belief": aux["belief"],

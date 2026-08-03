@@ -1,0 +1,29 @@
+{
+  "architecture": "recurrent_mlp_v1",
+  "device": "cuda",
+  "rollout_steps": 64,
+  "updates": 2,
+  "history": [
+    {
+      "update": 0.0,
+      "loss": 7.464211463928223,
+      "policy_loss": 7.470436096191406,
+      "value_loss": 7.475709571735933e-05,
+      "entropy": 0.6261621117591858
+    },
+    {
+      "update": 1.0,
+      "loss": 8.805853843688965,
+      "policy_loss": 8.812549591064453,
+      "value_loss": 0.00012669884017668664,
+      "entropy": 0.6758448481559753
+    }
+  ],
+  "legal_action_rate": 1.0,
+  "elapsed_s": 23.74849929998163,
+  "checkpoint": "experiments\\checkpoints\\ppo\\recurrent_mlp_v1\\model.json",
+  "resume_ok": true,
+  "nan_free": true,
+  "bridge_decision": "PASS",
+  "note": "Bounded PPO smoke only; not a marathon campaign."
+}
