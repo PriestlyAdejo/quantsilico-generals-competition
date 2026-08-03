@@ -1,42 +1,40 @@
 {
   "schema_version": 1,
   "kind": "PHASE_9Q_STATUS",
-  "phase": "9Q",
-  "starting_commit": "544215e",
+  "status": "DEVELOPMENT_GATE_FAILED",
+  "starting_commit": "2350dac",
+  "ending_commit_pending": true,
   "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
-  "implemented": [
-    "exploration_planner with region partition, target persistence, stall recovery",
-    "SEARCH_FOR_CONTACT / CLEAR_ENEMY_REGION phases",
-    "threat_assessment with credible emergency, DEFENSIVE_CAUTION, hysteresis",
-    "fog-alone no longer triggers EMERGENCY_DEFENCE",
-    "scenario unit tests",
-    "development seed groups A/B/C",
-    "dashboard qualification phase 9Q fields"
-  ],
-  "expander_smoke_9qd": {
-    "WDL": {"wins": 3, "draws": 13, "losses": 0},
-    "discovery_rate": 0.25,
-    "post_discovery_win_rate": 0.75,
-    "gate": "FAIL (need >=12/16 wins)"
+  "linux_parity": {
+    "root_cause": "Docker mounted missing gitignored ZIP path as directory /pkg/package.zip",
+    "fix_commit": "f46aaad",
+    "workflow_run": "https://github.com/PriestlyAdejo/quantsilico-generals-competition/actions/runs/30839203842",
+    "result": "success",
+    "resolved_zip": "/home/runner/work/_temp/parity-package/heuristic_v1_packaged.zip",
+    "package_sha256": "50f751939998baa77d6c37d6ff10a471ec6730532b3f694ecde8879af6180372",
+    "mounted_as": "/pkg/heuristic_v1_packaged.zip"
   },
-  "prior_best_smoke": {
-    "file": "qualification_smoke_v2f.json",
-    "WDL": {"wins": 8, "draws": 8, "losses": 0},
-    "note": "Earlier fog_sweep candidate; not yet recovered by planner retune"
+  "determinism": {
+    "same_process_seed0_swap": "IDENTICAL",
+    "fresh_process_seed2": "IDENTICAL",
+    "historical_8w_gap": "Not current-run variance; freeze reproduces 4W on current runtime"
   },
-  "hunter_micro_9qd": {
-    "heuristic_v2_qualifier": {"WDL": "0/0/8"},
-    "heuristic_v1": {"WDL": "3/0/5"},
-    "gate": "FAIL severe regression"
+  "screening": {
+    "pass": ["heuristic_v2f_plus_planner", "heuristic_v2f_plus_planner_plus_intercept"],
+    "fail_hunter": ["heuristic_v2f_plus_hunter_intercept"],
+    "reject": ["garrison variants"]
   },
-  "phase_9q_status": "INCOMPLETE",
-  "phase_10_ready": false,
-  "UPLOAD_READY": false,
-  "package": null,
-  "next_actions": [
-    "Recover Expander discovery toward v2f 8/8 behaviour without false emergencies",
-    "Ablate explore_only vs defence_only on development A/B/C",
-    "Hunter: keep defensive mass earlier without cancelling post-contact clear",
-    "Do not package or upload until smoke+development+holdout pass"
-  ]
+  "development_abc": {
+    "heuristic_v2f_plus_planner": "11/37/0 FAIL",
+    "heuristic_v2f_plus_planner_plus_intercept": "11/37/0 FAIL",
+    "primary_blockers": [
+      "win_rate 0.229 < 0.50",
+      "discovery 0.438 < 0.60",
+      "post_discovery 0.526 < 0.80",
+      "DEATHTOUCH_NOT_EXPLOITED dominant among discovered-not-converted"
+    ]
+  },
+  "blocked": ["holdout", "UPLOAD_READY", "Phase_10", "PPO"],
+  "next_incomplete_gate": "DEVELOPMENT_GATE",
+  "exact_next_action": "Fix post-discovery Deathtouch conversion and fog discovery before re-running A/B/C; screen corridor_intercept_v2 on Hunter micro."
 }

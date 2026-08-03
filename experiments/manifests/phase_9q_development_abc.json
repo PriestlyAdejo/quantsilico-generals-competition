@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE_9Q_DEVELOPMENT_ABC",
+  "candidates": {
+    "heuristic_v2f_plus_planner": {
+      "config_hash": "57631a7d77ebd3f5",
+      "groups": [
+        {
+          "name": "development_a",
+          "wins": 5,
+          "draws": 11,
+          "losses": 0,
+          "discovery_rate": 0.5,
+          "post_discovery_win_rate": 0.625,
+          "failure_classes": {
+            "FOG_NOT_CLEARED": 5,
+            "NO_CONTACT_DRAW": 2,
+            "DEATHTOUCH_NOT_EXPLOITED": 3,
+            "GENERAL_NEVER_LOCATED": 1
+          }
+        },
+        {
+          "name": "development_b",
+          "wins": 4,
+          "draws": 12,
+          "losses": 0,
+          "discovery_rate": 0.375,
+          "post_discovery_win_rate": 0.6666666666666666,
+          "failure_classes": {
+            "NO_CONTACT_DRAW": 8,
+            "FOG_NOT_CLEARED": 2,
+            "DEATHTOUCH_NOT_EXPLOITED": 2
+          }
+        },
+        {
+          "name": "development_c",
+          "wins": 2,
+          "draws": 14,
+          "losses": 0,
+          "discovery_rate": 0.4375,
+          "post_discovery_win_rate": 0.2857142857142857,
+          "failure_classes": {
+            "NO_CONTACT_DRAW": 4,
+            "DEATHTOUCH_NOT_EXPLOITED": 5,
+            "FOG_NOT_CLEARED": 5
+          }
+        }
+      ],
+      "combined": {
+        "W": 11,
+        "D": 37,
+        "L": 0,
+        "discovery_rate": 0.4375,
+        "post_discovery_win_rate": 0.5257936507936508
+      },
+      "development_gate": {
+        "passed": false,
+        "reasons": [
+          "group_development_a_win_rate=0.312<0.375",
+          "group_development_b_win_rate=0.250<0.375",
+          "group_development_c_win_rate=0.125<0.375",
+          "combined_win_rate=0.229<0.50",
+          "discovery=0.438<0.60",
+          "post_discovery=0.526<0.80"
+        ]
+      }
+    },
+    "heuristic_v2f_plus_planner_plus_intercept": {
+      "config_hash": "4e86af5fc0141c1b",
+      "groups": [
+        {
+          "name": "development_a",
+          "wins": 5,
+          "draws": 11,
+          "losses": 0,
+          "discovery_rate": 0.5,
+          "post_discovery_win_rate": 0.625,
+          "failure_classes": {
+            "FOG_NOT_CLEARED": 5,
+            "NO_CONTACT_DRAW": 2,
+            "DEATHTOUCH_NOT_EXPLOITED": 3,
+            "GENERAL_NEVER_LOCATED": 1
+          }
+        },
+        {
+          "name": "development_b",
+          "wins": 4,
+          "draws": 12,
+          "losses": 0,
+          "discovery_rate": 0.375,
+          "post_discovery_win_rate": 0.6666666666666666,
+          "failure_classes": {
+            "NO_CONTACT_DRAW": 8,
+            "FOG_NOT_CLEARED": 2,
+            "DEATHTOUCH_NOT_EXPLOITED": 2
+          }
+        },
+        {
+          "name": "development_c",
+          "wins": 2,
+          "draws": 14,
+          "losses": 0,
+          "discovery_rate": 0.4375,
+          "post_discovery_win_rate": 0.2857142857142857,
+          "failure_classes": {
+            "NO_CONTACT_DRAW": 4,
+            "DEATHTOUCH_NOT_EXPLOITED": 5,
+            "FOG_NOT_CLEARED": 5
+          }
+        }
+      ],
+      "combined": {
+        "W": 11,
+        "D": 37,
+        "L": 0,
+        "discovery_rate": 0.4375,
+        "post_discovery_win_rate": 0.5257936507936508
+      },
+      "development_gate": {
+        "passed": false,
+        "reasons": [
+          "group_development_a_win_rate=0.312<0.375",
+          "group_development_b_win_rate=0.250<0.375",
+          "group_development_c_win_rate=0.125<0.375",
+          "combined_win_rate=0.229<0.50",
+          "discovery=0.438<0.60",
+          "post_discovery=0.526<0.80"
+        ]
+      }
+    }
+  },
+  "elapsed_s": 3164.524588099972
+}
