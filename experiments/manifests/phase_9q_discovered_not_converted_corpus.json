@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "kind": "DISCOVERED_NOT_CONVERTED_CORPUS",
+  "baseline_policy": "heuristic_v2f_plus_planner",
+  "games": [
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s2_p0",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 2,
+      "position": 0,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 799,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        16,
+        18
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s5_p0",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 5,
+      "position": 0,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 118,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        4,
+        4
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s7_p1",
+      "source_manifest": "dev_development_a_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 7,
+      "position": 1,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 125,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        5,
+        14
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s10_p1",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 10,
+      "position": 1,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 717,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        13,
+        4
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s11_p0",
+      "source_manifest": "dev_development_b_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 11,
+      "position": 0,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 737,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        1,
+        14
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s17_p0",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 17,
+      "position": 0,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 144,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        4,
+        0
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s17_p1",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 17,
+      "position": 1,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 702,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        16,
+        13
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s18_p1",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 18,
+      "position": 1,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 487,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        2,
+        10
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s19_p1",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 19,
+      "position": 1,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 697,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        4,
+        14
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_s20_p0",
+      "source_manifest": "dev_development_c_heuristic_v2f_plus_planner.json",
+      "policy": "heuristic_v2f_plus_planner",
+      "opponent": "official_expander",
+      "seed": 20,
+      "position": 0,
+      "terminal_turn": 1200,
+      "turn_enemy_general_discovered": 99,
+      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
+      "known_enemy_general": [
+        0,
+        2
+      ],
+      "candidate_config_hash": "57631a7d77ebd3f5"
+    }
+  ],
+  "count": 10
+}

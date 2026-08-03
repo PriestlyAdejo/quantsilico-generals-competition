@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE_9Q_DEVELOPMENT_FAILED",
+  "immutable": true,
+  "bot_commit": "e1ee6cd9b0c1c5ca50cccfa406c05b7edb9aef2e",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "primary_baseline": "heuristic_v2f_plus_planner",
+  "primary_config_hash": "57631a7d77ebd3f5",
+  "seed_manifests": {
+    "development_a": "experiments/seeds/development_a.txt",
+    "development_b": "experiments/seeds/development_b.txt",
+    "development_c": "experiments/seeds/development_c.txt"
+  },
+  "source_report": "experiments/manifests/phase_9q_development_abc.json",
+  "combined": {
+    "W": 11,
+    "D": 37,
+    "L": 0,
+    "win_rate": 0.229,
+    "discovery_rate": 0.4375,
+    "post_discovery_win_rate": 0.526
+  },
+  "groups": {
+    "development_a": {"W": 5, "D": 11, "L": 0},
+    "development_b": {"W": 4, "D": 12, "L": 0},
+    "development_c": {"W": 2, "D": 14, "L": 0}
+  },
+  "dominant_failure": "DEATHTOUCH_NOT_EXPLOITED",
+  "note": "Do not overwrite. Do not lower development gate."
+}

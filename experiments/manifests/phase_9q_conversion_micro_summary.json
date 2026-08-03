@@ -1,0 +1,8 @@
+{
+  "corpus": 10,
+  "terminal_fix_conversion": 1.0,
+  "terminal_fix_gate": true,
+  "wins": 10,
+  "failures": [],
+  "note": "v4 gather before pre-DT tip; near rebind on source loss"
+}
