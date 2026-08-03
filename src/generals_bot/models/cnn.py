@@ -1,4 +1,4 @@
-"""Tiny recurrent MLP control architecture for pipeline tests."""
+"""Recurrent residual CNN actor–critic matched to the graph model interface."""
 
 from __future__ import annotations
 
@@ -11,7 +11,6 @@ from generals_bot.models.action_index import ACTION_DIM
 from generals_bot.models.heads import AuxiliaryHeads, HeadConfig, StrategicMixtureGate
 from generals_bot.models.observation_encoder import (
     GLOBAL_DIM,
-    MAX_HW,
     NUM_CELL_CHANNELS,
     encode_globals,
     encode_observation,
@@ -19,28 +18,48 @@ from generals_bot.models.observation_encoder import (
 from generals_bot.observation import Observation
 
 
-@dataclass
-class MLPConfig:
-    hidden: int = 128
-    recurrent: int = 64
-    global_dim: int = GLOBAL_DIM
-    architecture: str = "recurrent_mlp_v1"
-
-
-class RecurrentMLPPolicy(nn.Module):
-    def __init__(self, config: MLPConfig | None = None) -> None:
+class ResidualBlock(nn.Module):
+    def __init__(self, channels: int) -> None:
         super().__init__()
-        self.config = config or MLPConfig()
-        flat = NUM_CELL_CHANNELS * MAX_HW * MAX_HW
-        self.encoder = nn.Sequential(
-            nn.Linear(flat + self.config.global_dim, self.config.hidden),
-            nn.ReLU(),
-            nn.Linear(self.config.hidden, self.config.hidden),
-            nn.ReLU(),
+        self.net = nn.Sequential(
+            nn.Conv2d(channels, channels, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(channels, channels, kernel_size=3, padding=1),
         )
-        self.rnn = nn.GRUCell(self.config.hidden, self.config.recurrent)
-        self.mixture = StrategicMixtureGate(self.config.recurrent, extra_dim=0)
-        self.actor = nn.Linear(self.config.recurrent + self.mixture.option_embed.embedding_dim, ACTION_DIM)
+        self.act = nn.ReLU(inplace=True)
+
+    def forward(self, x: Tensor) -> Tensor:
+        return self.act(x + self.net(x))
+
+
+@dataclass
+class CNNConfig:
+    channels: int = 48
+    blocks: int = 3
+    recurrent: int = 96
+    global_dim: int = GLOBAL_DIM
+    architecture: str = "recurrent_cnn_v1"
+
+
+class RecurrentCNNPolicy(nn.Module):
+    def __init__(self, config: CNNConfig | None = None) -> None:
+        super().__init__()
+        self.config = config or CNNConfig()
+        c = self.config.channels
+        self.stem = nn.Sequential(
+            nn.Conv2d(NUM_CELL_CHANNELS, c, kernel_size=3, padding=1),
+            nn.ReLU(inplace=True),
+        )
+        self.blocks = nn.Sequential(*[ResidualBlock(c) for _ in range(self.config.blocks)])
+        self.pool = nn.AdaptiveAvgPool2d(1)
+        self.fuse = nn.Sequential(
+            nn.Linear(c + self.config.global_dim, self.config.recurrent),
+            nn.ReLU(inplace=True),
+        )
+        self.rnn = nn.GRUCell(self.config.recurrent, self.config.recurrent)
+        self.mixture = StrategicMixtureGate(self.config.recurrent)
+        emb = self.mixture.option_embed.embedding_dim
+        self.actor = nn.Linear(self.config.recurrent + emb, ACTION_DIM)
         self.aux = AuxiliaryHeads(HeadConfig(recurrent=self.config.recurrent))
 
     def initial_hidden(self, batch: int = 1, device: torch.device | None = None) -> Tensor:
@@ -56,15 +75,11 @@ class RecurrentMLPPolicy(nn.Module):
         deterministic: bool = True,
         previous_option: Tensor | None = None,
     ) -> dict[str, Tensor]:
-        """Batched forward from pre-encoded tensors.
-
-        cells: (B, C, H, W) or (B, C*H*W)
-        globals_: (B, G)
-        """
-        if cells.ndim == 4:
-            cells = cells.reshape(cells.shape[0], -1)
-        x = self.encoder(torch.cat([cells, globals_], dim=-1))
-        h = self.rnn(x, hidden)
+        x = self.stem(cells)
+        x = self.blocks(x)
+        pooled = self.pool(x).flatten(1)
+        fused = self.fuse(torch.cat([pooled, globals_], dim=-1))
+        h = self.rnn(fused, hidden)
         mix_probs, opt_idx, opt_emb = self.mixture(
             h, previous_option=previous_option, deterministic=deterministic
         )
@@ -90,7 +105,7 @@ class RecurrentMLPPolicy(nn.Module):
         deterministic: bool = True,
     ) -> tuple[Tensor, Tensor, Tensor]:
         device = hidden.device
-        cells = encode_observation(observation, device=device).reshape(1, -1)
+        cells = encode_observation(observation, device=device).unsqueeze(0)
         glob = encode_globals(observation, device=device).unsqueeze(0)
         out = self.forward_tensors(cells, glob, hidden, deterministic=deterministic)
         return out["logits"], out["value"], out["hidden"]

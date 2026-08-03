@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "architectures": [
+    {
+      "id": "recurrent_mlp_v1",
+      "role": "control",
+      "status": "IMPLEMENTED",
+      "parameter_count_nominal": 952820
+    },
+    {
+      "id": "recurrent_cnn_v1",
+      "role": "candidate",
+      "status": "IMPLEMENTED",
+      "parameter_count_nominal": 662756
+    },
+    {
+      "id": "recurrent_graph_belief_v1",
+      "role": "candidate",
+      "status": "IMPLEMENTED",
+      "parameter_count_nominal": 599780
+    }
+  ],
+  "champion": "heuristic_v1",
+  "bridge_decision": "PASS",
+  "bridge_steps_per_second": 35.8
+}
