@@ -1,0 +1,1482 @@
+{
+  "schema_version": 1,
+  "kind": "QUALIFICATION_SUITE",
+  "preset": {
+    "name": "ablation_expander_smoke",
+    "seed_file": "experiments/seeds/train.txt",
+    "seeds": 8,
+    "paired_positions": true,
+    "max_turns": 1200,
+    "opponents": [
+      "official_expander"
+    ],
+    "label": "wiring_and_gross_regression"
+  },
+  "seed_manifest": "experiments/seeds/train.txt",
+  "seed_manifest_hash": "a658f34417004048e470697bf202006272fd1e2f99bf3b9051a56fbef15a586c",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "elapsed_s": 455.86226560000796,
+  "stopped_early": false,
+  "games_count": 16,
+  "policies": {
+    "heuristic_v2f_plus_planner_terminal_fix": {
+      "summary": {
+        "games": 16,
+        "wins": 8,
+        "draws": 8,
+        "losses": 0,
+        "win_rate": 0.5,
+        "draw_rate": 0.5,
+        "loss_rate": 0.0,
+        "score_rate": 0.75,
+        "dominant_position_games": 13,
+        "dominant_position_conversion_rate": 0.6153846153846154,
+        "enemy_general_discovery_rate": 0.5,
+        "post_discovery_win_rate": 1.0,
+        "failure_classes": {
+          "FOG_NOT_CLEARED": 5,
+          "NO_CONTACT_DRAW": 2,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "note": "Do not use score_rate alone; persistent draws yield 0.5 without wins."
+      },
+      "by_opponent": {
+        "official_expander": {
+          "games": 16,
+          "wins": 8,
+          "draws": 8,
+          "losses": 0,
+          "win_rate": 0.5,
+          "draw_rate": 0.5,
+          "loss_rate": 0.0,
+          "score_rate": 0.75,
+          "dominant_position_games": 13,
+          "dominant_position_conversion_rate": 0.6153846153846154,
+          "enemy_general_discovery_rate": 0.5,
+          "post_discovery_win_rate": 1.0,
+          "failure_classes": {
+            "FOG_NOT_CLEARED": 5,
+            "NO_CONTACT_DRAW": 2,
+            "GENERAL_NEVER_LOCATED": 1
+          },
+          "note": "Do not use score_rate alone; persistent draws yield 0.5 without wins."
+        }
+      }
+    }
+  },
+  "games": [
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 0,
+      "position": 0,
+      "winner": 0,
+      "terminal_turn": 711,
+      "terminal_reason": "WIN_GENERAL_CAPTURE",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "first_enemy_contact_turn": 52,
+      "enemy_general_discovered": true,
+      "turn_enemy_general_discovered": 710,
+      "turn_enemy_general_captured": 711,
+      "land_ratio_terminal": 1.0,
+      "army_ratio_terminal": 1.0,
+      "remaining_enemy_land": 0,
+      "candidate_general_cells_terminal": 1,
+      "last_newly_scouted_turn": 710,
+      "dominant_at_terminal": true,
+      "failure_class": null,
+      "extras": {
+        "phase": "GENERAL_HUNT",
+        "phase_reason": "enemy_general_visible_or_known",
+        "mobile_army": 427,
+        "frontier_mobile_army": 413,
+        "largest_stranded_stack": 3,
+        "army_concentration_ratio": 0.9672131147540983,
+        "candidate_mask_size": 1,
+        "dominant": true,
+        "known_enemy_general": [
+          0,
+          4
+        ],
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 0,
+        "scout_ttl": 40,
+        "scout_stall": 0,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 29,
+        "general": [
+          0,
+          4
+        ],
+        "discovery_turn": 710,
+        "source": [
+          0,
+          3
+        ],
+        "route": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "route_hash": "0,3|0,4",
+        "route_index": 0,
+        "last_progress_turn": 710,
+        "replan_count": 1,
+        "blocked_reason": "replan:initial",
+        "deathtouch": false,
+        "active": true,
+        "route_len": 2,
+        "terminal_win_candidates": 2
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 0,
+      "position": 1,
+      "winner": null,
+      "terminal_turn": 1200,
+      "terminal_reason": "DRAW_TURN_LIMIT",
+      "wins": 0,
+      "draws": 1,
+      "losses": 0,
+      "first_enemy_contact_turn": 460,
+      "enemy_general_discovered": false,
+      "turn_enemy_general_discovered": null,
+      "turn_enemy_general_captured": null,
+      "land_ratio_terminal": 0.5299145299145299,
+      "army_ratio_terminal": 0.5565217391304348,
+      "remaining_enemy_land": 55,
+      "candidate_general_cells_terminal": 51,
+      "last_newly_scouted_turn": 485,
+      "dominant_at_terminal": false,
+      "failure_class": "FOG_NOT_CLEARED",
+      "extras": {
+        "phase": "EMERGENCY_DEFENCE",
+        "phase_reason": "credible_threat_to_own_general",
+        "mobile_army": 1667,
+        "frontier_mobile_army": 1580,
+        "largest_stranded_stack": 16,
+        "army_concentration_ratio": 0.9478104379124175,
+        "candidate_mask_size": 51,
+        "dominant": false,
+        "known_enemy_general": null,
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": true,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 1,
+        "scout_ttl": 40,
+        "scout_stall": 20,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 67,
+        "general": null,
+        "discovery_turn": 0,
+        "source": null,
+        "route": [],
+        "route_hash": "",
+        "route_index": 0,
+        "last_progress_turn": 0,
+        "replan_count": 0,
+        "blocked_reason": "",
+        "deathtouch": false,
+        "active": false,
+        "route_len": 0
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 1,
+      "position": 0,
+      "winner": null,
+      "terminal_turn": 1200,
+      "terminal_reason": "DRAW_TURN_LIMIT",
+      "wins": 0,
+      "draws": 1,
+      "losses": 0,
+      "first_enemy_contact_turn": 511,
+      "enemy_general_discovered": false,
+      "turn_enemy_general_discovered": null,
+      "turn_enemy_general_captured": null,
+      "land_ratio_terminal": 0.72,
+      "army_ratio_terminal": 0.6206373292867982,
+      "remaining_enemy_land": 28,
+      "candidate_general_cells_terminal": 30,
+      "last_newly_scouted_turn": 511,
+      "dominant_at_terminal": true,
+      "failure_class": "FOG_NOT_CLEARED",
+      "extras": {
+        "phase": "DRAW_AVOIDANCE",
+        "phase_reason": "turn_ge_1150_unresolved",
+        "mobile_army": 1900,
+        "frontier_mobile_army": 670,
+        "largest_stranded_stack": 1121,
+        "army_concentration_ratio": 0.3526315789473684,
+        "candidate_mask_size": 30,
+        "dominant": true,
+        "known_enemy_general": null,
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": [
+          5,
+          3
+        ],
+        "scout_target": [
+          0,
+          14
+        ],
+        "scout_region_id": 0,
+        "scout_ttl": 40,
+        "scout_stall": 688,
+        "scout_abort_reason": "",
+        "scout_progress": 46,
+        "general": null,
+        "discovery_turn": 0,
+        "source": null,
+        "route": [],
+        "route_hash": "",
+        "route_index": 0,
+        "last_progress_turn": 0,
+        "replan_count": 0,
+        "blocked_reason": "",
+        "deathtouch": false,
+        "active": false,
+        "route_len": 0
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 1,
+      "position": 1,
+      "winner": null,
+      "terminal_turn": 1200,
+      "terminal_reason": "DRAW_TURN_LIMIT",
+      "wins": 0,
+      "draws": 1,
+      "losses": 0,
+      "first_enemy_contact_turn": null,
+      "enemy_general_discovered": false,
+      "turn_enemy_general_discovered": null,
+      "turn_enemy_general_captured": null,
+      "land_ratio_terminal": 0.8632478632478633,
+      "army_ratio_terminal": 0.7029733009708737,
+      "remaining_enemy_land": 16,
+      "candidate_general_cells_terminal": 107,
+      "last_newly_scouted_turn": 756,
+      "dominant_at_terminal": true,
+      "failure_class": "NO_CONTACT_DRAW",
+      "extras": {
+        "phase": "DRAW_AVOIDANCE",
+        "phase_reason": "turn_ge_1150_unresolved",
+        "mobile_army": 2114,
+        "frontier_mobile_army": 1972,
+        "largest_stranded_stack": 24,
+        "army_concentration_ratio": 0.9328287606433302,
+        "candidate_mask_size": 107,
+        "dominant": true,
+        "known_enemy_general": null,
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": [
+          9,
+          12
+        ],
+        "scout_target": [
+          9,
+          4
+        ],
+        "scout_region_id": 2,
+        "scout_ttl": 40,
+        "scout_stall": 443,
+        "scout_abort_reason": "",
+        "scout_progress": 72,
+        "general": null,
+        "discovery_turn": 0,
+        "source": null,
+        "route": [],
+        "route_hash": "",
+        "route_index": 0,
+        "last_progress_turn": 0,
+        "replan_count": 0,
+        "blocked_reason": "",
+        "deathtouch": false,
+        "active": false,
+        "route_len": 0
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 2,
+      "position": 0,
+      "winner": 0,
+      "terminal_turn": 822,
+      "terminal_reason": "WIN_GENERAL_CAPTURE",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "first_enemy_contact_turn": 764,
+      "enemy_general_discovered": true,
+      "turn_enemy_general_discovered": 799,
+      "turn_enemy_general_captured": 822,
+      "land_ratio_terminal": 1.0,
+      "army_ratio_terminal": 1.0,
+      "remaining_enemy_land": 0,
+      "candidate_general_cells_terminal": 1,
+      "last_newly_scouted_turn": 821,
+      "dominant_at_terminal": true,
+      "failure_class": null,
+      "extras": {
+        "phase": "DEATHTOUCH_HUNT",
+        "phase_reason": "deathtouch_known_general",
+        "mobile_army": 968,
+        "frontier_mobile_army": 847,
+        "largest_stranded_stack": 11,
+        "army_concentration_ratio": 0.875,
+        "candidate_mask_size": 1,
+        "dominant": true,
+        "known_enemy_general": [
+          16,
+          18
+        ],
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 0,
+        "scout_ttl": 40,
+        "scout_stall": 0,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 120,
+        "general": [
+          16,
+          18
+        ],
+        "discovery_turn": 799,
+        "source": [
+          16,
+          17
+        ],
+        "route": [
+          [
+            16,
+            0
+          ],
+          [
+            15,
+            0
+          ],
+          [
+            14,
+            0
+          ],
+          [
+            14,
+            1
+          ],
+          [
+            14,
+            2
+          ],
+          [
+            14,
+            3
+          ],
+          [
+            14,
+            4
+          ],
+          [
+            14,
+            5
+          ],
+          [
+            14,
+            6
+          ],
+          [
+            14,
+            7
+          ],
+          [
+            14,
+            8
+          ],
+          [
+            14,
+            9
+          ],
+          [
+            14,
+            10
+          ],
+          [
+            14,
+            11
+          ],
+          [
+            14,
+            12
+          ],
+          [
+            14,
+            13
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            15,
+            14
+          ],
+          [
+            15,
+            15
+          ],
+          [
+            16,
+            15
+          ],
+          [
+            16,
+            16
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            16,
+            18
+          ]
+        ],
+        "route_hash": "16,0|15,0|14,0|14,1|14,2|14,3|14,4|14,5|14,6|14,7|14,8|14,9|14,10|14,11|14,12|14,13|15,13|15,14|15,15|16,15|16,16|16,17|16,18",
+        "route_index": 21,
+        "last_progress_turn": 821,
+        "replan_count": 1,
+        "blocked_reason": "source_followed_along_route",
+        "deathtouch": true,
+        "active": true,
+        "route_len": 23,
+        "terminal_win_candidates": 2
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 2,
+      "position": 1,
+      "winner": 1,
+      "terminal_turn": 793,
+      "terminal_reason": "WIN_GENERAL_CAPTURE",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "first_enemy_contact_turn": 761,
+      "enemy_general_discovered": true,
+      "turn_enemy_general_discovered": 791,
+      "turn_enemy_general_captured": 793,
+      "land_ratio_terminal": 1.0,
+      "army_ratio_terminal": 1.0,
+      "remaining_enemy_land": 0,
+      "candidate_general_cells_terminal": 1,
+      "last_newly_scouted_turn": 792,
+      "dominant_at_terminal": true,
+      "failure_class": null,
+      "extras": {
+        "phase": "GENERAL_HUNT",
+        "phase_reason": "enemy_general_visible_or_known",
+        "mobile_army": 1729,
+        "frontier_mobile_army": 1449,
+        "largest_stranded_stack": 32,
+        "army_concentration_ratio": 0.8380566801619433,
+        "candidate_mask_size": 1,
+        "dominant": true,
+        "known_enemy_general": [
+          16,
+          0
+        ],
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 1,
+        "scout_ttl": 40,
+        "scout_stall": 0,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 130,
+        "general": [
+          16,
+          0
+        ],
+        "discovery_turn": 791,
+        "source": [
+          16,
+          1
+        ],
+        "route": [
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            16,
+            0
+          ]
+        ],
+        "route_hash": "15,1|16,1|16,0",
+        "route_index": 1,
+        "last_progress_turn": 792,
+        "replan_count": 1,
+        "blocked_reason": "source_followed_along_route",
+        "deathtouch": false,
+        "active": true,
+        "route_len": 3,
+        "terminal_win_candidates": 2
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 3,
+      "position": 0,
+      "winner": 0,
+      "terminal_turn": 434,
+      "terminal_reason": "WIN_GENERAL_CAPTURE",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "first_enemy_contact_turn": 402,
+      "enemy_general_discovered": true,
+      "turn_enemy_general_discovered": 417,
+      "turn_enemy_general_captured": 434,
+      "land_ratio_terminal": 1.0,
+      "army_ratio_terminal": 1.0,
+      "remaining_enemy_land": 0,
+      "candidate_general_cells_terminal": 1,
+      "last_newly_scouted_turn": 432,
+      "dominant_at_terminal": true,
+      "failure_class": null,
+      "extras": {
+        "phase": "GENERAL_HUNT",
+        "phase_reason": "enemy_general_visible_or_known",
+        "mobile_army": 626,
+        "frontier_mobile_army": 556,
+        "largest_stranded_stack": 5,
+        "army_concentration_ratio": 0.8881789137380192,
+        "candidate_mask_size": 1,
+        "dominant": true,
+        "known_enemy_general": [
+          1,
+          19
+        ],
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 3,
+        "scout_ttl": 40,
+        "scout_stall": 14,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 105,
+        "general": [
+          1,
+          19
+        ],
+        "discovery_turn": 417,
+        "source": [
+          1,
+          18
+        ],
+        "route": [
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            1,
+            10
+          ],
+          [
+            1,
+            11
+          ],
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            13
+          ],
+          [
+            1,
+            14
+          ],
+          [
+            1,
+            15
+          ],
+          [
+            1,
+            16
+          ],
+          [
+            1,
+            17
+          ],
+          [
+            1,
+            18
+          ],
+          [
+            1,
+            19
+          ]
+        ],
+        "route_hash": "0,5|1,5|1,6|1,7|0,7|0,8|0,9|1,9|1,10|1,11|1,12|1,13|1,14|1,15|1,16|1,17|1,18|1,19",
+        "route_index": 16,
+        "last_progress_turn": 433,
+        "replan_count": 1,
+        "blocked_reason": "source_followed_along_route",
+        "deathtouch": false,
+        "active": true,
+        "route_len": 18,
+        "terminal_win_candidates": 2
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 3,
+      "position": 1,
+      "winner": 1,
+      "terminal_turn": 566,
+      "terminal_reason": "WIN_GENERAL_CAPTURE",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "first_enemy_contact_turn": 394,
+      "enemy_general_discovered": true,
+      "turn_enemy_general_discovered": 544,
+      "turn_enemy_general_captured": 566,
+      "land_ratio_terminal": 1.0,
+      "army_ratio_terminal": 1.0,
+      "remaining_enemy_land": 0,
+      "candidate_general_cells_terminal": 1,
+      "last_newly_scouted_turn": 564,
+      "dominant_at_terminal": true,
+      "failure_class": null,
+      "extras": {
+        "phase": "GENERAL_HUNT",
+        "phase_reason": "enemy_general_visible_or_known",
+        "mobile_army": 809,
+        "frontier_mobile_army": 557,
+        "largest_stranded_stack": 11,
+        "army_concentration_ratio": 0.688504326328801,
+        "candidate_mask_size": 1,
+        "dominant": true,
+        "known_enemy_general": [
+          16,
+          14
+        ],
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 5,
+        "scout_ttl": 40,
+        "scout_stall": 0,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 127,
+        "general": [
+          16,
+          14
+        ],
+        "discovery_turn": 544,
+        "source": [
+          15,
+          14
+        ],
+        "route": [
+          [
+            1,
+            19
+          ],
+          [
+            1,
+            18
+          ],
+          [
+            2,
+            18
+          ],
+          [
+            3,
+            18
+          ],
+          [
+            4,
+            18
+          ],
+          [
+            5,
+            18
+          ],
+          [
+            6,
+            18
+          ],
+          [
+            7,
+            18
+          ],
+          [
+            8,
+            18
+          ],
+          [
+            9,
+            18
+          ],
+          [
+            10,
+            18
+          ],
+          [
+            11,
+            18
+          ],
+          [
+            11,
+            17
+          ],
+          [
+            12,
+            17
+          ],
+          [
+            13,
+            17
+          ],
+          [
+            13,
+            16
+          ],
+          [
+            13,
+            15
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            15,
+            15
+          ],
+          [
+            15,
+            14
+          ],
+          [
+            16,
+            14
+          ]
+        ],
+        "route_hash": "1,19|1,18|2,18|3,18|4,18|5,18|6,18|7,18|8,18|9,18|10,18|11,18|11,17|12,17|13,17|13,16|13,15|14,15|15,15|15,14|16,14",
+        "route_index": 19,
+        "last_progress_turn": 565,
+        "replan_count": 1,
+        "blocked_reason": "source_followed_along_route",
+        "deathtouch": false,
+        "active": true,
+        "route_len": 21,
+        "terminal_win_candidates": 2
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 4,
+      "position": 0,
+      "winner": null,
+      "terminal_turn": 1200,
+      "terminal_reason": "DRAW_TURN_LIMIT",
+      "wins": 0,
+      "draws": 1,
+      "losses": 0,
+      "first_enemy_contact_turn": 753,
+      "enemy_general_discovered": false,
+      "turn_enemy_general_discovered": null,
+      "turn_enemy_general_captured": null,
+      "land_ratio_terminal": 0.9318181818181818,
+      "army_ratio_terminal": 0.8154945904173106,
+      "remaining_enemy_land": 15,
+      "candidate_general_cells_terminal": 42,
+      "last_newly_scouted_turn": 985,
+      "dominant_at_terminal": true,
+      "failure_class": "FOG_NOT_CLEARED",
+      "extras": {
+        "phase": "DRAW_AVOIDANCE",
+        "phase_reason": "turn_ge_1150_unresolved",
+        "mobile_army": 3810,
+        "frontier_mobile_army": 3234,
+        "largest_stranded_stack": 16,
+        "army_concentration_ratio": 0.8488188976377953,
+        "candidate_mask_size": 42,
+        "dominant": true,
+        "known_enemy_general": null,
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": [
+          0,
+          12
+        ],
+        "scout_target": [
+          0,
+          0
+        ],
+        "scout_region_id": 0,
+        "scout_ttl": 40,
+        "scout_stall": 214,
+        "scout_abort_reason": "",
+        "scout_progress": 120,
+        "general": null,
+        "discovery_turn": 0,
+        "source": null,
+        "route": [],
+        "route_hash": "",
+        "route_index": 0,
+        "last_progress_turn": 0,
+        "replan_count": 0,
+        "blocked_reason": "",
+        "deathtouch": false,
+        "active": false,
+        "route_len": 0
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 4,
+      "position": 1,
+      "winner": null,
+      "terminal_turn": 1200,
+      "terminal_reason": "DRAW_TURN_LIMIT",
+      "wins": 0,
+      "draws": 1,
+      "losses": 0,
+      "first_enemy_contact_turn": null,
+      "enemy_general_discovered": false,
+      "turn_enemy_general_discovered": null,
+      "turn_enemy_general_captured": null,
+      "land_ratio_terminal": 0.8641304347826086,
+      "army_ratio_terminal": 0.7210932025227751,
+      "remaining_enemy_land": 25,
+      "candidate_general_cells_terminal": 90,
+      "last_newly_scouted_turn": 767,
+      "dominant_at_terminal": true,
+      "failure_class": "NO_CONTACT_DRAW",
+      "extras": {
+        "phase": "DRAW_AVOIDANCE",
+        "phase_reason": "turn_ge_1150_unresolved",
+        "mobile_army": 2768,
+        "frontier_mobile_army": 2545,
+        "largest_stranded_stack": 23,
+        "army_concentration_ratio": 0.9194364161849711,
+        "candidate_mask_size": 90,
+        "dominant": true,
+        "known_enemy_general": null,
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": [
+          0,
+          10
+        ],
+        "scout_target": [
+          0,
+          12
+        ],
+        "scout_region_id": 0,
+        "scout_ttl": 40,
+        "scout_stall": 432,
+        "scout_abort_reason": "",
+        "scout_progress": 115,
+        "general": null,
+        "discovery_turn": 0,
+        "source": null,
+        "route": [],
+        "route_hash": "",
+        "route_index": 0,
+        "last_progress_turn": 0,
+        "replan_count": 0,
+        "blocked_reason": "",
+        "deathtouch": false,
+        "active": false,
+        "route_len": 0
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 5,
+      "position": 0,
+      "winner": 0,
+      "terminal_turn": 811,
+      "terminal_reason": "WIN_GENERAL_CAPTURE",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "first_enemy_contact_turn": 113,
+      "enemy_general_discovered": true,
+      "turn_enemy_general_discovered": 118,
+      "turn_enemy_general_captured": 811,
+      "land_ratio_terminal": 1.0,
+      "army_ratio_terminal": 1.0,
+      "remaining_enemy_land": 0,
+      "candidate_general_cells_terminal": 1,
+      "last_newly_scouted_turn": 809,
+      "dominant_at_terminal": true,
+      "failure_class": null,
+      "extras": {
+        "phase": "DEATHTOUCH_HUNT",
+        "phase_reason": "deathtouch_known_general",
+        "mobile_army": 964,
+        "frontier_mobile_army": 926,
+        "largest_stranded_stack": 14,
+        "army_concentration_ratio": 0.9605809128630706,
+        "candidate_mask_size": 1,
+        "dominant": false,
+        "known_enemy_general": [
+          4,
+          4
+        ],
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 0,
+        "scout_ttl": 40,
+        "scout_stall": 0,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 42,
+        "general": [
+          4,
+          4
+        ],
+        "discovery_turn": 118,
+        "source": [
+          4,
+          3
+        ],
+        "route": [
+          [
+            5,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            7,
+            5
+          ],
+          [
+            7,
+            4
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "route_hash": "5,5|6,5|7,5|7,4|7,3|7,2|6,2|5,2|4,2|4,3|4,4",
+        "route_index": 9,
+        "last_progress_turn": 810,
+        "replan_count": 2,
+        "blocked_reason": "source_followed_along_route",
+        "deathtouch": true,
+        "active": true,
+        "route_len": 11,
+        "terminal_win_candidates": 2
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 5,
+      "position": 1,
+      "winner": null,
+      "terminal_turn": 1200,
+      "terminal_reason": "DRAW_TURN_LIMIT",
+      "wins": 0,
+      "draws": 1,
+      "losses": 0,
+      "first_enemy_contact_turn": 404,
+      "enemy_general_discovered": false,
+      "turn_enemy_general_discovered": null,
+      "turn_enemy_general_captured": null,
+      "land_ratio_terminal": 0.6036036036036037,
+      "army_ratio_terminal": 0.5978704123244223,
+      "remaining_enemy_land": 88,
+      "candidate_general_cells_terminal": 56,
+      "last_newly_scouted_turn": 766,
+      "dominant_at_terminal": false,
+      "failure_class": "FOG_NOT_CLEARED",
+      "extras": {
+        "phase": "EMERGENCY_DEFENCE",
+        "phase_reason": "credible_threat_to_own_general",
+        "mobile_army": 2370,
+        "frontier_mobile_army": 1988,
+        "largest_stranded_stack": 17,
+        "army_concentration_ratio": 0.8388185654008439,
+        "candidate_mask_size": 56,
+        "dominant": false,
+        "known_enemy_general": null,
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": true,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 0,
+        "scout_ttl": 40,
+        "scout_stall": 40,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 74,
+        "general": null,
+        "discovery_turn": 0,
+        "source": null,
+        "route": [],
+        "route_hash": "",
+        "route_index": 0,
+        "last_progress_turn": 0,
+        "replan_count": 0,
+        "blocked_reason": "",
+        "deathtouch": false,
+        "active": false,
+        "route_len": 0
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 6,
+      "position": 0,
+      "winner": 0,
+      "terminal_turn": 786,
+      "terminal_reason": "WIN_GENERAL_CAPTURE",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "first_enemy_contact_turn": 106,
+      "enemy_general_discovered": true,
+      "turn_enemy_general_discovered": 108,
+      "turn_enemy_general_captured": 786,
+      "land_ratio_terminal": 1.0,
+      "army_ratio_terminal": 1.0,
+      "remaining_enemy_land": 0,
+      "candidate_general_cells_terminal": 1,
+      "last_newly_scouted_turn": 778,
+      "dominant_at_terminal": true,
+      "failure_class": null,
+      "extras": {
+        "phase": "GENERAL_HUNT",
+        "phase_reason": "enemy_general_visible_or_known",
+        "mobile_army": 697,
+        "frontier_mobile_army": 685,
+        "largest_stranded_stack": 6,
+        "army_concentration_ratio": 0.9827833572453372,
+        "candidate_mask_size": 1,
+        "dominant": true,
+        "known_enemy_general": [
+          2,
+          2
+        ],
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 1,
+        "scout_ttl": 40,
+        "scout_stall": 0,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 34,
+        "general": [
+          2,
+          2
+        ],
+        "discovery_turn": 108,
+        "source": [
+          2,
+          3
+        ],
+        "route": [
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "route_hash": "3,4|2,4|2,3|2,2",
+        "route_index": 2,
+        "last_progress_turn": 785,
+        "replan_count": 4,
+        "blocked_reason": "source_followed_along_route",
+        "deathtouch": false,
+        "active": true,
+        "route_len": 4,
+        "terminal_win_candidates": 2
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 6,
+      "position": 1,
+      "winner": null,
+      "terminal_turn": 1200,
+      "terminal_reason": "DRAW_TURN_LIMIT",
+      "wins": 0,
+      "draws": 1,
+      "losses": 0,
+      "first_enemy_contact_turn": 251,
+      "enemy_general_discovered": false,
+      "turn_enemy_general_discovered": null,
+      "turn_enemy_general_captured": null,
+      "land_ratio_terminal": 0.7025316455696202,
+      "army_ratio_terminal": 0.655086285195277,
+      "remaining_enemy_land": 47,
+      "candidate_general_cells_terminal": 35,
+      "last_newly_scouted_turn": 259,
+      "dominant_at_terminal": true,
+      "failure_class": "FOG_NOT_CLEARED",
+      "extras": {
+        "phase": "EMERGENCY_DEFENCE",
+        "phase_reason": "credible_threat_to_own_general",
+        "mobile_army": 2662,
+        "frontier_mobile_army": 2172,
+        "largest_stranded_stack": 22,
+        "army_concentration_ratio": 0.8159278737791135,
+        "candidate_mask_size": 35,
+        "dominant": true,
+        "known_enemy_general": null,
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": true,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 3,
+        "scout_ttl": 40,
+        "scout_stall": 14,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 90,
+        "general": null,
+        "discovery_turn": 0,
+        "source": null,
+        "route": [],
+        "route_hash": "",
+        "route_index": 0,
+        "last_progress_turn": 0,
+        "replan_count": 0,
+        "blocked_reason": "",
+        "deathtouch": false,
+        "active": false,
+        "route_len": 0
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 7,
+      "position": 0,
+      "winner": null,
+      "terminal_turn": 1200,
+      "terminal_reason": "DRAW_TURN_LIMIT",
+      "wins": 0,
+      "draws": 1,
+      "losses": 0,
+      "first_enemy_contact_turn": 81,
+      "enemy_general_discovered": false,
+      "turn_enemy_general_discovered": null,
+      "turn_enemy_general_captured": null,
+      "land_ratio_terminal": 0.32608695652173914,
+      "army_ratio_terminal": 0.38843226788432267,
+      "remaining_enemy_land": 62,
+      "candidate_general_cells_terminal": 0,
+      "last_newly_scouted_turn": 90,
+      "dominant_at_terminal": false,
+      "failure_class": "GENERAL_NEVER_LOCATED",
+      "extras": {
+        "phase": "EMERGENCY_DEFENCE",
+        "phase_reason": "credible_threat_to_own_general",
+        "mobile_army": 1215,
+        "frontier_mobile_army": 1153,
+        "largest_stranded_stack": 23,
+        "army_concentration_ratio": 0.9489711934156378,
+        "candidate_mask_size": 0,
+        "dominant": false,
+        "known_enemy_general": null,
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": true,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 0,
+        "scout_ttl": 40,
+        "scout_stall": 20,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 18,
+        "general": null,
+        "discovery_turn": 0,
+        "source": null,
+        "route": [],
+        "route_hash": "",
+        "route_index": 0,
+        "last_progress_turn": 0,
+        "replan_count": 0,
+        "blocked_reason": "",
+        "deathtouch": false,
+        "active": false,
+        "route_len": 0
+      }
+    },
+    {
+      "policy": "heuristic_v2f_plus_planner_terminal_fix",
+      "opponent": "official_expander",
+      "seed": 7,
+      "position": 1,
+      "winner": 1,
+      "terminal_turn": 156,
+      "terminal_reason": "WIN_GENERAL_CAPTURE",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "first_enemy_contact_turn": 97,
+      "enemy_general_discovered": true,
+      "turn_enemy_general_discovered": 125,
+      "turn_enemy_general_captured": 156,
+      "land_ratio_terminal": 1.0,
+      "army_ratio_terminal": 1.0,
+      "remaining_enemy_land": 0,
+      "candidate_general_cells_terminal": 1,
+      "last_newly_scouted_turn": 154,
+      "dominant_at_terminal": true,
+      "failure_class": null,
+      "extras": {
+        "phase": "GENERAL_HUNT",
+        "phase_reason": "enemy_general_visible_or_known",
+        "mobile_army": 93,
+        "frontier_mobile_army": 53,
+        "largest_stranded_stack": 10,
+        "army_concentration_ratio": 0.5698924731182796,
+        "candidate_mask_size": 1,
+        "dominant": false,
+        "known_enemy_general": [
+          5,
+          14
+        ],
+        "castle_proposals": 0,
+        "ablation": "heuristic_v2f_plus_planner_terminal_fix",
+        "config_hash": "4c5466776180217b",
+        "emergency_active": false,
+        "caution_active": false,
+        "scout_source": null,
+        "scout_target": null,
+        "scout_region_id": 1,
+        "scout_ttl": 40,
+        "scout_stall": 23,
+        "scout_abort_reason": "higher_priority_threat_or_known_general",
+        "scout_progress": 42,
+        "general": [
+          5,
+          14
+        ],
+        "discovery_turn": 125,
+        "source": [
+          5,
+          15
+        ],
+        "route": [
+          [
+            10,
+            13
+          ],
+          [
+            10,
+            14
+          ],
+          [
+            9,
+            14
+          ],
+          [
+            8,
+            14
+          ],
+          [
+            8,
+            15
+          ],
+          [
+            8,
+            16
+          ],
+          [
+            7,
+            16
+          ],
+          [
+            6,
+            16
+          ],
+          [
+            5,
+            16
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            5,
+            14
+          ]
+        ],
+        "route_hash": "10,13|10,14|9,14|8,14|8,15|8,16|7,16|6,16|5,16|5,15|5,14",
+        "route_index": 9,
+        "last_progress_turn": 155,
+        "replan_count": 2,
+        "blocked_reason": "gather_until_15",
+        "deathtouch": false,
+        "active": true,
+        "route_len": 11,
+        "terminal_win_candidates": 1
+      }
+    }
+  ],
+  "note": "Do not use score_rate alone; report W/D/L and terminal reasons."
+}

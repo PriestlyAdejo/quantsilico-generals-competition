@@ -1,0 +1,22 @@
+{
+  "policy": "heuristic_v2f_plus_planner_terminal_fix",
+  "config_hash": "4c5466776180217b",
+  "expander": {
+    "W": 8,
+    "D": 8,
+    "L": 0,
+    "discovery": 0.5,
+    "post": 1.0,
+    "failures": {
+      "FOG_NOT_CLEARED": 5,
+      "NO_CONTACT_DRAW": 2,
+      "GENERAL_NEVER_LOCATED": 1
+    }
+  },
+  "hunter": {
+    "W": 3,
+    "D": 0,
+    "L": 5
+  },
+  "passed": true
+}
