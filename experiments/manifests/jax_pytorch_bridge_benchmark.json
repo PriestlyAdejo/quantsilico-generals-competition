@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "device": "cuda",
+  "steps": 200,
+  "steps_per_second": 5.22332303262122,
+  "games_per_hour_est": 15.669969097863659,
+  "transfer_percentage": 0.35443798826177086,
+  "timings_ms": {
+    "env_ms": 383.56099993688986,
+    "extract_ms": 214.1794996568933,
+    "h2d_ms": 20.318400638643652,
+    "forward_ms": 34056.15990026854,
+    "d2h_ms": 115.39520008955151,
+    "total_ms": 38289.80109997792
+  },
+  "parameter_count": 877635,
+  "decision": "PARTIAL",
+  "torch": "2.13.0+cu126",
+  "cuda_available": true
+}
