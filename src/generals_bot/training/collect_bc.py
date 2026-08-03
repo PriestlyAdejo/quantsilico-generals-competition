@@ -69,11 +69,13 @@ def collect_trajectories(
     seeds: list[int],
     max_turns: int = 80,
     opponent: str = "pass",
+    dedupe: bool = True,
 ) -> list[BCSample]:
     env = GeneralsEnv(mode="competition")
     transition = make_transition(env)
     get_obs = game.get_observation
     samples: list[BCSample] = []
+    seen_hashes: set[int] = set()
 
     for seed in seeds:
         for policy_name in policies:
@@ -108,6 +110,14 @@ def collect_trajectories(
                 opt = OPTION_TO_IDX.get(dec0.strategic_option, OPTION_TO_IDX["WAIT"])
                 mask = legal_mask_observation(obs0).cpu().numpy().astype(bool)
                 assert mask[action_to_index(dec0.action)]
+                cell_hash = hash(cells.tobytes()) ^ (opt << 17) ^ action_to_index(dec0.action)
+                if dedupe and cell_hash in seen_hashes:
+                    actions = jnp.stack([_action_to_jax(dec0.action), _action_to_jax(dec1.action)])
+                    state, info = transition(state, actions)
+                    if bool(info.is_done):
+                        break
+                    continue
+                seen_hashes.add(cell_hash)
                 samples.append(
                     BCSample(
                         cells=cells,

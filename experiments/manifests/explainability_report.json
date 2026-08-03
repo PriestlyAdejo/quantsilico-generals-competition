@@ -1,0 +1,46 @@
+{
+  "architecture": "recurrent_mlp_v1",
+  "chosen_action_index": 454,
+  "alternative_action_index": 457,
+  "chosen_vs_alternative_margin": 0.16535502672195435,
+  "grouped_ablation_delta": {
+    "visibility": -0.009430885314941406,
+    "terrain": -0.14885985851287842,
+    "ownership": -0.00019049644470214844,
+    "army": 3.5762786865234375e-07,
+    "padding": 0.06647336483001709
+  },
+  "cell_occlusion_delta_general": -0.0008749961853027344,
+  "integrated_gradients": {
+    "status": "VERIFIED",
+    "attr_abs_mean": 0.0002564064343459904
+  },
+  "model_randomisation": {
+    "status": "VERIFIED",
+    "original_action": 454,
+    "random_model_action": 454,
+    "note": "Sanity: independent random weights need not match; used as control."
+  },
+  "counterfactual": {
+    "action_counterfactual": [
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "reachable": true,
+    "label": "legal-state",
+    "status": "VERIFIED"
+  },
+  "fidelity": {
+    "integrated_gradients": "VERIFIED",
+    "grouped_ablation": "VERIFIED",
+    "cell_occlusion": "VERIFIED",
+    "model_randomisation": "VERIFIED",
+    "counterfactual": "VERIFIED",
+    "top_feature_deletion": "PARTIAL",
+    "memory_channel_ablation": "NOT_EVALUATED",
+    "temporal_window_ablation": "NOT_EVALUATED"
+  }
+}

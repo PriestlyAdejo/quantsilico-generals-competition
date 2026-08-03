@@ -6,7 +6,17 @@
     2,
     3,
     4,
-    5
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
   ],
   "val_seeds": [
     10000,
@@ -26,170 +36,149 @@
     "recurrent_mlp_v1": {
       "architecture": "recurrent_mlp_v1",
       "device": "cuda",
-      "epochs": 6,
-      "train_n": 1440,
-      "val_n": 960,
+      "epochs": 5,
+      "train_n": 941,
+      "val_n": 182,
       "history": [
         {
           "epoch": 0.0,
-          "train_loss": 1.858916982014974,
-          "train_action_acc": 0.6111111111111112,
-          "val_action_acc": 0.3229166666666667,
+          "train_loss": 2.2439660498997105,
+          "train_action_acc": 0.461211477151966,
+          "val_action_acc": 0.1813186813186813,
           "val_option_acc": 1.0
         },
         {
           "epoch": 1.0,
-          "train_loss": 1.0818366050720214,
-          "train_action_acc": 0.7833333333333333,
-          "val_action_acc": 0.30416666666666664,
+          "train_loss": 1.2988073211420608,
+          "train_action_acc": 0.6556854410201913,
+          "val_action_acc": 0.2692307692307692,
           "val_option_acc": 1.0
         },
         {
           "epoch": 2.0,
-          "train_loss": 0.9852056225140889,
-          "train_action_acc": 0.8041666666666667,
-          "val_action_acc": 0.309375,
+          "train_loss": 1.0999508154886308,
+          "train_action_acc": 0.7311370882040382,
+          "val_action_acc": 0.2032967032967033,
           "val_option_acc": 1.0
         },
         {
           "epoch": 3.0,
-          "train_loss": 0.9323455161518521,
-          "train_action_acc": 0.8076388888888889,
-          "val_action_acc": 0.3104166666666667,
+          "train_loss": 1.0145432743838692,
+          "train_action_acc": 0.767268862911796,
+          "val_action_acc": 0.26373626373626374,
           "val_option_acc": 1.0
         },
         {
           "epoch": 4.0,
-          "train_loss": 0.8769892546865675,
-          "train_action_acc": 0.8111111111111111,
-          "val_action_acc": 0.30625,
-          "val_option_acc": 1.0
-        },
-        {
-          "epoch": 5.0,
-          "train_loss": 0.8283012138472663,
-          "train_action_acc": 0.8159722222222222,
-          "val_action_acc": 0.30625,
+          "train_loss": 0.9682429788849939,
+          "train_action_acc": 0.7747077577045696,
+          "val_action_acc": 0.24175824175824176,
           "val_option_acc": 1.0
         }
       ],
-      "elapsed_s": 17.41647469997406,
+      "elapsed_s": 45.87143679999281,
       "checkpoint": "experiments\\checkpoints\\bc\\recurrent_mlp_v1\\model.json",
       "parameter_count": 952820,
-      "final_train_action_acc": 0.8159722222222222,
-      "final_val_action_acc": 0.30625
+      "final_train_action_acc": 0.7747077577045696,
+      "final_val_action_acc": 0.24175824175824176
     },
     "recurrent_cnn_v1": {
       "architecture": "recurrent_cnn_v1",
       "device": "cuda",
-      "epochs": 6,
-      "train_n": 1440,
-      "val_n": 960,
+      "epochs": 5,
+      "train_n": 941,
+      "val_n": 182,
       "history": [
         {
           "epoch": 0.0,
-          "train_loss": 1.7861247181892395,
-          "train_action_acc": 0.5972222222222222,
-          "val_action_acc": 0.29375,
+          "train_loss": 2.1089318632192744,
+          "train_action_acc": 0.49309245483528164,
+          "val_action_acc": 0.3516483516483517,
           "val_option_acc": 1.0
         },
         {
           "epoch": 1.0,
-          "train_loss": 1.0808955603175694,
-          "train_action_acc": 0.7743055555555556,
-          "val_action_acc": 0.29375,
+          "train_loss": 1.257203407292665,
+          "train_action_acc": 0.6865037194473964,
+          "val_action_acc": 0.34615384615384615,
           "val_option_acc": 1.0
         },
         {
           "epoch": 2.0,
-          "train_loss": 0.9857481638590495,
-          "train_action_acc": 0.7916666666666666,
-          "val_action_acc": 0.29375,
+          "train_loss": 1.098986061169161,
+          "train_action_acc": 0.7460148777895855,
+          "val_action_acc": 0.3516483516483517,
           "val_option_acc": 1.0
         },
         {
           "epoch": 3.0,
-          "train_loss": 0.9353181600570679,
-          "train_action_acc": 0.7944444444444444,
-          "val_action_acc": 0.29375,
+          "train_loss": 1.0229962495384257,
+          "train_action_acc": 0.7545164718384697,
+          "val_action_acc": 0.3516483516483517,
           "val_option_acc": 1.0
         },
         {
           "epoch": 4.0,
-          "train_loss": 0.9084418230586582,
-          "train_action_acc": 0.8034722222222223,
-          "val_action_acc": 0.29375,
-          "val_option_acc": 1.0
-        },
-        {
-          "epoch": 5.0,
-          "train_loss": 0.8871506161159939,
-          "train_action_acc": 0.8104166666666667,
-          "val_action_acc": 0.29375,
+          "train_loss": 0.9911332874698416,
+          "train_action_acc": 0.7630180658873539,
+          "val_action_acc": 0.3516483516483517,
           "val_option_acc": 1.0
         }
       ],
-      "elapsed_s": 21.482393599988427,
+      "elapsed_s": 30.26993859995855,
       "checkpoint": "experiments\\checkpoints\\bc\\recurrent_cnn_v1\\model.json",
       "parameter_count": 662756,
-      "final_train_action_acc": 0.8104166666666667,
-      "final_val_action_acc": 0.29375
+      "final_train_action_acc": 0.7630180658873539,
+      "final_val_action_acc": 0.3516483516483517
     },
     "recurrent_graph_belief_v1": {
       "architecture": "recurrent_graph_belief_v1",
       "device": "cuda",
-      "epochs": 6,
-      "train_n": 1440,
-      "val_n": 960,
+      "epochs": 5,
+      "train_n": 941,
+      "val_n": 182,
       "history": [
         {
           "epoch": 0.0,
-          "train_loss": 1.9989495091968112,
-          "train_action_acc": 0.5618055555555556,
-          "val_action_acc": 0.3416666666666667,
+          "train_loss": 2.4459702523937894,
+          "train_action_acc": 0.39107332624867164,
+          "val_action_acc": 0.17032967032967034,
           "val_option_acc": 1.0
         },
         {
           "epoch": 1.0,
-          "train_loss": 1.0529540565278794,
-          "train_action_acc": 0.7770833333333333,
-          "val_action_acc": 0.3541666666666667,
+          "train_loss": 1.24497535555573,
+          "train_action_acc": 0.6705632306057385,
+          "val_action_acc": 0.17032967032967034,
           "val_option_acc": 1.0
         },
         {
           "epoch": 2.0,
-          "train_loss": 0.9574197159873115,
-          "train_action_acc": 0.8,
-          "val_action_acc": 0.3541666666666667,
+          "train_loss": 1.038907236297883,
+          "train_action_acc": 0.7545164718384697,
+          "val_action_acc": 0.17032967032967034,
           "val_option_acc": 1.0
         },
         {
           "epoch": 3.0,
-          "train_loss": 0.9125904414388869,
-          "train_action_acc": 0.8020833333333334,
-          "val_action_acc": 0.3541666666666667,
+          "train_loss": 0.9689847156167917,
+          "train_action_acc": 0.7619553666312433,
+          "val_action_acc": 0.17032967032967034,
           "val_option_acc": 1.0
         },
         {
           "epoch": 4.0,
-          "train_loss": 0.8941868835025364,
-          "train_action_acc": 0.8104166666666667,
-          "val_action_acc": 0.3541666666666667,
-          "val_option_acc": 1.0
-        },
-        {
-          "epoch": 5.0,
-          "train_loss": 0.8749519877963596,
-          "train_action_acc": 0.8159722222222222,
-          "val_action_acc": 0.3541666666666667,
+          "train_loss": 0.933248435462826,
+          "train_action_acc": 0.7651434643995749,
+          "val_action_acc": 0.17032967032967034,
           "val_option_acc": 1.0
         }
       ],
-      "elapsed_s": 52.94800969999051,
+      "elapsed_s": 43.61282640002901,
       "checkpoint": "experiments\\checkpoints\\bc\\recurrent_graph_belief_v1\\model.json",
       "parameter_count": 599780,
-      "final_train_action_acc": 0.8159722222222222,
-      "final_val_action_acc": 0.3541666666666667
+      "final_train_action_acc": 0.7651434643995749,
+      "final_val_action_acc": 0.17032967032967034
     }
   }
 }

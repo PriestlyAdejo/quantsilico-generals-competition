@@ -1,0 +1,168 @@
+{
+  "campaign_id": "bounded_initial_prep",
+  "started": 1785755266.507171,
+  "champion": "heuristic_v1",
+  "promotion_decision": "NO LEARNED CANDIDATE PROMOTED",
+  "guards": {
+    "max_wall_clock_s": 7200.0,
+    "max_env_steps": 50000,
+    "max_disk_gb": 20.0,
+    "min_free_disk_gb": 5.0,
+    "max_checkpoints": 20,
+    "max_raw_replays": 50,
+    "stop_requested": false
+  },
+  "stages": {
+    "PRECHECK": {
+      "name": "PRECHECK",
+      "status": "PASS",
+      "start_time": null,
+      "end_time": 1785755266.507171,
+      "config": {},
+      "inputs": [],
+      "outputs": [
+        "package",
+        "linux_parity"
+      ],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "DATASET": {
+      "name": "DATASET",
+      "status": "PENDING",
+      "start_time": null,
+      "end_time": null,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "BC": {
+      "name": "BC",
+      "status": "PENDING",
+      "start_time": null,
+      "end_time": null,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "AUXILIARY": {
+      "name": "AUXILIARY",
+      "status": "PENDING",
+      "start_time": null,
+      "end_time": null,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "PPO": {
+      "name": "PPO",
+      "status": "PENDING",
+      "start_time": null,
+      "end_time": null,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "EVALUATION": {
+      "name": "EVALUATION",
+      "status": "PENDING",
+      "start_time": null,
+      "end_time": null,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "POPULATION": {
+      "name": "POPULATION",
+      "status": "PASS",
+      "start_time": null,
+      "end_time": 1785755266.507171,
+      "config": {},
+      "inputs": [],
+      "outputs": [
+        "payoff_population_smoke.json"
+      ],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "EXPLAINABILITY": {
+      "name": "EXPLAINABILITY",
+      "status": "PASS",
+      "start_time": null,
+      "end_time": 1785755266.507171,
+      "config": {},
+      "inputs": [],
+      "outputs": [
+        "explainability_report.json"
+      ],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "PROMOTION": {
+      "name": "PROMOTION",
+      "status": "PENDING",
+      "start_time": null,
+      "end_time": null,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "PACKAGING": {
+      "name": "PACKAGING",
+      "status": "PASS",
+      "start_time": null,
+      "end_time": 1785755266.507171,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "LINUX_PARITY": {
+      "name": "LINUX_PARITY",
+      "status": "PASS",
+      "start_time": null,
+      "end_time": 1785755266.507171,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    },
+    "COMPLETE": {
+      "name": "COMPLETE",
+      "status": "PENDING",
+      "start_time": null,
+      "end_time": null,
+      "config": {},
+      "inputs": [],
+      "outputs": [],
+      "checkpoint": null,
+      "resume_point": null,
+      "error": null
+    }
+  }
+}

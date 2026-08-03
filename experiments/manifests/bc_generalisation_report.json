@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "train": {
+    "n": 1440,
+    "unique_actions": 84,
+    "action_kinds": {
+      "pass": 174,
+      "move": 1266
+    },
+    "options": {
+      "WAIT": 174,
+      "EXPAND": 346,
+      "COLLECT": 920
+    },
+    "sources": {
+      "heuristic_v0": 240,
+      "heuristic_v1": 240,
+      "heuristic_aggressive": 240,
+      "heuristic_defensive": 240,
+      "heuristic_castle": 240,
+      "heuristic_deathtouch": 240
+    },
+    "duplicate_cell_rate": 0.7493055555555556,
+    "pass_rate": 0.12083333333333333,
+    "build_rate": 0.0,
+    "move_rate": 0.8791666666666667
+  },
+  "validation": {
+    "n": 960,
+    "unique_actions": 51,
+    "action_kinds": {
+      "pass": 114,
+      "move": 846
+    },
+    "options": {
+      "WAIT": 114,
+      "EXPAND": 241,
+      "COLLECT": 605
+    },
+    "sources": {
+      "heuristic_v0": 160,
+      "heuristic_v1": 160,
+      "heuristic_aggressive": 160,
+      "heuristic_defensive": 160,
+      "heuristic_castle": 160,
+      "heuristic_deathtouch": 160
+    },
+    "duplicate_cell_rate": 0.8114583333333334,
+    "pass_rate": 0.11875,
+    "build_rate": 0.0,
+    "move_rate": 0.88125
+  },
+  "action_index_overlap": 1,
+  "validation_actions_unseen_in_train": 50,
+  "validation_unseen_action_fraction": 0.9803921568627451,
+  "option_shift": {
+    "COLLECT": {
+      "train_pct": 0.6388888888888888,
+      "val_pct": 0.6302083333333334
+    },
+    "EXPAND": {
+      "train_pct": 0.24027777777777778,
+      "val_pct": 0.25104166666666666
+    },
+    "WAIT": {
+      "train_pct": 0.12083333333333333,
+      "val_pct": 0.11875
+    }
+  },
+  "source_shift": {
+    "heuristic_aggressive": {
+      "train_pct": 0.16666666666666666,
+      "val_pct": 0.16666666666666666
+    },
+    "heuristic_castle": {
+      "train_pct": 0.16666666666666666,
+      "val_pct": 0.16666666666666666
+    },
+    "heuristic_deathtouch": {
+      "train_pct": 0.16666666666666666,
+      "val_pct": 0.16666666666666666
+    },
+    "heuristic_defensive": {
+      "train_pct": 0.16666666666666666,
+      "val_pct": 0.16666666666666666
+    },
+    "heuristic_v0": {
+      "train_pct": 0.16666666666666666,
+      "val_pct": 0.16666666666666666
+    },
+    "heuristic_v1": {
+      "train_pct": 0.16666666666666666,
+      "val_pct": 0.16666666666666666
+    }
+  },
+  "findings": [
+    "Majority of validation action indices never appear in training \u2014 flat ACTION_DIM imitation cannot generalise those exact moves.",
+    "High duplicate observation rate in training.",
+    "IID frame sampling with zeroed recurrent state ignores sequence boundaries; validation maps/seeds differ so exact action indices rarely match."
+  ],
+  "recommendations": [
+    "Use hierarchical action heads (source/direction/split) or legal-masked imitation with more seeds; avoid requiring exact flat-index match.",
+    "Deduplicate trajectories / diversify seeds.",
+    "Report legal-top1 and option accuracy alongside flat action accuracy; expand train seeds; keep promotion_holdout untouched."
+  ]
+}

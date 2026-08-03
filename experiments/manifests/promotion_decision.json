@@ -7,8 +7,10 @@
   "UPLOAD_READY": false,
   "reasons": [
     "no learned challenger nominated",
-    "Linux parity not verified; Windows package cannot be UPLOAD_READY"
+    "empirical population evaluation incomplete for promotion",
+    "Linux parity not verified; cannot mark UPLOAD_READY for Windows-only package"
   ],
   "bridge_decision": "PASS",
-  "linux_parity": false
+  "linux_parity": false,
+  "empirical_payoff": false
 }
