@@ -28,6 +28,7 @@ ENGINE_COMMIT = "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462"
 HEURISTIC_POPULATION = [
     "pass",
     "legal_random",
+    "official_expander",
     "heuristic_v0",
     "heuristic_v1",
     "heuristic_aggressive",
@@ -203,6 +204,7 @@ def run_population_eval(
     preset_name: str = "population_smoke",
     policies: list[str] | None = None,
     out_path: Path | None = None,
+    priority_pairs: list[tuple[str, str]] | None = None,
 ) -> dict[str, Any]:
     preset = PRESETS[preset_name]
     policies = policies or HEURISTIC_POPULATION
@@ -221,9 +223,11 @@ def run_population_eval(
 
     t0 = time.perf_counter()
     records: list[PairingRecord] = []
-    # games_per_pairing with paired positions: each seed contributes 2 games when paired
     games_needed = preset.games_per_pairing
-    pairs = [(a, b) for a in policies for b in policies if a != b]
+    if priority_pairs is not None:
+        pairs = [(a, b) for a, b in priority_pairs if a in policies and b in policies and a != b]
+    else:
+        pairs = [(a, b) for a in policies for b in policies if a != b]
     for a, b in pairs:
         played = 0
         seed_i = 0
@@ -421,8 +425,31 @@ def main() -> None:
 
     p = argparse.ArgumentParser()
     p.add_argument("--preset", default="population_smoke", choices=sorted(PRESETS))
+    p.add_argument("--priority", action="store_true", help="prioritised pairings only")
     args = p.parse_args()
-    payoff = run_population_eval(preset_name=args.preset)
+    priority = None
+    if args.priority:
+        core = HEURISTIC_POPULATION
+        priority = []
+        for a in core:
+            for b in ("heuristic_v1", "official_expander"):
+                if a != b:
+                    priority.append((a, b))
+                    priority.append((b, a))
+        # strategic variants vs each other (sample)
+        variants = [
+            "heuristic_v0",
+            "heuristic_v1",
+            "heuristic_aggressive",
+            "heuristic_defensive",
+            "heuristic_castle",
+            "heuristic_deathtouch",
+        ]
+        for i, a in enumerate(variants):
+            for b in variants[i + 1 :]:
+                priority.append((a, b))
+                priority.append((b, a))
+    payoff = run_population_eval(preset_name=args.preset, priority_pairs=priority)
     pfsp = pfsp_from_empirical(payoff)
     psro = lightweight_psro(payoff)
     print(json.dumps({
@@ -431,6 +458,7 @@ def main() -> None:
         "incomplete": payoff["incomplete_wall_clock"],
         "pfsp_sum": pfsp["sum"],
         "psro_cycles": psro["cycle_count"],
+        "priority": bool(args.priority),
     }, indent=2))
 
 

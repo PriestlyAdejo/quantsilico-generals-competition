@@ -18,5 +18,6 @@
   "cycle_count": 0,
   "weak_matchups_for_focal": [],
   "next_br_target": "heuristic_aggressive",
-  "note": "Uniform meta-strategy documented baseline; not a Nash/exploitability claim."
+  "note": "Uniform meta-strategy documented baseline; not a Nash/exploitability claim.",
+  "path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\manifests\\psro_lightweight.json"
 }

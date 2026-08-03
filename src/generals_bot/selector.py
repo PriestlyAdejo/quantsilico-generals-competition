@@ -12,6 +12,7 @@ from generals_bot.policies.heuristic_config import (
 )
 from generals_bot.policies.heuristic_v0 import HeuristicV0Policy
 from generals_bot.policies.heuristic_v1 import HeuristicV1Policy
+from generals_bot.policies.official_expander import OfficialExpanderPolicy
 from generals_bot.policies.pass_policy import PassPolicy
 from generals_bot.policies.random_policy import RandomPolicy
 
@@ -22,6 +23,8 @@ def create_policy(name: str, **kwargs: Any) -> Any:
         return PassPolicy()
     if key in {"legal_random", "random", "random_policy"}:
         return RandomPolicy(seed=int(kwargs.get("seed", 0)))
+    if key in {"official_expander", "expander", "official_expander_python"}:
+        return OfficialExpanderPolicy()
     if key in {"heuristic_v0", "heuristic0", "hv0"}:
         return HeuristicV0Policy()
     if key in {"heuristic_v1", "heuristic1", "hv1"}:
@@ -41,6 +44,7 @@ def list_policies() -> list[str]:
     return [
         "pass",
         "legal_random",
+        "official_expander",
         "heuristic_v0",
         "heuristic_v1",
         "heuristic_aggressive",

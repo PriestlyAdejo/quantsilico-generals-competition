@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "lifecycle": {
+    "recurrent_cnn_v2": {
+      "label": "SMOKE_TESTED",
+      "note": "Factorised BC candidate; not competitive until promotion gate",
+      "checkpoint": "experiments/checkpoints/bc/recurrent_cnn_v2/model.json",
+      "val_exact_acc": 0.610,
+      "val_source_acc": 0.879,
+      "val_top5_exact_acc": 0.984
+    },
+    "recurrent_graph_belief_v2": {
+      "label": "SMOKE_TESTED",
+      "note": "Factorised BC candidate; not competitive until promotion gate",
+      "checkpoint": "experiments/checkpoints/bc/recurrent_graph_belief_v2/model.json",
+      "val_exact_acc": 0.632,
+      "val_source_acc": 0.846,
+      "val_top5_exact_acc": 0.978
+    }
+  },
+  "champion": "heuristic_v1",
+  "UPLOAD_READY": true,
+  "package_sha256": "4af60c94b16acdf20e27b315780f78dd1dc346e8f1fd5c563450cbdbfd32c863"
+}

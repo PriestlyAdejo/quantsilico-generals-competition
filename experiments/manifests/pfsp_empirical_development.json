@@ -45,5 +45,6 @@
     "wall_clock_s": 1800.0,
     "label": "development"
   },
-  "kind": "EMPIRICAL_PFSP"
+  "kind": "EMPIRICAL_PFSP",
+  "path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\manifests\\pfsp_empirical.json"
 }
