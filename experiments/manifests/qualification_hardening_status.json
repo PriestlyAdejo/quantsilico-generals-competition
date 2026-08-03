@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kind": "QUALIFICATION_HARDENING_STATUS",
+  "starting_commit": "3da8796",
+  "milestone_commit": "3375e3e",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "portal": {
+    "heuristic_v1": {"expander": "D/D/D", "hunter": "L/W/L", "verdict": "NOT_QUALIFIED"},
+    "heuristic_v0": {"expander": "D/D/D", "hunter": "W/W/L", "verdict": "NOT_QUALIFIED"}
+  },
+  "package_source_parity_heuristic_v1": "PASS",
+  "castle_module_in_package": true,
+  "best_expander_smoke_so_far": {
+    "file": "experiments/manifests/qualification_smoke_v2f.json",
+    "policy": "heuristic_v2_qualifier",
+    "WDL": {"wins": 8, "draws": 8, "losses": 0},
+    "win_rate": 0.5,
+    "discovery_rate": 0.5,
+    "post_discovery_win_rate": 1.0,
+    "vs_heuristic_v1_same_suite": {"wins": 0, "draws": 16, "losses": 0}
+  },
+  "hunter_micro": {
+    "note": "INFORMATIONAL; severe defence regression for v2 vs v1 on local official Hunter wrapper",
+    "heuristic_v2_qualifier": {"WDL": "0/0/8"},
+    "heuristic_v1": {"WDL": "3/0/5"},
+    "heuristic_v0": {"WDL": "1/1/6"}
+  },
+  "heuristic_v2_qualifier": {
+    "status": "CANDIDATE_NOT_READY",
+    "champion_until_promoted": "heuristic_v1",
+    "UPLOAD_READY": false,
+    "package": null,
+    "blockers": [
+      "Expander smoke win rate 50% < internal 90% target",
+      "remaining FOG_NOT_CLEARED / NO_CONTACT draws",
+      "Hunter-style defence regression vs heuristic_v1",
+      "development/holdout suites incomplete"
+    ]
+  },
+  "ppo_campaign": "BLOCKED",
+  "upload": "DO_NOT_UPLOAD"
+}

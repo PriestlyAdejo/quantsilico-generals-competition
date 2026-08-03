@@ -212,11 +212,17 @@ class HeuristicV2QualifierPolicy:
         collect_scale = 1.8 if phase == StrategicPhase.CONSOLIDATION else 1.2
         hunt_scale = 3.0 if force_hunt else 1.0
 
-        # Focused fog-sweep after contact / late: aim stacks at ranked fog near enemy
-        if force_hunt and fog_targets and phase not in {
-            StrategicPhase.OPENING,
-            StrategicPhase.EXPANSION,
-        }:
+        # Focused fog-sweep after contact / late: aim stacks at ranked fog near enemy.
+        # Disabled once the enemy general cell is known — do not divert from the kill route.
+        if (
+            force_hunt
+            and known_eg is None
+            and fog_targets
+            and phase not in {
+                StrategicPhase.OPENING,
+                StrategicPhase.EXPANSION,
+            }
+        ):
             ranked = fog_targets
             if last_enemy_sighting is not None:
                 lr, lc = last_enemy_sighting
@@ -231,6 +237,11 @@ class HeuristicV2QualifierPolicy:
                 pick = ranked[0]
             hunt_anchor = (pick[0], pick[1])
             ar, ac = hunt_anchor
+            near_fog = {
+                (t[0], t[1])
+                for t in ranked[:8]
+                if abs(t[0] - ar) + abs(t[1] - ac) <= 6
+            }
             for action in legal:
                 if action.kind != KIND_MOVE or action.split == 1:
                     continue
@@ -242,16 +253,21 @@ class HeuristicV2QualifierPolicy:
                     continue
                 dist_src = abs(action.row - ar) + abs(action.col - ac)
                 dist_dst = abs(nr - ar) + abs(nc - ac)
-                into_fog = obs.type_grid[nr][nc] == TYPE_FOG
                 into_enemy = obs.owner_grid[nr][nc] == OWNER_OPP
-                if into_fog or into_enemy:
+                into_focus_fog = obs.type_grid[nr][nc] == TYPE_FOG and (
+                    (nr, nc) in near_fog
+                    or (nr, nc) == (ar, ac)
+                    or abs(nr - ar) + abs(nc - ac) <= 2
+                )
+                if into_enemy or into_focus_fog:
                     proposals.append(
                         Proposal(
                             action=action,
                             option="GENERAL_HUNT",
                             module="fog_sweep",
                             hard_priority=90,
-                            score=(1200.0 + sendable * 10) * hunt_scale,
+                            score=(1200.0 + sendable * 10 + 50.0 * max(0, dist_src - dist_dst))
+                            * hunt_scale,
                             confidence=0.85,
                             explanation_code="sweep_into_enemy_or_fog",
                         )
@@ -280,7 +296,9 @@ class HeuristicV2QualifierPolicy:
                         continue
                     dr, dc = DIRECTIONS[action.direction]
                     nr, nc = action.row + dr, action.col + dc
-                    # Move onto general or toward general
+                    # Never leave the general with a stripping move during threat
+                    if (action.row, action.col) == (gr, gc):
+                        continue
                     dist_src = abs(action.row - gr) + abs(action.col - gc)
                     dist_dst = abs(nr - gr) + abs(nc - gc)
                     if (nr, nc) == (gr, gc) or dist_dst < dist_src:
@@ -329,7 +347,7 @@ class HeuristicV2QualifierPolicy:
                         )
                     )
                 else:
-                    # Move closer to known general
+                    # Move closer to known general — hard priority above fog sweep
                     dist_src = abs(action.row - er) + abs(action.col - ec)
                     dist_dst = abs(nr - er) + abs(nc - ec)
                     if dist_dst < dist_src:
@@ -338,7 +356,7 @@ class HeuristicV2QualifierPolicy:
                                 action=action,
                                 option="DEATHTOUCH" if dt else "GENERAL_HUNT",
                                 module="general_hunt",
-                                hard_priority=80,
+                                hard_priority=93,
                                 score=(900.0 + sendable * 5 + 50.0 * (dist_src - dist_dst))
                                 * hunt_scale,
                                 confidence=0.8,
@@ -404,18 +422,23 @@ class HeuristicV2QualifierPolicy:
                     hunt_bonus += 150.0
                 if very_late:
                     hunt_bonus += 300.0
-                score = (140.0 + sendable + info_gain + hunt_bonus + frontier_bonus) * cfg.scout_weight
-                force_hunt = phase in {
-                    StrategicPhase.CONVERSION,
-                    StrategicPhase.GENERAL_HUNT,
-                    StrategicPhase.DEATHTOUCH_HUNT,
-                    StrategicPhase.DRAW_AVOIDANCE,
-                }
+                far_bonus = 0.0
+                if gen is not None and not force_hunt:
+                    far_bonus = 8.0 * (abs(nr - gen[0]) + abs(nc - gen[1]))
+                score = (
+                    140.0 + sendable + info_gain + hunt_bonus + frontier_bonus + far_bonus
+                ) * cfg.scout_weight
                 hard = 20
                 if force_hunt and (on_candidate or frontier_bonus > 0):
                     hard = 88
                 elif on_candidate and (dt or late):
                     hard = 70
+                elif not force_hunt and phase in {
+                    StrategicPhase.OPENING,
+                    StrategicPhase.EXPANSION,
+                    StrategicPhase.CONSOLIDATION,
+                }:
+                    hard = 21  # deep scout competes on score, not above expand
                 proposals.append(
                     Proposal(
                         action=action,
@@ -430,10 +453,14 @@ class HeuristicV2QualifierPolicy:
                 )
             elif dest_owner == OWNER_NEUTRAL and dest_type == TYPE_PLAIN and sendable >= 1:
                 if expand_scale < 0.2 and phase != StrategicPhase.OPENING:
-                    # Still allow tiny expand if no better proposals later
                     score = (80.0 + sendable) * cfg.expand_weight * expand_scale
                 else:
                     score = (220.0 + sendable) * cfg.expand_weight * expand_scale
+                if gen is not None:
+                    if abs(nr - gen[0]) + abs(nc - gen[1]) > abs(action.row - gen[0]) + abs(
+                        action.col - gen[1]
+                    ):
+                        score += 40.0
                 proposals.append(
                     Proposal(
                         action=action,
@@ -528,6 +555,33 @@ class HeuristicV2QualifierPolicy:
                 explanation_code="safe_pass",
             )
         )
+
+        # Standing garrison: drop proposals that strip the general below reserve.
+        # Opening must still leave the general to establish a route (low reserve).
+        if gen is not None:
+            gr, gc = gen
+            threat = self._general_threat_level(obs, *gen)
+            if threat > 0 or phase == StrategicPhase.EMERGENCY_DEFENCE:
+                reserve = 18
+            elif phase in {StrategicPhase.OPENING, StrategicPhase.EXPANSION} and obs.turn < 120:
+                reserve = 2
+            elif obs.turn < 200:
+                reserve = 6
+            elif obs.turn < 600:
+                reserve = 8
+            else:
+                reserve = 6
+            gen_army = obs.army_grid[gr][gc]
+            kept: list[Proposal] = []
+            for p in proposals:
+                a = p.action
+                if a.kind == KIND_MOVE and (a.row, a.col) == (gr, gc):
+                    sendable = gen_army - 1 if a.split == 0 else gen_army // 2
+                    if gen_army - sendable < reserve:
+                        continue
+                kept.append(p)
+            proposals = kept
+
         return proposals
 
     def _find_own_general(self, obs: Observation) -> tuple[int, int] | None:
@@ -552,17 +606,21 @@ class HeuristicV2QualifierPolicy:
         return False
 
     def _general_threat_level(self, obs: Observation, gr: int, gc: int) -> int:
-        """0=none, 1=near fog/enemy within 2, 2=adjacent enemy, 3=adjacent large stack."""
+        """0=none, 1=enemy within 3, 2=enemy within 2, 3=adjacent large stack.
+
+        Fog alone is not a threat — fog surrounds the general for most of the game.
+        """
         level = 0
-        for r in range(max(0, gr - 2), min(obs.height, gr + 3)):
-            for c in range(max(0, gc - 2), min(obs.width, gc + 3)):
+        for r in range(max(0, gr - 3), min(obs.height, gr + 4)):
+            for c in range(max(0, gc - 3), min(obs.width, gc + 4)):
                 dist = abs(r - gr) + abs(c - gc)
-                if dist == 0 or dist > 2:
+                if dist == 0 or dist > 3:
                     continue
                 if obs.owner_grid[r][c] == OWNER_OPP:
-                    level = max(level, 3 if dist == 1 and obs.army_grid[r][c] >= 5 else (2 if dist == 1 else 1))
-                elif obs.type_grid[r][c] == TYPE_FOG and dist == 1:
-                    level = max(level, 1)
+                    level = max(
+                        level,
+                        3 if dist == 1 and obs.army_grid[r][c] >= 5 else (2 if dist <= 2 else 1),
+                    )
         return level
 
     def _is_frontier(self, obs: Observation, r: int, c: int) -> bool:
