@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE_9Q_MILESTONE",
+  "phase": "9Q",
+  "name": "Official Qualification Hardening",
+  "objective": "Produce a deterministic heuristic that reliably defeats official Expander without a severe Hunter-style defence regression",
+  "starting_commit": "544215e",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "champion_fallback": "heuristic_v1",
+  "challenger": "heuristic_v2_qualifier",
+  "phase_10_ready": false,
+  "status": "IN_PROGRESS",
+  "focus": [
+    "persistent exploration planner",
+    "contact persistence / CLEAR_ENEMY_REGION",
+    "credible EMERGENCY_DEFENCE with DEFENSIVE_CAUTION hysteresis",
+    "Hunter defence without false emergencies"
+  ],
+  "gates": {
+    "expander_smoke": ">=12/16 wins, 0 losses",
+    "expander_development": ">=85% wins across A/B/C, no group <75%",
+    "hunter_regression": "reject 0/0/8; at least approach v1",
+    "holdout": ">=90% wins, <=10% draws, 0 losses"
+  },
+  "blocked": ["120-minute PPO campaign", "automatic upload", "overwrite heuristic_v1 package"]
+}

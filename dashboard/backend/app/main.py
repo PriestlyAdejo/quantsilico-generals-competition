@@ -281,24 +281,36 @@ def qualification() -> dict[str, Any]:
     portal = REPO_ROOT / "experiments" / "manifests" / "official_portal_results_2026-08-03.json"
     suites_dir = REPO_ROOT / "experiments" / "manifests"
     suite_files = sorted(suites_dir.glob("qualification_*.json"))
+    phase9q = REPO_ROOT / "experiments" / "manifests" / "phase_9q_milestone.json"
     reward = REPO_ROOT / "experiments" / "manifests" / "ppo_reward_audit.json"
+    draw_diag = REPO_ROOT / "experiments" / "manifests" / "expander_draw_diagnostics_9q.json"
     payload: dict[str, Any] = {
         "schema_version": 1,
         "kind": "QUALIFICATION_DASHBOARD",
+        "phase": "9Q",
         "champion_until_promoted": "heuristic_v1",
         "candidate_lineage": "heuristic_v2_qualifier",
         "milestones": ["turn_800_deathtouch", "turn_1050_draw_avoidance", "turn_1150", "turn_1200"],
         "portal": None,
+        "phase_9q": None,
         "local_suites": [],
+        "development_groups": {},
+        "draw_diagnostics": None,
         "reward_audit": None,
         "note": "Wire real traces only; score_rate alone is insufficient.",
     }
     if portal.exists():
         payload["portal"] = json.loads(portal.read_text(encoding="utf-8"))
+    if phase9q.exists():
+        payload["phase_9q"] = json.loads(phase9q.read_text(encoding="utf-8"))
+    if draw_diag.exists():
+        payload["draw_diagnostics"] = json.loads(draw_diag.read_text(encoding="utf-8"))
     for path in suite_files:
-        payload["local_suites"].append(
-            {"id": path.stem, "path": str(path.relative_to(REPO_ROOT)), "data": json.loads(path.read_text(encoding="utf-8"))}
-        )
+        data = json.loads(path.read_text(encoding="utf-8"))
+        item = {"id": path.stem, "path": str(path.relative_to(REPO_ROOT)), "data": data}
+        payload["local_suites"].append(item)
+        if path.stem.startswith("qualification_development_") or "development_" in path.stem:
+            payload["development_groups"][path.stem] = data.get("policies", {})
     if reward.exists():
         payload["reward_audit"] = json.loads(reward.read_text(encoding="utf-8"))
     return payload

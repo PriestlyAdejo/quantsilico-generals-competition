@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE_9Q_STATUS",
+  "phase": "9Q",
+  "starting_commit": "544215e",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "implemented": [
+    "exploration_planner with region partition, target persistence, stall recovery",
+    "SEARCH_FOR_CONTACT / CLEAR_ENEMY_REGION phases",
+    "threat_assessment with credible emergency, DEFENSIVE_CAUTION, hysteresis",
+    "fog-alone no longer triggers EMERGENCY_DEFENCE",
+    "scenario unit tests",
+    "development seed groups A/B/C",
+    "dashboard qualification phase 9Q fields"
+  ],
+  "expander_smoke_9qd": {
+    "WDL": {"wins": 3, "draws": 13, "losses": 0},
+    "discovery_rate": 0.25,
+    "post_discovery_win_rate": 0.75,
+    "gate": "FAIL (need >=12/16 wins)"
+  },
+  "prior_best_smoke": {
+    "file": "qualification_smoke_v2f.json",
+    "WDL": {"wins": 8, "draws": 8, "losses": 0},
+    "note": "Earlier fog_sweep candidate; not yet recovered by planner retune"
+  },
+  "hunter_micro_9qd": {
+    "heuristic_v2_qualifier": {"WDL": "0/0/8"},
+    "heuristic_v1": {"WDL": "3/0/5"},
+    "gate": "FAIL severe regression"
+  },
+  "phase_9q_status": "INCOMPLETE",
+  "phase_10_ready": false,
+  "UPLOAD_READY": false,
+  "package": null,
+  "next_actions": [
+    "Recover Expander discovery toward v2f 8/8 behaviour without false emergencies",
+    "Ablate explore_only vs defence_only on development A/B/C",
+    "Hunter: keep defensive mass earlier without cancelling post-contact clear",
+    "Do not package or upload until smoke+development+holdout pass"
+  ]
+}
