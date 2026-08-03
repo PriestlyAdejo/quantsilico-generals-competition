@@ -84,3 +84,58 @@ def evaluate_development_gate(
     if legal_action_rate < 1.0:
         reasons.append(f"legal_action_rate={legal_action_rate}")
     return ScreeningResult(passed=not reasons, reasons=reasons, level="DEVELOPMENT_GATE")
+
+
+@dataclass(frozen=True)
+class PrePpoSubmissionResult:
+    passed: bool
+    reasons: list[str]
+    level: str = "PRE_PPO_SUBMISSION_GATE"
+
+
+def evaluate_pre_ppo_submission_gate(
+    *,
+    paired_score_delta: float,
+    paired_ci_low: float,
+    protocol_faults: int,
+    legal_action_rate: float,
+    post_discovery_win_rate: float,
+    conversion_micro_wins: int,
+    conversion_micro_n: int,
+    hunter_wins: int,
+    hunter_losses: int,
+    submitted_hunter_wins: int,
+    submitted_hunter_losses: int,
+    latency_p95_ms: float,
+    peak_memory_mb: float | None,
+    package_source_parity: bool,
+) -> PrePpoSubmissionResult:
+    """Second-submission gate vs the currently submitted portal package."""
+    reasons: list[str] = []
+    if protocol_faults != 0:
+        reasons.append(f"protocol_faults={protocol_faults}")
+    if legal_action_rate < 1.0:
+        reasons.append(f"legal_action_rate={legal_action_rate}")
+    if not package_source_parity:
+        reasons.append("package_source_parity_failed")
+    if paired_score_delta <= 0:
+        reasons.append(f"paired_score_delta={paired_score_delta:.3f}<=0")
+    if paired_ci_low < -0.05:
+        reasons.append(f"paired_ci_low={paired_ci_low:.3f}<-0.05")
+    if post_discovery_win_rate < 0.80:
+        reasons.append(f"post_discovery={post_discovery_win_rate:.3f}<0.80")
+    if conversion_micro_n and (conversion_micro_wins / conversion_micro_n) < 0.80:
+        reasons.append(
+            f"conversion_micro={conversion_micro_wins}/{conversion_micro_n}<0.80"
+        )
+    # No severe Hunter regression vs submitted package
+    if hunter_wins + hunter_losses >= 4 and submitted_hunter_wins + submitted_hunter_losses >= 4:
+        if hunter_wins == 0 and hunter_losses >= submitted_hunter_losses and hunter_losses >= 4:
+            reasons.append("hunter_severe_regression_0_wins")
+        if hunter_losses - submitted_hunter_losses >= 3 and hunter_wins < submitted_hunter_wins:
+            reasons.append("hunter_loss_spike_vs_submitted")
+    if latency_p95_ms >= 150.0:
+        reasons.append(f"latency_p95_ms={latency_p95_ms:.1f}>=150")
+    if peak_memory_mb is not None and peak_memory_mb >= 1800.0:
+        reasons.append(f"peak_memory_mb={peak_memory_mb:.0f}>=1800")
+    return PrePpoSubmissionResult(passed=not reasons, reasons=reasons)

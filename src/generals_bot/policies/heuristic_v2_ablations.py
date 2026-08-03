@@ -11,6 +11,7 @@ from generals_bot.map_memory import MapMemory
 from generals_bot.observation import GameContext
 from generals_bot.policies.base import ActionDecision, TraceLevel
 from generals_bot.policies.bounded_scout import BoundedScoutAssigner, ScoutTask
+from generals_bot.policies.exploration_planner import ExplorationState
 from generals_bot.policies.general_garrison import (
     filter_general_stripping,
     garrison_reserve,
@@ -39,11 +40,19 @@ class AblationFlags:
     use_hunt_plan: bool = False
     # When True, use credible threat assessor instead of v2f raw threatened→EMERGENCY
     use_credible_threat: bool = False
+    use_persistent_explore: bool = False
+    use_dual_scout: bool = False
 
     def config_hash(self) -> str:
         payload_obj = asdict(self)
         # Preserve historical hashes for candidates that do not use newer flags.
-        for optional in ("use_intercept_v2", "use_terminal_oracle", "use_hunt_plan"):
+        for optional in (
+            "use_intercept_v2",
+            "use_terminal_oracle",
+            "use_hunt_plan",
+            "use_persistent_explore",
+            "use_dual_scout",
+        ):
             if not payload_obj.get(optional):
                 payload_obj.pop(optional, None)
         payload = json.dumps(payload_obj, sort_keys=True)
@@ -96,6 +105,8 @@ FLAGS: dict[str, AblationFlags] = {
         use_terminal_oracle=True,
         use_hunt_plan=True,
         use_credible_threat=True,
+        use_persistent_explore=True,
+        use_dual_scout=True,
     ),
     V2F_CORRIDOR_TERMINAL: AblationFlags(
         name=V2F_CORRIDOR_TERMINAL,
@@ -104,6 +115,8 @@ FLAGS: dict[str, AblationFlags] = {
         use_terminal_oracle=True,
         use_hunt_plan=True,
         use_credible_threat=True,
+        use_persistent_explore=True,
+        use_dual_scout=True,
     ),
     V2F_COMBINED: AblationFlags(
         name=V2F_COMBINED,
@@ -134,7 +147,9 @@ class HeuristicV2AblationPolicy:
         self.policy_id = flags.name
         self._base = HeuristicV2FReferencePolicy()
         self._base.policy_id = flags.name
-        self._scout = BoundedScoutAssigner() if flags.use_planner else None
+        self._scout = (
+            BoundedScoutAssigner(dual_scout=flags.use_dual_scout) if flags.use_planner else None
+        )
         self.config_hash = flags.config_hash()
 
     def initial_state(self, context: GameContext):
@@ -142,6 +157,8 @@ class HeuristicV2AblationPolicy:
         state.data["ablation"] = self.flags.name
         state.data["config_hash"] = self.config_hash
         state.data["scout_task"] = ScoutTask()
+        state.data["scout_task_b"] = ScoutTask()
+        state.data["exploration_state"] = ExplorationState()
         state.data["threat"] = ThreatMemory()
         state.data["hunt_plan"] = GeneralHuntPlan()
         return state
@@ -189,7 +206,10 @@ class HeuristicV2AblationPolicy:
         if self.flags.use_planner and self._scout is not None:
             gen_mask = memory.possible_enemy_general_mask(observation)
             task: ScoutTask = state.data.get("scout_task") or ScoutTask()
-            task = self._scout.update(
+            task_b: ScoutTask = state.data.get("scout_task_b") or ScoutTask()
+            est: ExplorationState = state.data.get("exploration_state") or ExplorationState()
+            # Persistent ExplorationState lives on policy state across turns.
+            task, task_b, est = self._scout.update(
                 task,
                 observation,
                 memory,
@@ -198,11 +218,21 @@ class HeuristicV2AblationPolicy:
                 newly_revealed=newly,
                 enemy_general_known=known_eg is not None,
                 emergency=threat.emergency,
+                exploration=est if self.flags.use_persistent_explore else ExplorationState(
+                    last_reveal_turn=task.last_reveal_turn,
+                    stalled_turns=task.stall,
+                ),
+                secondary=task_b if self.flags.use_dual_scout else ScoutTask(),
             )
             state.data["scout_task"] = task
-            # Do not inject scout proposals once general is known
+            if self.flags.use_dual_scout:
+                state.data["scout_task_b"] = task_b
+            if self.flags.use_persistent_explore:
+                state.data["exploration_state"] = est
             if known_eg is None:
                 proposals.extend(self._scout.proposals(task, observation, legal))
+                if self.flags.use_dual_scout:
+                    proposals.extend(self._scout.proposals(task_b, observation, legal))
 
         if self.flags.use_hunt_plan and known_eg is not None:
             plan: GeneralHuntPlan = state.data.get("hunt_plan") or GeneralHuntPlan()
@@ -288,6 +318,14 @@ class HeuristicV2AblationPolicy:
         diag["caution_active"] = threat.caution
         if self.flags.use_planner:
             diag.update((state.data.get("scout_task") or ScoutTask()).to_diagnostics())
+            task_b = state.data.get("scout_task_b") or ScoutTask()
+            diag["scout_b_source"] = task_b.source
+            diag["scout_b_target"] = task_b.target
+            diag["scout_b_region_id"] = task_b.region_id
+            diag["scout_b_stall"] = task_b.stall
+            diag["scout_b_abort_reason"] = task_b.abort_reason
+            est = state.data.get("exploration_state") or ExplorationState()
+            diag.update(est.to_diagnostics())
         if self.flags.use_hunt_plan:
             diag.update((state.data.get("hunt_plan") or GeneralHuntPlan()).to_diagnostics())
         if terminal_hits:

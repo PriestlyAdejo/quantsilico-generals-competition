@@ -1,4 +1,4 @@
-"""Bounded scout-task assignment — does not take over the whole policy."""
+"""Bounded scout-task assignment with persistent exploration memory."""
 
 from __future__ import annotations
 
@@ -11,13 +11,18 @@ from generals_bot.policies.base import Proposal
 from generals_bot.policies.exploration_planner import (
     ExplorationPlanner,
     ExplorationState,
+    FogRegion,
+    decayed_region_attempts,
     partition_fog_regions,
+    score_region,
 )
 from generals_bot.policies.general_garrison import find_own_general
 from generals_bot.protocol import DIRECTIONS, OWNER_ME, OWNER_OPP, TYPE_FOG
 
 DEFAULT_TTL = 40
-STALL_ABORT = 20
+STALL_ABORT = 25
+SECOND_SCOUT_MIN_TURN = 1050
+SECOND_SCOUT_MIN_STALL = 40
 
 
 @dataclass
@@ -45,30 +50,42 @@ class ScoutTask:
         }
 
 
-def _pick_source(obs: Observation, gen: tuple[int, int] | None) -> tuple[int, int] | None:
-    """Largest stack that is not the general (or general only if surplus)."""
+def _pick_source(
+    obs: Observation,
+    gen: tuple[int, int] | None,
+    *,
+    target: tuple[int, int] | None = None,
+    exclude: set[tuple[int, int]] | None = None,
+) -> tuple[int, int] | None:
+    """Largest usable stack; never prefer a stripped general; honour excludes."""
+    exclude = exclude or set()
     best = None
-    best_a = 0
+    best_key = None
     for r in range(obs.height):
         for c in range(obs.width):
+            if (r, c) in exclude:
+                continue
             if obs.owner_grid[r][c] != OWNER_ME:
                 continue
             a = obs.army_grid[r][c]
             if a <= 2:
                 continue
-            if gen is not None and (r, c) == gen and a < 8:
+            if gen is not None and (r, c) == gen and a < 12:
                 continue
-            if a > best_a:
-                best_a = a
+            dist = 0 if target is None else abs(r - target[0]) + abs(c - target[1])
+            key = (-a, dist, r, c)
+            if best_key is None or key < best_key:
+                best_key = key
                 best = (r, c)
     return best
 
 
 class BoundedScoutAssigner:
-    """Assign one scout stack to one fog target; other modules keep operating."""
+    """Assign scout stack(s) using persistent ExplorationState on the policy."""
 
-    def __init__(self) -> None:
+    def __init__(self, *, dual_scout: bool = False) -> None:
         self._planner = ExplorationPlanner(stall_turns=STALL_ABORT)
+        self.dual_scout = dual_scout
 
     def update(
         self,
@@ -81,44 +98,71 @@ class BoundedScoutAssigner:
         newly_revealed: bool,
         enemy_general_known: bool,
         emergency: bool,
-    ) -> ScoutTask:
-        if enemy_general_known or emergency:
+        exploration: ExplorationState | None = None,
+        secondary: ScoutTask | None = None,
+    ) -> tuple[ScoutTask, ScoutTask, ExplorationState]:
+        est = exploration if exploration is not None else ExplorationState()
+        secondary = secondary or ScoutTask()
+
+        if enemy_general_known:
             task.abort_reason = "higher_priority_threat_or_known_general"
             task.target = None
             task.source = None
-            return task
+            secondary.abort_reason = "higher_priority_threat_or_known_general"
+            secondary.target = None
+            secondary.source = None
+            est = self._planner.update(
+                est,
+                obs,
+                memory,
+                gen_mask,
+                last_enemy=last_enemy,
+                newly_revealed=newly_revealed,
+                enemy_general_known=True,
+            )
+            return task, secondary, est
+
+        if emergency:
+            # Pause scouting; keep exploration memory intact.
+            task.abort_reason = "higher_priority_threat_or_known_general"
+            task.target = None
+            task.source = None
+            secondary.abort_reason = "higher_priority_threat_or_known_general"
+            secondary.target = None
+            secondary.source = None
+            return task, secondary, est
 
         if newly_revealed:
             task.last_reveal_turn = obs.turn
             task.stall = 0
             task.progress += 1
+            secondary.last_reveal_turn = obs.turn
+            secondary.stall = 0
+            est.last_newly_scouted_turn = obs.turn
         else:
+            if task.last_reveal_turn <= 0:
+                task.last_reveal_turn = max(0, obs.turn - task.stall)
             task.stall = obs.turn - task.last_reveal_turn
+            secondary.stall = obs.turn - max(secondary.last_reveal_turn, 0)
+        est.scout_stall = task.stall
+        stall_for_dual = task.stall
 
-        # Abort conditions
+        task = self._maybe_abort(task, obs, est)
+        secondary = self._maybe_abort(secondary, obs, est)
+
+        # Keep planner target in sync with the live scout task.
         if task.target is not None:
-            age = obs.turn - task.assigned_turn
-            if age >= task.ttl:
-                task.abort_reason = "ttl_expired"
-                task.target = None
-            elif task.stall >= STALL_ABORT:
-                task.abort_reason = "stall_window"
-                task.target = None
-            elif task.source is not None:
-                sr, sc = task.source
-                if obs.owner_grid[sr][sc] != OWNER_ME or obs.army_grid[sr][sc] <= 2:
-                    task.abort_reason = "source_too_weak"
-                    task.target = None
-                    task.source = None
+            est.current_target = task.target
+            est.target_region_id = task.region_id
+        else:
+            est.current_target = None
+            est.target_region_id = None
+        est.stalled_turns = task.stall
+        if newly_revealed:
+            est.last_reveal_turn = obs.turn
+        elif est.last_reveal_turn <= 0:
+            est.last_reveal_turn = task.last_reveal_turn
 
-        if task.target is not None:
-            return task
-
-        # Fresh assignment via region planner
-        est = ExplorationState(
-            last_reveal_turn=task.last_reveal_turn,
-            stalled_turns=task.stall,
-        )
         est = self._planner.update(
             est,
             obs,
@@ -128,16 +172,142 @@ class BoundedScoutAssigner:
             newly_revealed=newly_revealed,
             enemy_general_known=False,
         )
+
         gen = find_own_general(obs)
-        task.source = _pick_source(obs, gen)
-        task.target = est.current_target
-        task.region_id = est.target_region_id
-        task.assigned_turn = obs.turn
-        task.ttl = DEFAULT_TTL
-        task.abort_reason = ""
         if task.target is None:
-            task.abort_reason = "no_unresolved_target"
+            task.target = est.current_target
+            task.region_id = est.target_region_id
+            task.assigned_turn = obs.turn
+            task.ttl = DEFAULT_TTL
+            task.abort_reason = ""
+            task.last_reveal_turn = obs.turn
+            task.stall = 0
+            if task.target is None:
+                task.abort_reason = "no_unresolved_target"
+                task.source = None
+            else:
+                task.source = _pick_source(obs, gen, target=task.target)
+                if task.region_id is not None:
+                    est.prior_regions.append(task.region_id)
+                    if len(est.prior_regions) > 32:
+                        est.prior_regions = est.prior_regions[-32:]
+        elif task.source is None or obs.owner_grid[task.source[0]][task.source[1]] != OWNER_ME:
+            task.source = _pick_source(obs, gen, target=task.target)
+
+        need_second = (
+            self.dual_scout
+            and task.target is not None
+            and obs.turn >= SECOND_SCOUT_MIN_TURN
+            and stall_for_dual >= SECOND_SCOUT_MIN_STALL
+        )
+        if need_second and secondary.target is None:
+            regions = partition_fog_regions(obs, memory, gen_mask)
+            secondary = self._assign_secondary(
+                secondary,
+                obs,
+                gen,
+                regions,
+                est,
+                primary_region=task.region_id,
+                exclude_source=task.source,
+            )
+        elif secondary.target is not None:
+            if secondary.source is None or obs.owner_grid[secondary.source[0]][secondary.source[1]] != OWNER_ME:
+                exclude = {task.source} if task.source is not None else set()
+                if gen is not None:
+                    exclude.add(gen)
+                secondary.source = _pick_source(
+                    obs, gen, target=secondary.target, exclude=exclude
+                )
+
+        return task, secondary, est
+
+    def _maybe_abort(
+        self,
+        task: ScoutTask,
+        obs: Observation,
+        est: ExplorationState,
+    ) -> ScoutTask:
+        if task.target is None:
+            return task
+        age = obs.turn - task.assigned_turn
+        aborted = False
+        if age >= task.ttl:
+            task.abort_reason = "ttl_expired"
+            aborted = True
+        elif task.stall >= STALL_ABORT:
+            task.abort_reason = "stall_window"
+            aborted = True
+        elif task.source is not None:
+            sr, sc = task.source
+            if obs.owner_grid[sr][sc] != OWNER_ME or obs.army_grid[sr][sc] <= 2:
+                task.abort_reason = "source_too_weak"
+                aborted = True
+        if aborted:
+            if task.abort_reason in {"stall_window", "ttl_expired"}:
+                est.note_soft_fail(task.target, obs.turn)
+                if task.region_id is not None:
+                    est.bump_region_attempt(task.region_id, obs.turn)
+            task.target = None
+            task.source = None
         return task
+
+    def _assign_secondary(
+        self,
+        secondary: ScoutTask,
+        obs: Observation,
+        gen: tuple[int, int] | None,
+        regions: list[FogRegion],
+        est: ExplorationState,
+        *,
+        primary_region: int | None,
+        exclude_source: tuple[int, int] | None,
+    ) -> ScoutTask:
+        if len(regions) < 2:
+            secondary.abort_reason = "no_second_region"
+            return secondary
+        stacks = [
+            (r, c, obs.army_grid[r][c])
+            for r in range(obs.height)
+            for c in range(obs.width)
+            if obs.owner_grid[r][c] == OWNER_ME and obs.army_grid[r][c] > 2
+        ]
+        scored = sorted(
+            regions,
+            key=lambda reg: -score_region(
+                reg,
+                last_enemy=None,
+                stacks=stacks,
+                attempts=decayed_region_attempts(est, reg.region_id, obs.turn),
+                turn=obs.turn,
+            ),
+        )
+        exclude: set[tuple[int, int]] = set()
+        if exclude_source is not None:
+            exclude.add(exclude_source)
+        if gen is not None:
+            exclude.add(gen)
+        for reg in scored:
+            if primary_region is not None and reg.region_id == primary_region:
+                continue
+            candidates = list(reg.frontier) + list(reg.cells[:4])
+            for cell in candidates:
+                if est.is_soft_failed(cell, obs.turn):
+                    continue
+                src = _pick_source(obs, gen, target=cell, exclude=exclude)
+                if src is None:
+                    continue
+                secondary.target = cell
+                secondary.region_id = reg.region_id
+                secondary.source = src
+                secondary.assigned_turn = obs.turn
+                secondary.ttl = DEFAULT_TTL
+                secondary.last_reveal_turn = obs.turn
+                secondary.stall = 0
+                secondary.abort_reason = ""
+                return secondary
+        secondary.abort_reason = "no_second_region"
+        return secondary
 
     def proposals(self, task: ScoutTask, obs: Observation, legal: list[Action]) -> list[Proposal]:
         if task.target is None or task.source is None:
@@ -148,7 +318,6 @@ class BoundedScoutAssigner:
         for action in legal:
             if action.kind != KIND_MOVE or action.split == 1:
                 continue
-            # Prefer moves from the assigned source; allow nearby helpers weakly
             from_src = (action.row, action.col) == (sr, sc)
             if not from_src and abs(action.row - sr) + abs(action.col - sc) > 2:
                 continue

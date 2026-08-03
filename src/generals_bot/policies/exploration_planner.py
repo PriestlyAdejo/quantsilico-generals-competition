@@ -18,6 +18,8 @@ from generals_bot.protocol import (
 
 STALL_TURNS = 25
 RECENT_LIMIT = 24
+SOFT_FAIL_COOLDOWN = 45
+REGION_ATTEMPT_DECAY_TURNS = 80
 
 
 @dataclass
@@ -37,9 +39,14 @@ class ExplorationState:
     assigned_turn: int = 0
     stalled_turns: int = 0
     last_reveal_turn: int = 0
+    last_newly_scouted_turn: int = 0
+    scout_stall: int = 0
     recent_cells: list[tuple[int, int]] = field(default_factory=list)
-    failed_targets: set[tuple[int, int]] = field(default_factory=set)
+    # Soft cell cooldowns only — never a permanent blacklist.
+    soft_fail_until: dict[tuple[int, int], int] = field(default_factory=dict)
     region_attempts: dict[int, int] = field(default_factory=dict)
+    region_attempt_turn: dict[int, int] = field(default_factory=dict)
+    prior_regions: list[int] = field(default_factory=list)
     last_change_reason: str = "init"
     unresolved_regions: int = 0
     target_progress: int = 0
@@ -49,11 +56,75 @@ class ExplorationState:
             "scout_target": self.current_target,
             "target_region_id": self.target_region_id,
             "stalled_turns": self.stalled_turns,
+            "scout_stall": self.scout_stall,
             "last_reveal_turn": self.last_reveal_turn,
+            "last_newly_scouted_turn": self.last_newly_scouted_turn,
             "unresolved_regions": self.unresolved_regions,
             "target_change_reason": self.last_change_reason,
-            "failed_target_count": len(self.failed_targets),
+            "soft_fail_active": sum(1 for until in self.soft_fail_until.values() if until > 0),
+            "region_attempt_keys": sorted(self.region_attempts.keys()),
         }
+
+    def note_soft_fail(self, cell: tuple[int, int], turn: int) -> None:
+        self.soft_fail_until[cell] = turn + SOFT_FAIL_COOLDOWN
+
+    def is_soft_failed(self, cell: tuple[int, int], turn: int) -> bool:
+        until = self.soft_fail_until.get(cell)
+        if until is None:
+            return False
+        if turn >= until:
+            self.soft_fail_until.pop(cell, None)
+            return False
+        return True
+
+    def bump_region_attempt(self, region_id: int, turn: int) -> None:
+        self.region_attempts[region_id] = self.region_attempts.get(region_id, 0) + 1
+        self.region_attempt_turn[region_id] = turn
+
+    def prune_expired(self, turn: int) -> None:
+        expired = [c for c, until in self.soft_fail_until.items() if turn >= until]
+        for c in expired:
+            self.soft_fail_until.pop(c, None)
+
+
+def decayed_region_attempts(state: ExplorationState, region_id: int, turn: int) -> int:
+    raw = state.region_attempts.get(region_id, 0)
+    if raw <= 0:
+        return 0
+    last = state.region_attempt_turn.get(region_id, turn)
+    decay = max(0, (turn - last) // REGION_ATTEMPT_DECAY_TURNS)
+    return max(0, raw - decay)
+
+
+def score_region(
+    region: FogRegion,
+    *,
+    last_enemy: tuple[int, int] | None,
+    stacks: list[tuple[int, int, int]],
+    attempts: int,
+    turn: int,
+) -> float:
+    score = float(region.candidate_mass) * 5.0 + float(region.size) * 0.15
+    if region.near_enemy:
+        score += 80.0
+    if last_enemy is not None and region.frontier:
+        fr, fc = region.frontier[0]
+        score += 40.0 / (1.0 + abs(fr - last_enemy[0]) + abs(fc - last_enemy[1]))
+    if stacks and region.frontier:
+        fr, fc = region.frontier[0]
+        best = min(abs(sr - fr) + abs(sc - fc) for sr, sc, _ in stacks)
+        score += 30.0 / (1.0 + best)
+        score += 0.05 * max(a for _, _, a in stacks)
+    if turn >= 800:
+        score += 100.0 / max(1, region.size)
+    if turn >= 1050:
+        score += 150.0 / max(1, region.size)
+    score -= attempts * 25.0
+    return score
+
+
+# Back-compat alias.
+_score_region = score_region
 
 
 def _passable_unknown(memory: MapMemory, obs: Observation, r: int, c: int) -> bool:
@@ -127,35 +198,6 @@ def partition_fog_regions(
     return regions
 
 
-def _score_region(
-    region: FogRegion,
-    *,
-    last_enemy: tuple[int, int] | None,
-    stacks: list[tuple[int, int, int]],
-    attempts: int,
-    turn: int,
-) -> float:
-    # Prefer candidate mass, enemy adjacency, smaller clearable regions late
-    score = float(region.candidate_mass) * 5.0 + float(region.size) * 0.15
-    if region.near_enemy:
-        score += 80.0
-    if last_enemy is not None and region.frontier:
-        fr, fc = region.frontier[0]
-        score += 40.0 / (1.0 + abs(fr - last_enemy[0]) + abs(fc - last_enemy[1]))
-    if stacks and region.frontier:
-        fr, fc = region.frontier[0]
-        best = min(abs(sr - fr) + abs(sc - fc) for sr, sc, _ in stacks)
-        score += 30.0 / (1.0 + best)
-        score += 0.05 * max(a for _, _, a in stacks)
-    # Deadline urgency: smaller regions become more valuable late
-    if turn >= 800:
-        score += 100.0 / max(1, region.size)
-    if turn >= 1050:
-        score += 150.0 / max(1, region.size)
-    score -= attempts * 25.0
-    return score
-
-
 def _mobile_stacks(obs: Observation) -> list[tuple[int, int, int]]:
     stacks: list[tuple[int, int, int]] = []
     for r in range(obs.height):
@@ -195,11 +237,15 @@ class ExplorationPlanner:
 
         if newly_revealed:
             state.last_reveal_turn = obs.turn
+            state.last_newly_scouted_turn = obs.turn
             state.stalled_turns = 0
+            state.scout_stall = 0
             state.target_progress += 1
         else:
             state.stalled_turns = obs.turn - state.last_reveal_turn
+            state.scout_stall = state.stalled_turns
 
+        state.prune_expired(obs.turn)
         regions = partition_fog_regions(obs, memory, gen_mask)
         state.unresolved_regions = len(regions)
         stacks = _mobile_stacks(obs)
@@ -208,24 +254,23 @@ class ExplorationPlanner:
         if state.current_target is not None:
             tr, tc = state.current_target
             if not _passable_unknown(memory, obs, tr, tc):
-                state.failed_targets.discard(state.current_target)
+                state.soft_fail_until.pop(state.current_target, None)
                 state.current_target = None
                 state.target_region_id = None
                 state.last_change_reason = "target_cleared_or_invalid"
 
-        # Stall recovery
+        # Stall recovery — soft cooldown only
         stalled = state.stalled_turns >= self.stall_turns and obs.turn > 40
         if stalled and state.current_target is not None:
-            state.failed_targets.add(state.current_target)
+            state.note_soft_fail(state.current_target, obs.turn)
             if state.target_region_id is not None:
-                state.region_attempts[state.target_region_id] = (
-                    state.region_attempts.get(state.target_region_id, 0) + 1
-                )
+                state.bump_region_attempt(state.target_region_id, obs.turn)
             state.current_target = None
             state.target_region_id = None
             state.last_change_reason = "stall_recovery"
             state.stalled_turns = 0
             state.last_reveal_turn = obs.turn  # reset stall clock after switch
+            state.scout_stall = 0
 
         # Retain existing valid target
         if state.current_target is not None:
@@ -237,19 +282,19 @@ class ExplorationPlanner:
 
         scored = sorted(
             regions,
-            key=lambda reg: -_score_region(
+            key=lambda reg: -score_region(
                 reg,
                 last_enemy=last_enemy,
                 stacks=stacks,
-                attempts=state.region_attempts.get(reg.region_id, 0),
+                attempts=decayed_region_attempts(state, reg.region_id, obs.turn),
                 turn=obs.turn,
             ),
         )
-        # Prefer frontiers not recently visited / not failed
+        # Prefer frontiers not recently visited / not soft-failed
         for reg in scored:
             candidates = list(reg.frontier) + list(reg.cells[:3])
             for cell in candidates:
-                if cell in state.failed_targets:
+                if state.is_soft_failed(cell, obs.turn):
                     continue
                 if cell in state.recent_cells[-8:]:
                     continue

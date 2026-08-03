@@ -28,6 +28,10 @@ POLICY_IMPORTS = {
         "from generals_bot.policies.heuristic_v2_qualifier import HeuristicV2QualifierPolicy",
         "HeuristicV2QualifierPolicy()",
     ),
+    "heuristic_v2f_plus_planner_terminal_fix": (
+        "from generals_bot.policies.heuristic_v2_ablations import create_ablation",
+        'create_ablation("heuristic_v2f_plus_planner_terminal_fix")',
+    ),
     "pass": (
         "from generals_bot.policies.pass_policy import PassPolicy",
         "PassPolicy()",
@@ -93,8 +97,14 @@ def build_heuristic_package(
     candidate: str = "heuristic_v0",
     *,
     out_dir: Path | None = None,
+    package_stem: str | None = None,
+    overwrite: bool = True,
 ) -> PackageReport:
-    """Build a ZIP with run.sh at the root for a heuristic baseline."""
+    """Build a ZIP with run.sh at the root for a heuristic baseline.
+
+    ``package_stem`` controls the ZIP basename (without ``_packaged.zip``).
+    Set ``overwrite=False`` to refuse clobbering an existing immutable package.
+    """
     out_dir = out_dir or (REPO_ROOT / "submission" / "packages")
     out_dir.mkdir(parents=True, exist_ok=True)
     if candidate not in POLICY_IMPORTS:
@@ -125,11 +135,13 @@ def build_heuristic_package(
             pkg_root / "run.sh",
             "#!/usr/bin/env bash\nset -euo pipefail\nexec python -u main.py\n",
         )
+        stem = package_stem or candidate
         _write_lf(
             pkg_root / "NOTICE.txt",
             "QuantSilico Generals competition submission package.\n"
             "Proprietary — All Rights Reserved.\n"
             f"candidate: {candidate}\n"
+            f"package_stem: {stem}\n"
             f"bot_commit: {bot_commit}\n"
             f"engine_commit: {engine_commit}\n",
         )
@@ -138,6 +150,7 @@ def build_heuristic_package(
             json.dumps(
                 {
                     "candidate": candidate,
+                    "package_stem": stem,
                     "bot_commit": bot_commit,
                     "engine_commit": engine_commit,
                     "architecture": "heuristic",
@@ -149,8 +162,10 @@ def build_heuristic_package(
         run_sh = pkg_root / "run.sh"
         run_sh.chmod(run_sh.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
-        zip_path = out_dir / f"{candidate}_packaged.zip"
+        zip_path = out_dir / f"{stem}_packaged.zip"
         if zip_path.exists():
+            if not overwrite:
+                raise FileExistsError(f"refusing to overwrite immutable package: {zip_path}")
             zip_path.unlink()
         with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
             for path in sorted(pkg_root.rglob("*")):
@@ -204,8 +219,9 @@ def build_heuristic_package(
             windows_validation="PENDING",
             linux_parity="NOT_RUN",
             upload_ready=False,
+            extra={"package_stem": stem},
         )
-        _write_report(out_dir, candidate, report)
+        _write_report(out_dir, stem, report)
         return report
     finally:
         shutil.rmtree(staging, ignore_errors=True)
