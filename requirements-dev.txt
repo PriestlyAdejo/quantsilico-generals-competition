@@ -1,0 +1,15 @@
+# Development dependencies for this private repository.
+#
+# Prefer installing via the package extras so versions stay aligned with
+# pyproject.toml:
+#
+#     python -m pip install -e ".[dev]"
+#
+# Official competition runtime versions are NOT duplicated here. Install them
+# from the pinned official engine submodule:
+#
+#     python -m pip install -r third_party/generals-bots/competition/requirements.txt
+#
+# That file is the authoritative lock for the evaluation sandbox.
+
+-e .[dev]

@@ -1,0 +1,5 @@
+# Opponent taxonomy — bootstrap skeleton only.
+version: 0
+notes: >
+  Populate after observing real opponents in evaluation. Do not invent styles.
+opponents: []

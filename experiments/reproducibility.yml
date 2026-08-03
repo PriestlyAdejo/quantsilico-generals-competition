@@ -1,0 +1,24 @@
+﻿version: 0
+repository: quantsilico-generals-competition
+status: bootstrap
+requested_python: "3.12.10"
+actual_python: "3.12.10"
+environment_parity: false
+linux_sandbox_parity: false
+official_smoke_match: failed
+official_smoke_match_notes: >
+  Windows/Git-Bash invocation of matchup.py spawned agents, but each agent
+  run.sh was executed via the Windows WSL bash launcher. Only the
+  docker-desktop WSL distro is present and lacks /bin/bash, so agents closed
+  stdout immediately. This is not Linux sandbox parity.
+official_engine:
+  repository: https://github.com/strakam/generals-bots
+  commit: "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462"
+  branch: master
+  requirements: third_party/generals-bots/competition/requirements.txt
+rules:
+  - pin the official engine as a submodule
+  - do not fabricate experiment results
+  - do not claim Linux sandbox parity from Windows/Git-Bash smoke tests
+  - record seeds, commits, and commands for every real experiment
+experiments: []
