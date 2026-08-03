@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE_9Q_DEVELOPMENT_ABC_TERMINAL_FIX",
+  "policy": "heuristic_v2f_plus_planner_terminal_fix",
+  "config_hash": "4c5466776180217b",
+  "groups": [
+    {
+      "name": "development_a",
+      "wins": 8,
+      "draws": 8,
+      "losses": 0,
+      "discovery_rate": 0.5,
+      "post_discovery_win_rate": 1.0,
+      "failure_classes": {
+        "FOG_NOT_CLEARED": 5,
+        "NO_CONTACT_DRAW": 2,
+        "GENERAL_NEVER_LOCATED": 1
+      }
+    },
+    {
+      "name": "development_b",
+      "wins": 6,
+      "draws": 10,
+      "losses": 0,
+      "discovery_rate": 0.375,
+      "post_discovery_win_rate": 1.0,
+      "failure_classes": {
+        "NO_CONTACT_DRAW": 8,
+        "FOG_NOT_CLEARED": 2
+      }
+    },
+    {
+      "name": "development_c",
+      "wins": 7,
+      "draws": 9,
+      "losses": 0,
+      "discovery_rate": 0.4375,
+      "post_discovery_win_rate": 1.0,
+      "failure_classes": {
+        "NO_CONTACT_DRAW": 4,
+        "FOG_NOT_CLEARED": 5
+      }
+    }
+  ],
+  "combined": {
+    "W": 21,
+    "D": 27,
+    "L": 0,
+    "discovery_rate": 0.4375,
+    "post_discovery_win_rate": 1.0
+  },
+  "development_gate": {
+    "passed": false,
+    "reasons": [
+      "combined_win_rate=0.438<0.50",
+      "discovery=0.438<0.60"
+    ]
+  },
+  "elapsed_s": 1424.975578499958
+}
