@@ -65,6 +65,27 @@ def run_parity(package_zip: Path, report_out: Path) -> dict:
         "cpu_limit_note": os.environ.get("PARITY_CPU_NOTE", "1 core / 2GB when launched via Docker/CI"),
     }
 
+    # Fail clearly when CI mounts a directory at a ZIP path (Docker creates a
+    # directory if the host file is missing / gitignored).
+    if package_zip.is_dir():
+        report["failure_reason"] = (
+            f"package path is a directory, not a ZIP file: {package_zip}. "
+            "Mount the parent directory and pass /pkg/<filename>.zip"
+        )
+        report_out.parent.mkdir(parents=True, exist_ok=True)
+        report_out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        return report
+    if not package_zip.is_file():
+        report["failure_reason"] = f"package path is not a regular file: {package_zip}"
+        report_out.parent.mkdir(parents=True, exist_ok=True)
+        report_out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        return report
+    if not zipfile.is_zipfile(package_zip):
+        report["failure_reason"] = f"package path is not a valid ZIP: {package_zip}"
+        report_out.parent.mkdir(parents=True, exist_ok=True)
+        report_out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        return report
+
     staging = Path(tempfile.mkdtemp(prefix="generals_parity_"))
     try:
         with zipfile.ZipFile(package_zip, "r") as zf:

@@ -3,14 +3,13 @@ name: Linux submission package parity
 on:
   workflow_dispatch:
     inputs:
-      package_path:
-        description: Path to package ZIP relative to repo root
+      candidate:
+        description: Heuristic candidate to build and test (ZIPs are gitignored)
         required: true
-        default: submission/packages/heuristic_v1_packaged.zip
+        default: heuristic_v1
   push:
     branches: [feature/full-research-platform-v0]
     paths:
-      - "submission/packages/**"
       - "scripts/parity/**"
       - "src/generals_bot/submission/**"
       - ".github/workflows/linux-submission-parity.yml"
@@ -27,23 +26,71 @@ jobs:
           submodules: recursive
           lfs: false
 
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.10"
+
+      - name: Install package builder deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Build submission package in job
+        id: build
+        env:
+          CANDIDATE: ${{ inputs.candidate || 'heuristic_v1' }}
+        run: |
+          set -euo pipefail
+          PKG_DIR="${RUNNER_TEMP}/parity-package"
+          mkdir -p "$PKG_DIR"
+          export PKG_DIR CANDIDATE
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from generals_bot.submission.builder import build_heuristic_package
+
+          candidate = os.environ["CANDIDATE"]
+          out_dir = Path(os.environ["PKG_DIR"])
+          report = build_heuristic_package(candidate, out_dir=out_dir)
+          print(report)
+          assert report.status == "PACKAGED", report
+          PY
+          PACKAGE_ZIP="$PKG_DIR/${CANDIDATE}_packaged.zip"
+          test -f "$PACKAGE_ZIP"
+          test ! -d "$PACKAGE_ZIP"
+          python scripts/parity/resolve_package_zip.py \
+            --package-zip "$PACKAGE_ZIP" \
+            --print-sha256 \
+            --print-root
+          echo "package_zip=$PACKAGE_ZIP" >> "$GITHUB_OUTPUT"
+          echo "package_dir=$PKG_DIR" >> "$GITHUB_OUTPUT"
+          echo "package_name=$(basename "$PACKAGE_ZIP")" >> "$GITHUB_OUTPUT"
+
       - name: Build parity image
         run: |
           docker build -f scripts/parity/Dockerfile.linux-parity -t generals-linux-parity:local .
 
       - name: Run package parity (network disabled, 1 CPU, 2G)
+        env:
+          PACKAGE_ZIP: ${{ steps.build.outputs.package_zip }}
+          PACKAGE_DIR: ${{ steps.build.outputs.package_dir }}
+          PACKAGE_NAME: ${{ steps.build.outputs.package_name }}
         run: |
+          set -euo pipefail
           mkdir -p experiments/manifests
+          # Mount the parent directory as /pkg — never mount a missing host path
+          # onto /pkg/package.zip (Docker would create a directory there).
           docker run --rm \
             --network=none \
             --cpus=1 \
             --memory=2g \
             -e PARITY_NETWORK=disabled \
             -e PARITY_CPU_NOTE="docker --cpus=1 --memory=2g --network=none" \
-            -v "$PWD/${{ inputs.package_path || 'submission/packages/heuristic_v1_packaged.zip' }}:/pkg/package.zip:ro" \
+            -v "${PACKAGE_DIR}:/pkg:ro" \
             -v "$PWD/experiments/manifests:/out" \
             generals-linux-parity:local \
-            /pkg/package.zip --report /out/linux_parity_report.json
+            "/pkg/${PACKAGE_NAME}" --report /out/linux_parity_report.json
 
       - name: Upload parity report
         uses: actions/upload-artifact@v4
