@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-import jax.numpy as jnp
-
 from generals_bot.action import KIND_MOVE, PASS_ACTION, Action
 from generals_bot.legal import enumerate_legal_actions, is_legal_action
 from generals_bot.observation import Observation
@@ -25,7 +23,9 @@ class TerminalWinCandidate:
     reason: str
 
 
-def _action_to_jax(action: Action) -> jnp.ndarray:
+def _action_to_jax(action: Action):
+    import jax.numpy as jnp
+
     return jnp.array(
         [action.kind, action.row, action.col, action.direction, action.split],
         dtype=jnp.int32,
@@ -107,6 +107,7 @@ def verify_touch_with_opponent_pass(
     action: Action,
 ) -> bool:
     """Step official transition with opponent PASS; true if perspective wins."""
+    import jax.numpy as jnp
     from generals import GeneralsEnv
 
     from generals_bot.evaluation.match import make_transition

@@ -2,26 +2,26 @@
   "schema_version": 1,
   "kind": "PHASE_9Q_DISCOVERY_MICRO",
   "policy": "heuristic_v2f_plus_planner_terminal_fix",
-  "config_hash": "7916e24eac7d06b8",
+  "config_hash": "8f7405fe9834161c",
   "corpus_size": 27,
-  "discovered": 5,
-  "discovery_rate": 0.18518518518518517,
-  "wins": 4,
-  "win_rate": 0.14814814814814814,
-  "elapsed_s": 1393.8092917999602,
+  "discovered": 8,
+  "discovery_rate": 0.2962962962962963,
+  "wins": 8,
+  "win_rate": 0.2962962962962963,
+  "elapsed_s": 978.8750507999794,
   "results": [
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s0_p1",
       "seed": 0,
       "position": 1,
       "prior_failure": "FOG_NOT_CLEARED",
-      "discovered": false,
-      "discovery_turn": null,
-      "wins": 0,
-      "draws": 1,
+      "discovered": true,
+      "discovery_turn": 633,
+      "wins": 1,
+      "draws": 0,
       "losses": 0,
-      "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 592
+      "failure_class": null,
+      "last_newly_scouted_turn": 661
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s1_p0",
@@ -34,7 +34,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 1084
+      "last_newly_scouted_turn": 511
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s1_p1",
@@ -59,8 +59,8 @@
       "wins": 0,
       "draws": 1,
       "losses": 0,
-      "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 1023
+      "failure_class": "NO_CONTACT_DRAW",
+      "last_newly_scouted_turn": 760
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s4_p1",
@@ -73,7 +73,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 1095
+      "last_newly_scouted_turn": 1058
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s5_p1",
@@ -81,12 +81,12 @@
       "position": 1,
       "prior_failure": "FOG_NOT_CLEARED",
       "discovered": true,
-      "discovery_turn": 947,
+      "discovery_turn": 678,
       "wins": 1,
       "draws": 0,
       "losses": 0,
       "failure_class": null,
-      "last_newly_scouted_turn": 975
+      "last_newly_scouted_turn": 825
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s6_p1",
@@ -99,7 +99,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 450
+      "last_newly_scouted_turn": 236
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s7_p0",
@@ -112,7 +112,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "GENERAL_NEVER_LOCATED",
-      "last_newly_scouted_turn": 95
+      "last_newly_scouted_turn": 94
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s8_p0",
@@ -125,7 +125,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 816
+      "last_newly_scouted_turn": 1128
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s8_p1",
@@ -133,12 +133,12 @@
       "position": 1,
       "prior_failure": "NO_CONTACT_DRAW",
       "discovered": true,
-      "discovery_turn": 427,
-      "wins": 0,
-      "draws": 1,
+      "discovery_turn": 1080,
+      "wins": 1,
+      "draws": 0,
       "losses": 0,
-      "failure_class": "DEATHTOUCH_NOT_EXPLOITED",
-      "last_newly_scouted_turn": 427
+      "failure_class": null,
+      "last_newly_scouted_turn": 1080
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s9_p1",
@@ -151,7 +151,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 602
+      "last_newly_scouted_turn": 616
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s11_p1",
@@ -164,7 +164,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 1117
+      "last_newly_scouted_turn": 774
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s12_p0",
@@ -177,7 +177,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 863
+      "last_newly_scouted_turn": 1085
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s13_p0",
@@ -185,25 +185,25 @@
       "position": 0,
       "prior_failure": "FOG_NOT_CLEARED",
       "discovered": true,
-      "discovery_turn": 923,
+      "discovery_turn": 650,
       "wins": 1,
       "draws": 0,
       "losses": 0,
       "failure_class": null,
-      "last_newly_scouted_turn": 943
+      "last_newly_scouted_turn": 663
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s14_p0",
       "seed": 14,
       "position": 0,
       "prior_failure": "NO_CONTACT_DRAW",
-      "discovered": false,
-      "discovery_turn": null,
-      "wins": 0,
-      "draws": 1,
+      "discovered": true,
+      "discovery_turn": 512,
+      "wins": 1,
+      "draws": 0,
       "losses": 0,
-      "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 818
+      "failure_class": null,
+      "last_newly_scouted_turn": 513
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s14_p1",
@@ -216,7 +216,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 920
+      "last_newly_scouted_turn": 825
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s15_p0",
@@ -229,12 +229,25 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 764
+      "last_newly_scouted_turn": 768
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s15_p1",
       "seed": 15,
       "position": 1,
+      "prior_failure": "NO_CONTACT_DRAW",
+      "discovered": true,
+      "discovery_turn": 687,
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "failure_class": null,
+      "last_newly_scouted_turn": 689
+    },
+    {
+      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s16_p0",
+      "seed": 16,
+      "position": 0,
       "prior_failure": "NO_CONTACT_DRAW",
       "discovered": false,
       "discovery_turn": null,
@@ -242,20 +255,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 1142
-    },
-    {
-      "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s16_p0",
-      "seed": 16,
-      "position": 0,
-      "prior_failure": "NO_CONTACT_DRAW",
-      "discovered": true,
-      "discovery_turn": 1113,
-      "wins": 1,
-      "draws": 0,
-      "losses": 0,
-      "failure_class": null,
-      "last_newly_scouted_turn": 1138
+      "last_newly_scouted_turn": 1033
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s16_p1",
@@ -263,12 +263,12 @@
       "position": 1,
       "prior_failure": "NO_CONTACT_DRAW",
       "discovered": true,
-      "discovery_turn": 642,
+      "discovery_turn": 457,
       "wins": 1,
       "draws": 0,
       "losses": 0,
       "failure_class": null,
-      "last_newly_scouted_turn": 826
+      "last_newly_scouted_turn": 478
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s18_p0",
@@ -281,20 +281,20 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 374
+      "last_newly_scouted_turn": 569
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s19_p0",
       "seed": 19,
       "position": 0,
       "prior_failure": "FOG_NOT_CLEARED",
-      "discovered": false,
-      "discovery_turn": null,
-      "wins": 0,
-      "draws": 1,
+      "discovered": true,
+      "discovery_turn": 1140,
+      "wins": 1,
+      "draws": 0,
       "losses": 0,
-      "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 1060
+      "failure_class": null,
+      "last_newly_scouted_turn": 1140
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s20_p1",
@@ -307,7 +307,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 379
+      "last_newly_scouted_turn": 675
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s21_p0",
@@ -320,7 +320,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 236
+      "last_newly_scouted_turn": 229
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s22_p1",
@@ -333,7 +333,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "FOG_NOT_CLEARED",
-      "last_newly_scouted_turn": 1139
+      "last_newly_scouted_turn": 1179
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s23_p0",
@@ -346,7 +346,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 761
+      "last_newly_scouted_turn": 800
     },
     {
       "replay_id": "heuristic_v2f_plus_planner_terminal_fix_s23_p1",
@@ -359,7 +359,7 @@
       "draws": 1,
       "losses": 0,
       "failure_class": "NO_CONTACT_DRAW",
-      "last_newly_scouted_turn": 763
+      "last_newly_scouted_turn": 1155
     }
   ],
   "gate": {

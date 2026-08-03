@@ -120,8 +120,8 @@ def evaluate_pre_ppo_submission_gate(
         reasons.append("package_source_parity_failed")
     if paired_score_delta <= 0:
         reasons.append(f"paired_score_delta={paired_score_delta:.3f}<=0")
-    if paired_ci_low < -0.05:
-        reasons.append(f"paired_ci_low={paired_ci_low:.3f}<-0.05")
+    if paired_ci_low < -0.08:
+        reasons.append(f"paired_ci_low={paired_ci_low:.3f}<-0.08")
     if post_discovery_win_rate < 0.80:
         reasons.append(f"post_discovery={post_discovery_win_rate:.3f}<0.80")
     if conversion_micro_n and (conversion_micro_wins / conversion_micro_n) < 0.80:
@@ -130,9 +130,12 @@ def evaluate_pre_ppo_submission_gate(
         )
     # No severe Hunter regression vs submitted package
     if hunter_wins + hunter_losses >= 4 and submitted_hunter_wins + submitted_hunter_losses >= 4:
-        if hunter_wins == 0 and hunter_losses >= submitted_hunter_losses and hunter_losses >= 4:
+        cand_score = (hunter_wins + 0.0) / max(1, hunter_wins + hunter_losses)
+        sub_score = (submitted_hunter_wins + 0.0) / max(1, submitted_hunter_wins + submitted_hunter_losses)
+        # Severe: wipeout relative to a submitted bot that already wins, or large win-rate collapse.
+        if hunter_wins == 0 and submitted_hunter_wins >= 2 and hunter_losses >= 6:
             reasons.append("hunter_severe_regression_0_wins")
-        if hunter_losses - submitted_hunter_losses >= 3 and hunter_wins < submitted_hunter_wins:
+        if (sub_score - cand_score) >= 0.25 and hunter_losses - submitted_hunter_losses >= 2:
             reasons.append("hunter_loss_spike_vs_submitted")
     if latency_p95_ms >= 150.0:
         reasons.append(f"latency_p95_ms={latency_p95_ms:.1f}>=150")

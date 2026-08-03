@@ -70,6 +70,12 @@ def _load_packaged_policy(package: Path, candidate: str):
             from generals_bot.policies.heuristic_v0 import HeuristicV0Policy
 
             return HeuristicV0Policy(), staging
+        if candidate == "heuristic_v2f_plus_planner_terminal_fix" or candidate.startswith(
+            "heuristic_v2_preppo_"
+        ):
+            from generals_bot.policies.heuristic_v2_ablations import create_ablation
+
+            return create_ablation("heuristic_v2f_plus_planner_terminal_fix"), staging
         raise KeyError(candidate)
     finally:
         # Keep path for subsequent acts in same process; caller removes staging.

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "kind": "CONVERSION_MICRO_REGRESSION",
   "policy": "heuristic_v2f_plus_planner_terminal_fix",
-  "config_hash": "4c5466776180217b",
+  "config_hash": "8f7405fe9834161c",
   "corpus_size": 10,
   "wins": 10,
   "conversion_rate": 1.0,
@@ -13,17 +13,17 @@
       "position": 0,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 822,
+      "terminal_turn": 803,
       "discovered": true,
-      "discovery_turn": 799,
+      "discovery_turn": 802,
       "failure_class": null,
       "extras": {
         "phase": "DEATHTOUCH_HUNT",
         "phase_reason": "deathtouch_known_general",
-        "mobile_army": 968,
-        "frontier_mobile_army": 847,
-        "largest_stranded_stack": 11,
-        "army_concentration_ratio": 0.875,
+        "mobile_army": 1077,
+        "frontier_mobile_army": 936,
+        "largest_stranded_stack": 39,
+        "army_concentration_ratio": 0.8690807799442897,
         "candidate_mask_size": 1,
         "dominant": true,
         "known_enemy_general": [
@@ -32,127 +32,60 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
         "scout_target": null,
-        "scout_region_id": 0,
+        "scout_region_id": 1,
         "scout_ttl": 40,
         "scout_stall": 0,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 120,
+        "scout_progress": 118,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 0,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 0,
+        "last_reveal_turn": 801,
+        "last_newly_scouted_turn": 801,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 0,
+        "region_attempt_keys": [
+          0,
+          1,
+          2
+        ],
         "general": [
           16,
           18
         ],
-        "discovery_turn": 799,
+        "discovery_turn": 802,
         "source": [
-          16,
-          17
+          15,
+          18
         ],
         "route": [
           [
-            16,
-            0
-          ],
-          [
             15,
-            0
-          ],
-          [
-            14,
-            0
-          ],
-          [
-            14,
-            1
-          ],
-          [
-            14,
-            2
-          ],
-          [
-            14,
-            3
-          ],
-          [
-            14,
-            4
-          ],
-          [
-            14,
-            5
-          ],
-          [
-            14,
-            6
-          ],
-          [
-            14,
-            7
-          ],
-          [
-            14,
-            8
-          ],
-          [
-            14,
-            9
-          ],
-          [
-            14,
-            10
-          ],
-          [
-            14,
-            11
-          ],
-          [
-            14,
-            12
-          ],
-          [
-            14,
-            13
-          ],
-          [
-            15,
-            13
-          ],
-          [
-            15,
-            14
-          ],
-          [
-            15,
-            15
-          ],
-          [
-            16,
-            15
-          ],
-          [
-            16,
-            16
-          ],
-          [
-            16,
-            17
+            18
           ],
           [
             16,
             18
           ]
         ],
-        "route_hash": "16,0|15,0|14,0|14,1|14,2|14,3|14,4|14,5|14,6|14,7|14,8|14,9|14,10|14,11|14,12|14,13|15,13|15,14|15,15|16,15|16,16|16,17|16,18",
-        "route_index": 21,
-        "last_progress_turn": 821,
+        "route_hash": "15,18|16,18",
+        "route_index": 0,
+        "last_progress_turn": 802,
         "replan_count": 1,
-        "blocked_reason": "source_followed_along_route",
+        "blocked_reason": "replan:initial",
         "deathtouch": true,
         "active": true,
-        "route_len": 23,
+        "route_len": 2,
         "terminal_win_candidates": 2
       }
     },
@@ -162,17 +95,17 @@
       "position": 0,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 811,
+      "terminal_turn": 834,
       "discovered": true,
-      "discovery_turn": 118,
+      "discovery_turn": 168,
       "failure_class": null,
       "extras": {
         "phase": "DEATHTOUCH_HUNT",
         "phase_reason": "deathtouch_known_general",
-        "mobile_army": 964,
-        "frontier_mobile_army": 926,
-        "largest_stranded_stack": 14,
-        "army_concentration_ratio": 0.9605809128630706,
+        "mobile_army": 789,
+        "frontier_mobile_army": 745,
+        "largest_stranded_stack": 22,
+        "army_concentration_ratio": 0.944233206590621,
         "candidate_mask_size": 1,
         "dominant": false,
         "known_enemy_general": [
@@ -181,33 +114,70 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
         "scout_target": null,
         "scout_region_id": 0,
         "scout_ttl": 40,
-        "scout_stall": 0,
+        "scout_stall": 2,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 42,
+        "scout_progress": 35,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 2,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 2,
+        "last_reveal_turn": 165,
+        "last_newly_scouted_turn": 165,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 0,
+        "region_attempt_keys": [],
         "general": [
           4,
           4
         ],
-        "discovery_turn": 118,
+        "discovery_turn": 168,
         "source": [
           4,
           3
         ],
         "route": [
           [
-            5,
-            5
+            7,
+            9
           ],
           [
-            6,
-            5
+            8,
+            9
+          ],
+          [
+            9,
+            9
+          ],
+          [
+            9,
+            8
+          ],
+          [
+            9,
+            7
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            6
+          ],
+          [
+            7,
+            6
           ],
           [
             7,
@@ -246,14 +216,14 @@
             4
           ]
         ],
-        "route_hash": "5,5|6,5|7,5|7,4|7,3|7,2|6,2|5,2|4,2|4,3|4,4",
-        "route_index": 9,
-        "last_progress_turn": 810,
-        "replan_count": 2,
+        "route_hash": "7,9|8,9|9,9|9,8|9,7|8,7|8,6|7,6|7,5|7,4|7,3|7,2|6,2|5,2|4,2|4,3|4,4",
+        "route_index": 15,
+        "last_progress_turn": 833,
+        "replan_count": 10,
         "blocked_reason": "source_followed_along_route",
         "deathtouch": true,
         "active": true,
-        "route_len": 11,
+        "route_len": 17,
         "terminal_win_candidates": 2
       }
     },
@@ -263,17 +233,17 @@
       "position": 1,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 156,
+      "terminal_turn": 818,
       "discovered": true,
-      "discovery_turn": 125,
+      "discovery_turn": 82,
       "failure_class": null,
       "extras": {
-        "phase": "GENERAL_HUNT",
-        "phase_reason": "enemy_general_visible_or_known",
-        "mobile_army": 93,
-        "frontier_mobile_army": 53,
-        "largest_stranded_stack": 10,
-        "army_concentration_ratio": 0.5698924731182796,
+        "phase": "DEATHTOUCH_HUNT",
+        "phase_reason": "deathtouch_known_general",
+        "mobile_army": 752,
+        "frontier_mobile_army": 698,
+        "largest_stranded_stack": 17,
+        "army_concentration_ratio": 0.9281914893617021,
         "candidate_mask_size": 1,
         "dominant": false,
         "known_enemy_general": [
@@ -282,26 +252,71 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
         "scout_target": null,
         "scout_region_id": 1,
         "scout_ttl": 40,
-        "scout_stall": 23,
+        "scout_stall": 0,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 42,
+        "scout_progress": 31,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 0,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 0,
+        "last_reveal_turn": 81,
+        "last_newly_scouted_turn": 81,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 0,
+        "region_attempt_keys": [],
         "general": [
           5,
           14
         ],
-        "discovery_turn": 125,
+        "discovery_turn": 82,
         "source": [
           5,
           15
         ],
         "route": [
+          [
+            18,
+            13
+          ],
+          [
+            17,
+            13
+          ],
+          [
+            16,
+            13
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            14,
+            13
+          ],
+          [
+            13,
+            13
+          ],
+          [
+            12,
+            13
+          ],
+          [
+            11,
+            13
+          ],
           [
             10,
             13
@@ -347,15 +362,15 @@
             14
           ]
         ],
-        "route_hash": "10,13|10,14|9,14|8,14|8,15|8,16|7,16|6,16|5,16|5,15|5,14",
-        "route_index": 9,
-        "last_progress_turn": 155,
-        "replan_count": 2,
-        "blocked_reason": "gather_until_15",
-        "deathtouch": false,
+        "route_hash": "18,13|17,13|16,13|15,13|14,13|13,13|12,13|11,13|10,13|10,14|9,14|8,14|8,15|8,16|7,16|6,16|5,16|5,15|5,14",
+        "route_index": 17,
+        "last_progress_turn": 817,
+        "replan_count": 1,
+        "blocked_reason": "source_followed_along_route",
+        "deathtouch": true,
         "active": true,
-        "route_len": 11,
-        "terminal_win_candidates": 1
+        "route_len": 19,
+        "terminal_win_candidates": 2
       }
     },
     {
@@ -364,17 +379,17 @@
       "position": 1,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 744,
+      "terminal_turn": 682,
       "discovered": true,
-      "discovery_turn": 717,
+      "discovery_turn": 660,
       "failure_class": null,
       "extras": {
         "phase": "GENERAL_HUNT",
         "phase_reason": "enemy_general_visible_or_known",
-        "mobile_army": 883,
-        "frontier_mobile_army": 682,
-        "largest_stranded_stack": 30,
-        "army_concentration_ratio": 0.7723669309173273,
+        "mobile_army": 972,
+        "frontier_mobile_army": 759,
+        "largest_stranded_stack": 12,
+        "army_concentration_ratio": 0.7808641975308642,
         "candidate_mask_size": 1,
         "dominant": true,
         "known_enemy_general": [
@@ -383,29 +398,46 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
-        "caution_active": false,
+        "caution_active": true,
         "scout_source": null,
         "scout_target": null,
         "scout_region_id": 1,
         "scout_ttl": 40,
-        "scout_stall": 8,
+        "scout_stall": 2,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 122,
+        "scout_progress": 115,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 2,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 2,
+        "last_reveal_turn": 657,
+        "last_newly_scouted_turn": 657,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 1,
+        "region_attempt_keys": [
+          0,
+          1,
+          2
+        ],
         "general": [
           13,
           4
         ],
-        "discovery_turn": 717,
+        "discovery_turn": 660,
         "source": [
           12,
           4
         ],
         "route": [
           [
-            9,
-            5
+            10,
+            4
           ],
           [
             10,
@@ -436,9 +468,9 @@
             4
           ]
         ],
-        "route_hash": "9,5|10,5|10,6|11,6|12,6|12,5|12,4|13,4",
+        "route_hash": "10,4|10,5|10,6|11,6|12,6|12,5|12,4|13,4",
         "route_index": 6,
-        "last_progress_turn": 743,
+        "last_progress_turn": 681,
         "replan_count": 2,
         "blocked_reason": "source_followed_along_route",
         "deathtouch": false,
@@ -453,17 +485,17 @@
       "position": 0,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 767,
+      "terminal_turn": 578,
       "discovered": true,
-      "discovery_turn": 737,
+      "discovery_turn": 572,
       "failure_class": null,
       "extras": {
         "phase": "GENERAL_HUNT",
         "phase_reason": "enemy_general_visible_or_known",
-        "mobile_army": 1062,
-        "frontier_mobile_army": 987,
-        "largest_stranded_stack": 7,
-        "army_concentration_ratio": 0.9293785310734464,
+        "mobile_army": 766,
+        "frontier_mobile_army": 683,
+        "largest_stranded_stack": 6,
+        "army_concentration_ratio": 0.891644908616188,
         "candidate_mask_size": 1,
         "dominant": true,
         "known_enemy_general": [
@@ -472,30 +504,45 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
         "scout_target": null,
-        "scout_region_id": 0,
+        "scout_region_id": 1,
         "scout_ttl": 40,
-        "scout_stall": 301,
+        "scout_stall": 13,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 72,
+        "scout_progress": 91,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 13,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 13,
+        "last_reveal_turn": 558,
+        "last_newly_scouted_turn": 558,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 2,
+        "region_attempt_keys": [
+          0,
+          2,
+          3,
+          4,
+          6
+        ],
         "general": [
           1,
           14
         ],
-        "discovery_turn": 737,
+        "discovery_turn": 572,
         "source": [
           2,
           14
         ],
         "route": [
-          [
-            5,
-            13
-          ],
           [
             5,
             14
@@ -525,14 +572,14 @@
             14
           ]
         ],
-        "route_hash": "5,13|5,14|5,15|4,15|3,15|2,15|2,14|1,14",
-        "route_index": 6,
-        "last_progress_turn": 766,
-        "replan_count": 2,
+        "route_hash": "5,14|5,15|4,15|3,15|2,15|2,14|1,14",
+        "route_index": 5,
+        "last_progress_turn": 577,
+        "replan_count": 1,
         "blocked_reason": "source_followed_along_route",
         "deathtouch": false,
         "active": true,
-        "route_len": 8,
+        "route_len": 7,
         "terminal_win_candidates": 2
       }
     },
@@ -542,17 +589,17 @@
       "position": 0,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 174,
+      "terminal_turn": 171,
       "discovered": true,
-      "discovery_turn": 144,
+      "discovery_turn": 169,
       "failure_class": null,
       "extras": {
         "phase": "GENERAL_HUNT",
         "phase_reason": "enemy_general_visible_or_known",
-        "mobile_army": 72,
-        "frontier_mobile_army": 70,
+        "mobile_army": 81,
+        "frontier_mobile_army": 80,
         "largest_stranded_stack": 2,
-        "army_concentration_ratio": 0.9722222222222222,
+        "army_concentration_ratio": 0.9876543209876543,
         "candidate_mask_size": 1,
         "dominant": true,
         "known_enemy_general": [
@@ -561,121 +608,44 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
         "scout_target": null,
         "scout_region_id": 2,
         "scout_ttl": 40,
-        "scout_stall": 31,
+        "scout_stall": 7,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 39,
+        "scout_progress": 33,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 7,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 7,
+        "last_reveal_turn": 161,
+        "last_newly_scouted_turn": 161,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 1,
+        "region_attempt_keys": [
+          3
+        ],
         "general": [
           4,
           0
         ],
-        "discovery_turn": 144,
+        "discovery_turn": 169,
         "source": [
           4,
           1
         ],
         "route": [
           [
-            16,
-            13
-          ],
-          [
-            16,
-            12
-          ],
-          [
-            15,
-            12
-          ],
-          [
-            15,
-            11
-          ],
-          [
-            14,
-            11
-          ],
-          [
-            14,
-            10
-          ],
-          [
-            13,
-            10
-          ],
-          [
-            12,
-            10
-          ],
-          [
-            11,
-            10
-          ],
-          [
-            10,
-            10
-          ],
-          [
-            9,
-            10
-          ],
-          [
-            8,
-            10
-          ],
-          [
-            7,
-            10
-          ],
-          [
-            7,
-            9
-          ],
-          [
-            6,
-            9
-          ],
-          [
-            6,
-            8
-          ],
-          [
-            6,
-            7
-          ],
-          [
-            6,
-            6
-          ],
-          [
-            6,
-            5
-          ],
-          [
-            6,
-            4
-          ],
-          [
-            6,
-            3
-          ],
-          [
-            5,
-            3
-          ],
-          [
-            5,
-            2
-          ],
-          [
-            4,
-            2
+            3,
+            1
           ],
           [
             4,
@@ -686,14 +656,14 @@
             0
           ]
         ],
-        "route_hash": "16,13|16,12|15,12|15,11|14,11|14,10|13,10|12,10|11,10|10,10|9,10|8,10|7,10|7,9|6,9|6,8|6,7|6,6|6,5|6,4|6,3|5,3|5,2|4,2|4,1|4,0",
-        "route_index": 24,
-        "last_progress_turn": 173,
+        "route_hash": "3,1|4,1|4,0",
+        "route_index": 1,
+        "last_progress_turn": 170,
         "replan_count": 1,
         "blocked_reason": "source_followed_along_route",
         "deathtouch": false,
         "active": true,
-        "route_len": 26,
+        "route_len": 3,
         "terminal_win_candidates": 2
       }
     },
@@ -703,17 +673,17 @@
       "position": 1,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 714,
+      "terminal_turn": 845,
       "discovered": true,
-      "discovery_turn": 702,
+      "discovery_turn": 817,
       "failure_class": null,
       "extras": {
-        "phase": "GENERAL_HUNT",
-        "phase_reason": "enemy_general_visible_or_known",
-        "mobile_army": 1099,
-        "frontier_mobile_army": 876,
-        "largest_stranded_stack": 72,
-        "army_concentration_ratio": 0.7970882620564149,
+        "phase": "DEATHTOUCH_HUNT",
+        "phase_reason": "deathtouch_known_general",
+        "mobile_army": 1095,
+        "frontier_mobile_army": 932,
+        "largest_stranded_stack": 13,
+        "army_concentration_ratio": 0.8511415525114155,
         "candidate_mask_size": 1,
         "dominant": true,
         "known_enemy_general": [
@@ -722,57 +692,138 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
         "scout_target": null,
-        "scout_region_id": 3,
+        "scout_region_id": 4,
         "scout_ttl": 40,
-        "scout_stall": 0,
+        "scout_stall": 13,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 114,
+        "scout_progress": 115,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 64,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 13,
+        "last_reveal_turn": 803,
+        "last_newly_scouted_turn": 752,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 3,
+        "region_attempt_keys": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
         "general": [
           16,
           13
         ],
-        "discovery_turn": 702,
+        "discovery_turn": 817,
         "source": [
           16,
           12
         ],
         "route": [
           [
-            14,
-            13
+            6,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            6,
+            3
+          ],
+          [
+            7,
+            3
+          ],
+          [
+            8,
+            3
+          ],
+          [
+            9,
+            3
+          ],
+          [
+            10,
+            3
+          ],
+          [
+            10,
+            4
+          ],
+          [
+            10,
+            5
+          ],
+          [
+            11,
+            5
+          ],
+          [
+            11,
+            6
+          ],
+          [
+            12,
+            6
           ],
           [
             13,
-            13
-          ],
-          [
-            12,
-            13
-          ],
-          [
-            12,
-            12
-          ],
-          [
-            12,
-            11
-          ],
-          [
-            12,
-            10
+            6
           ],
           [
             13,
-            10
+            7
           ],
           [
             14,
-            10
+            7
+          ],
+          [
+            15,
+            7
+          ],
+          [
+            15,
+            8
+          ],
+          [
+            15,
+            9
           ],
           [
             15,
@@ -795,14 +846,14 @@
             13
           ]
         ],
-        "route_hash": "14,13|13,13|12,13|12,12|12,11|12,10|13,10|14,10|15,10|15,11|16,11|16,12|16,13",
-        "route_index": 11,
-        "last_progress_turn": 713,
+        "route_hash": "6,0|5,0|4,0|4,1|4,2|5,2|6,2|6,3|7,3|8,3|9,3|10,3|10,4|10,5|11,5|11,6|12,6|13,6|13,7|14,7|15,7|15,8|15,9|15,10|15,11|16,11|16,12|16,13",
+        "route_index": 26,
+        "last_progress_turn": 844,
         "replan_count": 1,
         "blocked_reason": "source_followed_along_route",
-        "deathtouch": false,
+        "deathtouch": true,
         "active": true,
-        "route_len": 13,
+        "route_len": 28,
         "terminal_win_candidates": 2
       }
     },
@@ -819,10 +870,10 @@
       "extras": {
         "phase": "GENERAL_HUNT",
         "phase_reason": "enemy_general_visible_or_known",
-        "mobile_army": 644,
-        "frontier_mobile_army": 619,
+        "mobile_army": 621,
+        "frontier_mobile_army": 597,
         "largest_stranded_stack": 6,
-        "army_concentration_ratio": 0.9611801242236024,
+        "army_concentration_ratio": 0.961352657004831,
         "candidate_mask_size": 1,
         "dominant": true,
         "known_enemy_general": [
@@ -831,16 +882,31 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
         "scout_target": null,
         "scout_region_id": 1,
         "scout_ttl": 40,
-        "scout_stall": 29,
+        "scout_stall": 4,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 80,
+        "scout_progress": 75,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 29,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 4,
+        "last_reveal_turn": 482,
+        "last_newly_scouted_turn": 457,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 2,
+        "region_attempt_keys": [
+          1
+        ],
         "general": [
           2,
           10
@@ -925,17 +991,17 @@
       "position": 1,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 716,
+      "terminal_turn": 646,
       "discovered": true,
-      "discovery_turn": 697,
+      "discovery_turn": 628,
       "failure_class": null,
       "extras": {
         "phase": "GENERAL_HUNT",
         "phase_reason": "enemy_general_visible_or_known",
-        "mobile_army": 1490,
-        "frontier_mobile_army": 1335,
-        "largest_stranded_stack": 11,
-        "army_concentration_ratio": 0.8959731543624161,
+        "mobile_army": 1062,
+        "frontier_mobile_army": 959,
+        "largest_stranded_stack": 7,
+        "army_concentration_ratio": 0.9030131826741996,
         "candidate_mask_size": 1,
         "dominant": true,
         "known_enemy_general": [
@@ -944,41 +1010,62 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
         "scout_target": null,
-        "scout_region_id": 1,
+        "scout_region_id": 3,
         "scout_ttl": 40,
-        "scout_stall": 0,
+        "scout_stall": 11,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
-        "scout_progress": 111,
+        "scout_progress": 105,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 62,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 11,
+        "last_reveal_turn": 616,
+        "last_newly_scouted_turn": 565,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 3,
+        "region_attempt_keys": [
+          0,
+          1,
+          3
+        ],
         "general": [
           4,
           14
         ],
-        "discovery_turn": 697,
+        "discovery_turn": 628,
         "source": [
           4,
           13
         ],
         "route": [
           [
+            6,
+            8
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            7,
+            7
+          ],
+          [
             8,
-            5
+            7
           ],
           [
             9,
-            5
-          ],
-          [
-            10,
-            5
-          ],
-          [
-            10,
-            6
+            7
           ],
           [
             10,
@@ -1037,15 +1124,15 @@
             14
           ]
         ],
-        "route_hash": "8,5|9,5|10,5|10,6|10,7|10,8|10,9|10,10|9,10|8,10|7,10|6,10|5,10|4,10|4,11|4,12|4,13|4,14",
-        "route_index": 16,
-        "last_progress_turn": 715,
+        "route_hash": "6,8|7,8|7,7|8,7|9,7|10,7|10,8|10,9|10,10|9,10|8,10|7,10|6,10|5,10|4,10|4,11|4,12|4,13|4,14",
+        "route_index": 17,
+        "last_progress_turn": 645,
         "replan_count": 1,
         "blocked_reason": "source_followed_along_route",
         "deathtouch": false,
         "active": true,
-        "route_len": 18,
-        "terminal_win_candidates": 1
+        "route_len": 19,
+        "terminal_win_candidates": 2
       }
     },
     {
@@ -1054,17 +1141,17 @@
       "position": 0,
       "baseline_failure": "DEATHTOUCH_NOT_EXPLOITED",
       "won": true,
-      "terminal_turn": 225,
+      "terminal_turn": 314,
       "discovered": true,
-      "discovery_turn": 99,
+      "discovery_turn": 80,
       "failure_class": null,
       "extras": {
         "phase": "GENERAL_HUNT",
         "phase_reason": "enemy_general_visible_or_known",
-        "mobile_army": 96,
-        "frontier_mobile_army": 61,
-        "largest_stranded_stack": 12,
-        "army_concentration_ratio": 0.6354166666666666,
+        "mobile_army": 123,
+        "frontier_mobile_army": 108,
+        "largest_stranded_stack": 10,
+        "army_concentration_ratio": 0.8780487804878049,
         "candidate_mask_size": 1,
         "dominant": false,
         "known_enemy_general": [
@@ -1073,7 +1160,7 @@
         ],
         "castle_proposals": 0,
         "ablation": "heuristic_v2f_plus_planner_terminal_fix",
-        "config_hash": "4c5466776180217b",
+        "config_hash": "8f7405fe9834161c",
         "emergency_active": false,
         "caution_active": false,
         "scout_source": null,
@@ -1083,109 +1170,62 @@
         "scout_stall": 1,
         "scout_abort_reason": "higher_priority_threat_or_known_general",
         "scout_progress": 25,
+        "scout_b_source": null,
+        "scout_b_target": null,
+        "scout_b_region_id": null,
+        "scout_b_stall": 1,
+        "scout_b_abort_reason": "higher_priority_threat_or_known_general",
+        "target_region_id": null,
+        "stalled_turns": 1,
+        "last_reveal_turn": 78,
+        "last_newly_scouted_turn": 78,
+        "unresolved_regions": 0,
+        "target_change_reason": "enemy_general_known",
+        "soft_fail_active": 0,
+        "region_attempt_keys": [],
         "general": [
           0,
           2
         ],
-        "discovery_turn": 99,
+        "discovery_turn": 80,
         "source": [
           0,
-          1
+          3
         ],
         "route": [
           [
-            15,
-            3
-          ],
-          [
-            15,
-            2
-          ],
-          [
-            15,
-            1
-          ],
-          [
-            14,
-            1
-          ],
-          [
-            13,
-            1
-          ],
-          [
-            12,
-            1
-          ],
-          [
-            11,
-            1
-          ],
-          [
-            10,
-            1
-          ],
-          [
-            10,
-            0
-          ],
-          [
-            9,
-            0
-          ],
-          [
-            8,
-            0
-          ],
-          [
-            7,
-            0
-          ],
-          [
-            6,
-            0
-          ],
-          [
-            5,
-            0
-          ],
-          [
-            4,
-            0
+            3,
+            4
           ],
           [
             3,
-            0
+            3
           ],
           [
             2,
-            0
+            3
           ],
           [
             1,
-            0
+            3
           ],
           [
             0,
-            0
-          ],
-          [
-            0,
-            1
+            3
           ],
           [
             0,
             2
           ]
         ],
-        "route_hash": "15,3|15,2|15,1|14,1|13,1|12,1|11,1|10,1|10,0|9,0|8,0|7,0|6,0|5,0|4,0|3,0|2,0|1,0|0,0|0,1|0,2",
-        "route_index": 19,
-        "last_progress_turn": 224,
+        "route_hash": "3,4|3,3|2,3|1,3|0,3|0,2",
+        "route_index": 4,
+        "last_progress_turn": 313,
         "replan_count": 4,
         "blocked_reason": "source_followed_along_route",
         "deathtouch": false,
         "active": true,
-        "route_len": 21,
+        "route_len": 6,
         "terminal_win_candidates": 2
       }
     }

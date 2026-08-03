@@ -1,0 +1,155 @@
+{
+  "report": {
+    "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\submission\\packages\\heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+    "stem": "heuristic_v2_preppo_8f7405fe9834161c",
+    "config_hash": "8f7405fe9834161c"
+  },
+  "windows": {
+    "package": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\submission\\packages\\heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+    "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "structural_status": "PACKAGED",
+    "handshake": "PASS",
+    "eof_shutdown": "PASS",
+    "status": "PASS",
+    "notes": [
+      "structure validation only; Linux parity not implied",
+      "Windows clean-package handshake+EOF smoke PASS"
+    ],
+    "first_action": "0 0 1 3 0"
+  },
+  "parity": {
+    "schema_version": 1,
+    "kind": "SOURCE_PACKAGE_PARITY",
+    "candidate": "heuristic_v2f_plus_planner_terminal_fix",
+    "package": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\submission\\packages\\heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+    "package_sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "main_py_config_ok": true,
+    "castle_module_present": true,
+    "comparisons": [
+      {
+        "turn": 10,
+        "source_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "package_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "source_option": "SCOUT_TASK",
+        "package_option": "SCOUT_TASK",
+        "match": true
+      },
+      {
+        "turn": 100,
+        "source_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "package_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "source_option": "SCOUT_TASK",
+        "package_option": "SCOUT_TASK",
+        "match": true
+      },
+      {
+        "turn": 400,
+        "source_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "package_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "source_option": "SCOUT_TASK",
+        "package_option": "SCOUT_TASK",
+        "match": true
+      },
+      {
+        "turn": 800,
+        "source_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "package_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "source_option": "GENERAL_HUNT",
+        "package_option": "GENERAL_HUNT",
+        "match": true
+      },
+      {
+        "turn": 1050,
+        "source_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "package_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "source_option": "GENERAL_HUNT",
+        "package_option": "GENERAL_HUNT",
+        "match": true
+      },
+      {
+        "turn": 1150,
+        "source_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "package_action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "source_option": "GENERAL_HUNT",
+        "package_option": "GENERAL_HUNT",
+        "match": true
+      }
+    ],
+    "mismatches": [],
+    "exact_action_equivalence": true,
+    "status": "PASS"
+  }
+}
