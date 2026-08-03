@@ -28,21 +28,18 @@ Do not silently modify the official engine.
 
 ## Current implementation status
 
-**Bootstrap scaffold only.**
+**Feature branch in progress:** `feature/full-research-platform-v0`
 
-Implemented:
+Implemented through Phase 2a vertical slice:
 
-- repository layout
-- private Python package stub (`generals_bot`)
-- development bootstrap / verification scripts
-- architecture and research notes
+- protocol / legal actions / castle pricing
+- pass, legal-random, heuristic_v0 baselines
+- Windows-safe live-like match runner
+- CLI (`doctor`, `match`, `submission`)
+- heuristic submission package (`PACKAGED`, not `UPLOAD_READY`)
+- minimal dashboard sources (Arena / Replay / Overview)
 
-Not implemented:
-
-- bot strategies
-- reinforcement learning
-- submission packaging / uploads
-- HGB-PSRO learning components (documented as planned only)
+Still pending: heuristic v1 family, full dashboard stack install, learning, PSRO, explainability, Linux `UPLOAD_READY` gate.
 
 ## Planned tracks
 

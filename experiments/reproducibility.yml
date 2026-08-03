@@ -1,24 +1,32 @@
-﻿version: 0
+﻿version: 1
 repository: quantsilico-generals-competition
-status: bootstrap
+status: feature-branch-wip
+branch: feature/full-research-platform-v0
 requested_python: "3.12.10"
 actual_python: "3.12.10"
-environment_parity: false
+environment_parity: true
 linux_sandbox_parity: false
-official_smoke_match: failed
+official_smoke_match: pending
 official_smoke_match_notes: >
-  Windows/Git-Bash invocation of matchup.py spawned agents, but each agent
-  run.sh was executed via the Windows WSL bash launcher. Only the
-  docker-desktop WSL distro is present and lacks /bin/bash, so agents closed
-  stdout immediately. This is not Linux sandbox parity.
+  Windows bare `bash` resolves to WSL docker-desktop and fails.
+  Use Python-direct agent spawn and Git Bash at
+  C:\Program Files\Git\bin\bash.exe for run.sh smoke.
+  UPLOAD_READY requires a separate Linux parity gate.
 official_engine:
   repository: https://github.com/strakam/generals-bots
   commit: "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462"
   branch: master
   requirements: third_party/generals-bots/competition/requirements.txt
+seed_splits:
+  manifest: experiments/seeds/MANIFEST.sha256
+  train: experiments/seeds/train.txt
+  validation: experiments/seeds/validation.txt
+  promotion_holdout: experiments/seeds/promotion_holdout.txt
+  package_smoke: experiments/seeds/package_smoke.txt
 rules:
   - pin the official engine as a submodule
   - do not fabricate experiment results
   - do not claim Linux sandbox parity from Windows/Git-Bash smoke tests
   - record seeds, commits, and commands for every real experiment
+  - CUDA failure blocks GPU training only
 experiments: []

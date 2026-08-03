@@ -1,0 +1,91 @@
+:root {
+  --bg: #12151a;
+  --panel: #1a1f27;
+  --ink: #e6ebf2;
+  --muted: #9aa3b2;
+  --accent: #3d8bfd;
+  --grid: rgba(61, 139, 253, 0.08);
+  --font: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, #0e1116 0%, var(--bg) 40%),
+    repeating-linear-gradient(0deg, transparent, transparent 23px, var(--grid) 24px),
+    repeating-linear-gradient(90deg, transparent, transparent 23px, var(--grid) 24px);
+  min-height: 100vh;
+}
+.top {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #2a313c;
+  background: rgba(18, 21, 26, 0.92);
+}
+.brand {
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+.sub { color: var(--muted); margin-top: 0.2rem; }
+main {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 1.5rem 2rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 960px) {
+  main { grid-template-columns: 1fr 1fr; }
+  #overview { grid-column: 1 / -1; }
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid #2a313c;
+  border-radius: 4px;
+  padding: 1rem 1.1rem;
+}
+h1 { font-size: 1.05rem; margin: 0 0 0.75rem; letter-spacing: 0.03em; }
+label { display: block; margin-bottom: 0.55rem; color: var(--muted); font-size: 0.9rem; }
+select, input, button {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 3px;
+  border: 1px solid #3a4452;
+  background: #10141a;
+  color: var(--ink);
+  font: inherit;
+}
+button {
+  margin-top: 0.75rem;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #041018;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:focus, select:focus, input:focus { outline: 2px solid #7eb0ff; outline-offset: 2px; }
+pre, #replay-view {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  background: #0d1015;
+  padding: 0.75rem;
+  border-radius: 3px;
+  border: 1px solid #2a313c;
+  max-height: 320px;
+  overflow: auto;
+}
+.hint { color: var(--muted); font-size: 0.9rem; }
+#replay-list { list-style: none; padding: 0; }
+#replay-list li button {
+  width: auto;
+  display: inline-block;
+  margin: 0.2rem 0;
+  background: transparent;
+  color: var(--accent);
+  border-color: #3a4452;
+}

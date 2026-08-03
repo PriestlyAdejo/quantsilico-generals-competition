@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "records": [
+    "match_result",
+    "per_turn_telemetry",
+    "replay",
+    "policy_decision",
+    "experiment_manifest",
+    "model_manifest",
+    "training_event",
+    "explanation",
+    "promotion_report",
+    "submission_report"
+  ],
+  "notes": "All filesystem records must include schema_version."
+}

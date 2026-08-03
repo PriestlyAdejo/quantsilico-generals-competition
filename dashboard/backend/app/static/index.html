@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QuantSilico Generals Console</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">QuantSilico</div>
+    <div class="sub">Generals Research Console</div>
+  </header>
+  <main>
+    <section id="overview" class="panel">
+      <h1>Overview</h1>
+      <pre id="overview-data">loading…</pre>
+    </section>
+    <section id="arena" class="panel">
+      <h1>Arena</h1>
+      <form id="match-form">
+        <label>Candidate
+          <select name="candidate">
+            <option>heuristic_v0</option>
+            <option>pass</option>
+            <option>legal_random</option>
+            <option>expander</option>
+          </select>
+        </label>
+        <label>Opponent
+          <select name="opponent">
+            <option>expander</option>
+            <option>pass</option>
+            <option>legal_random</option>
+            <option>heuristic_v0</option>
+          </select>
+        </label>
+        <label>Seed <input name="seed" type="number" value="0" /></label>
+        <label>Max turns <input name="max_turns" type="number" value="50" /></label>
+        <button type="submit">Run match</button>
+      </form>
+      <pre id="match-result"></pre>
+    </section>
+    <section id="replay" class="panel">
+      <h1>Replay Lab</h1>
+      <p class="hint">Lists recorded match summaries under replays/private.</p>
+      <ul id="replay-list"></ul>
+      <pre id="replay-view"></pre>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

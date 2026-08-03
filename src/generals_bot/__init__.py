@@ -1,6 +1,3 @@
-"""Private QuantSilico Generals competition package.
-
-Bootstrap stage only: no bot strategy or learning components are implemented.
-"""
+"""Private QuantSilico Generals competition package."""
 
 __version__ = "0.1.0"

@@ -1,0 +1,15 @@
+"""Rules constants aligned with the official competition ruleset."""
+
+from __future__ import annotations
+
+DEATHTOUCH_TURN = 800
+DRAW_TURN = 1200
+LAND_GROWTH_PERIOD = 50
+CASTLE_BASE_COST = 35
+CASTLE_PROXIMITY_PENALTY = 14
+CASTLE_PROXIMITY_DECAY = 2
+MAP_SIZE_MIN = 18
+MAP_SIZE_MAX = 21
+FIRST_ACTION_DEADLINE_S = 10.0
+ACTION_DEADLINE_S = 0.150
+FAULT_BUDGET = 50

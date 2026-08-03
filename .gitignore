@@ -1,5 +1,6 @@
 # Virtual environments
 .venv/
+.venv-training/
 venv/
 .env/
 .envrc
@@ -29,11 +30,42 @@ build/
 .env.*
 !.env.example
 
+# Node / dashboard frontend
+dashboard/frontend/node_modules/
+dashboard/frontend/dist/
+*.tsbuildinfo
+
+# Runtime / dashboard state
+var/**
+!var/.gitkeep
+!var/dashboard/.gitkeep
+!var/jobs/.gitkeep
+!var/cache/.gitkeep
+!var/logs/.gitkeep
+!var/locks/.gitkeep
+!var/training/.gitkeep
+
 # Experiment artefacts (keep directory placeholders)
 experiments/raw/**
 !experiments/raw/.gitkeep
 experiments/checkpoints/**
 !experiments/checkpoints/.gitkeep
+experiments/datasets/**
+!experiments/datasets/.gitkeep
+experiments/explanations/**
+!experiments/explanations/.gitkeep
+experiments/explanation_evaluations/**
+!experiments/explanation_evaluations/.gitkeep
+experiments/policy_summaries/**
+!experiments/policy_summaries/.gitkeep
+experiments/payoff_matrices/**
+!experiments/payoff_matrices/.gitkeep
+experiments/promotion_reports/**
+!experiments/promotion_reports/.gitkeep
+experiments/summaries/**
+!experiments/summaries/.gitkeep
+experiments/public_exports/**
+!experiments/public_exports/.gitkeep
 
 # Private replays (keep directory placeholder)
 replays/private/**
@@ -41,12 +73,25 @@ replays/private/**
 
 # Submission archives
 submission/**/*.zip
+submission/packages/**
+!submission/packages/.gitkeep
 
-# Model weights and checkpoints
+# Model weights and checkpoints (keep registry placeholders)
+models/private/**
+!models/private/.gitkeep
+models/challengers/**
+!models/challengers/.gitkeep
+models/rejected/**
+!models/rejected/.gitkeep
 *.safetensors
 *.pt
 *.pth
 *.ckpt
+
+# SQLite dashboard index
+*.sqlite
+*.sqlite3
+*.db
 
 # JAX / tooling caches
 jax_cache/
