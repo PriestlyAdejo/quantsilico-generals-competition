@@ -153,6 +153,7 @@ def models() -> dict[str, Any]:
 def submission() -> dict[str, Any]:
     pkg = REPO_ROOT / "submission" / "packages" / "heuristic_v1_packaged.zip"
     report = REPO_ROOT / "submission" / "packages" / "heuristic_v1_packaged.report.json"
+    parity = REPO_ROOT / "experiments" / "manifests" / "linux_parity_report.json"
     payload: dict[str, Any] = {
         "schema_version": 1,
         "candidate": "heuristic_v1",
@@ -160,10 +161,22 @@ def submission() -> dict[str, Any]:
         "upload_ready": False,
         "package_exists": pkg.exists(),
         "package_path": str(pkg) if pkg.exists() else None,
-        "notes": ["UPLOAD_READY requires Linux parity gate"],
+        "manual_upload_instructions": "submission/MANUAL_UPLOAD.md",
+        "notes": ["No upload button; UPLOAD_READY requires Linux parity"],
     }
     if report.exists():
-        payload["report"] = json.loads(report.read_text(encoding="utf-8"))
+        rep = json.loads(report.read_text(encoding="utf-8"))
+        payload["report"] = rep
+        payload["status"] = rep.get("status", payload["status"])
+        payload["upload_ready"] = bool(rep.get("upload_ready"))
+        payload["package_hash"] = rep.get("sha256")
+        payload["zip_size"] = rep.get("zip_size")
+        payload["unpacked_size"] = rep.get("unpacked_size")
+        payload["file_count"] = rep.get("file_count")
+        payload["windows_validation"] = rep.get("windows_validation")
+        payload["linux_parity"] = rep.get("linux_parity")
+    if parity.exists():
+        payload["linux_parity_report"] = json.loads(parity.read_text(encoding="utf-8"))
     return payload
 
 

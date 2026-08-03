@@ -1,0 +1,15 @@
+# Approximates the competition Linux sandbox for package parity tests.
+# NOT a claim of bit-identical competition identity.
+FROM python:3.12.10-slim-bookworm
+
+RUN apt-get update && apt-get install -y --no-install-recommends bash ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt/parity
+COPY third_party/generals-bots/competition/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir torch==2.13.0 --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir -r /tmp/requirements.txt
+
+COPY scripts/parity/linux_package_parity.py /opt/parity/linux_package_parity.py
+ENV PYTHONUNBUFFERED=1
+ENTRYPOINT ["python", "-u", "/opt/parity/linux_package_parity.py"]

@@ -1,0 +1,62 @@
+name: Linux submission package parity
+
+on:
+  workflow_dispatch:
+    inputs:
+      package_path:
+        description: Path to package ZIP relative to repo root
+        required: true
+        default: submission/packages/heuristic_v1_packaged.zip
+  push:
+    branches: [feature/full-research-platform-v0]
+    paths:
+      - "submission/packages/**"
+      - "scripts/parity/**"
+      - "src/generals_bot/submission/**"
+      - ".github/workflows/linux-submission-parity.yml"
+
+jobs:
+  linux-parity:
+    runs-on: ubuntu-latest
+    # Approximate competition limits; not bit-identical identity.
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          lfs: false
+
+      - name: Build parity image
+        run: |
+          docker build -f scripts/parity/Dockerfile.linux-parity -t generals-linux-parity:local .
+
+      - name: Run package parity (network disabled, 1 CPU, 2G)
+        run: |
+          mkdir -p experiments/manifests
+          docker run --rm \
+            --network=none \
+            --cpus=1 \
+            --memory=2g \
+            -e PARITY_NETWORK=disabled \
+            -e PARITY_CPU_NOTE="docker --cpus=1 --memory=2g --network=none" \
+            -v "$PWD/${{ inputs.package_path || 'submission/packages/heuristic_v1_packaged.zip' }}:/pkg/package.zip:ro" \
+            -v "$PWD/experiments/manifests:/out" \
+            generals-linux-parity:local \
+            /pkg/package.zip --report /out/linux_parity_report.json
+
+      - name: Upload parity report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-parity-report
+          path: experiments/manifests/linux_parity_report.json
+
+      - name: Fail if parity failed
+        run: |
+          python - <<'PY'
+          import json, sys
+          report = json.load(open("experiments/manifests/linux_parity_report.json", encoding="utf-8"))
+          print(json.dumps(report, indent=2)[:2000])
+          sys.exit(0 if report.get("passed") else 1)
+          PY

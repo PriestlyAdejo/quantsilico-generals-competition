@@ -1,0 +1,86 @@
+{
+  "candidate": "heuristic_v1",
+  "package_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\submission\\packages\\heuristic_v1_packaged.zip",
+  "sha256": "4af60c94b16acdf20e27b315780f78dd1dc346e8f1fd5c563450cbdbfd32c863",
+  "zip_size": 62557,
+  "unpacked_size": 59045,
+  "file_count": 27,
+  "run_sh_present": true,
+  "status": "UPLOAD_READY",
+  "notes": [
+    "Windows package built; Linux parity required for UPLOAD_READY",
+    "structure validation only; Linux parity not implied",
+    "Windows clean-package handshake+EOF smoke PASS",
+    "Linux parity PASS; marked UPLOAD_READY (manual upload only)"
+  ],
+  "bot_commit": "11a9225d1562c2d42b4662db05d9d7981b793646",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "windows_validation": "PASS",
+  "linux_parity": "PASS",
+  "upload_ready": true,
+  "extra": {
+    "linux_report": {
+      "schema_version": 1,
+      "passed": true,
+      "failure_reason": "",
+      "package": "/pkg/package.zip",
+      "approximation_note": "Approximates competition Linux sandbox with pinned CPU deps; not a claim of exact competition-environment identity (image/kernel/cgroup differences may remain).",
+      "run_sh_present": true,
+      "lf_ok": true,
+      "executable_ok": true,
+      "build_sh_ran": false,
+      "board_sizes": [
+        {
+          "h": 3,
+          "w": 3,
+          "action": "0 0 0 1 0",
+          "latency_ms": 322.72850000026665,
+          "returncode": 0
+        },
+        {
+          "h": 5,
+          "w": 8,
+          "action": "0 0 0 1 0",
+          "latency_ms": 186.86944099999891,
+          "returncode": 0
+        },
+        {
+          "h": 10,
+          "w": 10,
+          "action": "0 0 0 1 0",
+          "latency_ms": 127.32222299973728,
+          "returncode": 0
+        },
+        {
+          "h": 15,
+          "w": 12,
+          "action": "0 0 0 1 0",
+          "latency_ms": 171.1020739999185,
+          "returncode": 0
+        },
+        {
+          "h": 21,
+          "w": 21,
+          "action": "0 0 0 1 0",
+          "latency_ms": 155.31010299991976,
+          "returncode": 0
+        }
+      ],
+      "latencies_ms": [
+        322.72850000026665,
+        186.86944099999891,
+        127.32222299973728,
+        171.1020739999185,
+        155.31010299991976
+      ],
+      "first_action_latency_ms": 322.72850000026665,
+      "latency_p50_ms": 171.1020739999185,
+      "latency_p95_ms": 186.86944099999891,
+      "latency_p99_ms": 322.72850000026665,
+      "peak_memory_mb": null,
+      "protocol_faults": 0,
+      "network": "disabled",
+      "cpu_limit_note": "docker --cpus=1 --memory=2g --network=none"
+    }
+  }
+}

@@ -75,6 +75,7 @@ replays/private/**
 submission/**/*.zip
 submission/packages/**
 !submission/packages/.gitkeep
+!submission/packages/*.report.json
 
 # Model weights and checkpoints (keep registry placeholders)
 models/private/**

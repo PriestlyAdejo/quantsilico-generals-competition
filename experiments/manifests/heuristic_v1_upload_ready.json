@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "candidate": "heuristic_v1",
+  "status": "UPLOAD_READY",
+  "upload_ready": true,
+  "sha256": "4af60c94b16acdf20e27b315780f78dd1dc346e8f1fd5c563450cbdbfd32c863",
+  "zip_size": 62557,
+  "unpacked_size": 59045,
+  "file_count": 27,
+  "windows_validation": "PASS",
+  "linux_parity": "PASS",
+  "bot_commit": "11a9225d1562c2d42b4662db05d9d7981b793646",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "package_path": "submission/packages/heuristic_v1_packaged.zip",
+  "manual_upload": "submission/MANUAL_UPLOAD.md",
+  "approximation_note": "Linux parity via Docker with --network=none --cpus=1 --memory=2g; not bit-identical competition identity."
+}
