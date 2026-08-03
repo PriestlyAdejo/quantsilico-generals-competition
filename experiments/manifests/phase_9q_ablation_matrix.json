@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE_9Q_ABLATION_MATRIX",
+  "candidates": {
+    "heuristic_v1_reference": {
+      "config_hash": "heuristic_v1",
+      "expander": {
+        "W": 0,
+        "D": 16,
+        "L": 0,
+        "win_rate": 0.0,
+        "discovery_rate": 0.3125,
+        "post_discovery_win_rate": 0.0,
+        "failure_classes": {
+          "FOG_NOT_CLEARED": 10,
+          "NO_CONTACT_DRAW": 1,
+          "DEATHTOUCH_NOT_EXPLOITED": 5
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 3,
+        "D": 0,
+        "L": 5,
+        "loss_rate": 0.625,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 5
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "PASS",
+      "progress": false
+    },
+    "heuristic_v2f_best_reference": {
+      "config_hash": "46cef5f83054eb10",
+      "expander": {
+        "W": 4,
+        "D": 12,
+        "L": 0,
+        "win_rate": 0.25,
+        "discovery_rate": 0.3125,
+        "post_discovery_win_rate": 0.8,
+        "failure_classes": {
+          "FOG_NOT_CLEARED": 5,
+          "NO_CONTACT_DRAW": 5,
+          "DEATHTOUCH_NOT_EXPLOITED": 1,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 0,
+        "D": 0,
+        "L": 8,
+        "loss_rate": 1.0,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 8
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "FAIL",
+      "progress": false
+    },
+    "heuristic_v2_9qd_latest": {
+      "config_hash": "9f60ffa_v2_qualifier",
+      "expander": {
+        "W": 1,
+        "D": 15,
+        "L": 0,
+        "win_rate": 0.0625,
+        "discovery_rate": 0.125,
+        "post_discovery_win_rate": 0.5,
+        "failure_classes": {
+          "FOG_NOT_CLEARED": 9,
+          "NO_CONTACT_DRAW": 4,
+          "DEATHTOUCH_NOT_EXPLOITED": 1,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 0,
+        "D": 0,
+        "L": 8,
+        "loss_rate": 1.0,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 8
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "FAIL",
+      "progress": false
+    },
+    "heuristic_v2f_restored": {
+      "config_hash": "84e6b1f01b9186ce",
+      "expander": {
+        "W": 4,
+        "D": 12,
+        "L": 0,
+        "win_rate": 0.25,
+        "discovery_rate": 0.3125,
+        "post_discovery_win_rate": 0.8,
+        "failure_classes": {
+          "FOG_NOT_CLEARED": 5,
+          "NO_CONTACT_DRAW": 5,
+          "DEATHTOUCH_NOT_EXPLOITED": 1,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 0,
+        "D": 0,
+        "L": 8,
+        "loss_rate": 1.0,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 8
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "FAIL",
+      "progress": false
+    },
+    "heuristic_v2f_plus_planner": {
+      "config_hash": "57631a7d77ebd3f5",
+      "expander": {
+        "W": 5,
+        "D": 11,
+        "L": 0,
+        "win_rate": 0.3125,
+        "discovery_rate": 0.5,
+        "post_discovery_win_rate": 0.625,
+        "failure_classes": {
+          "FOG_NOT_CLEARED": 5,
+          "NO_CONTACT_DRAW": 2,
+          "DEATHTOUCH_NOT_EXPLOITED": 3,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 3,
+        "D": 0,
+        "L": 5,
+        "loss_rate": 0.625,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 5
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "PASS",
+      "progress": false
+    },
+    "heuristic_v2f_plus_garrison": {
+      "config_hash": "6416c26d32d78266",
+      "expander": {
+        "W": 0,
+        "D": 16,
+        "L": 0,
+        "win_rate": 0.0,
+        "discovery_rate": 0.0,
+        "post_discovery_win_rate": null,
+        "failure_classes": {
+          "NO_CONTACT_DRAW": 15,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 0,
+        "D": 0,
+        "L": 8,
+        "loss_rate": 1.0,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 8
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "FAIL",
+      "progress": false
+    },
+    "heuristic_v2f_plus_hunter_intercept": {
+      "config_hash": "c8cfd9e2e9d923b5",
+      "expander": {
+        "W": 6,
+        "D": 10,
+        "L": 0,
+        "win_rate": 0.375,
+        "discovery_rate": 0.375,
+        "post_discovery_win_rate": 1.0,
+        "failure_classes": {
+          "FOG_NOT_CLEARED": 4,
+          "NO_CONTACT_DRAW": 5,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 0,
+        "D": 0,
+        "L": 8,
+        "loss_rate": 1.0,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 8
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "FAIL",
+      "progress": false
+    },
+    "heuristic_v2f_plus_planner_plus_garrison": {
+      "config_hash": "892bbc159765f1af",
+      "expander": {
+        "W": 0,
+        "D": 16,
+        "L": 0,
+        "win_rate": 0.0,
+        "discovery_rate": 0.0,
+        "post_discovery_win_rate": null,
+        "failure_classes": {
+          "NO_CONTACT_DRAW": 15,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 0,
+        "D": 0,
+        "L": 8,
+        "loss_rate": 1.0,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 8
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "FAIL",
+      "progress": false
+    },
+    "heuristic_v2f_plus_planner_plus_garrison_plus_intercept": {
+      "config_hash": "68a6f479ec41f582",
+      "expander": {
+        "W": 0,
+        "D": 16,
+        "L": 0,
+        "win_rate": 0.0,
+        "discovery_rate": 0.0,
+        "post_discovery_win_rate": null,
+        "failure_classes": {
+          "NO_CONTACT_DRAW": 15,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 0,
+        "D": 0,
+        "L": 8,
+        "loss_rate": 1.0,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 8
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "FAIL",
+      "progress": false
+    },
+    "heuristic_v2f_plus_planner_plus_intercept": {
+      "config_hash": "4e86af5fc0141c1b",
+      "expander": {
+        "W": 5,
+        "D": 11,
+        "L": 0,
+        "win_rate": 0.3125,
+        "discovery_rate": 0.5,
+        "post_discovery_win_rate": 0.625,
+        "failure_classes": {
+          "FOG_NOT_CLEARED": 5,
+          "NO_CONTACT_DRAW": 2,
+          "DEATHTOUCH_NOT_EXPLOITED": 3,
+          "GENERAL_NEVER_LOCATED": 1
+        },
+        "protocol_faults": 0
+      },
+      "hunter": {
+        "W": 3,
+        "D": 1,
+        "L": 4,
+        "loss_rate": 0.5,
+        "failure_classes": {
+          "GENERAL_DEFENCE_COLLAPSE": 4,
+          "FOG_NOT_CLEARED": 1
+        }
+      },
+      "smoke_expander_gate": "FAIL",
+      "smoke_hunter_gate": "PASS",
+      "progress": false
+    }
+  },
+  "elapsed_s": 4910.267873400007,
+  "ranked": [
+    "heuristic_v2f_plus_hunter_intercept",
+    "heuristic_v2f_plus_planner",
+    "heuristic_v2f_plus_planner_plus_intercept",
+    "heuristic_v2f_best_reference",
+    "heuristic_v2f_restored",
+    "heuristic_v2_9qd_latest",
+    "heuristic_v1_reference",
+    "heuristic_v2f_plus_garrison",
+    "heuristic_v2f_plus_planner_plus_garrison",
+    "heuristic_v2f_plus_planner_plus_garrison_plus_intercept"
+  ],
+  "best": "heuristic_v2f_plus_hunter_intercept",
+  "any_progress": false,
+  "note": "Added missing planner+intercept (no garrison) after garrison proved toxic"
+}

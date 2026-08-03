@@ -17,7 +17,7 @@ from generals_bot.selector import create_policy
 from generals_bot.training.bridge_benchmark import extract_numpy_boards
 from generals_bot.training.collect_bc import _action_to_jax, _observation_from_arrays
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def diagnose_game(policy_name: str, opponent: str, seed: int, swap: bool, max_turns: int = 1200) -> dict:

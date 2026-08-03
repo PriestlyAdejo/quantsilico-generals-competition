@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE_9Q_ABLATION_STATUS",
+  "phase": "9Q",
+  "status": "SMOKE_GATE_FAILED",
+  "starting_commit": "9f60ffabcd14ba7fd9824b696b5fcb74d1585a94",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "historical_v2f": {
+    "W": 8,
+    "D": 8,
+    "L": 0,
+    "reproduced": false,
+    "current_frozen_WDL": "4/12/0"
+  },
+  "smoke_gate": {
+    "expander_required": "0 losses, >=12/16 wins, 0 faults, 100% legal",
+    "hunter_required": "not 0/8 losses; preferably >= v1 3/5",
+    "any_progress": false
+  },
+  "rejected_modules": {
+    "general_garrison_current": "Toxic: 0/16 Expander, 0 discovery whenever enabled. Do not combine."
+  },
+  "useful_modules": {
+    "bounded_planner": "Expander 5/11, discovery 0.50, Hunter 3/0/5 (matches v1)",
+    "hunter_intercept": "Expander 6/10, discovery 0.375, post-discovery 1.0, but Hunter still 0/8"
+  },
+  "best_by_expander_wins": "heuristic_v2f_plus_hunter_intercept",
+  "best_balanced": "heuristic_v2f_plus_planner",
+  "pending": null,
+  "blocked": [
+    "development_a",
+    "development_b",
+    "development_c",
+    "holdout",
+    "packaging",
+    "Phase_10",
+    "PPO"
+  ],
+  "next_incomplete_gate": "smoke (>=12 Expander wins with non-catastrophic Hunter)",
+  "exact_blockers": [
+    "No ablation reaches 12 Expander wins (best 6/10)",
+    "Frozen v2f does not reproduce historical 8/8 on current runtime (4/12)",
+    "Garrison module cancels exploration globally despite design intent",
+    "Hunter intercept does not reduce general-loss vs Hunter opponent"
+  ],
+  "extra_candidate": {
+    "name": "heuristic_v2f_plus_planner_plus_intercept",
+    "expander": "5/11/0",
+    "hunter": "3/1/4",
+    "discovery": 0.5,
+    "result": "no better than planner alone on Expander; Hunter non-catastrophic"
+  }
+}

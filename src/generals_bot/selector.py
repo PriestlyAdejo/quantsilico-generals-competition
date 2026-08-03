@@ -12,7 +12,16 @@ from generals_bot.policies.heuristic_config import (
 )
 from generals_bot.policies.heuristic_v0 import HeuristicV0Policy
 from generals_bot.policies.heuristic_v1 import HeuristicV1Policy
+from generals_bot.policies.heuristic_v2_ablations import (
+    FLAGS,
+    V1_REFERENCE,
+    V2_9QD,
+    V2F_BEST,
+    V2F_RESTORED,
+    create_ablation,
+)
 from generals_bot.policies.heuristic_v2_qualifier import HeuristicV2QualifierPolicy
+from generals_bot.policies.heuristic_v2f_reference import HeuristicV2FReferencePolicy
 from generals_bot.policies.official_expander import OfficialExpanderPolicy
 from generals_bot.policies.official_hunter import OfficialHunterPolicy
 from generals_bot.policies.pass_policy import PassPolicy
@@ -31,10 +40,14 @@ def create_policy(name: str, **kwargs: Any) -> Any:
         return OfficialHunterPolicy()
     if key in {"heuristic_v0", "heuristic0", "hv0"}:
         return HeuristicV0Policy()
-    if key in {"heuristic_v1", "heuristic1", "hv1"}:
+    if key in {"heuristic_v1", "heuristic1", "hv1", V1_REFERENCE}:
         return HeuristicV1Policy()
-    if key in {"heuristic_v2_qualifier", "heuristic_v2", "hv2", "v2_qualifier"}:
+    if key in {"heuristic_v2_qualifier", "heuristic_v2", "hv2", "v2_qualifier", V2_9QD}:
         return HeuristicV2QualifierPolicy()
+    if key in {V2F_BEST, V2F_RESTORED, "heuristic_v2f_best_reference", "heuristic_v2f_restored"}:
+        return HeuristicV2FReferencePolicy()
+    if key in FLAGS:
+        return create_ablation(key)
     if key in {"heuristic_aggressive", "aggressive"}:
         return HeuristicV1Policy(config=AGGRESSIVE)
     if key in {"heuristic_defensive", "defensive"}:
@@ -54,7 +67,12 @@ def list_policies() -> list[str]:
         "official_hunter",
         "heuristic_v0",
         "heuristic_v1",
+        "heuristic_v1_reference",
         "heuristic_v2_qualifier",
+        "heuristic_v2_9qd_latest",
+        "heuristic_v2f_best_reference",
+        "heuristic_v2f_restored",
+        *sorted(FLAGS.keys()),
         "heuristic_aggressive",
         "heuristic_defensive",
         "heuristic_castle",
