@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "focal": "heuristic_v1",
+  "formula": "softmax-like ((1-wr)^1/T) with Laplace prior and probability floor",
+  "temperature": 1.0,
+  "probability_floor": 0.02,
+  "opponents": [
+    "pass",
+    "legal_random",
+    "heuristic_v0",
+    "heuristic_aggressive",
+    "heuristic_defensive",
+    "heuristic_castle",
+    "heuristic_deathtouch"
+  ],
+  "input_win_rates_smoothed": [
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "probabilities": [
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288
+  ],
+  "sum": 1.0000000000000002,
+  "source_payoff": {
+    "name": "population_smoke",
+    "seeds": 2,
+    "paired_positions": true,
+    "games_per_pairing": 4,
+    "seed_file": "experiments/seeds/train.txt",
+    "max_turns": 80,
+    "wall_clock_s": 300.0,
+    "label": "wiring_only"
+  },
+  "kind": "EMPIRICAL_PFSP"
+}

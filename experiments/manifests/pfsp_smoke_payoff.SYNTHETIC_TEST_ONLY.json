@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "kind": "SYNTHETIC_TEST_ONLY",
+  "note": "Earlier PFSP smoke payoff is wiring-only. Do not use for PFSP/PSRO/promotion/claims.",
+  "redirect_empirical": "experiments/manifests/payoff_population_smoke.json"
+}
