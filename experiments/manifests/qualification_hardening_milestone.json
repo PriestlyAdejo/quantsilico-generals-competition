@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "kind": "QUALIFICATION_HARDENING_MILESTONE",
+  "recording": "LOCAL_EMPIRICAL",
+  "starting_commit": "3da8796",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "portal": {
+    "kind": "OFFICIAL_PORTAL_OBSERVATION",
+    "heuristic_v1": {"expander": ["D", "D", "D"], "hunter": ["L", "W", "L"], "verdict": "NOT_QUALIFIED"},
+    "heuristic_v0": {"expander": ["D", "D", "D"], "hunter": ["W", "W", "L"], "verdict": "NOT_QUALIFIED"}
+  },
+  "package_source_parity_heuristic_v1": "PASS",
+  "castle_module_in_package": true,
+  "micro_expander_v2d": {
+    "seeds": 2,
+    "paired": true,
+    "games": 4,
+    "WDL": {"wins": 1, "draws": 3, "losses": 0},
+    "enemy_general_discovery_rate": 0.25,
+    "post_discovery_win_rate": 1.0,
+    "note": "First verified Expander win via discovery+conversion; remaining draws classified FOG_NOT_CLEARED / NO_CONTACT_DRAW"
+  },
+  "heuristic_v2_qualifier": {
+    "status": "CANDIDATE_IN_PROGRESS",
+    "champion_until_promoted": "heuristic_v1",
+    "UPLOAD_READY": false,
+    "package": null
+  },
+  "blocked": [
+    "full qualification_smoke/development/holdout not yet complete",
+    "120-minute PPO campaign",
+    "automatic upload"
+  ]
+}

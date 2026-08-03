@@ -108,6 +108,10 @@ def evaluate_promotion(
     empirical_payoff: bool = False,
     screen_passed: bool = False,
     holdout_passed: bool = False,
+    expander_wins: int | None = None,
+    expander_draws: int | None = None,
+    expander_losses: int | None = None,
+    learned_qualification_passed: bool = False,
 ) -> dict[str, Any]:
     reasons: list[str] = []
     decision = "INSUFFICIENT_EVIDENCE"
@@ -124,11 +128,29 @@ def evaluate_promotion(
     if challenger and screen_passed and not holdout_passed:
         reasons.append("promotion holdout not passed")
         decision = "INSUFFICIENT_EVIDENCE"
+    if challenger and not learned_qualification_passed:
+        reasons.append("learned qualification gate not passed (require Expander W/D/L)")
+        decision = "INSUFFICIENT_EVIDENCE"
+    if challenger and expander_wins is not None:
+        if expander_losses and expander_losses > 0:
+            reasons.append(f"Expander losses={expander_losses}; score_rate alone insufficient")
+            decision = "REJECTED_QUALIFICATION"
+        if expander_wins == 0 and (expander_draws or 0) > 0:
+            reasons.append("Expander draws without wins — conversion failure")
+            decision = "REJECTED_QUALIFICATION"
     if not linux_parity:
         reasons.append("Linux parity not verified; cannot mark UPLOAD_READY for Windows-only package")
     upload_ready = bool(linux_parity and package_windows and champion == "heuristic_v1" and challenger is None)
-    # Learned promotion only with full evidence
-    if challenger and screen_passed and holdout_passed and empirical_payoff and linux_parity:
+    # Learned promotion only with full evidence including W/D/L qualification
+    if (
+        challenger
+        and screen_passed
+        and holdout_passed
+        and empirical_payoff
+        and linux_parity
+        and learned_qualification_passed
+        and decision != "REJECTED_QUALIFICATION"
+    ):
         decision = "PROMOTED"
         upload_ready = True
     elif challenger and decision == "INSUFFICIENT_EVIDENCE":

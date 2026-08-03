@@ -52,21 +52,86 @@ class MapMemory:
                 self.last_owner[r][c] = observation.owner_grid[r][c]
                 self.last_army[r][c] = observation.army_grid[r][c]
 
-    def possible_enemy_general_mask(self, observation: Observation) -> list[list[bool]]:
-        """Cells that could still hide the enemy general."""
+    def possible_enemy_general_mask(
+        self,
+        observation: Observation,
+        *,
+        min_general_distance: int = 17,
+    ) -> list[list[bool]]:
+        """Cells that could still hide the enemy general (no privileged hidden state)."""
+        from generals_bot.protocol import TYPE_GENERAL
+
+        own_gen: tuple[int, int] | None = None
+        enemy_cells: list[tuple[int, int]] = []
+        for r in range(self.height):
+            for c in range(self.width):
+                if (
+                    observation.owner_grid[r][c] == OWNER_ME
+                    and observation.type_grid[r][c] == TYPE_GENERAL
+                ):
+                    own_gen = (r, c)
+                if observation.owner_grid[r][c] == OWNER_OPP:
+                    enemy_cells.append((r, c))
+                    if observation.type_grid[r][c] == TYPE_GENERAL:
+                        mask = [[False] * self.width for _ in range(self.height)]
+                        mask[r][c] = True
+                        return mask
+                # Remember last-seen enemy positions from memory
+                if self.last_owner[r][c] == OWNER_OPP:
+                    enemy_cells.append((r, c))
+
         mask = [[False] * self.width for _ in range(self.height)]
         for r in range(self.height):
             for c in range(self.width):
-                terrain = self.known_terrain[r][c]
-                if terrain == TYPE_MOUNTAIN:
+                if self.known_terrain[r][c] == TYPE_MOUNTAIN:
                     continue
-                owner_now = observation.owner_grid[r][c]
-                if owner_now == OWNER_ME:
+                if observation.owner_grid[r][c] == OWNER_ME:
                     continue
-                # Visible enemy general already found
-                if observation.type_grid[r][c] == 4 and owner_now == OWNER_OPP:
-                    mask[r][c] = True
+                cell_type = observation.type_grid[r][c]
+                # Only unresolved fog (or never seen) can still hide a general
+                if cell_type == TYPE_STRUCTURE_IN_FOG:
                     continue
-                if observation.type_grid[r][c] == TYPE_FOG or not self.ever_seen[r][c]:
-                    mask[r][c] = True
+                if cell_type != TYPE_FOG and self.ever_seen[r][c]:
+                    continue
+                if own_gen is not None:
+                    if abs(r - own_gen[0]) + abs(c - own_gen[1]) < min_general_distance:
+                        continue
+                if enemy_cells:
+                    if min(abs(r - er) + abs(c - ec) for er, ec in enemy_cells) > 10:
+                        # Still allow far fog if never contacted deeply — keep a thinner set
+                        if cell_type == TYPE_FOG and not self._adjacent_to_owned(observation, r, c):
+                            continue
+                mask[r][c] = True
         return mask
+
+    def _adjacent_to_owned(self, observation: Observation, r: int, c: int) -> bool:
+        for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < self.height and 0 <= nc < self.width:
+                if observation.owner_grid[nr][nc] == OWNER_ME:
+                    return True
+        return False
+
+    def enemy_frontier_fog_targets(self, observation: Observation) -> list[tuple[int, int, int]]:
+        """Return (row, col, priority) fog cells adjacent to us or to visible enemy."""
+        targets: list[tuple[int, int, int]] = []
+        for r in range(self.height):
+            for c in range(self.width):
+                if observation.type_grid[r][c] != TYPE_FOG:
+                    continue
+                pri = 0
+                for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+                    nr, nc = r + dr, c + dc
+                    if not (0 <= nr < self.height and 0 <= nc < self.width):
+                        continue
+                    if observation.owner_grid[nr][nc] == OWNER_OPP:
+                        pri = max(pri, 100)
+                    elif observation.owner_grid[nr][nc] == OWNER_ME:
+                        pri = max(pri, 40)
+                if pri:
+                    pri += min(50, self.info_age[r][c] // 5)
+                    if not self.ever_seen[r][c]:
+                        pri += 20
+                    targets.append((r, c, pri))
+        targets.sort(key=lambda x: -x[2])
+        return targets

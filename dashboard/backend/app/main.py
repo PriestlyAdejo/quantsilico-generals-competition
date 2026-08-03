@@ -31,6 +31,7 @@ ALLOWED_CANDIDATES = {
     "legal_random",
     "heuristic_v0",
     "heuristic_v1",
+    "heuristic_v2_qualifier",
     "heuristic_aggressive",
     "heuristic_defensive",
     "heuristic_castle",
@@ -272,6 +273,35 @@ def population() -> dict[str, Any]:
 @app.get("/api/explainability")
 def explainability() -> dict[str, Any]:
     return {"schema_version": 1, "explanations": []}
+
+
+@app.get("/api/qualification")
+def qualification() -> dict[str, Any]:
+    """Qualification view: portal observations + local W/D/L suites (real traces only)."""
+    portal = REPO_ROOT / "experiments" / "manifests" / "official_portal_results_2026-08-03.json"
+    suites_dir = REPO_ROOT / "experiments" / "manifests"
+    suite_files = sorted(suites_dir.glob("qualification_*.json"))
+    reward = REPO_ROOT / "experiments" / "manifests" / "ppo_reward_audit.json"
+    payload: dict[str, Any] = {
+        "schema_version": 1,
+        "kind": "QUALIFICATION_DASHBOARD",
+        "champion_until_promoted": "heuristic_v1",
+        "candidate_lineage": "heuristic_v2_qualifier",
+        "milestones": ["turn_800_deathtouch", "turn_1050_draw_avoidance", "turn_1150", "turn_1200"],
+        "portal": None,
+        "local_suites": [],
+        "reward_audit": None,
+        "note": "Wire real traces only; score_rate alone is insufficient.",
+    }
+    if portal.exists():
+        payload["portal"] = json.loads(portal.read_text(encoding="utf-8"))
+    for path in suite_files:
+        payload["local_suites"].append(
+            {"id": path.stem, "path": str(path.relative_to(REPO_ROOT)), "data": json.loads(path.read_text(encoding="utf-8"))}
+        )
+    if reward.exists():
+        payload["reward_audit"] = json.loads(reward.read_text(encoding="utf-8"))
+    return payload
 
 
 @app.get("/api/competition")

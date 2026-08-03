@@ -108,6 +108,23 @@ def cmd_submission_validate(args: argparse.Namespace) -> int:
     return 0 if report.status == "PACKAGED" else 1
 
 
+def cmd_qualification(args: argparse.Namespace) -> int:
+    from generals_bot.evaluation.qualification_runner import run_qualification_suite
+
+    out = Path(args.out) if args.out else (
+        REPO_ROOT / "experiments" / "manifests" / f"{args.preset}.json"
+    )
+    report = run_qualification_suite(
+        policies=args.policies,
+        preset_name=args.preset,
+        out_path=out,
+        wall_clock_s=args.wall_clock_s,
+    )
+    print(json.dumps({k: report[k] for k in report if k != "games"}, indent=2))
+    print(f"wrote {out}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="generals_bot")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -132,6 +149,17 @@ def build_parser() -> argparse.ArgumentParser:
     p_val = sub_sub.add_parser("validate")
     p_val.add_argument("--package", required=True)
     p_val.set_defaults(func=cmd_submission_validate)
+
+    p_qual = sub.add_parser("qualification", help="run Expander W/D/L qualification suite")
+    p_qual.add_argument("--preset", default="qualification_smoke")
+    p_qual.add_argument(
+        "--policies",
+        nargs="+",
+        default=["heuristic_v2_qualifier", "heuristic_v1", "heuristic_v0"],
+    )
+    p_qual.add_argument("--out", default="")
+    p_qual.add_argument("--wall-clock-s", type=float, default=None)
+    p_qual.set_defaults(func=cmd_qualification)
 
     return parser
 

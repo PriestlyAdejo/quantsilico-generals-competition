@@ -1,0 +1,18 @@
+# Qualification development: tuning suite (never use holdout for tuning).
+# 48 seeds × paired positions = 96 games per policy vs Expander.
+name: qualification_development
+seed_file: experiments/seeds/train.txt
+seeds: 48
+paired_positions: true
+max_turns: 1200
+opponents:
+  - official_expander
+label: development
+policies:
+  - heuristic_v2_qualifier
+  - heuristic_v1
+  - heuristic_v0
+hunter_info:
+  seeds: 12
+  opponent: official_hunter
+note: Report W/D/L; score_rate alone is forbidden for promotion.

@@ -1,0 +1,14 @@
+# Qualification smoke: wiring + gross regression detection.
+# 8 seeds × paired positions = 16 games per policy vs Expander.
+name: qualification_smoke
+seed_file: experiments/seeds/train.txt
+seeds: 8
+paired_positions: true
+max_turns: 1200
+opponents:
+  - official_expander
+label: wiring_and_gross_regression
+policies:
+  - heuristic_v2_qualifier
+  - heuristic_v1
+  - heuristic_v0

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "OFFICIAL_PORTAL_OBSERVATION",
+  "recording": "MANUALLY_RECORDED",
+  "upload_date": "2026-08-03",
+  "bot_commit_at_upload": "939561d",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "results": [
+    {
+      "candidate": "heuristic_v1",
+      "package_sha256": "4af60c94b16acdf20e27b315780f78dd1dc346e8f1fd5c563450cbdbfd32c863",
+      "expander": ["D", "D", "D"],
+      "hunter": ["L", "W", "L"],
+      "faults": 0,
+      "verdict": "NOT_QUALIFIED",
+      "note": "Expander is the qualification gate; Hunter is informational."
+    },
+    {
+      "candidate": "heuristic_v0",
+      "package_sha256": "8c2594561b9f3a5968b86d75c95a399f71f18f137f39cf7ba20228c0abc029dd",
+      "expander": ["D", "D", "D"],
+      "hunter": ["W", "W", "L"],
+      "faults": 0,
+      "verdict": "NOT_QUALIFIED",
+      "note": "Same Expander draw failure; Hunter stronger than v1 (possible v1 defence regression)."
+    }
+  ],
+  "interpretation": {
+    "blocker": "failure to convert Expander games into wins",
+    "hypothesis": "terminal conversion / fog clear / general hunt / Deathtouch, not expansion"
+  }
+}

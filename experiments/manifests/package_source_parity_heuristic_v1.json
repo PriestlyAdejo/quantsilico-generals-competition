@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "kind": "SOURCE_PACKAGE_PARITY",
+  "candidate": "heuristic_v1",
+  "package": "submission\\packages\\heuristic_v1_packaged.zip",
+  "package_sha256": "4af60c94b16acdf20e27b315780f78dd1dc346e8f1fd5c563450cbdbfd32c863",
+  "main_py_config_ok": true,
+  "castle_module_present": true,
+  "comparisons": [
+    {
+      "turn": 10,
+      "source_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "package_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "source_option": "EXPAND",
+      "package_option": "EXPAND",
+      "match": true
+    },
+    {
+      "turn": 100,
+      "source_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "package_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "source_option": "EXPAND",
+      "package_option": "EXPAND",
+      "match": true
+    },
+    {
+      "turn": 400,
+      "source_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "package_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "source_option": "EXPAND",
+      "package_option": "EXPAND",
+      "match": true
+    },
+    {
+      "turn": 800,
+      "source_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "package_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "source_option": "EXPAND",
+      "package_option": "EXPAND",
+      "match": true
+    },
+    {
+      "turn": 1050,
+      "source_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "package_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "source_option": "EXPAND",
+      "package_option": "EXPAND",
+      "match": true
+    },
+    {
+      "turn": 1150,
+      "source_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "package_action": [
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "source_option": "EXPAND",
+      "package_option": "EXPAND",
+      "match": true
+    }
+  ],
+  "mismatches": [],
+  "exact_action_equivalence": true,
+  "status": "PASS"
+}

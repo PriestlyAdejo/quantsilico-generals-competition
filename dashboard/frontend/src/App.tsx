@@ -12,6 +12,7 @@ const NAV = [
   ["/training", "Training"],
   ["/models", "Models"],
   ["/population", "Population"],
+  ["/qualification", "Qualification"],
   ["/explainability", "Explainability"],
   ["/champion", "Champion"],
   ["/submission", "Submission"],
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/training" element={<GenericPage title="Training" endpoint="/api/training" />} />
           <Route path="/models" element={<GenericPage title="Models" endpoint="/api/models" />} />
           <Route path="/population" element={<GenericPage title="Population" endpoint="/api/population" />} />
+          <Route path="/qualification" element={<GenericPage title="Qualification" endpoint="/api/qualification" />} />
           <Route path="/explainability" element={<GenericPage title="Explainability" endpoint="/api/explainability" />} />
           <Route path="/champion" element={<GenericPage title="Champion" endpoint="/api/models" />} />
           <Route path="/submission" element={<GenericPage title="Submission" endpoint="/api/submission" />} />

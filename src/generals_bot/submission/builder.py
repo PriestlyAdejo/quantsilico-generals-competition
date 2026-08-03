@@ -24,6 +24,10 @@ POLICY_IMPORTS = {
         "from generals_bot.policies.heuristic_v1 import HeuristicV1Policy",
         "HeuristicV1Policy()",
     ),
+    "heuristic_v2_qualifier": (
+        "from generals_bot.policies.heuristic_v2_qualifier import HeuristicV2QualifierPolicy",
+        "HeuristicV2QualifierPolicy()",
+    ),
     "pass": (
         "from generals_bot.policies.pass_policy import PassPolicy",
         "PassPolicy()",

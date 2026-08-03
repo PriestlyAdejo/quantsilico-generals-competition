@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kind": "PPO_REWARD_AUDIT",
+  "status": "IMPLEMENTED_CONFIG_NOT_CAMPAIGN",
+  "terminal_ablation": [
+    {
+      "win": 1.0,
+      "draw": 0.0,
+      "loss": -1.0,
+      "name": "win1_draw0_loss-1"
+    },
+    {
+      "win": 1.0,
+      "draw": -0.2,
+      "loss": -1.0,
+      "name": "win1_draw-0.2_loss-1"
+    }
+  ],
+  "default_for_smoke": {
+    "win": 1.0,
+    "draw": -0.2,
+    "loss": -1.0,
+    "name": "win1_draw-0.2_loss-1"
+  },
+  "findings": [
+    {
+      "signal": "land_dominance_delta",
+      "can_be_positive_on_draw": true,
+      "risk": "Turn-1200 territorial dominance can accumulate positive shaping without a win.",
+      "recommendation": "Zero or decay land shaping after turn 800; never treat draw as success."
+    },
+    {
+      "signal": "army_dominance_delta",
+      "can_be_positive_on_draw": true,
+      "risk": "Army lead at draw looks like success under dense shaping.",
+      "recommendation": "Cap army shaping; emphasise general-capture sparse bonus."
+    },
+    {
+      "signal": "castle_ownership",
+      "can_be_positive_on_draw": true,
+      "risk": "Castles produce ongoing army that can raise draw shaping without conversion.",
+      "recommendation": "Do not reward castle count alone after conversion phase."
+    },
+    {
+      "signal": "terminal_draw_as_zero",
+      "can_be_positive_on_draw": false,
+      "risk": "draw=0 makes Expander draw loops look as good as mixed W/L at score_rate 0.5.",
+      "recommendation": "Ablate DRAW_PENALTY (-0.2) vs DRAW_NEUTRAL; require W/D/L promotion metrics."
+    }
+  ],
+  "promotion_rule": "Do not promote on score_rate or mean reward alone; require Expander W/D/L and dominant-position conversion.",
+  "campaign_gate": "120-minute PPO campaign blocked until qualification-hardening passes."
+}

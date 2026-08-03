@@ -1,0 +1,17 @@
+# Immutable holdout — do not tune on these results.
+# Internal portal-retry readiness target (engineering, not portal threshold):
+#   zero protocol faults, zero illegal actions, zero Expander losses,
+#   >= 90% wins, <= 10% draws, successful dominant conversion,
+#   no severe Hunter-style defence regression.
+name: qualification_holdout
+seed_file: experiments/seeds/promotion_holdout.txt
+seeds: 48
+paired_positions: true
+max_turns: 1200
+opponents:
+  - official_expander
+label: immutable_holdout
+immutable: true
+policies:
+  - heuristic_v2_qualifier
+do_not_tune: true
