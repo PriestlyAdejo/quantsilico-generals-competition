@@ -1,0 +1,95 @@
+:root {
+  --bg: #12151a;
+  --panel: #1a1f27;
+  --ink: #e6ebf2;
+  --muted: #9aa3b2;
+  --accent: #3d8bfd;
+  --grid: rgba(61, 139, 253, 0.08);
+  --font: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, #0e1116 0%, var(--bg) 40%),
+    repeating-linear-gradient(0deg, transparent, transparent 23px, var(--grid) 24px),
+    repeating-linear-gradient(90deg, transparent, transparent 23px, var(--grid) 24px);
+  min-height: 100vh;
+}
+.shell { min-height: 100vh; }
+.top {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid #2a313c;
+  background: rgba(18, 21, 26, 0.92);
+}
+.brand { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.04em; }
+.sub { color: var(--muted); margin-top: 0.15rem; }
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0.75rem 1.2rem;
+  border-bottom: 1px solid #2a313c;
+}
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid #2a313c;
+  border-radius: 3px;
+}
+.nav a:hover, .nav a:focus { color: var(--ink); border-color: var(--accent); outline: none; }
+.main { padding: 1rem 1.2rem 2rem; }
+.panel {
+  background: var(--panel);
+  border: 1px solid #2a313c;
+  border-radius: 4px;
+  padding: 1rem;
+}
+h1 { margin: 0 0 0.75rem; font-size: 1.05rem; }
+.form label { display: block; margin-bottom: 0.55rem; color: var(--muted); }
+select, input, button {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 3px;
+  border: 1px solid #3a4452;
+  background: #10141a;
+  color: var(--ink);
+  font: inherit;
+}
+button {
+  margin-top: 0.75rem;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #041018;
+  font-weight: 600;
+  cursor: pointer;
+}
+pre {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  background: #0d1015;
+  padding: 0.75rem;
+  border-radius: 3px;
+  border: 1px solid #2a313c;
+  max-height: 420px;
+  overflow: auto;
+}
+.hint { color: var(--muted); }
+.list { list-style: none; padding: 0; }
+.list button {
+  width: auto;
+  display: inline-block;
+  background: transparent;
+  color: var(--accent);
+  border-color: #3a4452;
+}
+@media (min-width: 900px) {
+  .form { max-width: 420px; }
+}

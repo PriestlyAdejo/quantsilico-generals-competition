@@ -1,6 +1,7 @@
-"""Minimal FastAPI research dashboard (Arena + Replay Lab).
+"""QuantSilico Generals research dashboard API.
 
-Bind to 127.0.0.1 only. Jobs are allowlisted; no arbitrary shell/paths/Git.
+Binds to 127.0.0.1 only. Jobs and paths are allowlisted.
+Runs from .venv-training. CLI remains independent.
 """
 
 from __future__ import annotations
@@ -17,13 +18,36 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-ALLOWED_CANDIDATES = {"pass", "pass_bot", "legal_random", "heuristic_v0", "expander"}
-ALLOWED_JOBS = {"MATCH"}
+ALLOWED_ROOTS = {
+    REPO_ROOT / "replays" / "private",
+    REPO_ROOT / "experiments",
+    REPO_ROOT / "models",
+    REPO_ROOT / "submission" / "packages",
+    REPO_ROOT / "var" / "dashboard",
+}
+ALLOWED_CANDIDATES = {
+    "pass",
+    "pass_bot",
+    "legal_random",
+    "heuristic_v0",
+    "heuristic_v1",
+    "heuristic_aggressive",
+    "heuristic_defensive",
+    "heuristic_castle",
+    "heuristic_deathtouch",
+    "expander",
+}
+ALLOWED_JOBS = {"MATCH", "SUBMISSION_VALIDATE"}
 
-app = FastAPI(title="QuantSilico Generals Research Console", version="0.1.0")
+app = FastAPI(title="QuantSilico Generals Research Console", version="0.2.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:8765", "http://localhost:8765", "http://127.0.0.1:5173"],
+    allow_origins=[
+        "http://127.0.0.1:8765",
+        "http://localhost:8765",
+        "http://127.0.0.1:5173",
+        "http://localhost:5173",
+    ],
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
@@ -38,32 +62,109 @@ class MatchRequest(BaseModel):
     record_replay: bool = True
 
 
+def _git(*args: str, cwd: Path | None = None) -> str:
+    return subprocess.check_output(
+        ["git", *args], cwd=str(cwd or REPO_ROOT), text=True
+    ).strip()
+
+
+def _assert_allowlisted_path(path: Path) -> Path:
+    resolved = path.resolve()
+    for root in ALLOWED_ROOTS:
+        try:
+            resolved.relative_to(root.resolve())
+            return resolved
+        except ValueError:
+            continue
+    raise HTTPException(400, "path not allowlisted")
+
+
 @app.get("/api/health")
 def health() -> dict[str, Any]:
-    return {"status": "ok", "bind": "127.0.0.1", "repo": str(REPO_ROOT)}
+    return {
+        "status": "ok",
+        "bind": "127.0.0.1",
+        "repo": str(REPO_ROOT),
+        "env": "training",
+        "schema_version": 1,
+    }
 
 
 @app.get("/api/overview")
 def overview() -> dict[str, Any]:
-    import subprocess as sp
-
-    branch = sp.check_output(["git", "branch", "--show-current"], cwd=REPO_ROOT, text=True).strip()
-    commit = sp.check_output(["git", "rev-parse", "HEAD"], cwd=REPO_ROOT, text=True).strip()
-    dirty_out = sp.check_output(["git", "status", "--porcelain"], cwd=REPO_ROOT, text=True)
-    dirty = dirty_out.strip() != ""
-    engine = sp.check_output(
-        ["git", "rev-parse", "HEAD"],
-        cwd=REPO_ROOT / "third_party" / "generals-bots",
-        text=True,
-    ).strip()
     return {
-        "branch": branch,
-        "commit": commit,
-        "dirty": dirty,
-        "engine_commit": engine,
-        "champion": "heuristic_v0",
         "schema_version": 1,
+        "branch": _git("branch", "--show-current"),
+        "commit": _git("rev-parse", "HEAD"),
+        "dirty": bool(_git("status", "--porcelain")),
+        "engine_commit": _git(
+            "rev-parse", "HEAD", cwd=REPO_ROOT / "third_party" / "generals-bots"
+        ),
+        "champion": "heuristic_v1",
+        "champion_status": "PACKAGED",
+        "package": "submission/packages/heuristic_v1_packaged.zip",
+        "active_jobs": [],
+        "latest_experiment": None,
     }
+
+
+@app.get("/api/repository")
+def repository() -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "remote": "origin",
+        "branch": _git("branch", "--show-current"),
+        "commit": _git("rev-parse", "HEAD"),
+        "dirty": bool(_git("status", "--porcelain")),
+        "recent_commits": _git("log", "-5", "--oneline").splitlines(),
+        "engine_commit": _git(
+            "rev-parse", "HEAD", cwd=REPO_ROOT / "third_party" / "generals-bots"
+        ),
+        "privacy": "private",
+    }
+
+
+@app.get("/api/experiments")
+def experiments() -> dict[str, Any]:
+    root = REPO_ROOT / "experiments" / "manifests"
+    items = []
+    if root.exists():
+        for path in sorted(root.glob("*.json")):
+            items.append(json.loads(path.read_text(encoding="utf-8")))
+    return {"schema_version": 1, "experiments": items}
+
+
+@app.get("/api/models")
+def models() -> dict[str, Any]:
+    root = REPO_ROOT / "models" / "registry"
+    items = []
+    if root.exists():
+        for path in sorted(root.glob("*.json")):
+            items.append(json.loads(path.read_text(encoding="utf-8")))
+    return {
+        "schema_version": 1,
+        "models": items,
+        "champion": "heuristic_v1",
+        "challengers": [],
+    }
+
+
+@app.get("/api/submission")
+def submission() -> dict[str, Any]:
+    pkg = REPO_ROOT / "submission" / "packages" / "heuristic_v1_packaged.zip"
+    report = REPO_ROOT / "submission" / "packages" / "heuristic_v1_packaged.report.json"
+    payload: dict[str, Any] = {
+        "schema_version": 1,
+        "candidate": "heuristic_v1",
+        "status": "PACKAGED",
+        "upload_ready": False,
+        "package_exists": pkg.exists(),
+        "package_path": str(pkg) if pkg.exists() else None,
+        "notes": ["UPLOAD_READY requires Linux parity gate"],
+    }
+    if report.exists():
+        payload["report"] = json.loads(report.read_text(encoding="utf-8"))
+    return payload
 
 
 @app.get("/api/replays")
@@ -72,22 +173,36 @@ def list_replays() -> dict[str, Any]:
     items = []
     if root.exists():
         for path in sorted(root.glob("*.json")):
-            items.append({"id": path.stem, "path": str(path), "name": path.name})
+            items.append({"id": path.stem, "name": path.name})
     return {"schema_version": 1, "replays": items}
 
 
 @app.get("/api/replays/{replay_id}")
 def get_replay(replay_id: str) -> dict[str, Any]:
-    # Path allowlist: only private replay JSON by stem
     if "/" in replay_id or "\\" in replay_id or ".." in replay_id:
         raise HTTPException(400, "invalid replay id")
-    path = REPO_ROOT / "replays" / "private" / f"{replay_id}.json"
+    path = _assert_allowlisted_path(
+        REPO_ROOT / "replays" / "private" / f"{replay_id}.json"
+    )
     if not path.exists():
         raise HTTPException(404, "replay not found")
     data = json.loads(path.read_text(encoding="utf-8"))
     data["schema_version"] = data.get("schema_version", 1)
-    data["privileged_label"] = None
+    data["privileged_label"] = "TRAINING / DEBUG PRIVILEGED VIEW — NOT AVAILABLE TO THE POLICY"
     return data
+
+
+@app.get("/api/jobs/allowlist")
+def job_allowlist() -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "jobs": sorted(ALLOWED_JOBS),
+        "candidates": sorted(ALLOWED_CANDIDATES),
+        "cli_map": {
+            "MATCH": "python -m generals_bot.cli.main match ...",
+            "SUBMISSION_VALIDATE": "python -m generals_bot.cli.main submission validate ...",
+        },
+    }
 
 
 @app.post("/api/jobs/match")
@@ -96,8 +211,11 @@ def run_match(req: MatchRequest) -> dict[str, Any]:
         raise HTTPException(400, "job type not allowlisted")
     if req.candidate not in ALLOWED_CANDIDATES or req.opponent not in ALLOWED_CANDIDATES:
         raise HTTPException(400, "candidate/opponent not allowlisted")
+    # Prefer competition .venv python for matches when available.
+    competition_py = REPO_ROOT / ".venv" / "Scripts" / "python.exe"
+    python = str(competition_py if competition_py.exists() else sys.executable)
     cmd = [
-        sys.executable,
+        python,
         "-m",
         "generals_bot.cli.main",
         "match",
@@ -112,13 +230,7 @@ def run_match(req: MatchRequest) -> dict[str, Any]:
         cmd.extend(["--max-turns", str(req.max_turns)])
     if req.record_replay:
         cmd.append("--record-replay")
-    result = subprocess.run(
-        cmd,
-        cwd=str(REPO_ROOT),
-        capture_output=True,
-        text=True,
-        check=False,
-    )
+    result = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True, check=False)
     if result.returncode != 0:
         raise HTTPException(
             500,
@@ -133,8 +245,32 @@ def run_match(req: MatchRequest) -> dict[str, Any]:
     return payload
 
 
+# Empty-state pages — real data only, no synthetic metrics.
+@app.get("/api/training")
+def training() -> dict[str, Any]:
+    return {"schema_version": 1, "campaigns": [], "active": None}
+
+
+@app.get("/api/population")
+def population() -> dict[str, Any]:
+    return {"schema_version": 1, "population": [], "payoff_matrix": None}
+
+
+@app.get("/api/explainability")
+def explainability() -> dict[str, Any]:
+    return {"schema_version": 1, "explanations": []}
+
+
+@app.get("/api/competition")
+def competition() -> dict[str, Any]:
+    return {"schema_version": 1, "submissions": [], "note": "manual records only"}
+
+
 STATIC_DIR = Path(__file__).resolve().parent / "static"
-if STATIC_DIR.exists():
+FRONTEND_DIST = REPO_ROOT / "dashboard" / "frontend" / "dist"
+if FRONTEND_DIST.exists():
+    app.mount("/", StaticFiles(directory=str(FRONTEND_DIST), html=True), name="frontend")
+elif STATIC_DIR.exists():
     app.mount("/", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")
 
 
