@@ -18,7 +18,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 OUT = REPO / "experiments" / "manifests" / "arena_browser_smoke.json"
 BASE = "http://127.0.0.1:8765"
-CANDIDATE = "heuristic_v2f_plus_planner_terminal_form"
+CANDIDATE = "heuristic_v2f_plus_planner_terminal_fix"
 OPPONENT = "expander"
 SEED = 7
 MAX_TURNS = 50

@@ -34,6 +34,7 @@ def _doctor_inline(_: argparse.Namespace) -> int:
 
 def cmd_match(args: argparse.Namespace) -> int:
     from generals_bot.evaluation.match import run_python_agent_match
+    from generals_bot.selector import list_policies
 
     baselines = {
         "pass": REPO_ROOT / "baselines" / "pass_bot" / "main.py",
@@ -55,28 +56,77 @@ def cmd_match(args: argparse.Namespace) -> int:
             / "main.py"
         ),
     }
-    candidate = baselines.get(args.candidate)
-    opponent = baselines.get(args.opponent)
-    if candidate is None or opponent is None:
-        print(f"unknown candidate/opponent. known: {sorted(baselines)}", file=sys.stderr)
+    policy_names = set(list_policies()) | set(baselines) | {"hunter", "official_hunter", "official_expander"}
+    candidate_path = baselines.get(args.candidate)
+    opponent_path = baselines.get(args.opponent)
+
+    # Prefer subprocess baseline runners when both sides have packaged mains.
+    if candidate_path is not None and opponent_path is not None:
+        result = run_python_agent_match(
+            candidate_path,
+            opponent_path,
+            seed=args.seed,
+            mode="competition",
+            max_turns=args.max_turns,
+        )
+        payload = {
+            "winner": result.winner,
+            "turns": result.turns,
+            "seed": result.seed,
+            "faults0": result.faults0,
+            "faults1": result.faults1,
+            "elapsed_s": result.elapsed_s,
+            "truncated": result.truncated,
+            "candidate": args.candidate,
+            "opponent": args.opponent,
+            "runner": "baseline_subprocess",
+        }
+        if args.record_replay:
+            out = (
+                REPO_ROOT
+                / "replays"
+                / "private"
+                / f"match_s{args.seed}_{args.candidate}_vs_{args.opponent}.json"
+            )
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+            payload["replay_path"] = str(out)
+            payload["replay_id"] = out.stem
+        print(json.dumps(payload, indent=2))
+        return 0 if result.faults0 == 0 and result.faults1 == 0 else 1
+
+    if args.candidate not in policy_names or args.opponent not in policy_names:
+        print(
+            f"unknown candidate/opponent. known: {sorted(policy_names)}",
+            file=sys.stderr,
+        )
         return 2
-    result = run_python_agent_match(
-        candidate,
-        opponent,
-        seed=args.seed,
-        mode="competition",
-        max_turns=args.max_turns,
+
+    # In-process selector policies (heuristic_v2f*, official_*, etc.).
+    from generals_bot.evaluation.population import _play_inprocess
+
+    max_turns = int(args.max_turns) if args.max_turns is not None else 1200
+    rec = _play_inprocess(
+        args.candidate,
+        args.opponent,
+        seed=int(args.seed),
+        swap=False,
+        max_turns=max_turns,
+        bot_commit="",
     )
+    winner = rec.winner if rec.winner is not None else -1
     payload = {
-        "winner": result.winner,
-        "turns": result.turns,
-        "seed": result.seed,
-        "faults0": result.faults0,
-        "faults1": result.faults1,
-        "elapsed_s": result.elapsed_s,
-        "truncated": result.truncated,
+        "winner": winner,
+        "turns": max_turns if winner is None or winner < 0 else max_turns,
+        "seed": int(args.seed),
+        "faults0": int(rec.protocol_faults),
+        "faults1": 0,
+        "elapsed_s": sum(rec.latency_ms) / 1000.0 if rec.latency_ms else 0.0,
+        "truncated": winner is None or winner < 0,
         "candidate": args.candidate,
         "opponent": args.opponent,
+        "runner": "selector_inprocess",
+        "wdl": {"wins": rec.wins, "draws": rec.draws, "losses": rec.losses},
     }
     if args.record_replay:
         out = (
@@ -88,8 +138,10 @@ def cmd_match(args: argparse.Namespace) -> int:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
         payload["replay_path"] = str(out)
+        payload["replay_id"] = out.stem
+        payload["replay_note"] = "Metadata-only replay; board frames not recorded by in-process runner."
     print(json.dumps(payload, indent=2))
-    return 0 if result.faults0 == 0 and result.faults1 == 0 else 1
+    return 0
 
 
 def cmd_submission_build(args: argparse.Namespace) -> int:

@@ -188,7 +188,18 @@ class FilesystemJobService:
         job.state = "RUNNING"
         self._write(job)
 
-        result = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True, check=False)
+        env = dict(**{**__import__("os").environ})
+        src = str(REPO_ROOT / "src")
+        env["PYTHONPATH"] = src + (__import__("os").pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
+
+        result = subprocess.run(
+            cmd,
+            cwd=str(REPO_ROOT),
+            capture_output=True,
+            text=True,
+            check=False,
+            env=env,
+        )
         if result.returncode != 0:
             job.state = "FAILED"
             job.error = (result.stderr or result.stdout or "match failed")[-2000:]
@@ -221,6 +232,9 @@ class FilesystemJobService:
 
 
 def default_python() -> str:
+    training_py = REPO_ROOT / ".venv-training" / "Scripts" / "python.exe"
+    if training_py.exists():
+        return str(training_py)
     competition_py = REPO_ROOT / ".venv" / "Scripts" / "python.exe"
     if competition_py.exists():
         return str(competition_py)

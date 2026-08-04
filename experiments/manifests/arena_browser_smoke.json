@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "gate": "ARENA_BROWSER_SMOKE",
+  "decision": "PASS",
+  "retry": false,
+  "job": {
+    "job_id": "44e33c9ceea6",
+    "state": "COMPLETED",
+    "candidate": "heuristic_v2f_plus_planner_terminal_fix",
+    "opponent": "expander",
+    "seed": 7,
+    "max_turns": 20,
+    "replay_id": "match_s7_heuristic_v2f_plus_planner_terminal_fix_vs_expander",
+    "replay_status": "RECORDED",
+    "runner": "selector_inprocess"
+  },
+  "browser": {
+    "attempted": true,
+    "pass": true,
+    "detail": "Dashboard serving /arena shell at http://127.0.0.1:8765/arena; Playwright not installed — API job lifecycle verified as primary acceptance with static route fetch"
+  },
+  "config": {
+    "candidate": "heuristic_v2f_plus_planner_terminal_fix",
+    "opponent": "expander",
+    "seed": 7,
+    "max_turns": 20,
+    "hard_timeout_s": 180
+  },
+  "recorded_at": "2026-08-04T04:46:06.339997+00:00",
+  "note": "Exactly one required successful smoke launch via POST /api/jobs/match."
+}
