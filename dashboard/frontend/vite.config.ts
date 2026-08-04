@@ -1,8 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { execSync } from "node:child_process";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
+import path from "node:path";
 
 function buildInfoPlugin() {
   return {
@@ -38,7 +40,12 @@ function buildInfoPlugin() {
 }
 
 export default defineConfig({
-  plugins: [react(), buildInfoPlugin()],
+  plugins: [react(), tailwindcss(), buildInfoPlugin()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
   server: {
     host: "127.0.0.1",
     port: 5173,

@@ -1,0 +1,192 @@
+@custom-variant dark (&:is(.dark *));
+
+/* QuantSilico Research Console — terminal-amber token layer
+   Source: src/imports/theme.css (priestlyadejo.com portfolio)
+   Deviation: --font-size 15px (vs 17px editorial) for dense research UI */
+:root {
+  --font-size: 15px;
+
+  /* ── Tailwind contract keys ─────────────────────────────────── */
+  --background:            #090D11;
+  --foreground:            #EAF0F6;
+  --card:                  #11161C;
+  --card-foreground:       #EAF0F6;
+  --popover:               #161C24;
+  --popover-foreground:    #EAF0F6;
+  --primary:               #FFB000;
+  --primary-foreground:    #0A0E12;
+  --secondary:             #161C24;
+  --secondary-foreground:  #EAF0F6;
+  --muted:                 #11161C;
+  --muted-foreground:      #8593A1;
+  --accent:                #FFB000;
+  --accent-foreground:     #0A0E12;
+  --destructive:           #F85149;
+  --destructive-foreground:#EAF0F6;
+  --border:                #1E2630;
+  --input:                 #1E2630;
+  --input-background:      #11161C;
+  --switch-background:     #1E2630;
+  --ring:                  #FFB000;
+  --radius:                0.125rem;
+
+  /* ── Extended design-board tokens ──────────────────────────── */
+  --bg:             #090D11;
+  --bg-secondary:   #0A0E12;
+  --surface:        #11161C;
+  --surface-deep:   #0C1116;
+  --elevated:       #161C24;
+  --surface-raised: #161C24;
+  --text:           #EAF0F6;
+  --body-primary:   #CDD6DF;
+  --body-secondary: #A3AFBA;
+  --metadata:       #8593A1;
+  --faint:          #6F7C89;
+  --text-secondary: #A3AFBA;
+  --accent-hi:      #FFC53D;
+  --accent-dim:     #B37A00;
+  --accent-glow:    rgba(255, 176, 0, 0.35);
+  --amber:          #FFB000;
+  --amber-hi:       #FFC53D;
+  --amber-dim:      #B37A00;
+  --cyan:           #22D3EE;
+  --cyan-dim:       #0E7490;
+  --pos:            #3FB950;
+  --neg:            #F85149;
+
+  /* ── Glass / matte surface tokens ───────────────────────────── */
+  --glass-nav-bg:          rgba(10, 14, 18, 0.72);
+  --glass-nav-bg-scrolled: rgba(10, 14, 18, 0.84);
+  --glass-card-bg:         rgba(17, 22, 28, 0.94);
+  --glass-card-solid:      rgba(17, 22, 28, 0.96);
+  --glass-subtle:          rgba(22, 28, 36, 0.55);
+  --glass-inset-bg:        rgba(9, 13, 17, 0.88);
+  --glass-border:          rgba(166, 182, 197, 0.16);
+  --glass-border-strong:   rgba(166, 182, 197, 0.22);
+  --glass-border-amber:    rgba(255, 176, 0, 0.38);
+  --glass-highlight:       rgba(255, 255, 255, 0.045);
+  --shadow-card:
+    inset 0 1px 0 var(--glass-highlight),
+    0 16px 44px rgba(0, 0, 0, 0.22);
+
+  /* ── Font families ──────────────────────────────────────────── */
+  --font-display: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'Raleway', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* ── Chart palette (categorical; amber is series-1 only) ─────── */
+  --chart-1: #FFB000;
+  --chart-2: #22D3EE;
+  --chart-3: #3FB950;
+  --chart-4: #F85149;
+  --chart-5: #8B98A5;
+  --chart-series-6: #C084FC;
+  --chart-positive:  #3FB950;
+  --chart-negative:  #F85149;
+  --chart-neutral:   #8593A1;
+  --chart-benchmark: #5A6570;
+  --chart-grid:      #1B222B;
+  --chart-axis:      #5A6570;
+
+  /* ── Sidebar (contract required) ───────────────────────────── */
+  --sidebar:                    #11161C;
+  --sidebar-foreground:         #EAF0F6;
+  --sidebar-primary:            #FFB000;
+  --sidebar-primary-foreground: #0A0E12;
+  --sidebar-accent:             #161C24;
+  --sidebar-accent-foreground:  #EAF0F6;
+  --sidebar-border:             #1E2630;
+  --sidebar-ring:               #FFB000;
+
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Always-dark site — no .dark override */
+
+@theme inline {
+  --color-background:             var(--background);
+  --color-foreground:             var(--foreground);
+  --color-card:                   var(--card);
+  --color-card-foreground:        var(--card-foreground);
+  --color-popover:                var(--popover);
+  --color-popover-foreground:     var(--popover-foreground);
+  --color-primary:                var(--primary);
+  --color-primary-foreground:     var(--primary-foreground);
+  --color-secondary:              var(--secondary);
+  --color-secondary-foreground:   var(--secondary-foreground);
+  --color-muted:                  var(--muted);
+  --color-muted-foreground:       var(--muted-foreground);
+  --color-accent:                 var(--accent);
+  --color-accent-foreground:      var(--accent-foreground);
+  --color-destructive:            var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:                 var(--border);
+  --color-input:                  var(--input);
+  --color-input-background:       var(--input-background);
+  --color-switch-background:      var(--switch-background);
+  --color-ring:                   var(--ring);
+  --color-chart-1:                var(--chart-1);
+  --color-chart-2:                var(--chart-2);
+  --color-chart-3:                var(--chart-3);
+  --color-chart-4:                var(--chart-4);
+  --color-chart-5:                var(--chart-5);
+  --radius-sm:  calc(var(--radius) - 0px);
+  --radius-md:  var(--radius);
+  --radius-lg:  calc(var(--radius) + 2px);
+  --radius-xl:  calc(var(--radius) + 4px);
+  --color-sidebar:                      var(--sidebar);
+  --color-sidebar-foreground:           var(--sidebar-foreground);
+  --color-sidebar-primary:              var(--sidebar-primary);
+  --color-sidebar-primary-foreground:   var(--sidebar-primary-foreground);
+  --color-sidebar-accent:               var(--sidebar-accent);
+  --color-sidebar-accent-foreground:    var(--sidebar-accent-foreground);
+  --color-sidebar-border:               var(--sidebar-border);
+  --color-sidebar-ring:                 var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: var(--font-size);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgba(255, 176, 0, 0.82);
+    outline-offset: 3px;
+  }
+
+  input[type="range"] {
+    accent-color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+  }
+}

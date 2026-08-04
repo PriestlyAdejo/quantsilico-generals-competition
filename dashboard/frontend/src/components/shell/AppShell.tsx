@@ -1,60 +1,41 @@
-import { useMemo, useState } from "react";
-import { Outlet } from "react-router-dom";
-import SideNavigation from "./SideNavigation";
+import React, { useState } from "react";
+import { Outlet, useLocation } from "react-router";
 import TopStatusBar from "./TopStatusBar";
+import SideNavigation from "./SideNavigation";
+import CommandPalette from "../CommandPalette";
+
+const LS_KEY = "qs-nav-collapsed";
 
 export default function AppShell() {
-  const [collapsed, setCollapsed] = useState(() => {
-    try {
-      return localStorage.getItem("qs-nav-collapsed") === "true";
-    } catch {
-      return false;
-    }
+  const location = useLocation();
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    try { return localStorage.getItem(LS_KEY) === "true"; } catch { return false; }
   });
-  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const shellClass = useMemo(
-    () => `shell${collapsed ? " nav-collapsed" : ""}`,
-    [collapsed],
-  );
+  const navWidth = collapsed ? 48 : 220;
 
-  const toggleCollapse = () => {
+  const handleToggle = () => {
     setCollapsed((prev) => {
       const next = !prev;
-      try {
-        localStorage.setItem("qs-nav-collapsed", String(next));
-      } catch {
-        /* ignore */
-      }
+      try { localStorage.setItem(LS_KEY, String(next)); } catch {}
       return next;
     });
   };
 
   return (
-    <div className={shellClass}>
+    <div className="min-h-screen bg-[#090D11]">
       <TopStatusBar />
-      <button
-        type="button"
-        className="menu-btn mobile-only"
-        aria-label="Open navigation"
-        onClick={() => setMobileOpen(true)}
-        style={{ position: "fixed", top: 4, right: 8, zIndex: 45 }}
-      >
-        Menu
-      </button>
-      <div
-        className={`nav-backdrop${mobileOpen ? " open" : ""}`}
-        onClick={() => setMobileOpen(false)}
-        aria-hidden={!mobileOpen}
-      />
       <SideNavigation
         collapsed={collapsed}
-        mobileOpen={mobileOpen}
-        onToggleCollapse={toggleCollapse}
-        onCloseMobile={() => setMobileOpen(false)}
+        onToggle={handleToggle}
+        activePath={location.pathname}
       />
-      <main className="shell-main">
-        <div className="shell-main-inner">
+      <CommandPalette />
+      <main
+        className="transition-all duration-200 overflow-y-auto"
+        style={{ paddingTop: 32, paddingLeft: navWidth, minHeight: "100vh" }}
+      >
+        <div className="p-6">
           <Outlet />
         </div>
       </main>

@@ -1,168 +1,116 @@
-import { useEffect, useState } from "react";
-import { useDataSource } from "../data/DataSourceContext";
-import type { OverviewResponse } from "../data/types";
-import { ApiError } from "../data/types";
-import { PageHeader, Panel, MetricStrip, MetricCard } from "../components/data-display/Panel";
-import { RawRecordDrawer } from "../components/feedback/RawRecordDrawer";
-import { BackendUnavailable, LoadingState, SchemaMismatch } from "../components/feedback/States";
-import { StatusBadge, ProvenanceBadge } from "../components/status/StatusBadge";
+import React, { useEffect, useState } from "react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
+import { useDataSource } from "../app/DataSourceProvider";
+import { OverviewRecord } from "../types/overview";
+import PageHeader from "../components/typography/PageHeader";
+import MetricCard from "../components/data-display/MetricCard";
+import ChartCard from "../components/data-display/ChartCard";
+import DataSourceBadge from "../components/status/DataSourceBadge";
+import LoadingState from "../components/feedback/LoadingState";
+import { chartTheme, rechartsDefaults } from "../utils/chartTheme";
+import { fmtWDL, fmtPct } from "../utils/formatting";
+import { AlertTriangle } from "lucide-react";
 
 export default function OverviewPage() {
   const ds = useDataSource();
-  const [data, setData] = useState<OverviewResponse | null>(null);
-  const [error, setError] = useState<ApiError | null>(null);
-  const [rawOpen, setRawOpen] = useState(false);
+  const [record, setRecord] = useState<OverviewRecord | null>(null);
 
-  const load = () => {
-    const ac = new AbortController();
-    setError(null);
-    ds.getOverview(ac.signal)
-      .then(setData)
-      .catch((err: unknown) => {
-        if (err instanceof ApiError) setError(err);
-        else setError(new ApiError("http", String(err)));
-      });
-    return () => ac.abort();
-  };
+  useEffect(() => { ds.getOverview().then(setRecord); }, [ds]);
 
-  useEffect(load, [ds]);
+  if (!record) return <LoadingState />;
 
-  if (error?.kind === "backend_unavailable") return <BackendUnavailable onRetry={load} />;
-  if (error?.kind === "schema_mismatch") return <SchemaMismatch detail={error.message} />;
-  if (!data) return <LoadingState />;
-
-  const pkg = data.active_submitted_package;
-  const current = data.gate_status?.current;
-  const board = data.gate_board || {};
-  const m = data.metrics || {};
-  const hist = data.gate_status?.historical_observations || [];
+  const wdlChartData = record.wdlHistory.map(h => ({
+    name: h.dateLabel ?? h.week,
+    wins: h.wdl.wins,
+    draws: h.wdl.draws,
+    losses: h.wdl.losses,
+  }));
 
   return (
-    <div className="page-overview">
-      <PageHeader
-        eyebrow="$ OVERVIEW /"
-        title="Overview"
-        subtitle="Current project state and authentic research gates — not promotional fiction."
-      />
-      <div className="row gap">
-        <ProvenanceBadge provenance="LIVE_REPOSITORY" />
-        <button type="button" className="btn ghost" onClick={() => setRawOpen(true)}>
-          View raw record
-        </button>
-      </div>
+    <div className="p-6 space-y-6">
+      <PageHeader eyebrow="overview/" title="Overview" />
+      <DataSourceBadge kind={record.kind} />
 
-      {current?.heuristic_development === "FAIL" ? (
-        <div className="banner failure" role="status">
-          <strong>DEVELOPMENT GATE FAIL</strong>
-          <span className="muted">
-            {" "}
-            Heuristic development discovery suite remains FAIL. Learning readiness is a separate gate (
-            {current.learning_readiness}). Learned promotion stays {current.learned_promotion}.
-          </span>
+      {record.blocker && (
+        <div className="border border-[#F85149] border-opacity-50 rounded-sm p-3 bg-[#0C1116] flex items-start gap-2">
+          <AlertTriangle size={14} className="text-[#F85149] flex-shrink-0 mt-0.5" />
+          <div>
+            <span className="text-[#F85149] font-mono text-xs font-bold">BLOCKER: {record.blocker}</span>
+            <p className="text-[#8593A1] font-mono text-xs mt-0.5">Discovery rate {fmtPct(record.discoveryRate)} — PPO {record.ppoStatus.replace("_", " ")}</p>
+          </div>
         </div>
-      ) : null}
+      )}
 
-      <div className="metric-grid">
-        <MetricCard label="Submitted candidate" value={String(m.submitted_candidate || pkg.candidate)} tone="accent" />
-        <MetricCard
-          label="Learning readiness"
-          value={String(m.learning_readiness || current?.learning_readiness || "…")}
-          sublabel="Current manifest"
-          tone={String(m.learning_readiness) === "PASS" ? "success" : "muted"}
-        />
-        <MetricCard label="CNN latency" value={String(m.cnn_latency || "NOT RECORDED")} sublabel="Competition-size" />
-        <MetricCard label="Graph latency" value={String(m.graph_latency || "NOT RECORDED")} sublabel="Competition-size" />
-        <MetricCard
-          label="Learned promotion"
-          value={String(m.learned_promotion || current?.learned_promotion || "NONE")}
-          sublabel="No learned champion"
-        />
-        <MetricCard
-          label="DEVELOPMENT PPO"
-          value={m.development_campaign ? "RECORDED" : "NOT RECORDED"}
-          sublabel={m.development_elapsed_s != null ? `${Number(m.development_elapsed_s).toFixed(0)}s wall` : undefined}
-        />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <MetricCard label="Current Result" value={fmtWDL(record.currentResult)} sublabel="Development" />
+        <MetricCard label="Discovery Rate" value={fmtPct(record.discoveryRate)} sublabel="Gate FAILED" />
+        <MetricCard label="Conversion" value={fmtPct(record.conversionRate)} sublabel="Post-discovery" />
+        <MetricCard label="PPO Status" value={record.ppoStatus.replace("_", " ")} sublabel="Training" />
       </div>
 
-      <div className="grid-2">
-        <Panel title="Current gate board">
-          <div className="stack">
-            {Object.entries(board).map(([k, v]) => (
-              <div key={k} className="row between">
-                <code>{k}</code>
-                <StatusBadge value={String(v)} />
+      <div className="border border-[#1E2630] rounded-sm p-4 bg-[#0C1116]">
+        <p className="text-[#6F7C89] font-mono text-xs uppercase mb-1">Current Candidate</p>
+        <p className="text-[#FFB000] font-mono font-bold">{record.currentCandidate}</p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <ChartCard title="W/D/L History">
+          <div className="h-48">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={wdlChartData} {...rechartsDefaults}>
+                <CartesianGrid {...rechartsDefaults.cartesianGrid} />
+                <XAxis dataKey="name" {...rechartsDefaults.axisStyle} tick={{ ...rechartsDefaults.axisStyle.tick, fontSize: 9 }} />
+                <YAxis {...rechartsDefaults.axisStyle} />
+                <Tooltip contentStyle={{ background: chartTheme.tooltip.bg, border: `1px solid ${chartTheme.tooltip.border}`, color: chartTheme.tooltip.text, fontFamily: "var(--font-mono)", fontSize: 10 }} />
+                <Bar dataKey="wins" fill={chartTheme.positive} name="Wins" />
+                <Bar dataKey="draws" fill={chartTheme.neutral} name="Draws" />
+                <Bar dataKey="losses" fill={chartTheme.negative} name="Losses" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="text-[#6F7C89] font-mono text-xs mt-1">Current: 21W/27D/0L (heuristic_v2f). Historical: 11W/37D/0L (Expander — timestamp not recorded).</p>
+        </ChartCard>
+
+        <ChartCard title="Qualification Funnel">
+          <div className="space-y-1.5 mt-2">
+            {record.qualificationFunnel.map(({ stage, count }) => (
+              <div key={stage} className="flex items-center gap-2">
+                <span className="w-28 text-[#8593A1]" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>{stage}</span>
+                <div className="flex-1 h-4 bg-[#1E2630] rounded-sm overflow-hidden">
+                  <div className="h-full bg-[#22D3EE] rounded-sm opacity-70" style={{ width: `${(count / 14) * 100}%` }} />
+                </div>
+                <span className="w-4 text-[#CDD6DF] text-right" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>{count}</span>
               </div>
             ))}
           </div>
-          <p className="muted">
-            Top bar and this board use <strong>current</strong> manifests only. Upload-time PENDING_AT_RECORD_TIME is
-            historical.
-          </p>
-        </Panel>
-        <Panel title="Active jobs">
-          {data.active_jobs?.length ? (
-            <ul className="stack">
-              {data.active_jobs.map((j) => (
-                <li key={j.job_id} className="mono">
-                  {j.job_id} · {j.state} · {j.candidate} vs {j.opponent}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="muted">No active jobs.</p>
-          )}
-        </Panel>
+        </ChartCard>
       </div>
 
-      <Panel title="Submitted package">
-        <MetricStrip
-          items={[
-            { label: "Lifecycle", value: pkg.lifecycle || "SUBMITTED" },
-            { label: "Policy source", value: pkg.authoritative_policy_source_commit },
-            { label: "Embedded bot_commit", value: `${pkg.embedded_bot_commit} (${pkg.embedded_metadata_status})` },
-            { label: "Config hash", value: pkg.config_hash || "—" },
-          ]}
-        />
-        <p className="muted">{pkg.metadata_note}</p>
-      </Panel>
+      <ChartCard title="Experiment Timeline">
+        <div className="space-y-2 mt-2">
+          {record.experimentTimeline.map(entry => (
+            <div key={entry.id} className="flex items-center gap-3 py-1.5 border-b border-[#1E2630] last:border-b-0">
+              <div className={`w-2 h-2 rounded-full flex-shrink-0 ${entry.status === "complete" ? "bg-[#3FB950]" : entry.status === "running" ? "bg-[#FFB000] animate-pulse" : "bg-[#4A5568]"}`} />
+              <span className="flex-1 text-[#CDD6DF]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{entry.label}</span>
+              <span className="text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>{entry.dateLabel ?? entry.startedAt}</span>
+            </div>
+          ))}
+        </div>
+      </ChartCard>
 
-      <Panel title="Historical upload observation">
-        {hist.length ? (
-          <ul className="stack">
-            {hist.map((h, i) => (
-              <li key={i}>
-                <StatusBadge value="HISTORICAL" />{" "}
-                <span className="muted">
-                  {String(h.source)} @ {String(h.observed_at || "unknown")} — learning_readiness at record time:{" "}
-                  {String(h.learning_readiness)}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="muted">No historical gate observations recorded.</p>
-        )}
-      </Panel>
-
-      <RawRecordDrawer
-        open={rawOpen}
-        onClose={() => setRawOpen(false)}
-        title="Overview raw record"
-        recordId="overview"
-        schema={`schema_version=${data.schema_version}`}
-        provenance="LIVE_REPOSITORY"
-        formatted={
-          <dl className="kv">
-            <dt>Branch</dt>
-            <dd className="mono">{data.branch}</dd>
-            <dt>Commit</dt>
-            <dd className="mono">{data.commit}</dd>
-            <dt>Champion</dt>
-            <dd>{data.learned_champion_note}</dd>
-          </dl>
-        }
-        raw={data}
-      />
+      <ChartCard title="Active Jobs">
+        <div className="space-y-2 mt-2">
+          {record.activeJobs.map(job => (
+            <div key={job.id} className="flex items-center gap-3">
+              <span className="flex-1 text-[#8593A1]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{job.label}</span>
+              <div className="w-32 h-3 bg-[#1E2630] rounded-sm overflow-hidden">
+                <div className="h-full rounded-sm" style={{ width: `${job.progress * 100}%`, backgroundColor: job.status === "complete" ? "#3FB950" : "#FFB000" }} />
+              </div>
+              <span className="text-[#6F7C89] w-10 text-right" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>{(job.progress * 100).toFixed(0)}%</span>
+            </div>
+          ))}
+        </div>
+      </ChartCard>
     </div>
   );
 }
