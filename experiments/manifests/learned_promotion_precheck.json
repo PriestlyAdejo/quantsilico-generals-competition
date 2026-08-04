@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "kind": "LEARNED_PROMOTION_PRECHECK",
+  "decision": "NONE",
+  "blocked": true,
+  "reasons": [
+    "DEVELOPMENT only; no INITIAL/qualification campaign",
+    "No learned package build authorised",
+    "Heuristic remains active submitted champion"
+  ]
+}
