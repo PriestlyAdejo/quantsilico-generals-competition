@@ -542,6 +542,7 @@ def environment() -> dict[str, Any]:
 @router.get("/api/champion")
 def champion() -> dict[str, Any]:
     pkg = submitted_package_dto()
+    precheck = manifest("learned_promotion_precheck.json") or {}
     return {
         "schema_version": 1,
         "active_submitted_package": pkg,
@@ -550,8 +551,15 @@ def champion() -> dict[str, Any]:
         "learned_champion": None,
         "learned_challenger": None,
         "learned_champion_note": "NO LEARNED CHAMPION",
+        "learned_promotion_precheck": precheck or None,
         "promotion_checklist": {
-            "LEARNED_PROMOTION_GATE": "NONE",
+            "LEARNED_PROMOTION_GATE": precheck.get("decision", "NONE"),
+            "blocked": precheck.get("blocked", True),
+            "reasons": precheck.get("reasons")
+            or [
+                "DEVELOPMENT only; no INITIAL/qualification campaign",
+                "No learned package build authorised",
+            ],
             "competitive_evaluation": "NOT_EVALUATED",
             "official_cpu_packaging": "NOT_EVALUATED",
             "portal_ready": False,
