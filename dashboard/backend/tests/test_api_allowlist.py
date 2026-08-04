@@ -53,7 +53,35 @@ def test_overview_no_learned_champion() -> None:
     assert "elo" not in body
     assert body["active_submitted_package"]["authoritative_policy_source_commit"] == "027ff5d"
     assert body["active_submitted_package"]["embedded_metadata_status"] == "STALE"
-    assert body["gate_status"]["HEURISTIC_DEVELOPMENT_GATE"] == "FAIL"
+    assert body["gate_board"]["HEURISTIC_DEVELOPMENT_GATE"] == "FAIL"
+    assert body["gate_status"]["current"]["learning_readiness"] == "PASS"
+    # Upload-time PENDING must not override current readiness.
+    hist = body["gate_status"]["historical_observations"]
+    if hist:
+        assert hist[0].get("source") == "UPLOAD_RECORD"
+
+
+def test_current_gates_not_overridden_by_upload_record() -> None:
+    res = client.get("/api/overview")
+    assert res.status_code == 200
+    body = res.json()
+    current = body["gate_status"]["current"]
+    assert current["learning_readiness"] == "PASS"
+    assert current["learned_promotion"] in {"NONE", "BLOCKED"}
+    for obs in body["gate_status"]["historical_observations"]:
+        # Historical may say PENDING_AT_RECORD_TIME; current must remain PASS.
+        assert current["learning_readiness"] != obs.get("learning_readiness") or current[
+            "learning_readiness"
+        ] == "PASS"
+
+
+def test_build_info_endpoint() -> None:
+    res = client.get("/api/build-info")
+    assert res.status_code == 200
+    body = res.json()
+    assert body["kind"] == "BUILD_INFO"
+    assert "repository" in body
+    assert "mismatch" in body
 
 
 def test_capabilities_reasons() -> None:

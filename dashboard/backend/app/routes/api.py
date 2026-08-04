@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 
 from generals_bot.candidate_identity import candidate_identity_record
 from dashboard.backend.app.capabilities import build_capabilities
+from dashboard.backend.app.gates import gate_status_dto, legacy_gate_board_from_current
 from dashboard.backend.app.paths import REPO_ROOT, assert_allowlisted_path, rel, safe_replay_id
 from dashboard.backend.app.readers.evidence import (
     GRAPH_LATENCY_WARNING,
@@ -61,7 +62,52 @@ def health() -> dict[str, Any]:
     except Exception:
         payload["branch"] = None
         payload["commit"] = None
+    build = _frontend_build_info()
+    if build:
+        payload["frontend_build"] = build
+        if payload.get("commit") and build.get("commit") and str(build["commit"]) != str(payload["commit"]):
+            payload["frontend_build_mismatch"] = True
     return payload
+
+
+def _frontend_build_info() -> dict[str, Any] | None:
+    path = REPO_ROOT / "dashboard" / "frontend" / "dist" / "build-info.json"
+    if not path.is_file():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+@router.get("/api/build-info")
+def build_info() -> dict[str, Any]:
+    repo_branch = None
+    repo_commit = None
+    try:
+        repo_branch = _git("branch", "--show-current")
+        repo_commit = _git("rev-parse", "HEAD")
+    except Exception:
+        pass
+    frontend = _frontend_build_info()
+    mismatch = bool(
+        frontend
+        and repo_commit
+        and frontend.get("commit")
+        and str(frontend.get("commit")) != str(repo_commit)
+    )
+    return {
+        "schema_version": 1,
+        "kind": "BUILD_INFO",
+        "repository": {"branch": repo_branch, "commit": repo_commit},
+        "frontend": frontend,
+        "mismatch": mismatch,
+        "warning": (
+            "dashboard/frontend/dist was built from a different commit than repository HEAD"
+            if mismatch
+            else None
+        ),
+    }
 
 
 @router.get("/api/capabilities")
@@ -72,8 +118,12 @@ def capabilities() -> dict[str, Any]:
 @router.get("/api/overview")
 def overview() -> dict[str, Any]:
     pkg = submitted_package_dto()
-    obs = manifest("official_portal_observation_heuristic_v2_preppo_2026-08-04.json") or {}
     readiness = manifest("learning_readiness_gate.json") or {}
+    latency = manifest("competition_size_latency_gate.json") or {}
+    development = manifest("bounded_development_ppo.json") or {}
+    gates = gate_status_dto()
+    current = gates["current"]
+    classification = latency.get("classification") or {}
     return {
         "schema_version": 1,
         "kind": "OVERVIEW",
@@ -83,19 +133,24 @@ def overview() -> dict[str, Any]:
         "engine_commit": _git(
             "rev-parse", "HEAD", cwd=REPO_ROOT / "third_party" / "generals-bots"
         ),
-        "research_phase": "Phase 4 console + Phase 5/6 smoke passed; Phase 7 next",
+        "research_phase": "Phase 7 evidence recorded; console fidelity corrective rebuild",
         "active_submitted_package": pkg,
         "heuristic_baseline": pkg.get("candidate"),
         "learned_champion": None,
         "learned_champion_note": "NO LEARNED CHAMPION",
         "learned_challenger": None,
-        "gate_status": obs.get("gate_status_at_observation")
-        or {
-            "HEURISTIC_DEVELOPMENT_GATE": "FAIL",
-            "PRE_PPO_SUBMISSION_GATE": "PASS",
-            "PORTAL_SUBMISSION_GATE": "PASS",
-            "LEARNING_READINESS_GATE": readiness.get("decision", "UNKNOWN"),
-            "LEARNED_PROMOTION_GATE": "NONE",
+        "gate_status": gates,
+        # Convenience board for chips — ALWAYS derived from current, never upload-time.
+        "gate_board": legacy_gate_board_from_current(current),
+        "metrics": {
+            "submitted_candidate": pkg.get("candidate"),
+            "learning_readiness": current["learning_readiness"],
+            "cnn_latency": classification.get("recurrent_cnn_v2", "NOT RECORDED"),
+            "graph_latency": classification.get("recurrent_graph_belief_v2", "NOT RECORDED"),
+            "learned_promotion": current["learned_promotion"],
+            "development_campaign": development.get("kind"),
+            "development_elapsed_s": development.get("elapsed_s"),
+            "development_stopped_reason": development.get("stopped_reason"),
         },
         "active_jobs": [
             j.to_dict()
@@ -108,7 +163,7 @@ def overview() -> dict[str, Any]:
             "note": "Smoke/infrastructure results only — not competitive performance.",
         },
         "candidate_identity": candidate_identity_record(),
-        # Deliberately omit live Elo/rank here.
+        "frontend_build": _frontend_build_info(),
     }
 
 
@@ -482,17 +537,14 @@ def qualification() -> dict[str, Any]:
     portal_v2 = manifest("official_portal_observation_heuristic_v2_preppo_2026-08-04.json")
     readiness = manifest("learning_readiness_gate.json")
     preppo = manifest("phase_9q_pre_ppo_submission_gate.json")
+    gates = gate_status_dto()
+    board = legacy_gate_board_from_current(gates["current"])
     return {
         "schema_version": 1,
         "kind": "QUALIFICATION_DASHBOARD",
         "champion_until_promoted": "heuristic_v2f_plus_planner_terminal_fix",
-        "gates": {
-            "HEURISTIC_DEVELOPMENT_GATE": "FAIL",
-            "PRE_PPO_SUBMISSION_GATE": "PASS",
-            "PORTAL_SUBMISSION_GATE": "PASS",
-            "LEARNING_READINESS_GATE": (readiness or {}).get("decision", "UNKNOWN"),
-            "LEARNED_PROMOTION_GATE": "NONE",
-        },
+        "gates": board,
+        "gate_status": gates,
         "gate_names": {
             "HEURISTIC_DEVELOPMENT_GATE": "internal research Expander discovery/conversion suite",
             "PRE_PPO_SUBMISSION_GATE": "local comparison vs previously submitted package",
