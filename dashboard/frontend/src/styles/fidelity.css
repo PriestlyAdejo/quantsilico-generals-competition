@@ -1,0 +1,299 @@
+/* Fidelity layout extensions — no Tailwind */
+
+.page-header .eyebrow {
+  margin: 0 0 0.15rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.page-header h1 {
+  font-size: 1.45rem;
+  font-weight: 650;
+}
+
+.page-header .subtitle {
+  font-size: 0.95rem;
+  color: var(--body-primary);
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.65rem;
+  margin: 0.85rem 0 1rem;
+}
+
+.metric-card .value {
+  font-size: 1.05rem;
+}
+
+.metric-card .sublabel {
+  margin-top: 0.2rem;
+  color: var(--faint);
+  font-size: 0.78rem;
+}
+
+.metric-card.tone-accent .value { color: var(--accent); }
+.metric-card.tone-success .value { color: var(--success); }
+.metric-card.tone-failure .value { color: var(--failure); }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.85rem;
+}
+
+.workspace-3col {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr) minmax(220px, 300px);
+  gap: 0.75rem;
+  align-items: start;
+  min-height: 420px;
+}
+
+.board-stage {
+  background: var(--surface-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.65rem;
+  min-height: 360px;
+}
+
+.board-caption {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+}
+
+.inspector .panel { margin-bottom: 0.65rem; }
+
+.banner {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.8rem;
+  margin: 0.65rem 0;
+  font-size: 0.9rem;
+}
+.banner.warning {
+  border-color: rgba(255, 176, 0, 0.45);
+  background: rgba(255, 176, 0, 0.08);
+  color: var(--accent);
+}
+.banner.failure {
+  border-color: rgba(248, 81, 73, 0.45);
+  background: rgba(248, 81, 73, 0.08);
+  color: var(--failure);
+}
+.banner.info {
+  border-color: rgba(34, 211, 238, 0.4);
+  background: rgba(34, 211, 238, 0.06);
+  color: var(--information);
+}
+
+.row.gap { gap: 0.65rem; }
+.row.between { justify-content: space-between; width: 100%; }
+
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.form-stack label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--metadata);
+  font-size: 0.88rem;
+}
+.form-stack input,
+.form-stack select {
+  padding: 0.45rem 0.55rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-inset);
+  color: var(--foreground);
+  font-size: 0.9rem;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--accent);
+  border-color: rgba(255, 176, 0, 0.35);
+}
+
+.chip.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.35rem 0.75rem;
+  margin: 0.35rem 0;
+  font-size: 0.9rem;
+}
+.kv dt { color: var(--metadata); }
+.kv dd { margin: 0; }
+
+.pipeline-stepper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.pipeline-stepper .step {
+  display: grid;
+  grid-template-columns: 12px 1fr auto;
+  gap: 0.55rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+.pipeline-stepper .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+}
+.pipeline-stepper .step.done .dot { background: var(--success); border-color: var(--success); }
+.pipeline-stepper .step.active .dot { background: var(--accent); border-color: var(--accent); }
+.pipeline-stepper .step.failed .dot,
+.pipeline-stepper .step.blocked .dot { background: var(--failure); border-color: var(--failure); }
+.pipeline-stepper .step-state {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--metadata);
+  text-transform: uppercase;
+}
+
+.evidence-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.evidence-checklist li {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.55rem 0.65rem;
+  background: var(--surface-inset);
+}
+.evidence-checklist .pill {
+  margin-left: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 0.75rem;
+}
+.filter-bar input[type="search"] {
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-inset);
+  color: var(--foreground);
+  font-size: 0.95rem;
+}
+.filter-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.chart-sources {
+  margin: 0.45rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  color: var(--metadata);
+}
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: flex-end;
+}
+.raw-drawer {
+  width: min(480px, 100%);
+  height: 100%;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  padding: 0.85rem;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.raw-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.raw-drawer-header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.raw-drawer-body { flex: 1; min-height: 0; }
+
+.heatmap {
+  width: 100%;
+  max-width: 520px;
+  font-family: var(--font-mono);
+}
+.heatmap text { fill: var(--foreground); font-size: 9px; }
+.heatmap .axis { fill: var(--metadata); font-size: 8px; }
+
+.mode-toggle { margin: 0.5rem 0; }
+.log-tail { margin: 0; padding-left: 1.1rem; font-size: 0.85rem; color: var(--body-secondary); }
+.failure { color: var(--failure); }
+.top-status {
+  flex-wrap: wrap;
+  height: auto;
+  min-height: var(--topbar-h);
+  padding: 0.35rem 0.75rem;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+}
+.top-status-primary,
+.top-status-gates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+.top-status .chip.accent { color: var(--accent); border-color: rgba(255, 176, 0, 0.4); }
+.top-warning {
+  width: 100%;
+  color: var(--failure);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 1100px) {
+  .workspace-3col {
+    grid-template-columns: 1fr;
+  }
+}

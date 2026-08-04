@@ -5,6 +5,21 @@ export type CapabilitiesResponse = {
   capabilities: Record<string, Capability>;
 };
 
+export type GateCurrent = {
+  learning_readiness: string;
+  heuristic_development: string;
+  pre_ppo_submission: string;
+  portal_submission: string;
+  learned_promotion: string;
+};
+
+export type GateStatusSplit = {
+  schema_version: number;
+  kind: string;
+  current: GateCurrent;
+  historical_observations: Record<string, unknown>[];
+};
+
 export type OverviewResponse = {
   schema_version: number;
   branch: string;
@@ -16,9 +31,13 @@ export type OverviewResponse = {
   heuristic_baseline: string;
   learned_champion: string | null;
   learned_champion_note: string;
-  gate_status: Record<string, string>;
+  gate_status: GateStatusSplit;
+  gate_board: Record<string, string>;
+  metrics?: Record<string, string | number | null | undefined>;
   active_jobs: JobRecord[];
   learning_smoke?: Record<string, unknown>;
+  frontend_build?: Record<string, unknown> | null;
+  candidate_identity?: Record<string, unknown>;
 };
 
 export type SubmissionPackage = {
@@ -51,6 +70,16 @@ export type JobRecord = {
   replay_status?: string | null;
   error?: string | null;
   notes?: string[];
+};
+
+export type ChartProvenance = {
+  manifestId: string;
+  kind: string;
+  observedAt?: string | null;
+  seedSplit?: string | null;
+  architecture?: string | null;
+  candidate?: string | null;
+  missingFields?: string[];
 };
 
 export type ApiErrorKind = "backend_unavailable" | "schema_mismatch" | "http" | "not_found";

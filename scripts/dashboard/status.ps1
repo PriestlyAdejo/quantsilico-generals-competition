@@ -37,6 +37,24 @@ try {
 } catch {}
 if ($portOwners.Count -gt 0) {
   Write-Host ("port_8765_bound: true owners=" + ($portOwners -join ','))
+  foreach ($owner in $portOwners) {
+    if ($recorded -and $owner -eq $recorded) {
+      Write-Host "pid_relationship: port_owner_equals_recorded_launcher_or_backend"
+    } elseif ($recorded) {
+      try {
+        $child = Get-CimInstance Win32_Process -Filter "ProcessId=$owner" -ErrorAction SilentlyContinue
+        if ($child -and [int]$child.ParentProcessId -eq $recorded) {
+          Write-Host "pid_relationship: port_owner=$owner is child of recorded_pid=$recorded (launcher/parent)"
+        } else {
+          Write-Host "pid_relationship: port_owner=$owner differs from recorded_pid=$recorded (inspect parent/child)"
+        }
+      } catch {
+        Write-Host "pid_relationship: port_owner=$owner recorded_pid=$recorded (relationship unknown)"
+      }
+    } else {
+      Write-Host "pid_relationship: port_owner=$owner (no recorded pid file)"
+    }
+  }
 } else {
   Write-Host "port_8765_bound: false"
 }
