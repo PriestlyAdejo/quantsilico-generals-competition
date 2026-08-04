@@ -52,10 +52,10 @@ try {
       Write-Host "served_commit: $($health.commit)"
     }
   } else {
-    Write-Host "health: unexpected payload — not assuming QuantSilico dashboard"
+    Write-Host "health: unexpected payload - not assuming QuantSilico dashboard"
   }
 } catch {
-  Write-Host "health: unreachable (do not assume any service on :8765 is QuantSilico)"
+  Write-Host "health: unreachable (do not assume any service on port 8765 is QuantSilico)"
 }
 
 if ($running -and $healthOk) {
