@@ -93,10 +93,10 @@ def resolve_candidate_allowlist() -> set[str]:
         base.update(list_policies())
     except Exception:
         pass
-    # Drop dashboard typo alias — not a distinct executable policy.
+    # Drop lookalike typos — not distinct executable policies.
     base.discard("heuristic_v2f_plus_planner_terminal_form")
+    base.discard("heuristic_v2f_plus_planner_terminal_force")
     base.add(EXECUTABLE_REGISTRY_ID)
-    # Normalise any accidental alias insertions.
     return {canonicalize_candidate_id(x) for x in base}
 
 class FilesystemJobService:

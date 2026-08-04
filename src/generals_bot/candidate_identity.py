@@ -1,24 +1,25 @@
-"""Candidate identity mapping for submitted heuristic vs dashboard typos.
+"""Candidate identity mapping for the submitted heuristic.
 
 Authoritative executable and submission evidence ID:
-  heuristic_v2f_plus_planner_terminal_force
+  heuristic_v2f_plus_planner_terminal_fix
 
-The string heuristic_v2f_plus_planner_terminal_form appeared only as a
-dashboard allowlist typo on feature/figma-console-integration @ 4be2a55.
-It is NOT a distinct registered policy.
+Do not confuse with lookalike typos:
+  …_terminal_form  (dashboard allowlist typo on 4be2a55)
+  …_terminal_force (transcription error)
+Neither typo is a distinct registered policy.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-SUBMITTED_CANDIDATE_ID = "heuristic_v2f_plus_planner_terminal_force"
-EXECUTABLE_REGISTRY_ID = "heuristic_v2f_plus_planner_terminal_force"
-DISPLAY_LABEL = "heuristic_v2f + planner + terminal force (submitted)"
+SUBMITTED_CANDIDATE_ID = "heuristic_v2f_plus_planner_terminal_fix"
+EXECUTABLE_REGISTRY_ID = "heuristic_v2f_plus_planner_terminal_fix"
+DISPLAY_LABEL = "heuristic_v2f + planner + terminal fix (submitted)"
 
-# Historical / erroneous strings → canonical ID (not separate policies).
 ALIASES_TO_CANONICAL: dict[str, str] = {
     "heuristic_v2f_plus_planner_terminal_form": SUBMITTED_CANDIDATE_ID,
+    "heuristic_v2f_plus_planner_terminal_force": SUBMITTED_CANDIDATE_ID,
 }
 
 
@@ -39,8 +40,12 @@ def candidate_identity_record() -> dict[str, Any]:
                 "alias": "heuristic_v2f_plus_planner_terminal_form",
                 "canonical": SUBMITTED_CANDIDATE_ID,
                 "status": "DASHBOARD_TYPO_NOT_DISTINCT_POLICY",
-                "note": "Introduced erroneously in 4be2a55 allowlist; discarded for Arena launch.",
-            }
+            },
+            {
+                "alias": "heuristic_v2f_plus_planner_terminal_force",
+                "canonical": SUBMITTED_CANDIDATE_ID,
+                "status": "TRANSCRIPTION_ERROR_NOT_DISTINCT_POLICY",
+            },
         ],
         "same_as_packaged": True,
     }
