@@ -1,0 +1,2760 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9D_MATCHED_PILOT",
+  "gate_name": "PHASE9D_MATCHED_PILOT",
+  "research_generation_id": "phase9d_draw_conversion_2026-08-04",
+  "decision": "COMPLETE",
+  "status": "COMPLETE",
+  "continuation_seed": 9001,
+  "pilot_monitoring_seeds": [
+    3100,
+    3101,
+    3102,
+    3103
+  ],
+  "pilot_config": "configs/training/draw_conversion/pilot_v1.yaml",
+  "arms": {
+    "cnn_control": {
+      "arm_id": "cnn_control",
+      "architecture": "recurrent_cnn_v2",
+      "treatment": "control",
+      "reward_version": "control_v1",
+      "frozen_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+      "frozen_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\draw_conversion\\cnn_control\\chunk_23\\model.json",
+      "final_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+      "continuation_seed": 9001,
+      "monitor_seeds": [
+        3100,
+        3101,
+        3102,
+        3103
+      ],
+      "step_zero": {
+        "seat0": {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            3100,
+            3101
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "seat1": {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            3100,
+            3101
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "protocol_faults": 0,
+        "wins": 0,
+        "draws": 4,
+        "losses": 0,
+        "score_rate": 0.5
+      },
+      "env_steps": 12288,
+      "chunks": 24,
+      "elapsed_s": 1204.6994970000014,
+      "stop_reason": "BUDGET",
+      "validation_windows": [
+        {
+          "env_steps": 1024,
+          "chunk": 2,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 2048,
+          "chunk": 4,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 3072,
+          "chunk": 6,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 4096,
+          "chunk": 8,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 5120,
+          "chunk": 10,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 6144,
+          "chunk": 12,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 7168,
+          "chunk": 14,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 8192,
+          "chunk": 16,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 9216,
+          "chunk": 18,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 10240,
+          "chunk": 20,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 11264,
+          "chunk": 22,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 12288,
+          "chunk": 24,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        }
+      ],
+      "best_window": {
+        "env_steps": 1024,
+        "chunk": 2,
+        "validation": {
+          "seat0": {
+            "wins": 0,
+            "draws": 4,
+            "losses": 0,
+            "games": 4,
+            "score_rate": 0.5,
+            "protocol_faults": 0,
+            "seeds": [
+              3100,
+              3101,
+              3102,
+              3103
+            ],
+            "learned_seat": 0,
+            "opponent": "official_expander",
+            "diagnostics_path": null
+          },
+          "seat1": {
+            "wins": 0,
+            "draws": 4,
+            "losses": 0,
+            "games": 4,
+            "score_rate": 0.5,
+            "protocol_faults": 0,
+            "seeds": [
+              3100,
+              3101,
+              3102,
+              3103
+            ],
+            "learned_seat": 1,
+            "opponent": "official_expander",
+            "diagnostics_path": null
+          },
+          "protocol_faults": 0,
+          "wins": 0,
+          "draws": 8,
+          "losses": 0,
+          "score_rate": 0.5
+        }
+      }
+    },
+    "cnn_conversion": {
+      "arm_id": "cnn_conversion",
+      "architecture": "recurrent_cnn_v2",
+      "treatment": "conversion",
+      "reward_version": "conversion_v1",
+      "frozen_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+      "frozen_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\draw_conversion\\cnn_conversion\\chunk_23\\model.json",
+      "final_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+      "continuation_seed": 9001,
+      "monitor_seeds": [
+        3100,
+        3101,
+        3102,
+        3103
+      ],
+      "step_zero": {
+        "seat0": {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            3100,
+            3101
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "seat1": {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            3100,
+            3101
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "protocol_faults": 0,
+        "wins": 0,
+        "draws": 4,
+        "losses": 0,
+        "score_rate": 0.5
+      },
+      "env_steps": 12288,
+      "chunks": 24,
+      "elapsed_s": 1096.8584030999991,
+      "stop_reason": "BUDGET",
+      "validation_windows": [
+        {
+          "env_steps": 1024,
+          "chunk": 2,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 2048,
+          "chunk": 4,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 3072,
+          "chunk": 6,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 4096,
+          "chunk": 8,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 5120,
+          "chunk": 10,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 6144,
+          "chunk": 12,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 7168,
+          "chunk": 14,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 8192,
+          "chunk": 16,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 9216,
+          "chunk": 18,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 10240,
+          "chunk": 20,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 11264,
+          "chunk": 22,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 12288,
+          "chunk": 24,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        }
+      ],
+      "best_window": {
+        "env_steps": 1024,
+        "chunk": 2,
+        "validation": {
+          "seat0": {
+            "wins": 0,
+            "draws": 4,
+            "losses": 0,
+            "games": 4,
+            "score_rate": 0.5,
+            "protocol_faults": 0,
+            "seeds": [
+              3100,
+              3101,
+              3102,
+              3103
+            ],
+            "learned_seat": 0,
+            "opponent": "official_expander",
+            "diagnostics_path": null
+          },
+          "seat1": {
+            "wins": 0,
+            "draws": 4,
+            "losses": 0,
+            "games": 4,
+            "score_rate": 0.5,
+            "protocol_faults": 0,
+            "seeds": [
+              3100,
+              3101,
+              3102,
+              3103
+            ],
+            "learned_seat": 1,
+            "opponent": "official_expander",
+            "diagnostics_path": null
+          },
+          "protocol_faults": 0,
+          "wins": 0,
+          "draws": 8,
+          "losses": 0,
+          "score_rate": 0.5
+        }
+      }
+    },
+    "graph_control": {
+      "arm_id": "graph_control",
+      "architecture": "recurrent_graph_belief_v2",
+      "treatment": "control",
+      "reward_version": "control_v1",
+      "frozen_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_graph_graph_bc_init_seed7\\chunk_0\\model.json",
+      "frozen_sha256": "23699c72fc5a3e0b011900c247c1cdc74c826e7723471c880c5e4df6091fee64",
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\draw_conversion\\graph_control\\chunk_23\\model.json",
+      "final_sha256": "23699c72fc5a3e0b011900c247c1cdc74c826e7723471c880c5e4df6091fee64",
+      "continuation_seed": 9001,
+      "monitor_seeds": [
+        3100,
+        3101,
+        3102,
+        3103
+      ],
+      "step_zero": {
+        "seat0": {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            3100,
+            3101
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "seat1": {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            3100,
+            3101
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "protocol_faults": 0,
+        "wins": 0,
+        "draws": 4,
+        "losses": 0,
+        "score_rate": 0.5
+      },
+      "env_steps": 12288,
+      "chunks": 24,
+      "elapsed_s": 1298.9537652,
+      "stop_reason": "BUDGET",
+      "validation_windows": [
+        {
+          "env_steps": 1024,
+          "chunk": 2,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 2048,
+          "chunk": 4,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 3072,
+          "chunk": 6,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 4096,
+          "chunk": 8,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 5120,
+          "chunk": 10,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 6144,
+          "chunk": 12,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 7168,
+          "chunk": 14,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 8192,
+          "chunk": 16,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 9216,
+          "chunk": 18,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 10240,
+          "chunk": 20,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 11264,
+          "chunk": 22,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 12288,
+          "chunk": 24,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        }
+      ],
+      "best_window": {
+        "env_steps": 1024,
+        "chunk": 2,
+        "validation": {
+          "seat0": {
+            "wins": 0,
+            "draws": 4,
+            "losses": 0,
+            "games": 4,
+            "score_rate": 0.5,
+            "protocol_faults": 0,
+            "seeds": [
+              3100,
+              3101,
+              3102,
+              3103
+            ],
+            "learned_seat": 0,
+            "opponent": "official_expander",
+            "diagnostics_path": null
+          },
+          "seat1": {
+            "wins": 0,
+            "draws": 4,
+            "losses": 0,
+            "games": 4,
+            "score_rate": 0.5,
+            "protocol_faults": 0,
+            "seeds": [
+              3100,
+              3101,
+              3102,
+              3103
+            ],
+            "learned_seat": 1,
+            "opponent": "official_expander",
+            "diagnostics_path": null
+          },
+          "protocol_faults": 0,
+          "wins": 0,
+          "draws": 8,
+          "losses": 0,
+          "score_rate": 0.5
+        }
+      }
+    },
+    "graph_conversion": {
+      "arm_id": "graph_conversion",
+      "architecture": "recurrent_graph_belief_v2",
+      "treatment": "conversion",
+      "reward_version": "conversion_v1",
+      "frozen_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_graph_graph_bc_init_seed7\\chunk_0\\model.json",
+      "frozen_sha256": "23699c72fc5a3e0b011900c247c1cdc74c826e7723471c880c5e4df6091fee64",
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\draw_conversion\\graph_conversion\\chunk_23\\model.json",
+      "final_sha256": "23699c72fc5a3e0b011900c247c1cdc74c826e7723471c880c5e4df6091fee64",
+      "continuation_seed": 9001,
+      "monitor_seeds": [
+        3100,
+        3101,
+        3102,
+        3103
+      ],
+      "step_zero": {
+        "seat0": {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            3100,
+            3101
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "seat1": {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            3100,
+            3101
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "protocol_faults": 0,
+        "wins": 0,
+        "draws": 4,
+        "losses": 0,
+        "score_rate": 0.5
+      },
+      "env_steps": 12288,
+      "chunks": 24,
+      "elapsed_s": 1376.9885018999994,
+      "stop_reason": "BUDGET",
+      "validation_windows": [
+        {
+          "env_steps": 1024,
+          "chunk": 2,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 2048,
+          "chunk": 4,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 3072,
+          "chunk": 6,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 4096,
+          "chunk": 8,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 5120,
+          "chunk": 10,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 6144,
+          "chunk": 12,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 7168,
+          "chunk": 14,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 8192,
+          "chunk": 16,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 9216,
+          "chunk": 18,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 10240,
+          "chunk": 20,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 11264,
+          "chunk": 22,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        },
+        {
+          "env_steps": 12288,
+          "chunk": 24,
+          "validation": {
+            "seat0": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 0,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "seat1": {
+              "wins": 0,
+              "draws": 4,
+              "losses": 0,
+              "games": 4,
+              "score_rate": 0.5,
+              "protocol_faults": 0,
+              "seeds": [
+                3100,
+                3101,
+                3102,
+                3103
+              ],
+              "learned_seat": 1,
+              "opponent": "official_expander",
+              "diagnostics_path": null
+            },
+            "protocol_faults": 0,
+            "wins": 0,
+            "draws": 8,
+            "losses": 0,
+            "score_rate": 0.5
+          }
+        }
+      ],
+      "best_window": {
+        "env_steps": 1024,
+        "chunk": 2,
+        "validation": {
+          "seat0": {
+            "wins": 0,
+            "draws": 4,
+            "losses": 0,
+            "games": 4,
+            "score_rate": 0.5,
+            "protocol_faults": 0,
+            "seeds": [
+              3100,
+              3101,
+              3102,
+              3103
+            ],
+            "learned_seat": 0,
+            "opponent": "official_expander",
+            "diagnostics_path": null
+          },
+          "seat1": {
+            "wins": 0,
+            "draws": 4,
+            "losses": 0,
+            "games": 4,
+            "score_rate": 0.5,
+            "protocol_faults": 0,
+            "seeds": [
+              3100,
+              3101,
+              3102,
+              3103
+            ],
+            "learned_seat": 1,
+            "opponent": "official_expander",
+            "diagnostics_path": null
+          },
+          "protocol_faults": 0,
+          "wins": 0,
+          "draws": 8,
+          "losses": 0,
+          "score_rate": 0.5
+        }
+      }
+    }
+  },
+  "step_zero_equality": {
+    "cnn_match": true,
+    "graph_match": true,
+    "cnn_control": {
+      "seat0": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          3100,
+          3101
+        ],
+        "learned_seat": 0,
+        "opponent": "official_expander",
+        "diagnostics_path": null
+      },
+      "seat1": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          3100,
+          3101
+        ],
+        "learned_seat": 1,
+        "opponent": "official_expander",
+        "diagnostics_path": null
+      },
+      "protocol_faults": 0,
+      "wins": 0,
+      "draws": 4,
+      "losses": 0,
+      "score_rate": 0.5
+    },
+    "cnn_conversion": {
+      "seat0": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          3100,
+          3101
+        ],
+        "learned_seat": 0,
+        "opponent": "official_expander",
+        "diagnostics_path": null
+      },
+      "seat1": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          3100,
+          3101
+        ],
+        "learned_seat": 1,
+        "opponent": "official_expander",
+        "diagnostics_path": null
+      },
+      "protocol_faults": 0,
+      "wins": 0,
+      "draws": 4,
+      "losses": 0,
+      "score_rate": 0.5
+    },
+    "graph_control": {
+      "seat0": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          3100,
+          3101
+        ],
+        "learned_seat": 0,
+        "opponent": "official_expander",
+        "diagnostics_path": null
+      },
+      "seat1": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          3100,
+          3101
+        ],
+        "learned_seat": 1,
+        "opponent": "official_expander",
+        "diagnostics_path": null
+      },
+      "protocol_faults": 0,
+      "wins": 0,
+      "draws": 4,
+      "losses": 0,
+      "score_rate": 0.5
+    },
+    "graph_conversion": {
+      "seat0": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          3100,
+          3101
+        ],
+        "learned_seat": 0,
+        "opponent": "official_expander",
+        "diagnostics_path": null
+      },
+      "seat1": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          3100,
+          3101
+        ],
+        "learned_seat": 1,
+        "opponent": "official_expander",
+        "diagnostics_path": null
+      },
+      "protocol_faults": 0,
+      "wins": 0,
+      "draws": 4,
+      "losses": 0,
+      "score_rate": 0.5
+    }
+  },
+  "treatment_effects": {
+    "cnn": "NO_MEANINGFUL_IMPROVEMENT",
+    "graph": "NO_MEANINGFUL_IMPROVEMENT",
+    "cnn_promising_for_matched_replication": false,
+    "graph_promising_for_matched_replication": false
+  },
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "created_at": "2026-08-04T14:50:25.048100+00:00",
+  "supersedes": null,
+  "superseded_by": null
+}

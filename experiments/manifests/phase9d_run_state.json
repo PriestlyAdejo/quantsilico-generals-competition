@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9D_RUN_STATE",
+  "research_generation_id": "phase9d_draw_conversion_2026-08-04",
+  "current_stage": "TERMINAL",
+  "stage_status": "COMPLETE",
+  "working_branch": "research/draw-conversion-cnn-graph-v1",
+  "starting_commit": "79f6f93af45a23029f2d8abeeaf44c68dc77dc87",
+  "last_verified_commit": null,
+  "working_branch_tip": null,
+  "chosen_integration_commit": null,
+  "gate_decisions": {
+    "CNN_OVERNIGHT_READINESS_GATE": "BLOCKED",
+    "GRAPH_OVERNIGHT_READINESS_GATE": "BLOCKED",
+    "PHASE9D_MATCHED_PILOT": "COMPLETE",
+    "treatment_cnn": "NO_MEANINGFUL_IMPROVEMENT",
+    "treatment_graph": "NO_MEANINGFUL_IMPROVEMENT"
+  },
+  "terminal_outcome": "NEITHER_INTERVENTION_WORKS_OVERNIGHT_BLOCKED",
+  "selected_overnight_candidate": null,
+  "phase10_entered": false,
+  "expanded_confirmation_opened": false,
+  "holdout_unused": true,
+  "learned_package": "NOT_PACKAGED",
+  "notes": [
+    "Four matched arms completed 12288 env steps each with 0 protocol faults.",
+    "No genuine wins; replication and confirmation correctly skipped.",
+    "Active portal remains heuristic_v2f_plus_planner_terminal_fix."
+  ],
+  "updated_at": "2026-08-04T14:55:00+00:00"
+}

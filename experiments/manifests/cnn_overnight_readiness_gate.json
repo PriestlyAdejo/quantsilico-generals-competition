@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "CNN_OVERNIGHT_READINESS_GATE",
+  "gate_name": "CNN_OVERNIGHT_READINESS_GATE",
+  "research_generation_id": "phase9d_draw_conversion_2026-08-04",
+  "decision": "BLOCKED",
+  "candidate_id": "cnn_bc_init_seed11",
+  "architecture": "recurrent_cnn_v2",
+  "reasons": [
+    "Matched pilot treatment effect: NO_MEANINGFUL_IMPROVEMENT",
+    "Conversion and control both 0W/8D/0L on pilot_monitoring_seeds after 12288 env steps",
+    "Not PROMISING for matched-pair replication"
+  ],
+  "blockers": [
+    "zero genuine wins under pilot monitoring",
+    "contact conversion intervention did not outperform matched control",
+    "score_rate remains 0.5 (draw-dominated)"
+  ],
+  "treatment_effect": "NO_MEANINGFUL_IMPROVEMENT",
+  "promising_for_matched_replication": false,
+  "holdout_unused": true,
+  "expanded_confirmation_opened": false,
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "source_manifest_hashes": {
+    "phase9d_matched_pilot.json": "COMPLETE",
+    "draw_behaviour_diagnosis_cnn.json": "CONTACT_FAILURE",
+    "conversion_intervention_spec.json": "conversion_v1"
+  },
+  "created_at": "2026-08-04T14:55:00+00:00",
+  "supersedes": "experiments/manifests/overnight_readiness_gate_corrected.json",
+  "superseded_by": null
+}
