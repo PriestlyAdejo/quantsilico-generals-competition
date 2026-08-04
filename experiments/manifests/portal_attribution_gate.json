@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kind": "PORTAL_ATTRIBUTION_GATE",
+  "gate_name": "PORTAL_ATTRIBUTION_GATE",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "decision": "RESOLVED",
+  "reasons": [
+    "Immutable UPLOAD_RECORD_heuristic_v2_preppo.md names heuristic_v2f_plus_planner_terminal_fix",
+    "Package report and ZIP present with matching SHA-256 e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "OFFICIAL_PORTAL_OBSERVATION records the same candidate_id and package hash",
+    "candidate_identity.py documents terminal_form and terminal_force as non-distinct lookalikes"
+  ],
+  "blockers": [],
+  "canonical_candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+  "package_identity": {
+    "path": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+    "report_path": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.report.json",
+    "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "zip_present": true,
+    "config_hash": "8f7405fe9834161c",
+    "package_content_source_commit": "027ff5d65f5b537133d76785c3a82bcf0459bc70",
+    "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462"
+  },
+  "observed_identifiers": [
+    {
+      "id": "heuristic_v2f_plus_planner_terminal_fix",
+      "classification": "CANONICAL",
+      "evidence": [
+        "submission/UPLOAD_RECORD_heuristic_v2_preppo.md",
+        "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.report.json",
+        "experiments/manifests/official_portal_observation_heuristic_v2_preppo_2026-08-04.json"
+      ]
+    },
+    {
+      "id": "heuristic_v2f_plus_planner_terminal_form",
+      "classification": "DATA_ENTRY_DEFECT",
+      "note": "Dashboard allowlist typo; mapped as alias in candidate_identity.py; not a distinct registered policy"
+    },
+    {
+      "id": "heuristic_v2f_plus_planner_terminal_force",
+      "classification": "DATA_ENTRY_DEFECT",
+      "note": "Transcription error; mapped as alias in candidate_identity.py; not a distinct registered policy"
+    }
+  ],
+  "source_manifest_hashes": {
+    "upload_record": "submission/UPLOAD_RECORD_heuristic_v2_preppo.md",
+    "portal_observation": "experiments/manifests/official_portal_observation_heuristic_v2_preppo_2026-08-04.json",
+    "package_report": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.report.json"
+  },
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "evaluator_sha": null,
+  "supersedes": null,
+  "superseded_by": null,
+  "created_at": "2026-08-04T12:25:00+00:00"
+}

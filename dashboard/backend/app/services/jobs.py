@@ -221,7 +221,16 @@ class FilesystemJobService:
             replay_id = replay_id.get("id")
         if replay_id:
             job.replay_id = str(replay_id)
-            job.replay_status = "RECORDED"
+            note = str(payload.get("replay_note") or "")
+            frames = payload.get("frames")
+            has_frames = isinstance(frames, list) and len(frames) > 0
+            if has_frames or str(payload.get("frames_status", "")).upper() == "RECORDED":
+                job.replay_status = "RECORDED"
+            elif "metadata-only" in note.lower() or not has_frames:
+                job.replay_status = "METADATA_ONLY"
+                job.notes.append("MATCH COMPLETE; REPLAY METADATA-ONLY (no board frames)")
+            else:
+                job.replay_status = "RECORDED"
         else:
             job.replay_id = None
             job.replay_status = "REPLAY_NOT_RECORDED"

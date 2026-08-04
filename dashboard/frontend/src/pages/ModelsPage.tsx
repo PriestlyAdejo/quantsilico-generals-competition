@@ -77,8 +77,8 @@ export default function ModelsPage() {
                   <Tag label={m.role} color={roleColor[m.role]} />
                   <Tag label={m.deliveryStatus} color="#4A5568" />
                 </div>
-                <p className="text-[#8593A1] font-mono text-xs mt-2">WDL: {fmtWDL(m.wdl)}</p>
-                <p className="text-[#8593A1] font-mono text-xs">Params: {fmtK(m.parameters) || "N/A"}</p>
+                <p className="text-[#8593A1] font-mono text-xs mt-2">WDL: {fmtWDL(m.wdl, m.wdlAvailability)}</p>
+                <p className="text-[#8593A1] font-mono text-xs">Params: {fmtK(m.parameters)}</p>
               </div>
             ))}
           </div>
@@ -112,7 +112,7 @@ export default function ModelsPage() {
                   <td className="px-3 py-2.5"><Tag label={model.lifecycle} color={lifecycleColor[model.lifecycle]} /></td>
                   <td className="px-3 py-2.5"><Tag label={model.role} color={roleColor[model.role]} /></td>
                   <td className="px-3 py-2.5"><Tag label={model.deliveryStatus} color="#4A5568" /></td>
-                  <td className="px-3 py-2.5"><span className="text-[#FFB000] font-bold" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{fmtWDL(model.wdl)}</span></td>
+                  <td className="px-3 py-2.5"><span className="text-[#FFB000] font-bold" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{fmtWDL(model.wdl, model.wdlAvailability)}</span></td>
                   <td className="px-3 py-2.5"><DataSourceBadge kind={model.kind} pill /></td>
                   <td className="px-3 py-2.5">
                     <button onClick={e => { e.stopPropagation(); setDrawerRecord(model); }} className="text-[#6F7C89] hover:text-[#FFB000] font-mono text-xs transition-colors">RAW</button>

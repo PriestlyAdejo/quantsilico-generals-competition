@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "kind": "LEARNED_PROTOCOL_COMPATIBILITY_GATE",
+  "gate_name": "LEARNED_PROTOCOL_COMPATIBILITY_GATE",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "architecture": "recurrent_graph_belief_v2",
+  "candidate_id": "graph_bc_init_seed7",
+  "checkpoint_identity": {
+    "path": "experiments/checkpoints/initial/initial_graph_graph_bc_init_seed7/chunk_0/model.json",
+    "sha256_16": "23699c72fc5a3e0b",
+    "frozen_initial_best": true
+  },
+  "decision": "PASS",
+  "reasons": [
+    "Typed adapt_forward_output contract consumes graph dict forward_tensors correctly.",
+    "Compatibility ladder vs official_expander seeds [1040,1041] max_turns=100: protocol_faults=0.",
+    "Training call-path audit: PPO/BC used dict access; CheckpointPolicy tuple indexing was validation-only."
+  ],
+  "blockers": [],
+  "ladder_result": {
+    "wins": 0,
+    "draws": 2,
+    "losses": 0,
+    "games": 2,
+    "score_rate": 0.5,
+    "protocol_faults": 0,
+    "opponent": "official_expander",
+    "seeds": [1040, 1041]
+  },
+  "latency_note": "Latency not part of this gate; measured separately if needed.",
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "evaluator_sha": null,
+  "source_manifest_hashes": {
+    "protocol_fault_denominator_report.json": "present",
+    "training_call_path_audit.json": "present"
+  },
+  "created_at": "2026-08-04T12:40:00+00:00",
+  "supersedes": null,
+  "superseded_by": null
+}

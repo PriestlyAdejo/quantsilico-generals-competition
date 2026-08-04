@@ -157,6 +157,13 @@ function phaseFromGates(board: Json): { current: Phase9QStep; steps: Phase9QStat
 function mapModel(row: Json): ModelRecord {
   const id = str(row.id, "unknown-model");
   const notes = Array.isArray(row.notes) ? row.notes.map(String).join("; ") : str(row.notes);
+  const hasParams = typeof row.parameters === "number" && Number.isFinite(row.parameters);
+  const hasSteps = typeof row.training_steps === "number" && Number.isFinite(row.training_steps);
+  const wins = row.wins ?? row.wdl && asObj(row.wdl as Json).wins;
+  const draws = row.draws ?? row.wdl && asObj(row.wdl as Json).draws;
+  const losses = row.losses ?? row.wdl && asObj(row.wdl as Json).losses;
+  const hasWdl =
+    typeof wins === "number" && typeof draws === "number" && typeof losses === "number";
   return {
     id,
     kind: KIND,
@@ -167,14 +174,33 @@ function mapModel(row: Json): ModelRecord {
     lifecycle: mapLifecycle(str(row.lifecycle)),
     role: mapRole(str(row.competitive_role ?? row.role, "NONE")),
     deliveryStatus: mapDelivery(str(row.delivery_status, "NOT_RECORDED")),
-    parameters: num(row.parameters),
-    trainingSteps: num(row.training_steps),
-    wdl: { wins: 0, draws: 0, losses: 0 },
+    parameters: hasParams ? Number(row.parameters) : null,
+    trainingSteps: hasSteps ? Number(row.training_steps) : null,
+    wdl: hasWdl ? { wins: Number(wins), draws: Number(draws), losses: Number(losses) } : null,
+    wdlAvailability: hasWdl ? "RECORDED" : "MISSING",
     promotionState: "NONE",
     blockerReason: str(row.blocker_reason) || undefined,
     createdAt: str(row.created_at) || "NOT RECORDED",
     notes: notes || undefined,
   };
+}
+
+function extractManifestWdl(data: Json): { wdl: { wins: number; draws: number; losses: number } | null; availability: "RECORDED" | "MISSING" } {
+  const best = asObj(data.best_validation ?? data.validation ?? {});
+  const hist = Array.isArray(data.validation_history) ? data.validation_history : [];
+  const last = hist.length ? asObj(hist[hist.length - 1] as Json) : {};
+  const src = best.wins != null ? best : last.wins != null ? last : asObj(data.wdl ?? {});
+  if (
+    typeof src.wins === "number" &&
+    typeof src.draws === "number" &&
+    typeof src.losses === "number"
+  ) {
+    return {
+      wdl: { wins: Number(src.wins), draws: Number(src.draws), losses: Number(src.losses) },
+      availability: "RECORDED",
+    };
+  }
+  return { wdl: null, availability: "MISSING" };
 }
 
 function mapExperiment(item: Json): ExperimentRecord {
@@ -187,6 +213,7 @@ function mapExperiment(item: Json): ExperimentRecord {
   else if (lifecycleRaw.includes("FAIL")) lifecycle = "FAILED";
   else if (lifecycleRaw.includes("PLAN")) lifecycle = "PLANNED";
   else if (lifecycleRaw.includes("ARCH")) lifecycle = "ARCHIVED";
+  const { wdl, availability } = extractManifestWdl(data);
 
   return {
     id,
@@ -197,7 +224,8 @@ function mapExperiment(item: Json): ExperimentRecord {
     opponent: str(data.opponent, "NOT RECORDED"),
     suite: str(data.suite ?? data.kind ?? kindRaw),
     lifecycle,
-    wdl: { wins: 0, draws: 0, losses: 0 },
+    wdl,
+    wdlAvailability: availability,
     discoveryGate: mapGateStatus(data.discovery_gate),
     developmentGate: mapGateStatus(data.development_gate),
     observedAt: str(data.observed_at ?? data.completed_at) || null,
@@ -281,18 +309,26 @@ export class ApiDataSource implements DataSource {
   async getReplayById(id: string): Promise<ReplayRecord | null> {
     try {
       const raw = await request<Json>(`/api/replays/${encodeURIComponent(id)}`);
-      const candidate = str(raw.candidate, "heuristic");
+      const candidate = str(raw.candidate ?? raw.architecture, "heuristic");
       const opponent = str(raw.opponent, "opponent");
-      const turns = num(raw.turns);
+      const turns = num(raw.turns ?? raw.total_turns);
       const winner = raw.winner;
       let outcome: ReplayRecord["outcome"] = "draw";
       if (winner === 0) outcome = "player1_win";
       else if (winner === 1) outcome = "player2_win";
+      const framesRaw = Array.isArray(raw.frames) ? raw.frames : [];
+      const framesStatus = str(raw.frames_status, framesRaw.length > 0 ? "RECORDED" : "METADATA_ONLY");
+      const hasFrames = framesStatus === "RECORDED" && framesRaw.length > 0;
+      const stub = emptyReplayStub(id, `${candidate} vs ${opponent}`);
+      const note = hasFrames
+        ? `${candidate} vs ${opponent} (seed ${String(raw.seed ?? "?")})`
+        : `${candidate} vs ${opponent} — METADATA_ONLY (no board frames in recorded evidence)`;
       return {
-        ...emptyReplayStub(id, `${candidate} vs ${opponent}`),
-        totalTurns: turns,
+        ...stub,
+        frames: hasFrames ? (framesRaw as ReplayRecord["frames"]) : [],
+        totalTurns: turns || framesRaw.length,
         outcome,
-        label: str(raw.privileged_label) || `${candidate} vs ${opponent} (seed ${String(raw.seed ?? "?")})`,
+        label: str(raw.privileged_label) || note,
         config: {
           player1: "heuristic",
           player2: "heuristic",

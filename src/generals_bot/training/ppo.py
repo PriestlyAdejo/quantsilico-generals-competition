@@ -22,6 +22,7 @@ from generals_bot.models.checkpoint import apply_state_dict, save_checkpoint
 from generals_bot.models.factory import build_model
 from generals_bot.models.legal_mask import apply_action_mask
 from generals_bot.models.mlp import RecurrentMLPPolicy
+from generals_bot.models.model_forward import adapt_forward_output
 from generals_bot.models.observation_encoder import encode_globals_numpy, encode_grids_numpy
 from generals_bot.training.bridge_benchmark import extract_numpy_boards
 from generals_bot.training.collect_bc import _action_to_jax, _observation_from_arrays
@@ -97,13 +98,15 @@ def run_bounded_ppo(
             glob_t = torch.from_numpy(glob).unsqueeze(0).to(torch_device)
             with torch.no_grad():
                 if cell_mem is not None:
-                    out = model.forward_tensors(cell_t, glob_t, hidden, cell_mem, deterministic=False)
-                    cell_mem = out["cell_memory"]
+                    raw = model.forward_tensors(cell_t, glob_t, hidden, cell_mem, deterministic=False)
                 else:
                     flat = cell_t.reshape(1, -1) if isinstance(model, RecurrentMLPPolicy) else cell_t
-                    out = model.forward_tensors(flat, glob_t, hidden, deterministic=False)
-                hidden = out["hidden"]
-                logits = out["logits"]
+                    raw = model.forward_tensors(flat, glob_t, hidden, deterministic=False)
+                fwd = adapt_forward_output(raw)
+                if fwd.cell_memory is not None:
+                    cell_mem = fwd.cell_memory
+                hidden = fwd.hidden
+                logits = fwd.logits
                 # Pass-safe mask: pass always legal; full enum omitted for smoke speed.
                 mask = torch.zeros(1, ACTION_DIM, dtype=torch.bool, device=torch_device)
                 mask[0, 0] = True
@@ -116,7 +119,7 @@ def run_bounded_ppo(
                 dist = torch.distributions.Categorical(logits=masked)
                 action = dist.sample()
                 logp = dist.log_prob(action)
-                value = out["value"]
+                value = fwd.value
             idx = int(action.item())
             assert bool(mask[0, idx]), "illegal action sampled"
             cells_buf.append(cells)
@@ -151,11 +154,12 @@ def run_bounded_ppo(
         hidden = model.initial_hidden(b, device=torch_device)
         if hasattr(model, "initial_cell_memory"):
             cell_mem = model.initial_cell_memory(b, device=torch_device)
-            out = model.forward_tensors(cells_t, globs_t, hidden, cell_mem, deterministic=False)
+            raw = model.forward_tensors(cells_t, globs_t, hidden, cell_mem, deterministic=False)
         else:
             flat = cells_t.reshape(b, -1) if isinstance(model, RecurrentMLPPolicy) else cells_t
-            out = model.forward_tensors(flat, globs_t, hidden, deterministic=False)
-        logits = out["logits"]
+            raw = model.forward_tensors(flat, globs_t, hidden, deterministic=False)
+        fwd = adapt_forward_output(raw)
+        logits = fwd.logits
         # Recompute with pass-only fallback mask bits for chosen actions only.
         mask = torch.zeros(b, ACTION_DIM, dtype=torch.bool, device=torch_device)
         mask.scatter_(1, acts_t.unsqueeze(1), True)
@@ -168,7 +172,7 @@ def run_bounded_ppo(
         surr1 = ratio * adv_t
         surr2 = torch.clamp(ratio, 1.0 - clip, 1.0 + clip) * adv_t
         policy_loss = -torch.min(surr1, surr2).mean()
-        value_loss = F.mse_loss(out["value"], ret_t)
+        value_loss = F.mse_loss(fwd.value, ret_t)
         loss = policy_loss + 0.5 * value_loss - 0.01 * entropy
         assert torch.isfinite(loss), "NaN/Inf PPO loss"
         with torch.no_grad():
@@ -178,7 +182,7 @@ def run_bounded_ppo(
             adv_std = float(adv_t.std(unbiased=False).item())
             var_y = float(ret_t.var(unbiased=False).item())
             explained_variance = (
-                float(1.0 - (ret_t - out["value"].detach()).var(unbiased=False).item() / (var_y + 1e-8))
+                float(1.0 - (ret_t - fwd.value.detach()).var(unbiased=False).item() / (var_y + 1e-8))
                 if var_y > 1e-12
                 else 0.0
             )
@@ -222,13 +226,13 @@ def run_bounded_ppo(
         dummy_cells = torch.zeros(1, 10, 21, 21, device=torch_device)
         dummy_glob = torch.zeros(1, 9, device=torch_device)
         if hasattr(resumed, "initial_cell_memory"):
-            out = resumed.forward_tensors(
+            raw = resumed.forward_tensors(
                 dummy_cells, dummy_glob, h0, resumed.initial_cell_memory(1, device=torch_device)
             )
         else:
             flat = dummy_cells.reshape(1, -1) if isinstance(resumed, RecurrentMLPPolicy) else dummy_cells
-            out = resumed.forward_tensors(flat, dummy_glob, h0)
-        assert torch.isfinite(out["logits"]).all()
+            raw = resumed.forward_tensors(flat, dummy_glob, h0)
+        assert torch.isfinite(adapt_forward_output(raw).logits).all()
 
     from generals_bot.training.telemetry_schema import annotate_history
 

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kind": "LOCAL_REFERENCE_BASELINE_SUITE",
+  "label": "LOCAL_REFERENCE_BASELINE_SUITE",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "declared_before_stage1": true,
+  "not_portal_claim": true,
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "baselines": [
+    {
+      "candidate_id": "official_expander",
+      "role": "primary_strength_opponent",
+      "reason": "Official competition Expander baseline used throughout DEVELOPMENT and INITIAL validation"
+    },
+    {
+      "candidate_id": "official_hunter",
+      "role": "secondary_opponent",
+      "reason": "Official Hunter informational opponent used in portal and qualification suites"
+    },
+    {
+      "candidate_id": "heuristic_v1",
+      "role": "local_heuristic_reference",
+      "reason": "Prior local heuristic reference; not claimed as the active portal submission"
+    }
+  ],
+  "minimum_opponent_breadth": 2,
+  "readiness_thresholds": {
+    "min_valid_zero_fault_games": 8,
+    "require_genuine_win": true,
+    "max_protocol_faults": 0,
+    "max_fallbacks": 0
+  },
+  "notes": [
+    "Predeclared before Stage 1. Must not be modified after observing Stage 1 performance.",
+    "Never describe as active portal candidate, submitted bot, portal baseline, or current competition submission.",
+    "Overnight may use this suite only when PORTAL_ATTRIBUTION_GATE is not RESOLVED."
+  ],
+  "created_at": "2026-08-04T12:25:00+00:00"
+}

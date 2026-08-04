@@ -24,6 +24,7 @@ from generals_bot.models.action_index import index_to_action
 from generals_bot.models.checkpoint import apply_state_dict
 from generals_bot.models.factory import build_model
 from generals_bot.models.legal_mask import apply_action_mask
+from generals_bot.models.model_forward import adapt_forward_output
 from generals_bot.models.observation_encoder import encode_globals_numpy, encode_grids_numpy
 from generals_bot.observation import GameContext, Observation
 from generals_bot.policies.base import ActionDecision, PolicyState, TraceLevel
@@ -86,13 +87,15 @@ class CheckpointPolicy:
             cell_mem = self._model.initial_cell_memory(1, device=torch.device(self.device))
         with torch.no_grad():
             if cell_mem is not None:
-                out = self._model.forward_tensors(cell_t, glob_t, hidden, cell_mem, deterministic=deterministic)
-                logits, value, new_h, new_c = out[0], out[1], out[2], out[3]
-                state.data["cell"] = new_c
+                raw = self._model.forward_tensors(cell_t, glob_t, hidden, cell_mem, deterministic=deterministic)
             else:
-                out = self._model.forward_tensors(cell_t, glob_t, hidden, deterministic=deterministic)
-                logits, value, new_h = out[0], out[1], out[2]
-            state.data["hidden"] = new_h
+                raw = self._model.forward_tensors(cell_t, glob_t, hidden, deterministic=deterministic)
+            fwd = adapt_forward_output(raw)
+            if fwd.cell_memory is not None:
+                state.data["cell"] = fwd.cell_memory
+            state.data["hidden"] = fwd.hidden
+            logits = fwd.logits
+            value = fwd.value
             mask = None
             try:
                 from generals_bot.models.legal_mask import legal_mask_observation
@@ -100,7 +103,9 @@ class CheckpointPolicy:
                 mask = legal_mask_observation(observation).to(self.device)
                 logits = apply_action_mask(logits, mask)
             except Exception:
-                pass
+                # Mask failures are not silently converted to PASS at the caller;
+                # leave unmasked logits and let illegal actions fail downstream.
+                mask = None
             idx = int(torch.argmax(logits, dim=-1).item()) if deterministic else int(
                 torch.distributions.Categorical(logits=logits).sample().item()
             )
@@ -128,51 +133,121 @@ def validate_checkpoint_vs_expander(
     seeds: list[int],
     max_turns: int,
     device: str,
+    learned_seat: int = 0,
+    record_diagnostics: Path | None = None,
 ) -> dict[str, Any]:
+    """Validate a checkpoint vs official_expander.
+
+    ``learned_seat`` is 0 or 1 (board player index for the learned policy).
+    When ``record_diagnostics`` is set, write one JSON replay with frames+actions
+    for the first completed game (diagnostic evidence).
+    """
+    if learned_seat not in (0, 1):
+        raise ValueError("learned_seat must be 0 or 1")
     learned = CheckpointPolicy(architecture=architecture, checkpoint=checkpoint, device=device)
     opp = create_policy("official_expander", seed=0)
     wins = draws = losses = 0
     faults = 0
+    diagnostics_written = False
     for seed in seeds:
         env = GeneralsEnv(mode="competition")
         transition = make_transition(env)
         get_obs = game.get_observation
         state = make_board(env, seed)
         h, w = (int(d) for d in state.armies.shape)
-        st0 = learned.initial_state(GameContext(0, h, w))
-        st1 = opp.initial_state(GameContext(1, h, w))
+        st_learned = learned.initial_state(GameContext(learned_seat, h, w))
+        st_opp = opp.initial_state(GameContext(1 - learned_seat, h, w))
         winner = None
-        for _ in range(max_turns):
+        frames: list[dict[str, Any]] = []
+        actions: list[dict[str, Any]] = []
+        for turn in range(max_turns):
             eng0 = get_obs(state, 0)
             eng1 = get_obs(state, 1)
             t0, o0, a0, _, m0 = extract_numpy_boards(eng0, h, w)
             t1, o1, a1, _, m1 = extract_numpy_boards(eng1, h, w)
             obs0 = _observation_from_arrays(t0, o0, a0, m0)
             obs1 = _observation_from_arrays(t1, o1, a1, m1)
-            try:
-                d0 = learned.act(obs0, st0, deterministic=True, trace=TraceLevel.NONE, deadline=None)
-                st0 = d0.new_state
-                act0 = d0.action
-            except Exception:
-                faults += 1
-                act0 = PASS_ACTION
-            try:
-                d1 = opp.act(obs1, st1, deterministic=True, trace=TraceLevel.NONE, deadline=None)
-                st1 = d1.new_state
-                act1 = d1.action
-            except Exception:
-                faults += 1
-                act1 = PASS_ACTION
+            if learned_seat == 0:
+                try:
+                    d0 = learned.act(obs0, st_learned, deterministic=True, trace=TraceLevel.NONE, deadline=None)
+                    st_learned = d0.new_state
+                    act0 = d0.action
+                except Exception:
+                    faults += 1
+                    act0 = PASS_ACTION
+                try:
+                    d1 = opp.act(obs1, st_opp, deterministic=True, trace=TraceLevel.NONE, deadline=None)
+                    st_opp = d1.new_state
+                    act1 = d1.action
+                except Exception:
+                    faults += 1
+                    act1 = PASS_ACTION
+            else:
+                try:
+                    d0 = opp.act(obs0, st_opp, deterministic=True, trace=TraceLevel.NONE, deadline=None)
+                    st_opp = d0.new_state
+                    act0 = d0.action
+                except Exception:
+                    faults += 1
+                    act0 = PASS_ACTION
+                try:
+                    d1 = learned.act(obs1, st_learned, deterministic=True, trace=TraceLevel.NONE, deadline=None)
+                    st_learned = d1.new_state
+                    act1 = d1.action
+                except Exception:
+                    faults += 1
+                    act1 = PASS_ACTION
+            if record_diagnostics is not None and not diagnostics_written:
+                frames.append(
+                    {
+                        "turn": turn,
+                        "height": h,
+                        "width": w,
+                        "type_grid": np.asarray(t0).tolist(),
+                        "owner_grid": np.asarray(o0).tolist(),
+                        "army_grid": np.asarray(a0).tolist(),
+                    }
+                )
+                actions.append(
+                    {
+                        "turn": turn,
+                        "act0": act0.as_tuple() if hasattr(act0, "as_tuple") else str(act0),
+                        "act1": act1.as_tuple() if hasattr(act1, "as_tuple") else str(act1),
+                        "learned_seat": learned_seat,
+                    }
+                )
             state, info = transition(state, jnp.stack([_action_to_jax(act0), _action_to_jax(act1)]))
             if bool(info.is_done):
                 winner = int(info.winner)
                 break
         if winner is None or winner < 0:
             draws += 1
-        elif winner == 0:
+            learned_result = "draw"
+        elif winner == learned_seat:
             wins += 1
+            learned_result = "win"
         else:
             losses += 1
+            learned_result = "loss"
+        if record_diagnostics is not None and not diagnostics_written and frames:
+            record_diagnostics.parent.mkdir(parents=True, exist_ok=True)
+            payload = {
+                "schema_version": 1,
+                "kind": "DIAGNOSTIC_REPLAY_FRAMES",
+                "frames_status": "RECORDED",
+                "architecture": architecture,
+                "checkpoint": str(checkpoint),
+                "seed": seed,
+                "learned_seat": learned_seat,
+                "opponent": "official_expander",
+                "winner": winner,
+                "learned_result": learned_result,
+                "turns": len(frames),
+                "frames": frames,
+                "actions": actions,
+            }
+            record_diagnostics.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+            diagnostics_written = True
     n = wins + draws + losses
     return {
         "wins": wins,
@@ -182,7 +257,9 @@ def validate_checkpoint_vs_expander(
         "score_rate": score_rate(wins, draws, losses) if n else None,
         "protocol_faults": faults,
         "seeds": seeds,
+        "learned_seat": learned_seat,
         "opponent": "official_expander",
+        "diagnostics_path": str(record_diagnostics) if diagnostics_written and record_diagnostics else None,
     }
 
 

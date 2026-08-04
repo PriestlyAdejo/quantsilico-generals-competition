@@ -35,9 +35,12 @@ export interface ModelRecord {
   lifecycle: ModelLifecycle;
   role: CompetitiveRole;
   deliveryStatus: DeliveryStatus;
-  parameters: number;
-  trainingSteps: number;
-  wdl: WDL;
+  /** Null when parameter count is not recorded on the model DTO. */
+  parameters: number | null;
+  trainingSteps: number | null;
+  /** Null when evaluation WDL is not recorded. */
+  wdl: WDL | null;
+  wdlAvailability: import("./common").MetricAvailability;
   eloEstimate?: number;
   discoveryRate?: number;
   promotionState?: "BLOCKED" | "ELIGIBLE" | "PROMOTED" | "NONE";

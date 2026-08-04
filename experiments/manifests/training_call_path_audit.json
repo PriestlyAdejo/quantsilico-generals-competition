@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "TRAINING_CALL_PATH_AUDIT",
+  "gate_name": "TRAINING_CALL_PATH_AUDIT",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "decision": "TRAINING_USED_DICT_ACCESS",
+  "reasons": [
+    "PPO rollout and update paths historically indexed forward_tensors via out['logits']/out['value']/out['hidden']/out['cell_memory'].",
+    "CheckpointPolicy.act (validation-only) historically unpacked via out[0]/out[1]/out[2] which raises KeyError on dict outputs.",
+    "BC trainer uses out['logits'] dict access.",
+    "CNN.forward and Graph.forward return tuples for legacy callers, but forward_tensors returns dict for both architectures.",
+    "INITIAL campaign validates exclusively through CheckpointPolicy / validate_checkpoint_vs_expander; training never invoked CheckpointPolicy.act."
+  ],
+  "blockers": [],
+  "candidate_checkpoint_identity": {
+    "cnn": {
+      "arm_id": "cnn_bc_init_seed11",
+      "architecture": "recurrent_cnn_v2",
+      "best_checkpoint": "experiments/checkpoints/initial/initial_cnn_cnn_bc_init_seed11/chunk_0/model.json"
+    },
+    "graph": {
+      "arm_id": "graph_bc_init_seed7",
+      "architecture": "recurrent_graph_belief_v2",
+      "best_checkpoint": "experiments/checkpoints/initial/initial_graph_graph_bc_init_seed7/chunk_0/model.json"
+    }
+  },
+  "layers": {
+    "training_ppo": {
+      "path": "src/generals_bot/training/ppo.py",
+      "access_style_before_fix": "dict",
+      "uses_checkpoint_policy": false,
+      "contaminated_by_tuple_bug": false
+    },
+    "training_bc": {
+      "path": "src/generals_bot/training/behaviour_clone.py",
+      "access_style_before_fix": "dict",
+      "uses_checkpoint_policy": false,
+      "contaminated_by_tuple_bug": false
+    },
+    "validation_checkpoint_policy": {
+      "path": "src/generals_bot/training/adaptive_initial.py::CheckpointPolicy.act",
+      "access_style_before_fix": "tuple_numeric_index",
+      "uses_checkpoint_policy": true,
+      "contaminated_by_tuple_bug": true,
+      "exception": "KeyError on dict keys when indexing out[0]",
+      "fallback": "PASS_ACTION with protocol_faults += 1 per turn"
+    }
+  },
+  "preliminary_class_hypothesis": "A",
+  "classification_status": "CONFIRMED_CLASS_A",
+  "note": "Class A confirmed after ladder PASS on frozen INITIAL checkpoint hashes.",
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "evaluator_sha": null,
+  "source_manifest_hashes": {
+    "adaptive_initial_campaign.json": "immutable_historical_reference"
+  },
+  "created_at": "2026-08-04T12:35:00+00:00",
+  "supersedes": null,
+  "superseded_by": "experiments/manifests/protocol_root_cause_classification.json"
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "kind": "DASHBOARD_OPERABILITY_GATE",
+  "gate_name": "DASHBOARD_OPERABILITY_GATE",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "decision": "PARTIAL",
+  "reasons": [
+    "Qualification suite selector now maps to stage detail and filters WDL charts.",
+    "Jobs service labels metadata-only replays as METADATA_ONLY instead of RECORDED.",
+    "Replay getReplayById surfaces METADATA_ONLY honestly when frames are absent."
+  ],
+  "blockers": [],
+  "remaining_nonblocking_defects": [
+    "Environment Lab guided-session UX still incomplete",
+    "Explainability prerequisite messaging still incomplete",
+    "Overview/Champion status separation polish pending",
+    "DataSourceBadge internal-kind drawer polish pending",
+    "Diagnostic grid frames are recorded but full CellState Replay Lab playback mapping is incomplete"
+  ],
+  "candidate_checkpoint_identity": null,
+  "source_manifest_hashes": {
+    "plans/dashboard-research-integrity-remediation.md": "updated"
+  },
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "evaluator_sha": null,
+  "created_at": "2026-08-04T12:50:00+00:00",
+  "supersedes": null,
+  "superseded_by": null,
+  "note": "PARTIAL does not block research integration when remaining defects are nonblocking."
+}

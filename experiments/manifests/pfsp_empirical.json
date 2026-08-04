@@ -5,24 +5,42 @@
   "temperature": 1.0,
   "probability_floor": 0.02,
   "opponents": [
-    "heuristic_v2f_plus_planner_terminal_fix",
-    "official_expander",
-    "official_hunter",
-    "heuristic_v0"
+    "pass",
+    "legal_random",
+    "heuristic_v0",
+    "heuristic_aggressive",
+    "heuristic_defensive",
+    "heuristic_castle",
+    "heuristic_deathtouch"
   ],
   "input_win_rates_smoothed": [
+    0.5,
+    0.5,
+    0.5,
     0.5,
     0.5,
     0.5,
     0.5
   ],
   "probabilities": [
-    0.25,
-    0.25,
-    0.25,
-    0.25
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288,
+    0.14285714285714288
   ],
-  "sum": 1.0,
-  "source_payoff": "experiments\\manifests\\payoff_pfsp_development.json",
+  "sum": 1.0000000000000002,
+  "source_payoff": {
+    "name": "population_smoke",
+    "seeds": 2,
+    "paired_positions": true,
+    "games_per_pairing": 4,
+    "seed_file": "experiments/seeds/train.txt",
+    "max_turns": 80,
+    "wall_clock_s": 300.0,
+    "label": "wiring_only"
+  },
   "kind": "EMPIRICAL_PFSP"
 }

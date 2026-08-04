@@ -2,17 +2,20 @@
   "schema_version": 1,
   "kind": "LIGHTWEIGHT_PSRO",
   "meta_strategy": {
-    "heuristic_v2f_plus_planner_terminal_fix": 0.2,
-    "heuristic_v1": 0.2,
-    "official_expander": 0.2,
-    "official_hunter": 0.2,
-    "heuristic_v0": 0.2
+    "pass": 0.125,
+    "legal_random": 0.125,
+    "heuristic_v0": 0.125,
+    "heuristic_v1": 0.125,
+    "heuristic_aggressive": 0.125,
+    "heuristic_defensive": 0.125,
+    "heuristic_castle": 0.125,
+    "heuristic_deathtouch": 0.125
   },
   "meta_sum": 1.0,
   "finite_nonnegative": true,
   "cycles_sample": [],
   "cycle_count": 0,
   "weak_matchups_for_focal": [],
-  "next_br_target": "official_expander",
+  "next_br_target": "heuristic_aggressive",
   "note": "Uniform meta-strategy documented baseline; not a Nash/exploitability claim."
 }

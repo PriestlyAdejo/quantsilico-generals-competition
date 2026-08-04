@@ -100,6 +100,22 @@ export default function QualificationPage() {
   const [suite, setSuite] = useState("development");
   const [stageId, setStageId] = useState("development");
 
+  const onSuiteChange = (next: string) => {
+    setSuite(next);
+    // Map evaluation-suite selector onto the stage detail panel when an id matches.
+    const suiteToStage: Record<string, string> = {
+      screening: "screening",
+      development: "development",
+      portal: "portal",
+      "learning-readiness": "learning-readiness",
+      "learned-promotion": "learned-promotion",
+      "persistent-state-diagnostic": "persistent-state",
+      "pre-ppo": "development",
+    };
+    const mapped = suiteToStage[next];
+    if (mapped) setStageId(mapped);
+  };
+
   useEffect(() => {
     ds.listCandidates().then((list) => {
       setCandidates(list);
@@ -124,17 +140,24 @@ export default function QualificationPage() {
     ? [
         {
           phase: "Screening",
+          suiteKey: "screening",
           Wins: selected.screeningAvailability === "RECORDED" ? selected.screeningWDL?.wins ?? null : null,
           Draws: selected.screeningAvailability === "RECORDED" ? selected.screeningWDL?.draws ?? null : null,
           Losses: selected.screeningAvailability === "RECORDED" ? selected.screeningWDL?.losses ?? null : null,
         },
         {
           phase: "Development",
+          suiteKey: "development",
           Wins: selected.developmentAvailability === "RECORDED" ? selected.developmentWDL?.wins ?? null : null,
           Draws: selected.developmentAvailability === "RECORDED" ? selected.developmentWDL?.draws ?? null : null,
           Losses: selected.developmentAvailability === "RECORDED" ? selected.developmentWDL?.losses ?? null : null,
         },
-      ].filter((row) => row.Wins != null)
+      ].filter((row) => {
+        if (row.Wins == null) return false;
+        if (suite === "screening") return row.suiteKey === "screening";
+        if (suite === "development" || suite === "pre-ppo") return row.suiteKey === "development";
+        return true;
+      })
     : [];
 
   const discoveryData = selected
@@ -183,7 +206,7 @@ export default function QualificationPage() {
             <select
               className="block mt-1 bg-[#0C1116] border border-[#1E2630] text-[#EAF0F6] font-mono text-xs px-2 py-1.5 rounded-sm"
               value={suite}
-              onChange={(e) => setSuite(e.target.value)}
+              onChange={(e) => onSuiteChange(e.target.value)}
             >
               <option value="screening">Screening Evaluation</option>
               <option value="development">Development Evaluation</option>

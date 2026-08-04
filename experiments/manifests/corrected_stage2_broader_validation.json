@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "kind": "CORRECTED_STAGE2_BROADER_VALIDATION",
+  "gate_name": "CORRECTED_STAGE2_BROADER_VALIDATION",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "decision": "COMPLETE",
+  "reasons": [
+    "PORTAL_ATTRIBUTION_GATE=RESOLVED",
+    "Opponents: ['official_expander', 'official_hunter', 'heuristic_v2f_plus_planner_terminal_fix']",
+    "8 seeds \u00d7 2 seats \u00d7 3 opponents = 48 games per architecture"
+  ],
+  "blockers": [],
+  "candidates": [
+    {
+      "arm_id": "cnn_bc_init_seed11",
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+      "checkpoint_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+      "checkpoint_sha256_16": "ee70e00bf3883568",
+      "frozen_initial_best": true,
+      "portal_candidate": "heuristic_v2f_plus_planner_terminal_fix",
+      "portal_attribution": "RESOLVED",
+      "by_series": [
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\replays\\private\\protocol_integrity\\stage2_cnn_bc_init_seed11_official_expander_seat0_s2000.json"
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 0,
+          "opponent": "official_hunter",
+          "diagnostics_path": null
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 1,
+          "opponent": "official_hunter",
+          "diagnostics_path": null
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 0,
+          "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+          "diagnostics_path": null
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 1,
+          "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+          "diagnostics_path": null
+        }
+      ],
+      "aggregate": {
+        "wins": 0,
+        "draws": 24,
+        "losses": 0,
+        "games": 24,
+        "score_rate": 0.5,
+        "protocol_faults": 0,
+        "seeds": [
+          2000,
+          2001,
+          2002,
+          2003
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "opponents": [
+          "official_expander",
+          "official_hunter",
+          "heuristic_v2f_plus_planner_terminal_fix"
+        ]
+      }
+    },
+    {
+      "arm_id": "graph_bc_init_seed7",
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_graph_graph_bc_init_seed7\\chunk_0\\model.json",
+      "checkpoint_sha256": "23699c72fc5a3e0b011900c247c1cdc74c826e7723471c880c5e4df6091fee64",
+      "checkpoint_sha256_16": "23699c72fc5a3e0b",
+      "frozen_initial_best": true,
+      "portal_candidate": "heuristic_v2f_plus_planner_terminal_fix",
+      "portal_attribution": "RESOLVED",
+      "by_series": [
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\replays\\private\\protocol_integrity\\stage2_graph_bc_init_seed7_official_expander_seat0_s2000.json"
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 0,
+          "opponent": "official_hunter",
+          "diagnostics_path": null
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 1,
+          "opponent": "official_hunter",
+          "diagnostics_path": null
+        },
+        {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 0,
+          "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+          "diagnostics_path": null
+        },
+        {
+          "wins": 0,
+          "draws": 3,
+          "losses": 1,
+          "games": 4,
+          "score_rate": 0.375,
+          "protocol_faults": 0,
+          "seeds": [
+            2000,
+            2001,
+            2002,
+            2003
+          ],
+          "learned_seat": 1,
+          "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+          "diagnostics_path": null
+        }
+      ],
+      "aggregate": {
+        "wins": 0,
+        "draws": 23,
+        "losses": 1,
+        "games": 24,
+        "score_rate": 0.4791666666666667,
+        "protocol_faults": 0,
+        "seeds": [
+          2000,
+          2001,
+          2002,
+          2003
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "opponents": [
+          "official_expander",
+          "official_hunter",
+          "heuristic_v2f_plus_planner_terminal_fix"
+        ]
+      }
+    }
+  ],
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "created_at": "2026-08-04T12:47:58.160950+00:00",
+  "supersedes": null,
+  "superseded_by": null
+}

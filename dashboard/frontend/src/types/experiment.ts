@@ -12,7 +12,9 @@ export interface ExperimentRecord {
   opponent: string;
   suite: string;
   lifecycle: ExperimentLifecycle;
-  wdl: WDL;
+  /** Null when the manifest does not contain evaluation WDL. */
+  wdl: WDL | null;
+  wdlAvailability: import("./common").MetricAvailability;
   discoveryRate?: number;
   conversionRate?: number;
   terminalTurnP50?: number;

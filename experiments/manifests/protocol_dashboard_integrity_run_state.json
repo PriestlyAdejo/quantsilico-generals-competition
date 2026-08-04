@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "kind": "PROTOCOL_DASHBOARD_INTEGRITY_RUN_STATE",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "current_stage": "TERMINAL",
+  "stage_status": "COMPLETE",
+  "working_branch": "fix/protocol-and-dashboard-research-integrity",
+  "starting_commit": "c671babe45663230173f76c53db399288bd76912",
+  "latest_commit": "c671babe45663230173f76c53db399288bd76912",
+  "last_verified_commit": "c671babe45663230173f76c53db399288bd76912",
+  "working_branch_tip": "c671babe45663230173f76c53db399288bd76912",
+  "chosen_integration_commit": null,
+  "active_campaign_id": null,
+  "active_checkpoint": null,
+  "gate_decisions": {
+    "PORTAL_ATTRIBUTION_GATE": "RESOLVED",
+    "LEARNED_PROTOCOL_COMPATIBILITY_GATE_CNN": "PASS",
+    "LEARNED_PROTOCOL_COMPATIBILITY_GATE_GRAPH": "PASS",
+    "PROTOCOL_ROOT_CAUSE_CLASSIFICATION": "CLASS_A",
+    "RESEARCH_EVIDENCE_INTEGRITY_GATE": "PASS",
+    "CORRECTED_STAGE1": "COMPLETE",
+    "CORRECTED_STAGE2": "COMPLETE",
+    "OVERNIGHT_READINESS_GATE": "BLOCKED",
+    "DASHBOARD_OPERABILITY_GATE": "PARTIAL",
+    "DELIVERY_INTEGRITY_GATE": "BLOCKED"
+  },
+  "terminal_outcome": "PROTOCOL_FIXED_POLICY_WEAK_OVERNIGHT_BLOCKED",
+  "recovery_tag": "protocol-dashboard-integrity-start-c671bab",
+  "notes": [
+    "Class A: CheckpointPolicy dict-as-tuple validation adapter only; checkpoints not contaminated.",
+    "Stage1 CNN/graph: 0 faults; all draws vs Expander.",
+    "Stage2 CNN 0W/24D/0L; graph 0W/23D/1L; 0 faults; portal attribution RESOLVED.",
+    "Historical INITIAL 200-fault evidence preserved.",
+    "Phase 10 / holdout / learned ZIP not entered.",
+    "Dashboard operability PARTIAL — research may still integrate."
+  ],
+  "updated_at": "2026-08-04T12:52:00+00:00"
+}

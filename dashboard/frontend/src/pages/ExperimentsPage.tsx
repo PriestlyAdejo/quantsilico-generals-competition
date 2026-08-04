@@ -72,7 +72,7 @@ export default function ExperimentsPage() {
               <div key={e.id} className="border border-[#1E2630] rounded-sm p-3">
                 <DataSourceBadge kind={e.kind} pill />
                 <p className="text-[#CDD6DF] font-mono text-xs mt-1">{e.candidate}</p>
-                <p className="text-[#FFB000] font-mono text-lg font-bold">{fmtWDL(e.wdl)}</p>
+                <p className="text-[#FFB000] font-mono text-lg font-bold">{fmtWDL(e.wdl, e.wdlAvailability)}</p>
                 <p className="text-[#8593A1] font-mono text-xs">
                   Discovery: {e.discoveryRate != null ? fmtPct(e.discoveryRate) : "NOT MEASURED"}
                 </p>
@@ -124,7 +124,7 @@ export default function ExperimentsPage() {
                   </td>
                   <td className="px-3 py-2.5"><span className="text-[#CDD6DF]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{exp.label.length > 40 ? exp.label.slice(0, 40) + "…" : exp.label}</span></td>
                   <td className="px-3 py-2.5"><span className="text-[#8593A1]" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>{exp.candidate.length > 20 ? exp.candidate.slice(0, 20) + "…" : exp.candidate}</span></td>
-                  <td className="px-3 py-2.5"><span className="text-[#FFB000] font-bold" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{fmtWDL(exp.wdl)}</span></td>
+                  <td className="px-3 py-2.5"><span className="text-[#FFB000] font-bold" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{fmtWDL(exp.wdl, exp.wdlAvailability)}</span></td>
                   <td className="px-3 py-2.5"><span className="text-[#CDD6DF]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{exp.discoveryRate != null ? fmtPct(exp.discoveryRate) : <span className="text-[#4A5568]">NOT MEASURED</span>}</span></td>
                   <td className="px-3 py-2.5">
                     <span className={`font-mono text-xs ${exp.discoveryGate === "PASSED" ? "text-[#3FB950]" : exp.discoveryGate === "FAILED" ? "text-[#F85149]" : "text-[#6F7C89]"}`}>{exp.discoveryGate}</span>

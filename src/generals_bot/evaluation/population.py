@@ -338,15 +338,33 @@ def pfsp_from_empirical(payoff: dict, *, temperature: float = 1.0, floor: float 
         cell = payoff["matrix"][i][j]
         games = payoff["counts"][i][j]
         if cell is None or games == 0:
-            # unplayed: neutral prior, not free win
-            wr = 0.5
+            # Unplayed cells must not enter PFSP as a fabricated 0.5 win-rate.
+            continue
         else:
-            # Laplace/Dirichlet-style smoothing
-            wr = (payoff["counts"][i][j] and (cell * games) + 1) / (games + 2)
-            # cell is score rate; reconstruct wins approx
+            # Laplace/Dirichlet-style smoothing over recorded cells only
             wr = (cell * games + 1.0) / (games + 2.0)
         win_rates.append(wr)
         opponents.append(name)
+    if not win_rates:
+        out = {
+            "schema_version": 1,
+            "focal": focal,
+            "formula": "empirical-only; no fabricated neutral priors",
+            "temperature": temperature,
+            "probability_floor": floor,
+            "opponents": [],
+            "input_win_rates_smoothed": [],
+            "probabilities": [],
+            "sum": 0.0,
+            "source_payoff": payoff.get("path") or payoff.get("preset"),
+            "kind": "EMPIRICAL_PFSP",
+            "availability": "MISSING",
+            "note": "No recorded off-diagonal cells for focal agent; PFSP weights not fabricated.",
+        }
+        path = REPO_ROOT / "experiments" / "manifests" / "pfsp_empirical.json"
+        path.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+        out["path"] = str(path)
+        return out
     scores = np.clip(1.0 - np.asarray(win_rates, dtype=np.float64), 1e-6, None)
     scores = scores ** (1.0 / max(temperature, 1e-6))
     probs = scores / scores.sum()
@@ -374,8 +392,8 @@ def pfsp_from_empirical(payoff: dict, *, temperature: float = 1.0, floor: float 
 def lightweight_psro(payoff: dict) -> dict:
     labels = payoff["labels"]
     n = len(labels)
-    # Build restricted game from available empirical cells; fill missing with 0.5
-    A = np.full((n, n), 0.5, dtype=np.float64)
+    # Restricted game from empirical cells only; missing stays NaN (never fabricate 0.5).
+    A = np.full((n, n), np.nan, dtype=np.float64)
     for i in range(n):
         A[i, i] = 0.0
         for j in range(n):
@@ -384,23 +402,36 @@ def lightweight_psro(payoff: dict) -> dict:
             v = payoff["matrix"][i][j]
             if v is not None:
                 A[i, j] = float(v)
-    # Uniform meta-strategy as documented baseline (not Nash claim)
-    meta = np.ones(n) / n
-    # Detect simple cycles: i beats j beats k beats i with score>0.55
+    # Uniform meta-strategy over agents with at least one recorded off-diagonal cell
+    eligible = [i for i in range(n) if np.any(np.isfinite(A[i]) & (np.arange(n) != i))]
+    meta = np.zeros(n, dtype=np.float64)
+    if eligible:
+        for i in eligible:
+            meta[i] = 1.0 / len(eligible)
+    else:
+        meta[:] = 1.0 / max(n, 1)
+    # Detect simple cycles using recorded edges only
     cycles = []
     for i in range(n):
         for j in range(n):
             for k in range(n):
                 if len({i, j, k}) < 3:
                     continue
-                if A[i, j] > 0.55 and A[j, k] > 0.55 and A[k, i] > 0.55:
+                if (
+                    np.isfinite(A[i, j])
+                    and np.isfinite(A[j, k])
+                    and np.isfinite(A[k, i])
+                    and A[i, j] > 0.55
+                    and A[j, k] > 0.55
+                    and A[k, i] > 0.55
+                ):
                     cycles.append([labels[i], labels[j], labels[k]])
     # Weak matchups for focal heuristic_v1
     focal = labels.index("heuristic_v1") if "heuristic_v1" in labels else 0
     weak = [
         {"opponent": labels[j], "score_rate": float(A[focal, j])}
         for j in range(n)
-        if j != focal and A[focal, j] < 0.45
+        if j != focal and np.isfinite(A[focal, j]) and A[focal, j] < 0.45
     ]
     out = {
         "schema_version": 1,

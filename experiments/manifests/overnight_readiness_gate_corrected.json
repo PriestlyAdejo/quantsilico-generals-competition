@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "kind": "OVERNIGHT_READINESS_GATE",
+  "gate_name": "OVERNIGHT_READINESS_GATE",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "decision": "BLOCKED",
+  "status": "BLOCKED",
+  "reasons": [
+    "Evaluated from corrected Stage 1/2 zero-fault validation after Class A protocol repair.",
+    "Does not mutate historical overnight_readiness_gate.json from Phase 9 INITIAL."
+  ],
+  "blockers": [
+    "cnn_bc_init_seed11: wins=0 (require >0 before overnight)",
+    "cnn_bc_init_seed11: score_rate=0.5 is draw-dominated with zero wins \u2014 not overnight-ready",
+    "graph_bc_init_seed7: wins=0 (require >0 before overnight)",
+    "graph_bc_init_seed7: losses=1 exceed wins=0",
+    "graph_bc_init_seed7: score_rate=0.4791666666666667 is draw-dominated with zero wins \u2014 not overnight-ready"
+  ],
+  "warnings": [
+    "Arena CLI match jobs remain metadata-only unless diagnostic recorder used; jobs.py now labels METADATA_ONLY honestly.",
+    "Dashboard Replay Lab still needs richer board CellState mapping from diagnostic grids for full UI playback."
+  ],
+  "candidates": [
+    {
+      "arm_id": "cnn_bc_init_seed11",
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+      "decision": "BLOCKED",
+      "blockers": [
+        "cnn_bc_init_seed11: wins=0 (require >0 before overnight)",
+        "cnn_bc_init_seed11: score_rate=0.5 is draw-dominated with zero wins \u2014 not overnight-ready"
+      ],
+      "aggregate": {
+        "wins": 0,
+        "draws": 24,
+        "losses": 0,
+        "games": 24,
+        "score_rate": 0.5,
+        "protocol_faults": 0
+      }
+    },
+    {
+      "arm_id": "graph_bc_init_seed7",
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_graph_graph_bc_init_seed7\\chunk_0\\model.json",
+      "decision": "BLOCKED",
+      "blockers": [
+        "graph_bc_init_seed7: wins=0 (require >0 before overnight)",
+        "graph_bc_init_seed7: losses=1 exceed wins=0",
+        "graph_bc_init_seed7: score_rate=0.4791666666666667 is draw-dominated with zero wins \u2014 not overnight-ready"
+      ],
+      "aggregate": {
+        "wins": 0,
+        "draws": 23,
+        "losses": 1,
+        "games": 24,
+        "score_rate": 0.4791666666666667,
+        "protocol_faults": 0
+      }
+    }
+  ],
+  "selected_overnight_candidate": null,
+  "portal_attribution": "RESOLVED",
+  "canonical_portal_candidate": "heuristic_v2f_plus_planner_terminal_fix",
+  "holdout_unused": true,
+  "phase10_permitted": false,
+  "candidate_checkpoint_identity": {
+    "cnn_bc_init_seed11": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+    "graph_bc_init_seed7": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_graph_graph_bc_init_seed7\\chunk_0\\model.json"
+  },
+  "source_manifest_hashes": {
+    "research_evidence_integrity_gate.json": "PASS",
+    "portal_attribution_gate.json": "RESOLVED",
+    "corrected_stage1_expander_validation.json": "COMPLETE",
+    "corrected_stage2_broader_validation.json": "COMPLETE"
+  },
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "evaluator_sha": null,
+  "created_at": "2026-08-04T12:49:09.720615+00:00",
+  "supersedes": "experiments/manifests/overnight_readiness_gate.json",
+  "superseded_by": null,
+  "note": "Overnight requires genuine wins with zero protocol faults. Holdout remains sealed."
+}

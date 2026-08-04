@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "PROTOCOL_FAULT_DENOMINATOR_REPORT",
+  "gate_name": "PROTOCOL_FAULT_DENOMINATOR",
+  "research_generation_id": "protocol_dashboard_integrity_2026-08-04",
+  "source_manifest": "experiments/manifests/adaptive_initial_campaign.json",
+  "immutable_historical": true,
+  "candidates": [
+    {
+      "arm_id": "cnn_bc_init_seed11",
+      "games_per_eval": 2,
+      "max_turns": 100,
+      "protocol_faults_per_eval": 200,
+      "faults_per_game": 100,
+      "faults_per_candidate_decision": 1.0,
+      "wins": 0,
+      "draws": 2,
+      "losses": 0,
+      "interpretation": "Exactly one learned-side fault per turn for two full-length games; expander side appears healthy"
+    },
+    {
+      "arm_id": "graph_bc_init_seed7",
+      "games_per_eval": 2,
+      "max_turns": 100,
+      "protocol_faults_per_eval": 200,
+      "faults_per_game": 100,
+      "faults_per_candidate_decision": 1.0,
+      "wins": 0,
+      "draws": 2,
+      "losses": 0,
+      "interpretation": "Same denominator pattern as CNN"
+    }
+  ],
+  "leading_hypothesis": {
+    "layer": "CheckpointPolicy.act numeric indexing of dict forward_tensors output",
+    "expected_exception": "KeyError on out[0]",
+    "fallback": "PASS_ACTION",
+    "status": "HYPOTHESIS_UNDER_TEST"
+  },
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "created_at": "2026-08-04T12:30:00+00:00",
+  "supersedes": null,
+  "superseded_by": null
+}
