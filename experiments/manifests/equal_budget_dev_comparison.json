@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "kind": "EQUAL_BUDGET_DEVELOPMENT_COMPARISON",
+  "budget": {
+    "rollout_steps_per_update": 96,
+    "updates": 2,
+    "env_steps_per_arm": 192,
+    "seed": 7
+  },
+  "arms": {
+    "cnn_scratch": {
+      "architecture": "recurrent_cnn_v2",
+      "init_checkpoint": null,
+      "legal_action_rate": 1.0,
+      "resume_ok": true,
+      "nan_free": true,
+      "elapsed_s": 12.693899800011422,
+      "history": [
+        {
+          "update": 0.0,
+          "loss": 7.568636894226074,
+          "policy_loss": 7.573862075805664,
+          "value_loss": 0.0011920970864593983,
+          "entropy": 0.5821093320846558
+        },
+        {
+          "update": 1.0,
+          "loss": 17.414762496948242,
+          "policy_loss": 17.4207706451416,
+          "value_loss": 0.0011957163223996758,
+          "entropy": 0.6604589819908142
+        }
+      ],
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\dev_compare\\cnn_scratch\\model.json",
+      "env_steps": 192,
+      "seed": 7,
+      "split": "DEVELOPMENT",
+      "note": "Equal-budget smoke only; not promotion evidence."
+    },
+    "graph_scratch": {
+      "architecture": "recurrent_graph_belief_v2_pure_torch",
+      "init_checkpoint": null,
+      "legal_action_rate": 1.0,
+      "resume_ok": true,
+      "nan_free": true,
+      "elapsed_s": 14.710680400021374,
+      "history": [
+        {
+          "update": 0.0,
+          "loss": 6.3441290855407715,
+          "policy_loss": 6.349681854248047,
+          "value_loss": 0.0014102751156315207,
+          "entropy": 0.625805139541626
+        },
+        {
+          "update": 1.0,
+          "loss": 20.445446014404297,
+          "policy_loss": 20.45149803161621,
+          "value_loss": 0.0014460490783676505,
+          "entropy": 0.6775177121162415
+        }
+      ],
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\dev_compare\\graph_scratch\\model.json",
+      "env_steps": 192,
+      "seed": 7,
+      "split": "DEVELOPMENT",
+      "note": "Equal-budget smoke only; not promotion evidence."
+    },
+    "cnn_bc_init": {
+      "architecture": "recurrent_cnn_v2",
+      "init_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\bc\\tiny_recurrent_cnn_v2\\model.json",
+      "legal_action_rate": 1.0,
+      "resume_ok": true,
+      "nan_free": true,
+      "elapsed_s": 7.211511800007429,
+      "history": [
+        {
+          "update": 0.0,
+          "loss": 0.9201890230178833,
+          "policy_loss": 0.9135828614234924,
+          "value_loss": 0.016089847311377525,
+          "entropy": 0.14387352764606476
+        },
+        {
+          "update": 1.0,
+          "loss": 5.278636932373047,
+          "policy_loss": 5.27131462097168,
+          "value_loss": 0.015355159528553486,
+          "entropy": 0.03553551807999611
+        }
+      ],
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\dev_compare\\cnn_bc_init\\model.json",
+      "env_steps": 192,
+      "seed": 7,
+      "split": "DEVELOPMENT",
+      "note": "Equal-budget smoke only; not promotion evidence."
+    },
+    "graph_bc_init": {
+      "architecture": "recurrent_graph_belief_v2_pure_torch",
+      "init_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\bc\\tiny_recurrent_graph_belief_v2\\model.json",
+      "legal_action_rate": 1.0,
+      "resume_ok": true,
+      "nan_free": true,
+      "elapsed_s": 14.01748849998694,
+      "history": [
+        {
+          "update": 0.0,
+          "loss": 1.8342984914779663,
+          "policy_loss": 1.8306609392166138,
+          "value_loss": 0.009005502797663212,
+          "entropy": 0.08651653677225113
+        },
+        {
+          "update": 1.0,
+          "loss": 5.7581400871276855,
+          "policy_loss": 5.755171298980713,
+          "value_loss": 0.0072092656046152115,
+          "entropy": 0.06354796141386032
+        }
+      ],
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\dev_compare\\graph_bc_init\\model.json",
+      "env_steps": 192,
+      "seed": 7,
+      "split": "DEVELOPMENT",
+      "note": "Equal-budget smoke only; not promotion evidence."
+    }
+  },
+  "pyg_needed": false,
+  "elapsed_s": 63.478870999999344,
+  "stop_before": [
+    "INITIAL",
+    "OVERNIGHT",
+    "MARATHON"
+  ],
+  "notes": [
+    "CNN is the learned control; graph-belief is the principal challenger.",
+    "Training return alone is not evidence of improvement.",
+    "No promotion holdout seeds used."
+  ]
+}

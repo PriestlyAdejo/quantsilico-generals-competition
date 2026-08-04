@@ -1,30 +1,53 @@
-# Post-submission learning continuation (do not run PPO in the packaging task)
+# Post-submission learning continuation
 
-After the operator records manual `SUBMITTED` for the second heuristic package:
+Status after commit `94c0a95` (SUBMITTED record) and subsequent Phase 5/6 smokes.
 
-1. Verify manual `SUBMITTED` record in `submission/UPLOAD_RECORD.md` (or the new package upload record).
-2. Run `LEARNING_READINESS_GATE`.
-3. Run recurrent MLP bridge benchmark.
-4. Confirm JAX-to-PyTorch bridge PASS or PARTIAL.
-5. Run CNN PPO smoke.
-6. Verify checkpoint resume.
-7. Verify safetensors official-CPU load/action.
-8. Run bounded recurrent CNN control.
-9. Run bounded pure-PyTorch recurrent graph-belief challenger (`recurrent_graph_belief_v2_pure_torch`).
-10. Run ablations and population evaluation.
-11. Promote only through `LEARNED_PROMOTION_GATE`.
+## Completed
+
+1. Manual `SUBMITTED` record — `submission/UPLOAD_RECORD_heuristic_v2_preppo.md`
+2. Portal observation — `experiments/manifests/official_portal_observation_heuristic_v2_preppo_2026-08-04.json` (`MANUALLY_RECORDED`)
+3. Public attribution probe — no public package hash beside matches → `MANUAL_OPERATOR_ASSIGNMENT`
+4. `LEARNING_READINESS_GATE` — **PASS** (`experiments/manifests/learning_readiness_gate.json`)
+5. Bridge benchmark — **PASS** (existing `jax_pytorch_bridge_benchmark.json`)
+6. BC tiny overfit — MLP / CNN / graph (`experiments/manifests/bc_tiny.json`)
+7. Bounded PPO smoke — MLP / CNN / graph (legal_action_rate 1.0, resume_ok)
+8. Official-CPU checkpoint load script — `scripts/dev/verify_official_cpu_checkpoint_load.py`
+9. Equal-budget DEVELOPMENT comparison module — `generals_bot.training.equal_budget_compare`
+
+## Model roles
+
+| Role | Architecture |
+|---|---|
+| Engineering bridge | `recurrent_mlp_v1` |
+| Learned control | `recurrent_cnn_v2` |
+| Principal challenger | `recurrent_graph_belief_v2` / alias `recurrent_graph_belief_v2_pure_torch` |
+
+PPO is the training algorithm. CNN and graph-belief are alternative encoders.
+
+## Gate board
+
+| Gate | Status |
+|---|---|
+| HEURISTIC_DEVELOPMENT_GATE | FAIL (discovery) |
+| PRE_PPO_SUBMISSION_GATE | PASS |
+| PORTAL_SUBMISSION_GATE | PASS (`QUALIFIED` ≠ final tournament) |
+| LEARNING_READINESS_GATE | PASS |
+| LEARNED_PROMOTION_GATE | NONE |
+| PPO at upload | NOT STARTED |
 
 ## Graph / PyG policy (unchanged)
 
 - Deployment graph path: pure PyTorch grid message passing — no PyG by default.
-- Optional research-only `recurrent_graph_belief_pyg_v1` under `.venv-training` only if measured need.
+- Optional research-only PyG under `.venv-training` only if measured need.
 - PyG must not enter the submitted runtime unless official `.venv`, offline, Linux parity, size, latency, memory, and measurable improvement all pass.
 
-## Continuation command (after SUBMITTED is recorded)
+## Next campaign (still DEVELOPMENT; stop before INITIAL/OVERNIGHT/MARATHON)
 
 ```powershell
 Set-Location 'C:\Users\pries\Documents\Projects\quantsilico-generals-competition'
-# Begin LEARNING_READINESS_GATE + CNN PPO control track from the recorded SUBMITTED commit.
+.\.venv\Scripts\python.exe -m generals_bot.training.equal_budget_compare --env-steps 256 --updates 4 --seed 7
+# Then: population/PFSP evaluation against Expander, Hunter, heuristic_v1, heuristic_v2f_plus_planner_terminal_force
+# Do NOT promote or upload learned checkpoints.
 ```
 
-Do not start PPO until the operator confirms portal upload.
+Do not overwrite `submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip`.

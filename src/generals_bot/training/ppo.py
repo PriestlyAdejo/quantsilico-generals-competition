@@ -233,7 +233,28 @@ def run_bounded_ppo(
 
 
 def main() -> None:
-    report = run_bounded_ppo()
+    import argparse
+
+    p = argparse.ArgumentParser(description="Bounded PPO smoke (not INITIAL/OVERNIGHT/MARATHON)")
+    p.add_argument("--architecture", default="recurrent_mlp_v1")
+    p.add_argument("--rollout-steps", type=int, default=64)
+    p.add_argument("--updates", type=int, default=2)
+    p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--device", default=None)
+    p.add_argument("--init-checkpoint", default=None)
+    args = p.parse_args()
+    report = run_bounded_ppo(
+        architecture=args.architecture,
+        rollout_steps=args.rollout_steps,
+        updates=args.updates,
+        seed=args.seed,
+        device=args.device,
+        init_checkpoint=Path(args.init_checkpoint) if args.init_checkpoint else None,
+    )
+    # Persist per-architecture smoke manifest for dashboard aggregation.
+    man = Path("experiments/manifests") / f"ppo_smoke_{args.architecture}.json"
+    man.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    report["manifest"] = str(man)
     print(json.dumps(report, indent=2))
 
 

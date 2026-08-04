@@ -239,6 +239,7 @@ def run_bc_pipeline(
     val_path = save_dataset(val_samples, data_root / ("tiny_val.npz" if tiny else "smoke_val.npz"))
 
     architectures = architectures or [
+        "recurrent_mlp_v1",
         "recurrent_cnn_v2",
         "recurrent_graph_belief_v2",
     ]
@@ -248,7 +249,7 @@ def run_bc_pipeline(
             architecture=arch,
             train_path=train_path,
             val_path=val_path,
-            epochs=150 if tiny else epochs,
+            epochs=epochs if epochs > 0 else (80 if tiny else 8),
             batch_size=8 if tiny else 32,
             lr=5e-3 if tiny else 1e-3,
             out_dir=Path("experiments/checkpoints/bc") / ("tiny_" + arch if tiny else arch),
@@ -258,6 +259,7 @@ def run_bc_pipeline(
         "train_seeds": train_seeds,
         "val_seeds": val_seeds,
         "policies": policies,
+        "architectures": architectures,
         "reports": reports,
     }
     out = Path("experiments/manifests/bc_smoke.json" if not tiny else "experiments/manifests/bc_tiny.json")
@@ -272,10 +274,21 @@ def main() -> None:
 
     p = argparse.ArgumentParser()
     p.add_argument("--tiny", action="store_true")
-    p.add_argument("--epochs", type=int, default=8)
+    p.add_argument("--epochs", type=int, default=0, help="0 = default (80 tiny / 8 smoke)")
     p.add_argument("--train-seeds", type=int, default=8)
+    p.add_argument(
+        "--architectures",
+        default="recurrent_mlp_v1,recurrent_cnn_v2,recurrent_graph_belief_v2",
+        help="Comma-separated architecture ids",
+    )
     args = p.parse_args()
-    summary = run_bc_pipeline(tiny=args.tiny, epochs=args.epochs, train_seed_limit=args.train_seeds)
+    arches = [a.strip() for a in args.architectures.split(",") if a.strip()]
+    summary = run_bc_pipeline(
+        tiny=args.tiny,
+        epochs=args.epochs,
+        train_seed_limit=args.train_seeds,
+        architectures=arches,
+    )
     print(json.dumps({k: summary[k] for k in summary if k != "reports"}, indent=2))
     for arch, rep in summary["reports"].items():
         print(arch, "train_acc", rep["final_train_action_acc"], "val_acc", rep["final_val_action_acc"])

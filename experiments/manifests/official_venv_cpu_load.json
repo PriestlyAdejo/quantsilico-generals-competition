@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "kind": "OFFICIAL_VENV_CPU_LOAD",
+  "results": [
+    {
+      "checkpoint": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/checkpoints/ppo/recurrent_mlp_v1/model.json",
+      "architecture": "recurrent_mlp_v1",
+      "parameter_count": 952820,
+      "action_index": 455,
+      "legal": true,
+      "latency_ms": 15.617299999576062,
+      "device": "cpu",
+      "ok": true
+    },
+    {
+      "checkpoint": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/checkpoints/ppo/recurrent_cnn_v2/model.json",
+      "architecture": "recurrent_cnn_v2",
+      "parameter_count": 225265,
+      "action_index": 0,
+      "legal": true,
+      "latency_ms": 51.904199994169176,
+      "device": "cpu",
+      "ok": true
+    },
+    {
+      "checkpoint": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/checkpoints/ppo/recurrent_graph_belief_v2/model.json",
+      "architecture": "recurrent_graph_belief_v2",
+      "parameter_count": 161137,
+      "action_index": 610,
+      "legal": true,
+      "latency_ms": 138.7809999869205,
+      "device": "cpu",
+      "ok": true
+    },
+    {
+      "checkpoint": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/checkpoints/readiness/recurrent_mlp_v1/readiness.json",
+      "architecture": "recurrent_mlp_v1",
+      "parameter_count": 952820,
+      "action_index": 618,
+      "legal": true,
+      "latency_ms": 31.808200001250952,
+      "device": "cpu",
+      "ok": true
+    }
+  ],
+  "all_ok": true,
+  "note": "Uses project .venv on CPU map_location; approximates official runtime load path."
+}

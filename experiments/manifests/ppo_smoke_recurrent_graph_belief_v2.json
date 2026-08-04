@@ -1,0 +1,30 @@
+{
+  "architecture": "recurrent_graph_belief_v2",
+  "device": "cpu",
+  "rollout_steps": 64,
+  "updates": 2,
+  "history": [
+    {
+      "update": 0.0,
+      "loss": 8.114558219909668,
+      "policy_loss": 8.119793891906738,
+      "value_loss": 0.0016036068554967642,
+      "entropy": 0.6037744283676147
+    },
+    {
+      "update": 1.0,
+      "loss": 10.090105056762695,
+      "policy_loss": 10.096049308776855,
+      "value_loss": 0.0015469613717868924,
+      "entropy": 0.6717727780342102
+    }
+  ],
+  "legal_action_rate": 1.0,
+  "elapsed_s": 12.780263299995568,
+  "checkpoint": "experiments\\checkpoints\\ppo\\recurrent_graph_belief_v2\\model.json",
+  "resume_ok": true,
+  "nan_free": true,
+  "bridge_decision": "PASS",
+  "note": "Bounded PPO smoke only; not a marathon campaign.",
+  "manifest": "experiments\\manifests\\ppo_smoke.json"
+}

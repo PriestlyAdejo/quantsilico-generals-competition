@@ -1,27 +1,27 @@
 {
-  "architecture": "recurrent_mlp_v1",
-  "device": "cuda",
-  "rollout_steps": 64,
+  "architecture": "recurrent_graph_belief_v2_pure_torch",
+  "device": "cpu",
+  "rollout_steps": 96,
   "updates": 2,
   "history": [
     {
       "update": 0.0,
-      "loss": 7.464211463928223,
-      "policy_loss": 7.470436096191406,
-      "value_loss": 7.475709571735933e-05,
-      "entropy": 0.6261621117591858
+      "loss": 1.8342984914779663,
+      "policy_loss": 1.8306609392166138,
+      "value_loss": 0.009005502797663212,
+      "entropy": 0.08651653677225113
     },
     {
       "update": 1.0,
-      "loss": 8.805853843688965,
-      "policy_loss": 8.812549591064453,
-      "value_loss": 0.00012669884017668664,
-      "entropy": 0.6758448481559753
+      "loss": 5.7581400871276855,
+      "policy_loss": 5.755171298980713,
+      "value_loss": 0.0072092656046152115,
+      "entropy": 0.06354796141386032
     }
   ],
   "legal_action_rate": 1.0,
-  "elapsed_s": 23.74849929998163,
-  "checkpoint": "experiments\\checkpoints\\ppo\\recurrent_mlp_v1\\model.json",
+  "elapsed_s": 14.01748849998694,
+  "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\dev_compare\\graph_bc_init\\model.json",
   "resume_ok": true,
   "nan_free": true,
   "bridge_decision": "PASS",

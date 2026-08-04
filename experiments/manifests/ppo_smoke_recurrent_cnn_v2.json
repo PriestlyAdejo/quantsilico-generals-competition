@@ -1,0 +1,30 @@
+{
+  "architecture": "recurrent_cnn_v2",
+  "device": "cpu",
+  "rollout_steps": 64,
+  "updates": 2,
+  "history": [
+    {
+      "update": 0.0,
+      "loss": 5.144705295562744,
+      "policy_loss": 5.150172710418701,
+      "value_loss": 2.459327515680343e-05,
+      "entropy": 0.5479960441589355
+    },
+    {
+      "update": 1.0,
+      "loss": 7.66786003112793,
+      "policy_loss": 7.674416542053223,
+      "value_loss": 2.629800292197615e-05,
+      "entropy": 0.6569626927375793
+    }
+  ],
+  "legal_action_rate": 1.0,
+  "elapsed_s": 7.750031300005503,
+  "checkpoint": "experiments\\checkpoints\\ppo\\recurrent_cnn_v2\\model.json",
+  "resume_ok": true,
+  "nan_free": true,
+  "bridge_decision": "PASS",
+  "note": "Bounded PPO smoke only; not a marathon campaign.",
+  "manifest": "experiments\\manifests\\ppo_smoke.json"
+}
