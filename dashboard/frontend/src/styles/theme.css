@@ -4,6 +4,7 @@
    Source: src/imports/theme.css (priestlyadejo.com portfolio)
    Deviation: --font-size 15px (vs 17px editorial) for dense research UI */
 :root {
+  color-scheme: dark;
   --font-size: 15px;
 
   /* ── Tailwind contract keys ─────────────────────────────────── */
@@ -189,4 +190,9 @@
     }
     html { scroll-behavior: auto; }
   }
+}
+
+.generals-board,
+.generals-board * {
+  forced-color-adjust: none;
 }

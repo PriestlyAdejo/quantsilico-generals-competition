@@ -1,0 +1,11 @@
+﻿# Console overview
+
+This research console shows **imported project evidence** and allowlisted local evaluator jobs.
+
+- Production mode uses `ApiDataSource` (real `/api/*` data).
+- DEMO mode is explicit (`VITE_DASHBOARD_DATA_MODE=demo`) and never writes real registries.
+- Uploads are **manual**. Credentials never enter this application.
+- Git mutation is unavailable.
+- Submitted heuristic remains active: `heuristic_v2f_plus_planner_terminal_fix`.
+- Learned models are research artefacts until promotion — there is **no learned champion**.
+- Current gate values and historical upload-time observations are **separate**.

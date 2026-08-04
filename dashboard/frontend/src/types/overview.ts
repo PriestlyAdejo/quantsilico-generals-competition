@@ -38,7 +38,7 @@ export interface OverviewRecord {
   qualificationFunnel: { stage: string; count: number }[];
   experimentTimeline: ExperimentTimelineEntry[];
   activeJobs: ActiveJob[];
-  currentResult: WDL;
+  currentResult: WDL | null;
   discoveryRate: number;
   conversionRate: number;
   ppoStatus: "NOT_STARTED" | "RUNNING" | "COMPLETE";

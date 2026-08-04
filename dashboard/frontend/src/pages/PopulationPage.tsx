@@ -56,7 +56,14 @@ export default function PopulationPage() {
       <header>
         <p className="text-[#FFB000] font-mono text-xs uppercase tracking-widest mb-1">$ population/</p>
         <h1 className="text-2xl font-bold text-[#EAF0F6]" style={{ fontFamily: "var(--font-heading)" }}>Population</h1>
-        <p className="text-[#8593A1] text-sm mt-1">PFSP agent population — payoff matrix and sampling weights.</p>
+        <p className="text-[#8593A1] text-sm mt-1">
+          Preferential Fictitious Self-Play (PFSP) population — payoff matrix and sampling weights.
+        </p>
+        <p className="text-[#6F7C89] font-mono text-[10px] mt-1">
+          <a className="text-[#22D3EE] hover:underline" href="/documentation/population">About Population / PFSP</a>
+          {" · "}
+          <a className="text-[#22D3EE] hover:underline" href="/documentation/glossary">Glossary</a>
+        </p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -171,10 +178,10 @@ export default function PopulationPage() {
                 <div className="flex-1 h-5 bg-[#1E2630] rounded-sm overflow-hidden relative">
                   <div
                     className="h-full rounded-sm transition-all"
-                    style={{ width: `${entry.pfspWeight * 100}%`, backgroundColor: entry.isMainAgent ? "#FFB000" : "#22D3EE", opacity: 0.8 }}
+                    style={{ width: `${Number.isFinite(entry.pfspWeight) ? entry.pfspWeight * 100 : 0}%`, backgroundColor: entry.isMainAgent ? "#FFB000" : "#22D3EE", opacity: 0.8 }}
                   />
                   <span className="absolute right-2 top-0 h-full flex items-center text-[#8593A1]" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
-                    {(entry.pfspWeight * 100).toFixed(0)}%
+                    {Number.isFinite(entry.pfspWeight) ? `${(entry.pfspWeight * 100).toFixed(0)}%` : "—"}
                   </span>
                 </div>
                 <DataSourceBadge kind={entry.kind} pill />
@@ -192,7 +199,9 @@ export default function PopulationPage() {
                     {entry.isMainAgent && <span className="ml-2 text-[#FFB000]" style={{ fontSize: 9 }}>★ MAIN</span>}
                   </p>
                   <p className="text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
-                    {entry.gamesPlayed} games — {(entry.winRate * 100).toFixed(0)}% win rate
+                    {Number.isFinite(entry.gamesPlayed) ? `${entry.gamesPlayed} games` : "games count NOT RECORDED"}
+                    {" — "}
+                    {Number.isFinite(entry.winRate) ? `${(entry.winRate * 100).toFixed(0)}% win rate` : "win rate NOT RECORDED"}
                   </p>
                 </div>
                 <DataSourceBadge kind={entry.kind} pill />

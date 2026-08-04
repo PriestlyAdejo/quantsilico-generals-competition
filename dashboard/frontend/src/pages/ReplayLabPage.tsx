@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, ReferenceLine,
 } from "recharts";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../app/components/ui/tabs";
 import { Slider } from "../app/components/ui/slider";
-import { Play, Pause, SkipBack, SkipForward } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 import { useDataSource } from "../app/DataSourceProvider";
 import { useReplayPlayer } from "../hooks/useReplayPlayer";
 import GeneralsBoard from "../components/board/GeneralsBoard";
@@ -14,7 +14,6 @@ import DataSourceBadge from "../components/status/DataSourceBadge";
 import PageHeader from "../components/typography/PageHeader";
 import Panel from "../components/data-display/Panel";
 import LoadingState from "../components/feedback/LoadingState";
-import ErrorState from "../components/feedback/ErrorState";
 import { ReplayRecord } from "../types/replay";
 
 const CHART_STYLE = { fontFamily: "var(--font-mono)", fontSize: 10, fill: "#6F7C89" };
@@ -23,33 +22,103 @@ const SPEED_OPTIONS = [0.5, 1, 2, 4];
 export default function ReplayLabPage() {
   const { replayId } = useParams<{ replayId?: string }>();
   const ds = useDataSource();
+  const navigate = useNavigate();
   const [replay, setReplay] = useState<ReplayRecord | null | undefined>(undefined);
+  const [registry, setRegistry] = useState<ReplayRecord[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const id = replayId ?? "replay-demo-001";
-    ds.getReplayById(id).then((r) => setReplay(r));
-  }, [ds, replayId]);
+    let cancelled = false;
+    (async () => {
+      const list = await ds.listReplays();
+      if (cancelled) return;
+      setRegistry(list);
+      if (!replayId) {
+        if (list.length === 0) {
+          setReplay(null);
+          setError("empty");
+          return;
+        }
+        navigate(`/replay/${encodeURIComponent(list[list.length - 1].id)}`, { replace: true });
+        return;
+      }
+      const found = await ds.getReplayById(replayId);
+      if (cancelled) return;
+      if (!found) {
+        setReplay(null);
+        setError("missing");
+        return;
+      }
+      setError(null);
+      setReplay(found);
+    })();
+    return () => { cancelled = true; };
+  }, [ds, replayId, navigate]);
 
   if (replay === undefined) return <LoadingState />;
-  if (replay === null) return <ErrorState error={`Replay not found: ${replayId ?? "replay-demo-001"}`} />;
 
-  return <ReplayViewer replay={replay} />;
+  if (error === "empty") {
+    return (
+      <div className="p-6 space-y-4">
+        <PageHeader eyebrow="replay/" title="Replay Lab" subtitle="No recorded replays yet." />
+        <Panel title="Empty registry" eyebrow="state/">
+          <p className="text-[#8593A1] font-mono text-xs mb-3">Replays are produced by Arena match jobs with recording enabled.</p>
+          <Link to="/arena" className="text-[#22D3EE] font-mono text-xs hover:underline">Open Arena</Link>
+        </Panel>
+      </div>
+    );
+  }
+
+  if (error === "missing" || replay === null) {
+    return (
+      <div className="p-6 space-y-4">
+        <PageHeader eyebrow="replay/" title="Replay Lab" subtitle={`Replay not found: ${replayId}`} />
+        <Panel title="Recover" eyebrow="selector/">
+          <p className="text-[#8593A1] font-mono text-xs mb-3">Choose a valid replay or load the latest.</p>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {registry.slice(-8).reverse().map((r) => (
+              <button
+                key={r.id}
+                type="button"
+                className="px-2 py-1 border border-[#1E2630] text-[#CDD6DF] font-mono text-[10px] hover:border-[#FFB000]"
+                onClick={() => navigate(`/replay/${encodeURIComponent(r.id)}`)}
+              >
+                {r.id}
+              </button>
+            ))}
+          </div>
+          {registry.length > 0 && (
+            <button
+              type="button"
+              className="px-3 py-1.5 border border-[#FFB000] text-[#FFB000] font-mono text-xs"
+              onClick={() => navigate(`/replay/${encodeURIComponent(registry[registry.length - 1].id)}`)}
+            >
+              Load latest replay
+            </button>
+          )}
+        </Panel>
+      </div>
+    );
+  }
+
+  return <ReplayViewer replay={replay} registry={registry} onSelect={(id) => navigate(`/replay/${encodeURIComponent(id)}`)} />;
 }
 
-function ReplayViewer({ replay }: { replay: ReplayRecord }) {
+function ReplayViewer({
+  replay,
+  registry,
+  onSelect,
+}: {
+  replay: ReplayRecord;
+  registry: ReplayRecord[];
+  onSelect: (id: string) => void;
+}) {
   const player = useReplayPlayer(replay.frames, 1);
   const { currentTurn, currentFrame, playing, speed, setSpeed, seekTo, togglePlay } = player;
-
-  const armiesData = replay.frames.map((f) => ({
-    turn: f.turn,
-    P1: f.p1Armies,
-    P2: f.p2Armies,
-  }));
-
+  const armiesData = replay.frames.map((f) => ({ turn: f.turn, P1: f.p1Armies, P2: f.p2Armies }));
   const currentDecision = replay.decisions[currentTurn] ?? replay.decisions[0];
-
-  // Event turns for scrubber markers
   const eventTurns = new Set(replay.events.map((e) => e.turn));
+  const hasFrames = replay.frames.length > 0;
 
   return (
     <div>
@@ -59,219 +128,114 @@ function ReplayViewer({ replay }: { replay: ReplayRecord }) {
         subtitle={`${replay.config.player1} vs ${replay.config.player2} — ${replay.outcome}`}
       />
       <DataSourceBadge kind={replay.kind} />
+      <p className="mb-2 text-[#6F7C89] font-mono text-[10px]">
+        <a className="text-[#22D3EE] hover:underline" href="/documentation/replay">About Replay Lab</a>
+      </p>
+      <div className="my-3">
+        <label className="text-[#6F7C89] font-mono text-[10px]">
+          Replay selector
+          <select
+            className="block mt-1 bg-[#0C1116] border border-[#1E2630] text-[#EAF0F6] font-mono text-xs px-2 py-1.5 rounded-sm min-w-[16rem]"
+            value={replay.id}
+            onChange={(e) => onSelect(e.target.value)}
+          >
+            {registry.map((r) => (
+              <option key={r.id} value={r.id}>{r.label ?? r.id}</option>
+            ))}
+          </select>
+        </label>
+      </div>
 
       <div className="flex gap-4">
-        {/* Board + controls (center) */}
         <div className="flex-1 min-w-0 space-y-4">
           <Panel title="Board" eyebrow="board/">
-            {currentFrame ? (
-              <div className="overflow-auto">
+            {hasFrames && currentFrame ? (
+              <div className="min-w-0 overflow-hidden">
                 <GeneralsBoard board={currentFrame.board} />
               </div>
             ) : (
-              <div className="h-40 flex items-center justify-center text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
-                No frame data.
+              <div className="min-h-40 flex flex-col items-center justify-center text-[#6F7C89] gap-2" style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
+                <span>REPLAY FRAMES NOT RECORDED</span>
+                <span className="text-[10px]">Match metadata remains available in the inspector.</span>
               </div>
             )}
           </Panel>
 
-          {/* Controls bar */}
-          <div className="flex items-center gap-3 bg-[#11161C] border border-[#1E2630] rounded-sm px-4 py-2">
-            <button
-              onClick={togglePlay}
-              className="flex items-center justify-center w-8 h-8 border border-[#FFB000] text-[#FFB000] rounded-sm hover:bg-[#FFB000] hover:text-[#090D11] transition-colors flex-shrink-0"
-            >
-              {playing ? <Pause size={14} /> : <Play size={14} />}
-            </button>
-
-            {/* Speed selector */}
-            <div className="flex gap-1">
-              {SPEED_OPTIONS.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setSpeed(s)}
-                  className={`px-2 py-0.5 text-xs rounded-sm border transition-colors ${
-                    speed === s
-                      ? "border-[#FFB000] text-[#FFB000] bg-[#161C24]"
-                      : "border-[#1E2630] text-[#6F7C89] hover:text-[#CDD6DF]"
-                  }`}
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {s}×
-                </button>
-              ))}
-            </div>
-
-            <span
-              className="text-[#8593A1] ml-auto"
-              style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}
-            >
-              Turn {currentTurn} / {replay.totalTurns - 1}
-            </span>
-          </div>
-
-          {/* Scrubber */}
-          <div className="bg-[#11161C] border border-[#1E2630] rounded-sm px-4 py-3 relative">
-            <Slider
-              min={0}
-              max={Math.max(0, replay.frames.length - 1)}
-              step={1}
-              value={[currentTurn]}
-              onValueChange={([v]) => seekTo(v)}
-              className="w-full"
-            />
-            {/* Event markers */}
-            <div className="relative mt-1" style={{ height: 8 }}>
-              {replay.frames.length > 1 &&
-                [...eventTurns].map((t) => (
-                  <div
-                    key={t}
-                    className="absolute w-1.5 h-1.5 rounded-full bg-[#FFB000]"
-                    style={{
-                      left: `${(t / (replay.frames.length - 1)) * 100}%`,
-                      transform: "translateX(-50%)",
-                      top: 0,
-                    }}
-                    title={replay.events.find((e) => e.turn === t)?.label}
-                  />
+          {hasFrames && (
+            <div className="flex items-center gap-3 bg-[#11161C] border border-[#1E2630] rounded-sm px-4 py-2">
+              <button type="button" onClick={togglePlay} className="text-[#FFB000]">
+                {playing ? <Pause size={14} /> : <Play size={14} />}
+              </button>
+              <Slider
+                value={[currentTurn]}
+                min={0}
+                max={Math.max(replay.frames.length - 1, 0)}
+                step={1}
+                onValueChange={(v) => seekTo(v[0] ?? 0)}
+                className="flex-1"
+              />
+              <div className="flex gap-1">
+                {SPEED_OPTIONS.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => setSpeed(s)}
+                    className={`px-1.5 py-0.5 text-[10px] font-mono border ${speed === s ? "border-[#FFB000] text-[#FFB000]" : "border-[#1E2630] text-[#6F7C89]"}`}
+                  >
+                    {s}x
+                  </button>
                 ))}
+              </div>
             </div>
-          </div>
-
-          {/* Army chart */}
-          <Panel title="P1 vs P2 Armies" eyebrow="chart/">
-            <ResponsiveContainer width="100%" height={140}>
-              <LineChart data={armiesData} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1E2630" />
-                <XAxis dataKey="turn" tick={CHART_STYLE} axisLine={false} tickLine={false} />
-                <YAxis tick={CHART_STYLE} axisLine={false} tickLine={false} />
-                <Tooltip
-                  contentStyle={{ background: "#11161C", border: "1px solid #1E2630", fontFamily: "var(--font-mono)", fontSize: 10 }}
-                  labelStyle={{ color: "#EAF0F6" }}
-                />
-                <ReferenceLine x={currentTurn} stroke="#FFB000" strokeWidth={1} strokeDasharray="4 2" />
-                <Line type="monotone" dataKey="P1" stroke="#3B82F6" dot={false} strokeWidth={1.5} />
-                <Line type="monotone" dataKey="P2" stroke="#EF4444" dot={false} strokeWidth={1.5} />
-              </LineChart>
-            </ResponsiveContainer>
-          </Panel>
+          )}
         </div>
 
-        {/* Inspector right */}
-        <div className="w-[300px] flex-shrink-0">
-          <Panel className="h-full">
-            <Tabs defaultValue="decision">
-              <TabsList className="w-full grid grid-cols-3 bg-[#0C1116] border border-[#1E2630] rounded-sm mb-3 h-auto p-0.5">
-                {["decision", "state", "raw"].map((tab) => (
-                  <TabsTrigger
-                    key={tab}
-                    value={tab}
-                    className="text-[9px] uppercase tracking-wider py-1 data-[state=active]:bg-[#161C24] data-[state=active]:text-[#FFB000] text-[#6F7C89] rounded-sm"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {tab}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              <TabsList className="w-full grid grid-cols-4 bg-[#0C1116] border border-[#1E2630] rounded-sm mb-4 h-auto p-0.5">
-                {["memory", "beliefs", "risk", "explain"].map((tab) => (
-                  <TabsTrigger
-                    key={tab}
-                    value={tab}
-                    className="text-[9px] uppercase tracking-wider py-1 data-[state=active]:bg-[#161C24] data-[state=active]:text-[#FFB000] text-[#6F7C89] rounded-sm"
-                    style={{ fontFamily: "var(--font-mono)" }}
-                  >
-                    {tab}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-
-              <TabsContent value="decision">
-                {currentDecision ? (
-                  <div className="space-y-2">
-                    <InspectorRow label="SRC" value={`(${currentDecision.srcRow}, ${currentDecision.srcCol})`} />
-                    <InspectorRow label="DST" value={`(${currentDecision.dstRow}, ${currentDecision.dstCol})`} />
-                    <InspectorRow label="ARMIES MOVED" value={currentDecision.armiesMoved} />
-                    <InspectorRow label="POLICY LOGIT" value={currentDecision.policyLogit.toFixed(3)} />
-                    <InspectorRow label="VALUE EST." value={currentDecision.valueEstimate.toFixed(3)} />
-                  </div>
-                ) : (
-                  <span className="text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>No decision data.</span>
-                )}
-              </TabsContent>
-
-              <TabsContent value="state">
-                {currentFrame ? (
-                  <div className="space-y-2">
-                    <InspectorRow label="DIMENSIONS" value={`${currentFrame.board.width}×${currentFrame.board.height}`} />
-                    <InspectorRow label="P1 ARMIES" value={currentFrame.p1Armies} />
-                    <InspectorRow label="P2 ARMIES" value={currentFrame.p2Armies} />
-                    <InspectorRow label="P1 LAND" value={currentFrame.p1Land} />
-                    <InspectorRow label="P2 LAND" value={currentFrame.p2Land} />
-                    <InspectorRow label="TURN" value={currentFrame.turn} />
-                  </div>
-                ) : (
-                  <span className="text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>No state data.</span>
-                )}
-              </TabsContent>
-
-              <TabsContent value="memory">
-                <span className="text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>(Pass 2)</span>
-              </TabsContent>
-              <TabsContent value="beliefs">
-                <span className="text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>(Pass 2)</span>
-              </TabsContent>
-              <TabsContent value="risk">
-                <span className="text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>(Pass 2)</span>
-              </TabsContent>
-              <TabsContent value="explain">
-                <span className="text-[#6F7C89]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>(Pass 2)</span>
-              </TabsContent>
-
-              <TabsContent value="raw">
-                <pre
-                  className="text-[#8593A1] overflow-auto max-h-96 text-[9px] leading-relaxed"
-                  style={{ fontFamily: "var(--font-mono)" }}
-                >
-                  {JSON.stringify(currentFrame, null, 2)}
-                </pre>
-              </TabsContent>
-            </Tabs>
-
-            {/* Events list */}
-            <div className="mt-4 border-t border-[#1E2630] pt-3">
-              <div className="text-[#6F7C89] uppercase tracking-widest mb-2" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
-                Events
-              </div>
-              <div className="space-y-1 max-h-40 overflow-y-auto">
-                {replay.events.filter((e) => e.turn <= currentTurn).map((e, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <span className="text-[#FFB000] flex-shrink-0" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
-                      T{e.turn}
-                    </span>
-                    <span className="text-[#8593A1]" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>
-                      {e.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
+        <div className="w-80 flex-shrink-0 space-y-4">
+          <Panel title="Inspector" eyebrow="meta/">
+            <div className="space-y-1 text-[11px]" style={{ fontFamily: "var(--font-mono)" }}>
+              <div className="text-[#6F7C89]">ID: <span className="text-[#CDD6DF]">{replay.id}</span></div>
+              <div className="text-[#6F7C89]">Turns: <span className="text-[#CDD6DF]">{replay.totalTurns}</span></div>
+              <div className="text-[#6F7C89]">Outcome: <span className="text-[#CDD6DF]">{replay.outcome}</span></div>
+              <div className="text-[#6F7C89]">Events: <span className="text-[#CDD6DF]">{replay.events.length}</span></div>
+              <div className="text-[#6F7C89]">Event markers: <span className="text-[#CDD6DF]">{eventTurns.size}</span></div>
+              {currentDecision && (
+                <div className="text-[#6F7C89]">Decision turn: <span className="text-[#CDD6DF]">{currentDecision.turn}</span></div>
+              )}
             </div>
           </Panel>
+          {armiesData.length > 0 && (
+            <Panel title="Armies" eyebrow="charts/">
+              <ResponsiveContainer width="100%" height={120}>
+                <LineChart data={armiesData}>
+                  <CartesianGrid stroke="#1E2630" strokeDasharray="3 3" />
+                  <XAxis dataKey="turn" tick={CHART_STYLE} />
+                  <YAxis tick={CHART_STYLE} />
+                  <Tooltip />
+                  <ReferenceLine x={currentTurn} stroke="#FFB000" />
+                  <Line type="monotone" dataKey="P1" stroke="#3B82F6" dot={false} />
+                  <Line type="monotone" dataKey="P2" stroke="#EF4444" dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </Panel>
+          )}
+          <Tabs defaultValue="events">
+            <TabsList>
+              <TabsTrigger value="events">Events</TabsTrigger>
+              <TabsTrigger value="raw">Raw</TabsTrigger>
+            </TabsList>
+            <TabsContent value="events">
+              <div className="max-h-40 overflow-auto text-[10px] font-mono text-[#8593A1] space-y-1">
+                {replay.events.length === 0 ? "NOT RECORDED" : replay.events.map((e, i) => (
+                  <div key={i}>t{e.turn}: {e.label}</div>
+                ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="raw">
+              <pre className="max-h-40 overflow-auto text-[10px] font-mono text-[#6F7C89]">{JSON.stringify({ id: replay.id, totalTurns: replay.totalTurns, frames: replay.frames.length }, null, 2)}</pre>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
-    </div>
-  );
-}
-
-function InspectorRow({ label, value }: { label: string; value: string | number }) {
-  return (
-    <div className="flex items-center justify-between py-1 border-b border-[#1E2630]">
-      <span className="text-[#6F7C89] uppercase tracking-widest" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
-        {label}
-      </span>
-      <span className="text-[#EAF0F6]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>
-        {value}
-      </span>
     </div>
   );
 }

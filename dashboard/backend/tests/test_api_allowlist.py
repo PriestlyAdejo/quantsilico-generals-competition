@@ -91,8 +91,9 @@ def test_capabilities_reasons() -> None:
     assert caps["portal_upload"]["enabled"] is False
     assert "manual" in caps["portal_upload"]["reason"].lower()
     assert caps["git_mutation"]["enabled"] is False
-    assert caps["environment_step"]["enabled"] is False
+    assert caps["environment_step"]["enabled"] is True
     assert "session" in caps["environment_step"]["reason"].lower()
+    assert caps["environment_reset"]["enabled"] is True
 
 
 def test_competition_snapshot_not_live() -> None:

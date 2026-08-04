@@ -36,7 +36,7 @@ export const routes: RouteObject[] = [
       { path: "submission", element: <SubmissionPage /> },
       { path: "competition", element: <CompetitionPage /> },
       { path: "repository", element: <RepositoryPage /> },
-      { path: "documentation", element: <DocumentationPage /> },
+      { path: "documentation/:sectionId?", element: <DocumentationPage /> },
     ],
   },
 ];

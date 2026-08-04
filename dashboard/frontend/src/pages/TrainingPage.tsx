@@ -114,9 +114,14 @@ export default function TrainingPage() {
   return (
     <div>
       <PageHeader eyebrow="training/" title="Training" subtitle="Manage and monitor training runs." />
+      <p className="px-1 mb-3 text-[#6F7C89] font-mono text-[10px]">
+        <a className="text-[#22D3EE] hover:underline" href="/documentation/training">About Training</a>
+        {" · "}
+        <a className="text-[#22D3EE] hover:underline" href="/documentation/ppo-metrics">PPO metrics glossary</a>
+      </p>
 
       {/* Blocked Banner */}
-      {blocked && !runId && (
+      {blocked && !runId && import.meta.env.VITE_DASHBOARD_DATA_MODE === "demo" && (
         <Panel className="mb-6 border-[#FFB000]">
           <DataSourceBadge kind="DEMO" />
           <div className="mb-3">
@@ -147,12 +152,12 @@ export default function TrainingPage() {
         </Panel>
       )}
 
-      {/* Smoke test button */}
-      {!activeRun && (
+      {/* Smoke test button — explicit DEMO mode only */}
+      {!activeRun && import.meta.env.VITE_DASHBOARD_DATA_MODE === "demo" && (
         <Panel title="Demo Training" eyebrow="demo/" className="mb-6">
           <DataSourceBadge kind="DEMO" />
           <div className="text-[#8593A1] mb-3" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>
-            Run a smoke test (10k steps) to verify the training pipeline.
+            Run a smoke test (10k steps) to verify the training pipeline. DEMO only — never writes production registries.
           </div>
           <button
             onClick={handleSmoke}
@@ -161,6 +166,13 @@ export default function TrainingPage() {
           >
             SMOKE TEST
           </button>
+        </Panel>
+      )}
+
+      {!activeRun && import.meta.env.VITE_DASHBOARD_DATA_MODE !== "demo" && (
+        <Panel title="Campaign status" eyebrow="training/" className="mb-6">
+          <p className="text-[#8593A1] font-mono text-xs mb-2">NO ACTIVE CAMPAIGN — browse recorded DEVELOPMENT evidence below.</p>
+          <p className="text-[#6F7C89] font-mono text-[10px]">Long training launches remain disabled in this console. See Documentation → Training.</p>
         </Panel>
       )}
 

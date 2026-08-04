@@ -169,10 +169,10 @@ function mapModel(row: Json): ModelRecord {
     deliveryStatus: mapDelivery(str(row.delivery_status, "NOT_RECORDED")),
     parameters: num(row.parameters),
     trainingSteps: num(row.training_steps),
-    wdl: EMPTY_WDL,
+    wdl: { wins: 0, draws: 0, losses: 0 },
     promotionState: "NONE",
     blockerReason: str(row.blocker_reason) || undefined,
-    createdAt: str(row.created_at, new Date().toISOString()),
+    createdAt: str(row.created_at) || "NOT RECORDED",
     notes: notes || undefined,
   };
 }
@@ -197,7 +197,7 @@ function mapExperiment(item: Json): ExperimentRecord {
     opponent: str(data.opponent, "NOT RECORDED"),
     suite: str(data.suite ?? data.kind ?? kindRaw),
     lifecycle,
-    wdl: EMPTY_WDL,
+    wdl: { wins: 0, draws: 0, losses: 0 },
     discoveryGate: mapGateStatus(data.discovery_gate),
     developmentGate: mapGateStatus(data.development_gate),
     observedAt: str(data.observed_at ?? data.completed_at) || null,
@@ -224,12 +224,16 @@ function emptyReplayStub(id: string, label: string): ReplayRecord {
     decisions: [],
     outcome: "draw",
     totalTurns: 0,
-    createdAt: new Date().toISOString(),
+    createdAt: "NOT RECORDED",
     label: `${label} — board frames not present in recorded evidence`,
   };
 }
 
 export class ApiDataSource implements DataSource {
+  getJson<T = Json>(path: string, init?: RequestInit): Promise<T> {
+    return request<T>(path, init);
+  }
+
   /* Pass 1 — Overview (legacy) */
   async getOverviewStats() {
     const o = await request<Json>("/api/overview");
@@ -311,24 +315,88 @@ export class ApiDataSource implements DataSource {
   /* Pass 1 — Qualification */
   async listCandidates(): Promise<QualCandidate[]> {
     const data = await request<Json>("/api/qualification");
-    const board = asObj(data.gates);
-    const { current, steps } = phaseFromGates(board);
-    const name = str(data.champion_until_promoted, "NOT RECORDED");
-    const candidate: QualCandidate = {
-      id: name,
-      kind: KIND,
-      name,
-      checkpoint: name,
-      phase9q: { currentStep: current, steps },
-      screeningWDL: EMPTY_WDL,
-      developmentWDL: EMPTY_WDL,
-      discoveryRate: 0,
-      terminalTurnP50: 0,
-      terminalTurnP95: 0,
-      submittedAt: new Date().toISOString(),
-      notes: str(data.note) || undefined,
-    };
-    return name ? [candidate] : [];
+    const stagesRaw = Array.isArray(data.stages) ? data.stages : [];
+    const stages = stagesRaw.map((s) => {
+      const row = asObj(s);
+      return {
+        id: str(row.id),
+        label: str(row.label, str(row.id)),
+        internalId: str(row.internal_id, str(row.id)),
+        status: (str(row.status, "pending") as QualCandidate["phase9q"]["steps"][0]["status"]),
+        explains: str(row.explains),
+        evidence: str(row.evidence),
+        passMeans: str(row.pass_means),
+        failMeans: str(row.fail_means),
+        blocksNext: Boolean(row.blocks_next),
+        perspective: str(row.perspective, "current"),
+        reasons: Array.isArray(row.reasons) ? row.reasons.map(String) : [],
+      };
+    });
+    const steps = stages.map((s) => ({
+      step: (s.id === "linux_parity" || s.id === "upload_ready" || s.id === "portal" || s.id === "screening" || s.id === "development" || s.id === "holdout" || s.id === "package"
+        ? s.id
+        : "screening") as QualCandidate["phase9q"]["currentStep"],
+      status: s.status,
+      label: s.label,
+    }));
+    const current =
+      steps.find((s) => s.status === "active" || s.status === "failed")?.step ??
+      steps.find((s) => s.status === "pending")?.step ??
+      "development";
+
+    const rows = Array.isArray(data.candidates) ? data.candidates : [];
+    if (!rows.length) {
+      const name = str(data.default_candidate ?? data.champion_until_promoted);
+      if (!name) return [];
+      rows.push({ id: name, name });
+    }
+
+    return rows.map((raw) => {
+      const row = asObj(raw);
+      const id = str(row.id ?? row.name, str(data.default_candidate));
+      const dev = asObj(row.development_wdl);
+      const scr = asObj(row.screening_wdl);
+      const discovery = asObj(row.discovery);
+      const conversion = asObj(row.conversion);
+      const devAvail = str(dev.availability, "MISSING") as QualCandidate["developmentAvailability"];
+      const scrAvail = str(scr.availability, "MISSING") as QualCandidate["screeningAvailability"];
+      return {
+        id,
+        kind: KIND,
+        name: id,
+        checkpoint: id,
+        phase9q: { currentStep: current, steps },
+        screeningWDL:
+          scrAvail === "RECORDED" && typeof scr.wins === "number"
+            ? { wins: num(scr.wins), draws: num(scr.draws), losses: num(scr.losses) }
+            : null,
+        developmentWDL:
+          devAvail === "RECORDED" && typeof dev.wins === "number"
+            ? { wins: num(dev.wins), draws: num(dev.draws), losses: num(dev.losses) }
+            : null,
+        screeningAvailability: scrAvail,
+        developmentAvailability: devAvail,
+        discovery: {
+          value: discovery.availability === "RECORDED" ? num(discovery.value) : null,
+          availability: (str(discovery.availability, "MISSING") as QualCandidate["discovery"]["availability"]),
+          source: str(discovery.source) || undefined,
+          suite: str(discovery.suite) || undefined,
+          note: str(discovery.note) || undefined,
+        },
+        conversion: {
+          value: conversion.availability === "RECORDED" ? num(conversion.value) : null,
+          availability: (str(conversion.availability, "MISSING") as QualCandidate["conversion"]["availability"]),
+          source: str(conversion.source) || undefined,
+          suite: str(conversion.suite) || undefined,
+          note: str(conversion.note) || undefined,
+        },
+        terminalTurnP50: null,
+        terminalTurnP95: null,
+        submittedAt: null,
+        notes: str(data.note) || undefined,
+        stages,
+      };
+    });
   }
 
   async getCandidateById(id: string): Promise<QualCandidate | null> {
@@ -337,31 +405,27 @@ export class ApiDataSource implements DataSource {
   }
 
   async getQualSummary(): Promise<QualificationSummary> {
-    const data = await request<Json>("/api/qualification");
-    const board = asObj(data.gates);
-    const { current } = phaseFromGates(board);
     const candidates = await this.listCandidates();
+    const primary = candidates[0];
     return {
       totalCandidates: candidates.length,
       passed: 0,
-      failed: 0,
+      failed: primary?.developmentAvailability === "RECORDED" && primary.developmentWDL ? 1 : 0,
       inProgress: candidates.length,
-      phase9qCurrent: current,
-      expanderRecord: EMPTY_WDL,
-      discoveryRate: 0,
-      conversionRate: 0,
+      phase9qCurrent: primary?.phase9q.currentStep ?? "development",
+      expanderRecord: primary?.developmentWDL ?? null,
+      discoveryRate: primary?.discovery.value ?? null,
+      conversionRate: primary?.conversion.value ?? null,
+      discoveryAvailability: primary?.discovery.availability ?? "MISSING",
+      conversionAvailability: primary?.conversion.availability ?? "MISSING",
     };
   }
 
   /* Pass 1 — Training */
   async getTrainingBlockedState(): Promise<TrainingBlockedState | null> {
-    const data = await request<Json>("/api/training");
-    if (data.launch_enabled === true) return null;
-    return {
-      reason: "Training launch is disabled in this console. Only recorded smoke/campaign evidence is shown.",
-      gateFailedAt: new Date().toISOString(),
-      requiredAction: str(asObj(data.labels).charts) || "Use recorded charts; do not launch INITIAL/OVERNIGHT from the dashboard.",
-    };
+    // Launch is disabled, but recorded DEVELOPMENT campaigns remain browsable.
+    // Do not present a blocking banner merely because launch_enabled is false.
+    return null;
   }
 
   async listTrainingRuns(): Promise<TrainingRun[]> {
@@ -463,14 +527,38 @@ export class ApiDataSource implements DataSource {
         ? `LEARNED PROMOTION: ${promotion || "NONE"}`
         : null;
 
+    // Prefer qualification evidence for WDL / discovery / conversion — never invent zeros.
+    let currentResult: OverviewRecord["currentResult"] = null;
+    let discoveryRate = Number.NaN;
+    let conversionRate = Number.NaN;
+    try {
+      const qual = await request<Json>("/api/qualification");
+      const rows = Array.isArray(qual.candidates) ? qual.candidates : [];
+      const primary = asObj(rows[0] ?? {});
+      const dev = asObj(primary.development_wdl);
+      if (str(dev.availability) === "RECORDED" && typeof dev.wins === "number") {
+        currentResult = { wins: num(dev.wins), draws: num(dev.draws), losses: num(dev.losses) };
+      }
+      const discovery = asObj(primary.discovery);
+      if (str(discovery.availability) === "RECORDED" && typeof discovery.value === "number") {
+        discoveryRate = num(discovery.value);
+      }
+      const conversion = asObj(primary.conversion);
+      if (str(conversion.availability) === "RECORDED" && typeof conversion.value === "number") {
+        conversionRate = num(conversion.value);
+      }
+    } catch {
+      /* leave NOT RECORDED */
+    }
+
     return {
       schemaVersion: SCHEMA_VERSION,
       id: "overview-api",
       kind: KIND,
       currentCandidate: typeof candidate === "string" ? candidate : str(asObj(candidate).candidate, "NOT RECORDED"),
-      currentResult: EMPTY_WDL,
-      discoveryRate: 0,
-      conversionRate: 0,
+      currentResult,
+      discoveryRate,
+      conversionRate,
       ppoStatus,
       blocker,
       wdlHistory: [],
@@ -483,7 +571,7 @@ export class ApiDataSource implements DataSource {
         {
           id: "repo-commit",
           label: `${str(o.branch)} @ ${str(o.commit).slice(0, 8)}`,
-          startedAt: new Date().toISOString(),
+          startedAt: str(o.commit) ? "NOT RECORDED" : "NOT RECORDED",
           completedAt: null,
           status: "running",
           dateLabel: str(o.research_phase),
@@ -493,13 +581,13 @@ export class ApiDataSource implements DataSource {
         const job = asObj(j);
         const state = str(job.state, "RUNNING").toUpperCase();
         return {
-          id: str(job.id, "job"),
+          id: str(job.id ?? job.job_id, "job"),
           label: str(job.label ?? job.job_type ?? job.id, "job"),
-          progress: state === "RUNNING" || state === "QUEUED" ? 0.5 : 1,
+          progress: Number.NaN,
           status:
             state === "FAILED"
               ? ("failed" as const)
-              : state === "SUCCEEDED" || state === "COMPLETE"
+              : state === "SUCCEEDED" || state === "COMPLETE" || state === "COMPLETED"
                 ? ("complete" as const)
                 : ("running" as const),
         };
@@ -571,18 +659,28 @@ export class ApiDataSource implements DataSource {
   async getPopulationSummary(): Promise<{ entries: PopulationEntry[]; matrix: PayoffMatrix; updatedAt: string }> {
     const data = await request<Json>("/api/population");
     const matrix = await this.getPayoffMatrix();
+    const pfsp = asObj(data.pfsp);
+    const probs = Array.isArray(pfsp.probabilities) ? pfsp.probabilities.map((v) => (typeof v === "number" ? v : null)) : [];
+    const opponents = Array.isArray(pfsp.opponents) ? pfsp.opponents.map(String) : matrix.agents;
     const labels = Array.isArray(data.population) ? data.population.map(String) : matrix.agents;
-    const entries: PopulationEntry[] = labels.map((name, i) => ({
-      id: name,
-      kind: KIND,
-      name,
-      checkpoint: name,
-      payoffs: matrix.matrix[i] ?? [],
-      pfspWeight: 0,
-      gamesPlayed: num(data.games_total),
-      winRate: 0,
-      isMainAgent: i === 0,
-    }));
+    const entries: PopulationEntry[] = labels.map((name, i) => {
+      const row = matrix.matrix[i] ?? [];
+      const recorded = row.filter((v): v is number => typeof v === "number");
+      const winRate = recorded.length ? recorded.reduce((a, b) => a + b, 0) / recorded.length : null;
+      const weightIdx = opponents.indexOf(name);
+      const weight = weightIdx >= 0 && typeof probs[weightIdx] === "number" ? probs[weightIdx] : null;
+      return {
+        id: name,
+        kind: KIND,
+        name,
+        checkpoint: name,
+        payoffs: row,
+        pfspWeight: weight ?? Number.NaN,
+        gamesPlayed: Number.NaN,
+        winRate: winRate ?? Number.NaN,
+        isMainAgent: i === 0,
+      };
+    });
     return {
       entries,
       matrix,
@@ -605,8 +703,8 @@ export class ApiDataSource implements DataSource {
     return {
       agents,
       matrix,
-      suite: data.synthetic ? "DEMO_SUITE" : "PFSP_LATEST",
-      updatedAt: new Date().toISOString(),
+      suite: data.synthetic === true ? "DEMO_SUITE" : "PFSP_LATEST",
+      updatedAt: str(payoff.updated_at, "NOT RECORDED"),
     };
   }
 
@@ -809,24 +907,38 @@ export class ApiDataSource implements DataSource {
   /* Pass 2 — Repository */
   async getRepositoryStatus(): Promise<RepositoryStatus> {
     const data = await request<Json>("/api/repository");
+    const hw = asObj(data.hardware);
     return {
       id: "repository-status-api",
       kind: KIND,
       schemaVersion: SCHEMA_VERSION,
       branch: str(data.branch),
       engineSha: str(data.engine_commit),
-      hardware: "NOT RECORDED",
-      linuxParityStatus: "skipped",
-      testStatus: "skipped",
-      packageStatus: "BUILT",
-      updatedAt: new Date().toISOString(),
+      hardware: str(hw.cpu, "NOT RECORDED"),
+      linuxParityStatus: str(data.linux_parity, "NOT_RECORDED"),
+      testStatus: str(data.dashboard_tests, "NOT_RUN"),
+      packageStatus: str(data.package_lifecycle, "NOT_RECORDED"),
+      updatedAt: str(data.updated_at, "NOT RECORDED"),
     };
   }
 
   async listRecentCommits(): Promise<CommitRecord[]> {
     const data = await request<Json>("/api/repository");
-    const lines = Array.isArray(data.recent_commits) ? data.recent_commits.map(String) : [];
-    return lines.map((line, i) => {
+    const rows = Array.isArray(data.recent_commits) ? data.recent_commits : [];
+    return rows.map((raw, i) => {
+      if (raw && typeof raw === "object") {
+        const row = asObj(raw);
+        return {
+          id: `commit-${i}-${str(row.sha)}`,
+          kind: KIND,
+          sha: str(row.sha).slice(0, 8),
+          message: str(row.message),
+          author: str(row.author, "NOT RECORDED"),
+          committedAt: str(row.committed_at, "NOT RECORDED"),
+          branch: str(data.branch),
+        };
+      }
+      const line = String(raw);
       const [sha, ...rest] = line.split(" ");
       return {
         id: `commit-${i}-${sha}`,
@@ -834,7 +946,7 @@ export class ApiDataSource implements DataSource {
         sha: sha || `unknown-${i}`,
         message: rest.join(" ") || line,
         author: "NOT RECORDED",
-        committedAt: new Date().toISOString(),
+        committedAt: "NOT RECORDED",
         branch: str(data.branch),
       };
     });
@@ -845,36 +957,50 @@ export class ApiDataSource implements DataSource {
   }
 
   async getEnvironmentLocks(): Promise<EnvironmentLock[]> {
-    return [];
+    const data = await request<Json>("/api/repository");
+    const locks = Array.isArray(data.lockfiles) ? data.lockfiles : [];
+    return locks.map((raw, i) => {
+      const row = asObj(raw);
+      return {
+        id: `lock-${i}-${str(row.name)}`,
+        kind: KIND,
+        name: str(row.name),
+        lockedBy: str(row.locked_by, "repository"),
+        lockedAt: "NOT RECORDED",
+        reason: str(row.reason, str(row.path)),
+      };
+    });
   }
 
   /* Pass 2 — Documentation */
   async getDocumentationIndex(): Promise<DocIndex> {
-    const data = await request<{ sections?: { id: string; title: string }[]; schema_version?: number }>(
-      "/api/documentation",
-    );
+    const data = await request<{
+      sections?: { id: string; title: string; order?: number; tags?: string[] }[];
+    }>("/api/documentation");
     return {
       schemaVersion: SCHEMA_VERSION,
-      sections: (data.sections ?? []).map((s, order) => ({
+      sections: (data.sections ?? []).map((s, i) => ({
         id: s.id,
         title: s.title,
-        order,
+        order: s.order ?? i,
+        tags: s.tags,
       })),
     };
   }
 
   async getDocumentationSection(id: string): Promise<DocSection | null> {
-    const index = await this.getDocumentationIndex();
-    const entry = index.sections.find((s) => s.id === id);
-    if (!entry) return null;
-    return {
-      id: entry.id,
-      title: entry.title,
-      order: entry.order,
-      content:
-        `Section «${entry.title}» — body text is not served by /api/documentation yet.\n` +
-        `Use repository docs under docs/ and plans/ for authoritative guidance.`,
-      tags: ["api"],
-    };
+    try {
+      const section = await request<Json>(`/api/documentation/${encodeURIComponent(id)}`);
+      return {
+        id: str(section.id, id),
+        title: str(section.title, id),
+        order: num(section.order),
+        content: str(section.content),
+        tags: Array.isArray(section.tags) ? section.tags.map(String) : undefined,
+      };
+    } catch (e) {
+      if (e instanceof ApiError && e.status === 404) return null;
+      throw e;
+    }
   }
 }

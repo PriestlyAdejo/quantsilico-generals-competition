@@ -14,12 +14,16 @@ from generals_bot.candidate_identity import candidate_identity_record
 from dashboard.backend.app.capabilities import build_capabilities
 from dashboard.backend.app.gates import gate_status_dto, legacy_gate_board_from_current
 from dashboard.backend.app.paths import REPO_ROOT, assert_allowlisted_path, rel, safe_replay_id
+from dashboard.backend.app.readers.documentation import documentation_index, documentation_section
 from dashboard.backend.app.readers.evidence import (
     GRAPH_LATENCY_WARNING,
     manifest,
     profile_snapshot_dto,
     submitted_package_dto,
 )
+from dashboard.backend.app.readers.qualification import qualification_dashboard_dto
+from dashboard.backend.app.readers.repository_status import repository_status_dto
+from dashboard.backend.app.services import env_sessions
 from dashboard.backend.app.services.jobs import (
     default_python,
     get_job_service,
@@ -169,19 +173,7 @@ def overview() -> dict[str, Any]:
 
 @router.get("/api/repository")
 def repository() -> dict[str, Any]:
-    return {
-        "schema_version": 1,
-        "remote": "origin",
-        "branch": _git("branch", "--show-current"),
-        "commit": _git("rev-parse", "HEAD"),
-        "dirty": bool(_git("status", "--porcelain")),
-        "recent_commits": _git("log", "-5", "--oneline").splitlines(),
-        "engine_commit": _git(
-            "rev-parse", "HEAD", cwd=REPO_ROOT / "third_party" / "generals-bots"
-        ),
-        "privacy": "private",
-        "mutations": {"enabled": False, "reason": "The console is read-only for repository state."},
-    }
+    return repository_status_dto()
 
 
 @router.get("/api/experiments")
@@ -534,29 +526,7 @@ def explainability() -> dict[str, Any]:
 
 @router.get("/api/qualification")
 def qualification() -> dict[str, Any]:
-    portal_v2 = manifest("official_portal_observation_heuristic_v2_preppo_2026-08-04.json")
-    readiness = manifest("learning_readiness_gate.json")
-    preppo = manifest("phase_9q_pre_ppo_submission_gate.json")
-    gates = gate_status_dto()
-    board = legacy_gate_board_from_current(gates["current"])
-    return {
-        "schema_version": 1,
-        "kind": "QUALIFICATION_DASHBOARD",
-        "champion_until_promoted": "heuristic_v2f_plus_planner_terminal_fix",
-        "gates": board,
-        "gate_status": gates,
-        "gate_names": {
-            "HEURISTIC_DEVELOPMENT_GATE": "internal research Expander discovery/conversion suite",
-            "PRE_PPO_SUBMISSION_GATE": "local comparison vs previously submitted package",
-            "PORTAL_SUBMISSION_GATE": "portal Expander 3-game gate (QUALIFIED ≠ final tournament)",
-            "LEARNING_READINESS_GATE": "engineering readiness before PPO campaigns",
-            "LEARNED_PROMOTION_GATE": "learned model may replace heuristic champion",
-        },
-        "portal_active_v2": portal_v2,
-        "pre_ppo_submission_gate": preppo,
-        "learning_readiness": readiness,
-        "note": "Never use unqualified QUALIFIED without naming PORTAL_SUBMISSION_GATE.",
-    }
+    return qualification_dashboard_dto()
 
 
 @router.get("/api/competition")
@@ -579,16 +549,102 @@ def competition() -> dict[str, Any]:
 def environment() -> dict[str, Any]:
     return {
         "schema_version": 1,
-        "mode": "READ_ONLY",
-        "state": "OFFICIAL SESSION NOT REGISTERED",
+        "mode": "OFFICIAL_SESSIONS",
+        "state": "OFFICIAL SESSION SERVICE REGISTERED",
         "capabilities": {
             "inspect": True,
-            "reset": False,
-            "step": False,
+            "reset": True,
+            "step": True,
+            "sessions": True,
         },
-        "reason": "No safe official-environment session service is currently registered.",
-        "note": "Use Replay Lab for board inspection derived from recorded matches.",
+        "limits": {
+            "max_concurrent": env_sessions.MAX_CONCURRENT,
+            "default_ttl_s": env_sessions.DEFAULT_TTL_S,
+            "max_ttl_s": env_sessions.MAX_TTL_S,
+            "max_actions": env_sessions.MAX_ACTIONS,
+        },
+        "reason": None,
+        "note": "Official sessions use the pinned GeneralsEnv. DEMO mode remains an explicit frontend opt-in.",
     }
+
+
+class EnvSessionCreate(BaseModel):
+    seed: int = 0
+    map_preset: str = "standard"
+    ttl_s: int | None = Field(default=None, ge=60, le=3600)
+
+
+class EnvSessionStep(BaseModel):
+    src_row: int = Field(ge=0)
+    src_col: int = Field(ge=0)
+    dst_row: int = Field(ge=0)
+    dst_col: int = Field(ge=0)
+
+
+@router.post("/api/environment/sessions")
+def env_create_session(req: EnvSessionCreate) -> dict[str, Any]:
+    try:
+        session = env_sessions.create_session(seed=req.seed, map_preset=req.map_preset, ttl_s=req.ttl_s)
+    except RuntimeError as exc:
+        raise HTTPException(429, str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(500, f"session create failed: {exc}") from exc
+    return session.public_dict()
+
+
+@router.get("/api/environment/sessions/{session_id}")
+def env_get_session(session_id: str) -> dict[str, Any]:
+    session = env_sessions.get_session(session_id)
+    if session is None:
+        raise HTTPException(404, "session not found or expired")
+    return session.public_dict()
+
+
+@router.post("/api/environment/sessions/{session_id}/reset")
+def env_reset_session(session_id: str, req: EnvSessionCreate | None = None) -> dict[str, Any]:
+    try:
+        seed = req.seed if req is not None else None
+        session = env_sessions.reset_session(session_id, seed=seed)
+    except KeyError as exc:
+        raise HTTPException(404, "session not found or expired") from exc
+    except RuntimeError as exc:
+        raise HTTPException(429, str(exc)) from exc
+    return session.public_dict()
+
+
+@router.post("/api/environment/sessions/{session_id}/step")
+def env_step_session(session_id: str, req: EnvSessionStep) -> dict[str, Any]:
+    try:
+        session = env_sessions.step_session(
+            session_id,
+            src_row=req.src_row,
+            src_col=req.src_col,
+            dst_row=req.dst_row,
+            dst_col=req.dst_col,
+        )
+    except KeyError as exc:
+        raise HTTPException(404, "session not found or expired") from exc
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    return session.public_dict()
+
+
+@router.get("/api/environment/sessions/{session_id}/legal-actions")
+def env_legal_actions(session_id: str) -> dict[str, Any]:
+    try:
+        return env_sessions.legal_actions(session_id)
+    except KeyError as exc:
+        raise HTTPException(404, "session not found or expired") from exc
+
+
+@router.delete("/api/environment/sessions/{session_id}")
+def env_delete_session(session_id: str) -> dict[str, Any]:
+    ok = env_sessions.close_session(session_id)
+    if not ok:
+        raise HTTPException(404, "session not found")
+    return {"schema_version": 1, "closed": True, "session_id": session_id}
 
 
 @router.get("/api/champion")
@@ -622,14 +678,12 @@ def champion() -> dict[str, Any]:
 
 @router.get("/api/documentation")
 def documentation() -> dict[str, Any]:
-    return {
-        "schema_version": 1,
-        "sections": [
-            {"id": "startup", "title": "Startup"},
-            {"id": "gates", "title": "Qualification gates"},
-            {"id": "attribution", "title": "Portal attribution"},
-            {"id": "manual-upload", "title": "Manual upload"},
-            {"id": "training-smoke", "title": "Training smoke evidence"},
-            {"id": "troubleshooting", "title": "Troubleshooting"},
-        ],
-    }
+    return documentation_index()
+
+
+@router.get("/api/documentation/{section_id}")
+def documentation_by_id(section_id: str) -> dict[str, Any]:
+    section = documentation_section(section_id)
+    if section is None:
+        raise HTTPException(404, "documentation section not found")
+    return section

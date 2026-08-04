@@ -39,6 +39,12 @@ export class MockDataSource implements DataSource {
   ]);
   private _pipeline: SubmissionPipeline = { ...submissionPipeline, steps: submissionPipeline.steps.map(s => ({ ...s })) };
 
+  async getJson<T = Record<string, unknown>>(_path: string, _init?: RequestInit): Promise<T> {
+    throw new Error(
+      "MockDataSource.getJson is unavailable — switch to API mode for jobs and official Environment Lab sessions.",
+    );
+  }
+
   private assertDemo(id: string, entityLabel: string) {
     const candidate = allCandidates.find(c => c.id === id);
     const replay = this.replays.get(id);

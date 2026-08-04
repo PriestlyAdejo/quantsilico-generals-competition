@@ -29,12 +29,12 @@ def build_capabilities(*, arena_match: bool = True) -> dict[str, Any]:
                 "Read-only official/replay-derived observation inspection is available.",
             ),
             "environment_reset": capability(
-                False,
-                "No safe official-environment session service is currently registered.",
+                True,
+                "Official Environment Lab sessions support reset within TTL and concurrency limits.",
             ),
             "environment_step": capability(
-                False,
-                "No safe official-environment session service is currently registered.",
+                True,
+                "Official Environment Lab sessions support typed step with legal-action validation.",
             ),
             "training_launch": capability(
                 False,

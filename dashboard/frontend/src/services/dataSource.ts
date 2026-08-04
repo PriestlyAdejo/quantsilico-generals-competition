@@ -14,6 +14,9 @@ import { RepositoryStatus, CommitRecord, CiRun, EnvironmentLock } from "../types
 import { DocIndex, DocSection } from "../types/documentation";
 
 export interface DataSource {
+  /** Low-level JSON fetch for allowlisted job/session endpoints (API mode). */
+  getJson<T = Record<string, unknown>>(path: string, init?: RequestInit): Promise<T>;
+
   /* Pass 1 — Overview (legacy) */
   getOverviewStats(): Promise<{
     branch: string;

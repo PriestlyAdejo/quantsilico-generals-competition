@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef, useCallback } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { BoardState, CellState } from "../../types/match";
 import { coordinateLabel } from "../../utils/gameBoard";
 
@@ -54,6 +54,9 @@ interface TooltipState {
   y: number;
 }
 
+/** Logical cell size inside the viewBox — SVG scales via CSS width 100%. */
+const CELL = 28;
+
 export default function GeneralsBoard({
   board, selectedSrc, selectedDst, onCellClick, className = "",
   interactive = true, attributionOverlay, beliefOverlay,
@@ -62,11 +65,9 @@ export default function GeneralsBoard({
   const containerRef = useRef<HTMLDivElement>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
-  const CELL = 28;
-  const svgW = board.width * CELL;
-  const svgH = board.height * CELL;
+  const vbW = board.width * CELL;
+  const vbH = board.height * CELL;
 
-  // Static terrain layer — only changes when board dimensions change
   const terrainLayer = useMemo(() => {
     return board.cells.flatMap((row, r) =>
       row.map((cell, c) => {
@@ -100,9 +101,8 @@ export default function GeneralsBoard({
         );
       })
     );
-  }, [board.width, board.height]);
+  }, [board.width, board.height, board.cells]);
 
-  // Dynamic overlay: army counts and ownership coloring update every frame
   const dynamicLayer = useMemo(() => {
     return board.cells.flatMap((row, r) =>
       row.map((cell, c) => {
@@ -135,7 +135,7 @@ export default function GeneralsBoard({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fontSize={8}
-                fill="white"
+                fill="#FFFFFF"
                 style={{ pointerEvents: "none", userSelect: "none" }}
               >
                 {cell.armies}
@@ -151,11 +151,21 @@ export default function GeneralsBoard({
     tooltip != null ? board.cells[tooltip.row]?.[tooltip.col] : null;
 
   return (
-    <div ref={containerRef} className={`relative overflow-auto ${className}`}>
+    <div
+      ref={containerRef}
+      className={`generals-board relative min-w-0 overflow-hidden ${className}`}
+      style={{ width: "100%", aspectRatio: `${board.width} / ${board.height}`, maxHeight: "min(70vh, 100%)" }}
+      data-board-summary={boardSummary}
+      data-interactive={interactive ? "true" : "false"}
+    >
       <svg
-        width={svgW}
-        height={svgH}
-        style={{ display: "block", imageRendering: "pixelated" }}
+        viewBox={`0 0 ${vbW} ${vbH}`}
+        width="100%"
+        height="auto"
+        preserveAspectRatio="xMidYMid meet"
+        style={{ display: "block", width: "100%", height: "auto" }}
+        role="img"
+        aria-label={boardSummary ?? `Generals board ${board.width}×${board.height}`}
       >
         <g>{terrainLayer}</g>
         <g>{dynamicLayer}</g>
@@ -180,26 +190,15 @@ export default function GeneralsBoard({
           <rect key={`path-${row}-${col}`} x={col * CELL} y={row * CELL} width={CELL} height={CELL} fill="rgba(63,185,80,0.2)" stroke="rgba(63,185,80,0.5)" strokeWidth={1} pointerEvents="none" />
         )}
         {changedCells?.map(({ row, col }) =>
-          <rect key={`changed-${row}-${col}`} x={col * CELL} y={row * CELL} width={CELL} height={CELL} fill="none" stroke="#FFB000" strokeWidth={1.5} pointerEvents="none" />
+          <rect key={`chg-${row}-${col}`} x={col * CELL} y={row * CELL} width={CELL} height={CELL} fill="none" stroke="#FFB000" strokeWidth={2} pointerEvents="none" />
         )}
       </svg>
-      {boardSummary && <p className="sr-only">{boardSummary}</p>}
       {tooltip && hoveredCell && (
         <div
-          className="absolute z-50 pointer-events-none bg-[#11161C] border border-[#1E2630] rounded-sm px-2 py-1.5 shadow-lg"
-          style={{
-            left: tooltip.x + 10,
-            top: tooltip.y + 10,
-            fontFamily: "var(--font-mono)",
-            fontSize: 10,
-          }}
+          className="pointer-events-none absolute z-10 rounded-sm border border-[#1E2630] bg-[#0C1116] px-2 py-1 text-[10px] text-[#CDD6DF]"
+          style={{ left: tooltip.x + 8, top: tooltip.y + 8, fontFamily: "var(--font-mono)" }}
         >
-          <div className="text-[#FFB000] font-bold mb-0.5">
-            {coordinateLabel(tooltip.row, tooltip.col)}
-          </div>
-          <div className="text-[#8593A1]">Terrain: <span className="text-[#CDD6DF]">{hoveredCell.terrain}</span></div>
-          <div className="text-[#8593A1]">Owner: <span className="text-[#CDD6DF]">{hoveredCell.owner}</span></div>
-          <div className="text-[#8593A1]">Armies: <span className="text-[#CDD6DF]">{hoveredCell.armies}</span></div>
+          {coordinateLabel(tooltip.row, tooltip.col)} · {hoveredCell.terrain} · {hoveredCell.owner} · {hoveredCell.armies}
         </div>
       )}
     </div>

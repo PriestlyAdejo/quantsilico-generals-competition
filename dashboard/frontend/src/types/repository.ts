@@ -2,6 +2,16 @@ import { DataSourceKind, ID } from "./common";
 
 export type CiStatus = "passed" | "failed" | "running" | "skipped";
 
+export type RepoEvidenceStatus =
+  | "PASS"
+  | "FAIL"
+  | "NOT_RUN"
+  | "NOT_RECORDED"
+  | "NOT_CONFIGURED"
+  | "NOT_APPLICABLE"
+  | "UNKNOWN"
+  | CiStatus;
+
 export interface CommitRecord {
   id: ID;
   kind: DataSourceKind;
@@ -38,8 +48,8 @@ export interface RepositoryStatus {
   branch: string;
   engineSha: string;
   hardware: string;
-  linuxParityStatus: CiStatus;
-  testStatus: CiStatus;
-  packageStatus: "NOT_BUILT" | "BUILT" | "VALIDATED";
+  linuxParityStatus: RepoEvidenceStatus | string;
+  testStatus: RepoEvidenceStatus | string;
+  packageStatus: "NOT_BUILT" | "BUILT" | "VALIDATED" | string;
   updatedAt: string;
 }

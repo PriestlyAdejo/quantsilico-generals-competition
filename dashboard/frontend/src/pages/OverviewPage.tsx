@@ -36,21 +36,26 @@ export default function OverviewPage() {
           <AlertTriangle size={14} className="text-[#F85149] flex-shrink-0 mt-0.5" />
           <div>
             <span className="text-[#F85149] font-mono text-xs font-bold">BLOCKER: {record.blocker}</span>
-            <p className="text-[#8593A1] font-mono text-xs mt-0.5">Discovery rate {fmtPct(record.discoveryRate)} — PPO {record.ppoStatus.replace("_", " ")}</p>
+            <p className="text-[#8593A1] font-mono text-xs mt-0.5">Discovery rate {fmtPct(Number.isFinite(record.discoveryRate) ? record.discoveryRate : null)} — PPO {record.ppoStatus.replace("_", " ")}</p>
           </div>
         </div>
       )}
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <MetricCard label="Current Result" value={fmtWDL(record.currentResult)} sublabel="Development" />
-        <MetricCard label="Discovery Rate" value={fmtPct(record.discoveryRate)} sublabel="Gate FAILED" />
-        <MetricCard label="Conversion" value={fmtPct(record.conversionRate)} sublabel="Post-discovery" />
+        <MetricCard label="Current Result" value={fmtWDL(record.currentResult, record.currentResult ? "RECORDED" : "MISSING")} sublabel="Development" />
+        <MetricCard label="Discovery Rate" value={fmtPct(Number.isFinite(record.discoveryRate) ? record.discoveryRate : null)} sublabel="From qualification suite" />
+        <MetricCard label="Conversion" value={fmtPct(Number.isFinite(record.conversionRate) ? record.conversionRate : null)} sublabel="Post-discovery" />
         <MetricCard label="PPO Status" value={record.ppoStatus.replace("_", " ")} sublabel="Training" />
       </div>
 
       <div className="border border-[#1E2630] rounded-sm p-4 bg-[#0C1116]">
         <p className="text-[#6F7C89] font-mono text-xs uppercase mb-1">Current Candidate</p>
         <p className="text-[#FFB000] font-mono font-bold">{record.currentCandidate}</p>
+        <p className="text-[#6F7C89] font-mono text-[10px] mt-2">
+          <a className="text-[#22D3EE] hover:underline" href="/documentation/overview">About Overview</a>
+          {" · "}
+          <a className="text-[#22D3EE] hover:underline" href="/documentation/glossary">Glossary</a>
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -68,7 +73,11 @@ export default function OverviewPage() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <p className="text-[#6F7C89] font-mono text-xs mt-1">Current: 21W/27D/0L (heuristic_v2f). Historical: 11W/37D/0L (Expander — timestamp not recorded).</p>
+          <p className="text-[#6F7C89] font-mono text-xs mt-1">
+            {record.currentResult
+              ? `Current recorded DEVELOPMENT: ${fmtWDL(record.currentResult, "RECORDED")}. Chart history may be incomplete.`
+              : "Current DEVELOPMENT W/D/L NOT RECORDED for this overview source."}
+          </p>
         </ChartCard>
 
         <ChartCard title="Qualification Funnel">
@@ -104,9 +113,9 @@ export default function OverviewPage() {
             <div key={job.id} className="flex items-center gap-3">
               <span className="flex-1 text-[#8593A1]" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>{job.label}</span>
               <div className="w-32 h-3 bg-[#1E2630] rounded-sm overflow-hidden">
-                <div className="h-full rounded-sm" style={{ width: `${job.progress * 100}%`, backgroundColor: job.status === "complete" ? "#3FB950" : "#FFB000" }} />
+                <div className="h-full rounded-sm" style={{ width: `${Number.isFinite(job.progress) ? job.progress * 100 : 0}%`, backgroundColor: job.status === "complete" ? "#3FB950" : "#FFB000" }} />
               </div>
-              <span className="text-[#6F7C89] w-10 text-right" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>{(job.progress * 100).toFixed(0)}%</span>
+              <span className="text-[#6F7C89] w-10 text-right" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>{Number.isFinite(job.progress) ? `${(job.progress * 100).toFixed(0)}%` : "—"}</span>
             </div>
           ))}
         </div>
