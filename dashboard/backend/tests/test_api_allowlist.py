@@ -1,4 +1,4 @@
-"""Dashboard API allowlist tests."""
+"""Dashboard API allowlist and contract tests."""
 
 from __future__ import annotations
 
@@ -15,12 +15,13 @@ def test_health() -> None:
     assert res.json()["bind"] == "127.0.0.1"
 
 
-def test_job_allowlist() -> None:
+def test_job_allowlist_includes_submitted_form_not_force() -> None:
     res = client.get("/api/jobs/allowlist")
     assert res.status_code == 200
     body = res.json()
     assert "MATCH" in body["jobs"]
-    assert "heuristic_v1" in body["candidates"]
+    assert "heuristic_v2f_plus_planner_terminal_form" in body["candidates"]
+    assert "heuristic_v2f_plus_planner_terminal_force" not in body["candidates"]
 
 
 def test_rejects_unknown_candidate() -> None:
@@ -42,7 +43,73 @@ def test_rejects_path_traversal_replay() -> None:
     assert res.status_code in (400, 404)
 
 
-def test_overview_champion() -> None:
+def test_overview_no_learned_champion() -> None:
     res = client.get("/api/overview")
     assert res.status_code == 200
-    assert res.json()["champion"] == "heuristic_v1"
+    body = res.json()
+    assert body["learned_champion"] is None
+    assert body["learned_champion_note"] == "NO LEARNED CHAMPION"
+    assert "elo" not in body
+    assert body["active_submitted_package"]["authoritative_policy_source_commit"] == "027ff5d"
+    assert body["active_submitted_package"]["embedded_metadata_status"] == "STALE"
+    assert body["gate_status"]["HEURISTIC_DEVELOPMENT_GATE"] == "FAIL"
+
+
+def test_capabilities_reasons() -> None:
+    res = client.get("/api/capabilities")
+    assert res.status_code == 200
+    caps = res.json()["capabilities"]
+    assert caps["portal_upload"]["enabled"] is False
+    assert "manual" in caps["portal_upload"]["reason"].lower()
+    assert caps["git_mutation"]["enabled"] is False
+    assert caps["environment_step"]["enabled"] is False
+    assert "session" in caps["environment_step"]["reason"].lower()
+
+
+def test_competition_snapshot_not_live() -> None:
+    res = client.get("/api/competition")
+    assert res.status_code == 200
+    body = res.json()
+    snap = body.get("profile_snapshot")
+    if snap:
+        assert snap["live"] is False
+        assert "observed_at" in snap
+        assert "provenance" in snap
+        assert "attribution_method" in snap
+        assert "source_reference" in snap
+
+
+def test_submission_metadata_authority() -> None:
+    res = client.get("/api/submission")
+    assert res.status_code == 200
+    pkg = res.json()["package"]
+    assert pkg["authoritative_policy_source_commit"] == "027ff5d"
+    assert pkg["embedded_bot_commit"] == "ee06778"
+    assert pkg["embedded_metadata_status"] == "STALE"
+    assert res.json()["upload_enabled"] is False
+
+
+def test_api_404_json() -> None:
+    res = client.get("/api/this-route-does-not-exist")
+    assert res.status_code == 404
+    assert "detail" in res.json()
+
+
+def test_spa_fallback_non_api() -> None:
+    res = client.get("/overview")
+    # Either index.html (200) or frontend-not-built (404) — never JSON API shape for SPA miss when dist missing
+    assert res.status_code in (200, 404)
+    if res.status_code == 200:
+        assert "text/html" in res.headers.get("content-type", "")
+
+
+def test_population_empty_state() -> None:
+    res = client.get("/api/population")
+    assert res.status_code == 200
+    assert "NOT YET RECORDED" in res.json()["state"]
+
+
+def test_models_graph_latency_warning() -> None:
+    res = client.get("/api/models")
+    assert res.status_code == 200
+    assert "139" in res.json()["graph_latency_warning"]

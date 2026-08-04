@@ -1,0 +1,13 @@
+.chart-card .legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+  color: var(--metadata);
+  font-size: 0.78rem;
+}
+
+.chart-summary {
+  color: var(--body-secondary);
+  font-size: 0.85rem;
+}

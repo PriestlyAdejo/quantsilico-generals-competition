@@ -1,59 +1,45 @@
-import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import AppShell from "./components/shell/AppShell";
 import OverviewPage from "./pages/OverviewPage";
 import ArenaPage from "./pages/ArenaPage";
-import ReplayPage from "./pages/ReplayPage";
-import GenericPage from "./pages/GenericPage";
-
-const NAV = [
-  ["/", "Overview"],
-  ["/arena", "Arena"],
-  ["/replay", "Replay Lab"],
-  ["/experiments", "Experiments"],
-  ["/training", "Training"],
-  ["/models", "Models"],
-  ["/population", "Population"],
-  ["/qualification", "Qualification"],
-  ["/explainability", "Explainability"],
-  ["/champion", "Champion"],
-  ["/submission", "Submission"],
-  ["/competition", "Competition"],
-  ["/repository", "Repository"],
-] as const;
+import SubmissionPage from "./pages/SubmissionPage";
+import ModelsPage from "./pages/ModelsPage";
+import CompetitionPage from "./pages/CompetitionPage";
+import TrainingPage from "./pages/TrainingPage";
+import QualificationPage, {
+  ChampionPage,
+  DocumentationPage,
+  EnvironmentLabPage,
+  ExperimentsPage,
+  ExplainabilityPage,
+  NotFoundPage,
+  PopulationPage,
+  ReplayLabPage,
+  RepositoryPage,
+} from "./pages/MorePages";
 
 export default function App() {
   return (
-    <div className="shell">
-      <header className="top">
-        <div>
-          <div className="brand">QuantSilico</div>
-          <div className="sub">Generals Research Console</div>
-        </div>
-      </header>
-      <nav className="nav" aria-label="Primary">
-        {NAV.map(([to, label]) => (
-          <Link key={to} to={to}>
-            {label}
-          </Link>
-        ))}
-      </nav>
-      <main className="main">
-        <Routes>
-          <Route path="/" element={<OverviewPage />} />
-          <Route path="/arena" element={<ArenaPage />} />
-          <Route path="/replay" element={<ReplayPage />} />
-          <Route path="/experiments" element={<GenericPage title="Experiments" endpoint="/api/experiments" />} />
-          <Route path="/training" element={<GenericPage title="Training" endpoint="/api/training" />} />
-          <Route path="/models" element={<GenericPage title="Models" endpoint="/api/models" />} />
-          <Route path="/population" element={<GenericPage title="Population" endpoint="/api/population" />} />
-          <Route path="/qualification" element={<GenericPage title="Qualification" endpoint="/api/qualification" />} />
-          <Route path="/explainability" element={<GenericPage title="Explainability" endpoint="/api/explainability" />} />
-          <Route path="/champion" element={<GenericPage title="Champion" endpoint="/api/models" />} />
-          <Route path="/submission" element={<GenericPage title="Submission" endpoint="/api/submission" />} />
-          <Route path="/competition" element={<GenericPage title="Competition" endpoint="/api/competition" />} />
-          <Route path="/repository" element={<GenericPage title="Repository" endpoint="/api/repository" />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-    </div>
+    <Routes>
+      <Route element={<AppShell />}>
+        <Route index element={<Navigate to="/overview" replace />} />
+        <Route path="overview" element={<OverviewPage />} />
+        <Route path="arena" element={<ArenaPage />} />
+        <Route path="environment-lab" element={<EnvironmentLabPage />} />
+        <Route path="replay/:replayId?" element={<ReplayLabPage />} />
+        <Route path="qualification/:candidateId?" element={<QualificationPage />} />
+        <Route path="training/:runId?" element={<TrainingPage />} />
+        <Route path="experiments/:experimentId?" element={<ExperimentsPage />} />
+        <Route path="models/:modelId?" element={<ModelsPage />} />
+        <Route path="population" element={<PopulationPage />} />
+        <Route path="explainability/:decisionId?" element={<ExplainabilityPage />} />
+        <Route path="champion" element={<ChampionPage />} />
+        <Route path="submission" element={<SubmissionPage />} />
+        <Route path="competition" element={<CompetitionPage />} />
+        <Route path="repository" element={<RepositoryPage />} />
+        <Route path="documentation" element={<DocumentationPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }

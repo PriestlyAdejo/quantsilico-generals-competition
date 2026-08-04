@@ -1,5 +1,9 @@
 from pathlib import Path
+import sys
 
-ROOT = Path(__file__).resolve().parents[2]
-if str(ROOT / "src") not in __import__("sys").path:
-    __import__("sys").path.insert(0, str(ROOT / "src"))
+REPO = Path(__file__).resolve().parents[3]
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
+SRC = REPO / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
