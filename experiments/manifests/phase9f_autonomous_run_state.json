@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_AUTONOMOUS_RUN_STATE",
+  "working_branch": "research/phase9f-autonomous-rebuild-v1",
+  "starting_commit": "3ee4815329f9d092a8cae8f46ad64e60722a0b3b",
+  "recovery_tag": "phase9f-autonomous-rebuild-v1-start-3ee4815",
+  "stage": "PACKAGING_COMPLETE_FOUNDATIONS_PARTIAL",
+  "deadline": "2026-08-04T22:00:00+01:00",
+  "generated_plan": {
+    "schema_version": 1,
+    "kind": "PHASE9F_GENERATED_PLAN",
+    "created_at": "2026-08-04T17:38:29.407259+00:00",
+    "plan_md": "plans/phase9f-generated-execution-plan.md",
+    "plan_sha256": "b84671cb813e758b9fd1d6ead435cc83b396932acde0b1ccdc96ef937d67e1f6",
+    "source_audits": [
+      "experiments/manifests/phase9f_root_cause_matrix.json",
+      "experiments/manifests/phase9f_architecture_decision_matrix.json"
+    ],
+    "near_term_architecture": "heuristic_candidates_plus_neural_ranker",
+    "long_term_architecture": "heuristic_candidates_plus_neural_ranker",
+    "ppo_tonight": false,
+    "packages_required_present": true,
+    "repairs_applied": [
+      "gae_truncation_bootstrap",
+      "hidden_state_persist_across_updates_in_chunk"
+    ],
+    "repairs_remaining": [
+      "persistent_env_across_chunks",
+      "structured_memory_learned_path",
+      "specialist_teachers"
+    ]
+  },
+  "gates": {
+    "PHASE9E_SAFE_STOP_GATE": "PASS",
+    "LONG_HORIZON_CREDIT_GATE": "PARTIAL",
+    "CHUNK_CREDIT_CONTINUITY_GATE": "PARTIAL",
+    "PARTIAL_OBSERVABILITY_MEMORY_GATE": "FAIL",
+    "PACKAGE_BUILD_GATE": "PASS",
+    "UPLOAD_READY_GATE": "PASS_PORTAL_ARTEFACTS",
+    "PHASE10_READINESS_GATE": "BLOCKED"
+  },
+  "resume_command": ".\\.venv-training\\Scripts\\python.exe -u scripts/run_phase9f_autonomous.py --resume --device cuda",
+  "updated_at": "2026-08-04T17:38:29.408260+00:00"
+}

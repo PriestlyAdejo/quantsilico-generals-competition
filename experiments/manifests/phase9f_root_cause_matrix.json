@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_ROOT_CAUSE_MATRIX",
+  "created_at": "2026-08-04T17:35:09.920386+00:00",
+  "hypotheses": [
+    {
+      "id": "zero_bootstrap_truncation",
+      "status": "PASS",
+      "confidence": 0.95,
+      "severity": "CRITICAL",
+      "evidence": {
+        "gae_source_contains_zero_bootstrap": false,
+        "demo_early_advantage_from_late_terminal": 0.00041358767248682657,
+        "demo_late_advantage": 1.0,
+        "gamma_1200": 5.784069691292562e-06,
+        "classification": "PASS",
+        "evidence": "src/generals_bot/training/ppo.py::_gae appends values+[0.0]"
+      },
+      "remediation": "Bootstrap V(s_T) on truncation; separate terminated vs truncated masks"
+    },
+    {
+      "id": "fresh_env_per_chunk",
+      "status": "FAIL",
+      "confidence": 0.95,
+      "severity": "CRITICAL",
+      "evidence": {
+        "run_bounded_ppo_creates_fresh_env": true,
+        "pilot_invokes_new_run_bounded_ppo_per_chunk": true,
+        "classification": "FAIL",
+        "consequence": "Opening actions cannot receive credit for post-chunk outcomes; episodes restart every 512 transitions."
+      },
+      "remediation": "Persistent env workers across chunks; carry hidden/memory state"
+    },
+    {
+      "id": "insufficient_effective_volume",
+      "status": "FAIL",
+      "confidence": 0.85,
+      "severity": "HIGH",
+      "evidence": {
+        "phase9e_transitions_per_arm": 12288,
+        "parallel_envs": 1,
+        "chunk_env_steps": 512,
+        "rollout_steps": 128,
+        "updates_per_chunk": 4,
+        "complete_game_equivalents_if_mean_100": 122.88,
+        "complete_game_equivalents_if_mean_1200": 10.24,
+        "interpretation": "env_step = one agent transition in run_bounded_ppo",
+        "classification": "FAIL",
+        "note": "Even optimistic 100-turn episodes \u2248123 games; true 1200-turn games \u224810 equivalents \u2014 tiny for rare wins."
+      },
+      "remediation": "Increase parallelism and complete-game sampling after continuity repair"
+    },
+    {
+      "id": "gamma_horizon_mismatch",
+      "status": "FAIL",
+      "confidence": 0.9,
+      "severity": "HIGH",
+      "evidence": {
+        "discount_table_gamma_0_99": {
+          "10": 0.9043820750088044,
+          "50": 0.6050060671375364,
+          "100": 0.3660323412732292,
+          "200": 0.13397967485796172,
+          "400": 0.017950553275045137,
+          "800": 0.0003222223628802337,
+          "1200": 5.784069691292562e-06
+        }
+      },
+      "remediation": "Benchmark higher gamma / multi-timescale returns; do not set gamma=1 blindly"
+    },
+    {
+      "id": "memory_lifecycle_reset",
+      "status": "FAIL",
+      "confidence": 0.85,
+      "severity": "HIGH",
+      "evidence": {
+        "cnn_has_gru": true,
+        "graph_has_cell_memory": true,
+        "chunk_resets_hidden": true,
+        "structured_map_memory_in_learned_path": false,
+        "heuristic_map_memory_exists": true,
+        "classification": "FAIL",
+        "note": "Models are recurrent but pilot chunks re-enter run_bounded_ppo with fresh hidden state; no structured fog memory in learned act path."
+      },
+      "remediation": "Persist recurrent state + add structured map memory for deployment path"
+    },
+    {
+      "id": "reward_only_insufficient",
+      "status": "PASS",
+      "confidence": 0.8,
+      "severity": "MEDIUM",
+      "evidence": "Phase 9D conversion and Phase 9E curriculum both 0W/8D/0L",
+      "remediation": "Do not run another reward-only full-game PPO before foundation repair + teachers"
+    }
+  ],
+  "gates": {
+    "LONG_HORIZON_CREDIT_GATE": "FAIL",
+    "CHUNK_CREDIT_CONTINUITY_GATE": "FAIL",
+    "PARTIAL_OBSERVABILITY_MEMORY_GATE": "FAIL",
+    "EFFECTIVE_VOLUME_GATE": "FAIL"
+  }
+}

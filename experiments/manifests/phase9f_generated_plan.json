@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_GENERATED_PLAN",
+  "created_at": "2026-08-04T17:38:29.407259+00:00",
+  "plan_md": "plans/phase9f-generated-execution-plan.md",
+  "plan_sha256": "b84671cb813e758b9fd1d6ead435cc83b396932acde0b1ccdc96ef937d67e1f6",
+  "source_audits": [
+    "experiments/manifests/phase9f_root_cause_matrix.json",
+    "experiments/manifests/phase9f_architecture_decision_matrix.json"
+  ],
+  "near_term_architecture": "heuristic_candidates_plus_neural_ranker",
+  "long_term_architecture": "heuristic_candidates_plus_neural_ranker",
+  "ppo_tonight": false,
+  "packages_required_present": true,
+  "repairs_applied": [
+    "gae_truncation_bootstrap",
+    "hidden_state_persist_across_updates_in_chunk"
+  ],
+  "repairs_remaining": [
+    "persistent_env_across_chunks",
+    "structured_memory_learned_path",
+    "specialist_teachers"
+  ]
+}

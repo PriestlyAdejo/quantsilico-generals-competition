@@ -1,0 +1,23 @@
+{
+  "candidate": "heuristic_v2f_plus_planner_terminal_fix",
+  "package_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\dist\\upload_ready\\quantsilico_phase9f_best_overall_packaged.zip",
+  "sha256": "f6cc278527456d865485d7c69c237efeb5d6136a7bcdd0f30ca46c576b12cd56",
+  "zip_size": 216079,
+  "unpacked_size": 210003,
+  "file_count": 43,
+  "run_sh_present": true,
+  "status": "PACKAGED",
+  "notes": [
+    "Windows package built; Linux parity required for UPLOAD_READY",
+    "structure validation only; Linux parity not implied",
+    "Windows clean-package handshake+EOF smoke PASS"
+  ],
+  "bot_commit": "3ee4815329f9d092a8cae8f46ad64e60722a0b3b",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "windows_validation": "PASS",
+  "linux_parity": "NOT_RUN",
+  "upload_ready": false,
+  "extra": {
+    "package_stem": "quantsilico_phase9f_best_overall"
+  }
+}

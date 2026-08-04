@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_RISK_REGISTER",
+  "risks": [
+    {"id": "scope_explosion", "probability": "HIGH", "impact": "HIGH", "mitigation": "deadline controller; package portal early", "blocking": false},
+    {"id": "chunk_env_still_fresh", "probability": "CERTAIN", "impact": "HIGH", "mitigation": "persistent workers next resume", "blocking": true, "blocks": "PHASE9F_RL_READINESS"},
+    {"id": "memory_gate_fail", "probability": "HIGH", "impact": "HIGH", "mitigation": "structured map memory", "blocking": true, "blocks": "strategic_training"},
+    {"id": "mislabel_upload_ready", "probability": "MED", "impact": "CRITICAL", "mitigation": "only portal-qualified tonight; neural in rejected/", "blocking": false}
+  ]
+}

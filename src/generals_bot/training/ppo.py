@@ -35,15 +35,35 @@ from generals_bot.training.conversion_reward import (
 from generals_bot.training.device_policy import assert_module_on_cuda, resolve_training_device
 
 
-def _gae(rewards: list[float], values: list[float], gamma: float = 0.99, lam: float = 0.95) -> tuple[list[float], list[float]]:
+def _gae(
+    rewards: list[float],
+    values: list[float],
+    gamma: float = 0.99,
+    lam: float = 0.95,
+    *,
+    bootstrap_value: float = 0.0,
+    dones: list[bool] | None = None,
+) -> tuple[list[float], list[float]]:
+    """Generalised advantage estimation with explicit truncation bootstrap.
+
+    When a rollout ends without a true episode terminal, pass ``bootstrap_value=V(s_T)``
+    rather than 0.0. ``dones[t]=True`` means the transition ended the episode so the
+    next-state value contribution is zeroed and GAE is reset.
+    """
     advantages: list[float] = []
     gae = 0.0
-    values = values + [0.0]
-    for t in reversed(range(len(rewards))):
-        delta = rewards[t] + gamma * values[t + 1] - values[t]
-        gae = delta + gamma * lam * gae
+    values_ext = list(values) + [float(bootstrap_value)]
+    n = len(rewards)
+    if dones is None:
+        dones = [False] * n
+    if len(dones) != n:
+        raise ValueError(f"dones length {len(dones)} != rewards length {n}")
+    for t in reversed(range(n)):
+        next_nonterminal = 0.0 if dones[t] else 1.0
+        delta = rewards[t] + gamma * values_ext[t + 1] * next_nonterminal - values_ext[t]
+        gae = delta + gamma * lam * next_nonterminal * gae
         advantages.insert(0, gae)
-    returns = [adv + val for adv, val in zip(advantages, values[:-1], strict=True)]
+    returns = [adv + val for adv, val in zip(advantages, values, strict=True)]
     return advantages, returns
 
 
@@ -96,6 +116,10 @@ def run_bounded_ppo(
     episode_shaping = 0.0
     prev_enemy_cells = 0
     discovered = False
+    hidden = model.initial_hidden(1, device=torch_device)
+    cell_mem = None
+    if hasattr(model, "initial_cell_memory"):
+        cell_mem = model.initial_cell_memory(1, device=torch_device)
 
     for update in range(updates):
         cells_buf: list[np.ndarray] = []
@@ -104,14 +128,11 @@ def run_bounded_ppo(
         logp_buf: list[float] = []
         val_buf: list[float] = []
         rew_buf: list[float] = []
-        hidden = model.initial_hidden(1, device=torch_device)
-        cell_mem = None
-        if hasattr(model, "initial_cell_memory"):
-            cell_mem = model.initial_cell_memory(1, device=torch_device)
+        done_buf: list[bool] = []
 
         for _ in range(rollout_steps):
             eng = get_obs(state, 0)
-            tg, og, ag, _g, meta = extract_numpy_boards(eng, h, w)
+            tg, og, ag, _, meta = extract_numpy_boards(eng, h, w)
             cells = encode_grids_numpy(tg, og, ag)
             obs = _observation_from_arrays(tg, og, ag, meta)
             glob = encode_globals_numpy(obs)
@@ -173,7 +194,8 @@ def run_bounded_ppo(
             prev_enemy_cells = next_enemy
 
             reward = float(shaping)
-            if bool(info.is_done):
+            episode_done = bool(info.is_done)
+            if episode_done:
                 winner = int(info.winner)
                 term = reward_cfg.terminal.terminal_reward(
                     winner=None if winner < 0 else winner, perspective=0
@@ -192,8 +214,31 @@ def run_bounded_ppo(
 
                     opp_state = opp_policy.initial_state(GameContext(1, h, w))
             rew_buf.append(reward)
+            done_buf.append(episode_done)
 
-        advantages, returns = _gae(rew_buf, val_buf)
+        bootstrap_value = 0.0
+        if done_buf and not done_buf[-1]:
+            with torch.no_grad():
+                eng_b = get_obs(state, 0)
+                tb, ob, ab, _, mb = extract_numpy_boards(eng_b, h, w)
+                cells_b = encode_grids_numpy(tb, ob, ab)
+                obs_b = _observation_from_arrays(tb, ob, ab, mb)
+                glob_b = encode_globals_numpy(obs_b)
+                cell_bt = torch.from_numpy(cells_b).unsqueeze(0).to(torch_device)
+                glob_bt = torch.from_numpy(glob_b).unsqueeze(0).to(torch_device)
+                if cell_mem is not None:
+                    raw_b = model.forward_tensors(cell_bt, glob_bt, hidden, cell_mem, deterministic=True)
+                else:
+                    flat_b = cell_bt.reshape(1, -1) if isinstance(model, RecurrentMLPPolicy) else cell_bt
+                    raw_b = model.forward_tensors(flat_b, glob_bt, hidden, deterministic=True)
+                bootstrap_value = float(adapt_forward_output(raw_b).value.item())
+
+        advantages, returns = _gae(
+            rew_buf,
+            val_buf,
+            bootstrap_value=bootstrap_value,
+            dones=done_buf,
+        )
         adv_t = torch.tensor(advantages, dtype=torch.float32, device=torch_device)
         adv_t = (adv_t - adv_t.mean()) / (adv_t.std() + 1e-8)
         ret_t = torch.tensor(returns, dtype=torch.float32, device=torch_device)

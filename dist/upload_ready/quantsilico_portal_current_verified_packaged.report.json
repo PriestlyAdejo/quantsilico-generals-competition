@@ -1,0 +1,23 @@
+{
+  "candidate": "heuristic_v2f_plus_planner_terminal_fix",
+  "package_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\dist\\upload_ready\\quantsilico_portal_current_verified_packaged.zip",
+  "sha256": "5176c838c9a3d88db06746ad67c2f69886cf9bf900da684b2baa86fa3bfe38ea",
+  "zip_size": 216085,
+  "unpacked_size": 210009,
+  "file_count": 43,
+  "run_sh_present": true,
+  "status": "PACKAGED",
+  "notes": [
+    "Windows package built; Linux parity required for UPLOAD_READY",
+    "structure validation only; Linux parity not implied",
+    "Windows clean-package handshake+EOF smoke PASS"
+  ],
+  "bot_commit": "3ee4815329f9d092a8cae8f46ad64e60722a0b3b",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "windows_validation": "PASS",
+  "linux_parity": "NOT_RUN",
+  "upload_ready": false,
+  "extra": {
+    "package_stem": "quantsilico_portal_current_verified"
+  }
+}
