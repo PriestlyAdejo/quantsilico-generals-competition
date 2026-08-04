@@ -1,0 +1,126 @@
+/* Documentation prose — required MDX/markdown scope (portfolio-aligned). */
+.doc-prose {
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: #8593a1;
+  max-width: 42rem;
+}
+
+.doc-prose h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #eaf0f6;
+  margin: 0 0 1rem;
+  font-family: var(--font-heading);
+}
+
+.doc-prose h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #eaf0f6;
+  margin: 1.75rem 0 0.75rem;
+  scroll-margin-top: 1rem;
+}
+
+.doc-prose h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #cdd6df;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.doc-prose p {
+  margin: 0 0 1rem;
+}
+
+.doc-prose ul {
+  list-style-type: disc;
+  margin: 0 0 1rem;
+  padding-left: 1.5rem;
+}
+
+.doc-prose ol {
+  list-style-type: decimal;
+  margin: 0 0 1rem;
+  padding-left: 1.5rem;
+}
+
+.doc-prose li {
+  margin-bottom: 0.35rem;
+}
+
+.doc-prose a {
+  color: #22d3ee;
+  overflow-wrap: anywhere;
+}
+
+.doc-prose a:hover {
+  text-decoration: underline;
+}
+
+.doc-prose strong {
+  color: #cdd6df;
+  font-weight: 600;
+}
+
+.doc-prose em {
+  color: #cdd6df;
+  font-style: italic;
+}
+
+.doc-inline-code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #ffb000;
+  background: #0c1116;
+  border: 1px solid #1e2630;
+  border-radius: 2px;
+  padding: 0.1rem 0.35rem;
+}
+
+.doc-code-block {
+  margin: 0.75rem 0 1rem;
+  border: 1px solid #1e2630;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.doc-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.75rem;
+  background: #0c1116;
+  border-bottom: 1px solid #1e2630;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #6f7c89;
+}
+
+.doc-code-header button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #6f7c89;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.doc-code-header button:hover {
+  color: #ffb000;
+}
+
+.doc-code-block pre {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  overflow-x: auto;
+  max-width: 100%;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.6;
+  color: #cdd6df;
+  background: #090d11;
+}

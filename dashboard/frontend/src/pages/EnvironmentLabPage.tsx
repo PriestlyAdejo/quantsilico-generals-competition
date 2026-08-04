@@ -105,6 +105,20 @@ export default function EnvironmentLabPage() {
   const [session, setSession] = useState<SessionPublic | null>(null);
   const [busy, setBusy] = useState(false);
   const [officialError, setOfficialError] = useState<string | null>(null);
+  const [activeSessions, setActiveSessions] = useState<
+    { session_id: string; seed: number; turn: number; ttl_remaining_s: number; action_count: number }[]
+  >([]);
+
+  const refreshSessionList = useCallback(async () => {
+    try {
+      const data = await ds.getJson<{
+        sessions?: { session_id: string; seed: number; turn: number; ttl_remaining_s: number; action_count: number }[];
+      }>("/api/environment/sessions");
+      setActiveSessions(Array.isArray(data.sessions) ? data.sessions : []);
+    } catch {
+      setActiveSessions([]);
+    }
+  }, [ds]);
 
   const applySession = useCallback((s: SessionPublic) => {
     setSession(s);
@@ -138,16 +152,18 @@ export default function EnvironmentLabPage() {
       });
       applySession(created);
       toast.message(`Official session ${created.session_id ?? "created"}`);
+      await refreshSessionList();
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Session create failed";
       setOfficialError(msg);
       toast.error(msg);
       setBoard(emptyBoard());
       setEvents([`OFFICIAL session unavailable: ${msg}`]);
+      await refreshSessionList();
     } finally {
       setBusy(false);
     }
-  }, [applySession, config.mapPreset, ds, seed, session?.session_id]);
+  }, [applySession, config.mapPreset, ds, refreshSessionList, seed, session?.session_id]);
 
   useEffect(() => {
     if (mode !== "OFFICIAL" || isForcedDemo) return;
@@ -155,6 +171,55 @@ export default function EnvironmentLabPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- create once on mode enter
   }, [mode]);
 
+  useEffect(() => {
+    if (mode !== "OFFICIAL") return;
+    void refreshSessionList();
+    const id = window.setInterval(() => void refreshSessionList(), 15000);
+    return () => window.clearInterval(id);
+  }, [mode, refreshSessionList]);
+
+  const recoverSession = useCallback(
+    async (sessionId: string) => {
+      setBusy(true);
+      try {
+        const s = await ds.getJson<SessionPublic>(
+          `/api/environment/sessions/${encodeURIComponent(sessionId)}`,
+        );
+        applySession(s);
+        toast.message(`Recovered ${sessionId.slice(0, 12)}…`);
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : "Recover failed";
+        toast.error(msg);
+        await refreshSessionList();
+      } finally {
+        setBusy(false);
+      }
+    },
+    [applySession, ds, refreshSessionList],
+  );
+
+  const closeListedSession = useCallback(
+    async (sessionId: string) => {
+      setBusy(true);
+      try {
+        await ds.getJson(`/api/environment/sessions/${encodeURIComponent(sessionId)}`, {
+          method: "DELETE",
+        });
+        if (session?.session_id === sessionId) {
+          setSession(null);
+          setBoard(emptyBoard());
+          setEvents(["Session closed."]);
+        }
+        toast.message("Session closed");
+        await refreshSessionList();
+      } catch (e) {
+        toast.error(e instanceof Error ? e.message : "Close failed");
+      } finally {
+        setBusy(false);
+      }
+    },
+    [ds, refreshSessionList, session?.session_id],
+  );
   useEffect(() => {
     if (mode === "DEMO") {
       setSession(null);
@@ -306,7 +371,9 @@ export default function EnvironmentLabPage() {
           About Environment Lab
         </a>
         {" · "}
-        Guardrails: max 2 concurrent · TTL 15–60 min · max 5,000 actions · records under var/ (not committed)
+        <a className="text-[#22D3EE] hover:underline" href="/documentation/env-official">
+          Session safety limits
+        </a>
       </p>
       <div className="flex gap-4">
         <div className="w-[240px] flex-shrink-0 space-y-3">
@@ -419,6 +486,40 @@ export default function EnvironmentLabPage() {
                   <div>TTL remaining: {ttlRemaining != null ? `${ttlRemaining}s` : "NOT RECORDED"}</div>
                 </div>
               )}
+              {mode === "OFFICIAL" && activeSessions.length > 0 && (
+                <div className="mt-3 border-t border-[#1E2630] pt-2 space-y-2">
+                  <div className="text-[#6F7C89] uppercase tracking-widest" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
+                    Active sessions ({activeSessions.length}/{session?.limits?.max_concurrent ?? 2})
+                  </div>
+                  {activeSessions.map((row) => (
+                    <div key={row.session_id} className="flex flex-col gap-1 border border-[#1E2630] rounded-sm p-1.5">
+                      <span className="text-[#CDD6DF]" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
+                        {row.session_id.slice(0, 12)}… · t{row.turn} · {row.ttl_remaining_s}s
+                      </span>
+                      <div className="flex gap-1">
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => void recoverSession(row.session_id)}
+                          className="flex-1 py-0.5 text-[9px] uppercase border border-[#22D3EE] text-[#22D3EE] rounded-sm disabled:opacity-40"
+                          style={{ fontFamily: "var(--font-mono)" }}
+                        >
+                          Open
+                        </button>
+                        <button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => void closeListedSession(row.session_id)}
+                          className="flex-1 py-0.5 text-[9px] uppercase border border-[#F85149] text-[#F85149] rounded-sm disabled:opacity-40"
+                          style={{ fontFamily: "var(--font-mono)" }}
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
               {officialError && (
                 <div className="text-[#F85149] mt-2" style={{ fontFamily: "var(--font-mono)", fontSize: 10 }}>
                   {officialError}
@@ -430,13 +531,17 @@ export default function EnvironmentLabPage() {
 
         <div className="flex-1 min-w-0">
           <Panel title={`Turn ${turn}`} eyebrow="board/">
-            <div className="overflow-hidden min-w-0">
+            <div className="overflow-hidden min-w-0 flex justify-center">
               <GeneralsBoard
+                variant="environment"
                 board={board}
                 selectedSrc={selectedSrc ?? undefined}
                 onCellClick={config.player1 === "manual" && !busy ? (r, c) => void handleCellClick(r, c) : undefined}
               />
             </div>
+            <p className="mt-2 text-[#6F7C89] font-mono text-[10px]">
+              Legal moves require a visible owned cell with armies &gt; 1. Session state and events are in the side panel.
+            </p>
           </Panel>
         </div>
 
@@ -444,10 +549,22 @@ export default function EnvironmentLabPage() {
           <Panel title="Env Stats" eyebrow="telemetry/">
             <div className="space-y-2">
               <Stat label="TURN" value={turn} />
-              <Stat label="P1 ARMIES" value={p1Armies} />
-              <Stat label="P2 ARMIES" value={p2Armies} />
+              <Stat label="P1 ARMIES (VISIBLE)" value={p1Armies} />
+              <Stat
+                label="P2 ARMIES"
+                value={
+                  mode === "OFFICIAL" && fogPct > 0
+                    ? `${p2Armies} visible · rest HIDDEN`
+                    : p2Armies
+                }
+              />
               <Stat label="FOG COVERAGE" value={`${fogPct}%`} />
             </div>
+            {mode === "OFFICIAL" && fogPct > 0 && (
+              <p className="mt-2 text-[#6F7C89] font-mono text-[9px]">
+                Opponent armies outside vision are NOT AVAILABLE FROM THIS OBSERVATION.
+              </p>
+            )}
             <div className="mt-3 border-t border-[#1E2630] pt-3">
               <div className="text-[#6F7C89] uppercase tracking-widest mb-2" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
                 Events
@@ -466,7 +583,7 @@ export default function EnvironmentLabPage() {
 
       <div className="mt-4">
         <Panel title="Vectorised Env — Army Heatmap" eyebrow="vec-env/">
-          <div className="overflow-auto">
+          <div className="overflow-auto max-w-[650px]">
             <div
               className="inline-grid gap-px"
               style={{ gridTemplateColumns: `repeat(${board.width}, 16px)` }}
@@ -511,11 +628,11 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="flex items-center justify-between py-1 border-b border-[#1E2630]">
+    <div className="flex items-center justify-between py-1 border-b border-[#1E2630] gap-2">
       <span className="text-[#6F7C89] uppercase tracking-widest" style={{ fontFamily: "var(--font-mono)", fontSize: 9 }}>
         {label}
       </span>
-      <span className="text-[#EAF0F6] font-bold" style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
+      <span className="text-[#EAF0F6] font-bold text-right" style={{ fontFamily: "var(--font-mono)", fontSize: 11 }}>
         {value}
       </span>
     </div>

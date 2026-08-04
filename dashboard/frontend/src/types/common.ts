@@ -2,7 +2,8 @@ export type DataSourceKind =
   | "DEMO"
   | "IMPORTED_PROJECT_EVIDENCE"
   | "OFFICIAL_PORTAL_OBSERVATION"
-  | "MANUALLY_RECORDED";
+  | "MANUALLY_RECORDED"
+  | "LIVE_LOCAL_STATE";
 
 export type MetricAvailability =
   | "RECORDED"

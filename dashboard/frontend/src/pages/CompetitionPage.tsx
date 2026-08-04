@@ -4,6 +4,7 @@ import { PortalObservation, ManualSubmissionRecord } from "../types/competition"
 import { DataSourceKind } from "../types/common";
 import SourceSelector from "../components/data-display/SourceSelector";
 import DataSourceBadge from "../components/status/DataSourceBadge";
+import DateTimeCell from "../components/data-display/DateTimeCell";
 import { Info } from "lucide-react";
 
 type Source = "OFFICIAL_PORTAL_OBSERVATION" | "MANUALLY_RECORDED";
@@ -74,7 +75,7 @@ export default function CompetitionPage() {
               <DataSourceBadge kind={rec.kind} />
               <p className="text-[#CDD6DF] font-mono text-sm font-bold">{rec.candidateName}</p>
               <div className="grid grid-cols-2 gap-3 mt-2">
-                <div><p className="text-[#6F7C89] font-mono text-xs">Submitted</p><p className="text-[#CDD6DF] font-mono text-xs">{new Date(rec.submittedAt).toLocaleDateString("en-GB")}</p></div>
+                <div><p className="text-[#6F7C89] font-mono text-xs">Submitted</p><p className="text-[#CDD6DF] font-mono text-xs"><DateTimeCell iso={rec.submittedAt} /></p></div>
                 <div><p className="text-[#6F7C89] font-mono text-xs">Method</p><p className="text-[#CDD6DF] font-mono text-xs">{rec.method}</p></div>
               </div>
               {rec.notes && <p className="text-[#8593A1] font-mono text-xs mt-2">{rec.notes}</p>}

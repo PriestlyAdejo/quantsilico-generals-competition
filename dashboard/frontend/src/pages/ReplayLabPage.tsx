@@ -151,7 +151,7 @@ function ReplayViewer({
           <Panel title="Board" eyebrow="board/">
             {hasFrames && currentFrame ? (
               <div className="min-w-0 overflow-hidden">
-                <GeneralsBoard board={currentFrame.board} />
+                <GeneralsBoard board={currentFrame.board} variant="replay" />
               </div>
             ) : (
               <div className="min-h-40 flex flex-col items-center justify-center text-[#6F7C89] gap-2" style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>

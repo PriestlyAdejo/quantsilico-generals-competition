@@ -238,7 +238,11 @@ def create_session(*, seed: int, map_preset: str = "standard", ttl_s: int | None
     with _lock:
         active = [s for s in _sessions.values() if not s.closed and s.expires_at >= _now()]
         if len(active) >= MAX_CONCURRENT:
-            raise RuntimeError(f"Maximum concurrent sessions ({MAX_CONCURRENT}) reached")
+            ids = ", ".join(s.session_id for s in active)
+            raise RuntimeError(
+                f"Session limit reached ({MAX_CONCURRENT} active). "
+                f"Close an existing session before starting another. Active: {ids}"
+            )
         ttl = min(max(ttl_s or DEFAULT_TTL_S, 60), MAX_TTL_S)
 
         from generals import GeneralsEnv
@@ -281,6 +285,30 @@ def get_session(session_id: str) -> EnvSession | None:
         if s is None or s.closed or s.expires_at < _now():
             return None
         return s
+
+
+def list_sessions() -> list[dict[str, Any]]:
+    """Active in-memory sessions (summary only — no full boards)."""
+    cleanup_expired()
+    with _lock:
+        rows: list[dict[str, Any]] = []
+        for s in _sessions.values():
+            if s.closed or s.expires_at < _now():
+                continue
+            rows.append(
+                {
+                    "session_id": s.session_id,
+                    "seed": s.seed,
+                    "map_preset": s.map_preset,
+                    "created_at": _iso(s.created_at),
+                    "expires_at": _iso(s.expires_at),
+                    "action_count": s.action_count,
+                    "turn": s.turn,
+                    "ttl_remaining_s": max(0, int(s.expires_at - _now())),
+                }
+            )
+        rows.sort(key=lambda r: r["created_at"], reverse=True)
+        return rows
 
 
 def close_session(session_id: str) -> bool:

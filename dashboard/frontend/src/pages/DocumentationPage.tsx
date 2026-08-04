@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, type ComponentType } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDataSource } from "../app/DataSourceProvider";
 import { DocSection, DocIndex } from "../types/documentation";
 import FilterBar from "../components/forms/FilterBar";
-import { Copy, Check } from "lucide-react";
+import DocMarkdown from "../components/documentation/DocMarkdown";
+import { EnvOfficialDoc, GlossaryDoc, OverviewDoc, type MdxSectionId } from "../docs/mdx/registry";
+import "../styles/doc-prose.css";
+
+const MDX_PAGES: Record<MdxSectionId, ComponentType> = {
+  overview: OverviewDoc,
+  glossary: GlossaryDoc,
+  "env-official": EnvOfficialDoc,
+};
 
 export default function DocumentationPage() {
   const ds = useDataSource();
@@ -12,7 +20,6 @@ export default function DocumentationPage() {
   const [index, setIndex] = useState<DocIndex | null>(null);
   const [activeSection, setActiveSection] = useState<DocSection | null>(null);
   const [search, setSearch] = useState("");
-  const [copiedBlock, setCopiedBlock] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -49,52 +56,10 @@ export default function DocumentationPage() {
     navigate(`/documentation/${id}`);
   };
 
-  const copyBlock = (code: string) => {
-    navigator.clipboard.writeText(code);
-    setCopiedBlock(code);
-    setTimeout(() => setCopiedBlock(null), 1500);
-  };
-
-  const renderContent = (content: string) => {
-    const parts = content.split(/(```[\s\S]*?```)/g);
-    return parts.map((part, i) => {
-      if (part.startsWith("```")) {
-        const lines = part.split("\n");
-        const lang = lines[0].replace("```", "").trim();
-        const code = lines.slice(1, -1).join("\n");
-        const isCopied = copiedBlock === code;
-        return (
-          <div key={i} className="my-3 rounded-sm border border-[#1E2630] overflow-hidden">
-            <div className="flex items-center justify-between px-3 py-1.5 bg-[#0C1116] border-b border-[#1E2630]">
-              <span className="text-[#6F7C89] font-mono text-xs">{lang || "code"}</span>
-              <button
-                onClick={() => copyBlock(code)}
-                className="flex items-center gap-1 text-[#6F7C89] hover:text-[#FFB000] transition-colors font-mono text-xs"
-              >
-                {isCopied ? <Check size={10} className="text-[#3FB950]" /> : <Copy size={10} />}
-                {isCopied ? "COPIED" : "COPY"}
-              </button>
-            </div>
-            <pre
-              className="px-3 py-2.5 overflow-x-auto text-[#CDD6DF]"
-              style={{ fontFamily: "var(--font-mono)", fontSize: 11, lineHeight: 1.6 }}
-            >
-              {code}
-            </pre>
-          </div>
-        );
-      }
-      return (
-        <div
-          key={i}
-          className="text-sm text-[#8593A1] leading-relaxed whitespace-pre-wrap"
-          style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}
-        >
-          {part}
-        </div>
-      );
-    });
-  };
+  const MdxPage =
+    activeSection && activeSection.id in MDX_PAGES
+      ? MDX_PAGES[activeSection.id as MdxSectionId]
+      : null;
 
   return (
     <div className="flex h-full overflow-hidden">
@@ -103,7 +68,7 @@ export default function DocumentationPage() {
         style={{ minHeight: "calc(100vh - 32px)" }}
       >
         <p className="text-[#6F7C89] font-mono text-xs uppercase tracking-widest mb-3">Sections</p>
-        <FilterBar search={search} onSearch={setSearch} placeholder="Search Phase 9Q, PFSP…" />
+        <FilterBar search={search} onSearch={setSearch} placeholder="Search docs, PFSP…" />
         <nav className="space-y-0.5">
           {filteredSections.map((s) => (
             <button
@@ -126,7 +91,13 @@ export default function DocumentationPage() {
         <p className="text-[#FFB000] font-mono text-xs uppercase tracking-widest mb-4">$ documentation/</p>
         {activeSection ? (
           <div className="max-w-2xl">
-            <div className="prose prose-invert">{renderContent(activeSection.content)}</div>
+            {MdxPage ? (
+              <div className="doc-prose">
+                <MdxPage />
+              </div>
+            ) : (
+              <DocMarkdown content={activeSection.content} />
+            )}
           </div>
         ) : (
           <p className="text-[#4A5568] font-mono text-xs">Select a section.</p>

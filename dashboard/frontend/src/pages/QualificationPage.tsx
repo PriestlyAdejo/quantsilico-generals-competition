@@ -46,7 +46,9 @@ function QualificationStepper({
   const steps = candidate.phase9q.steps;
   return (
     <Panel title="Delivery pipeline" eyebrow="stages/" className="mb-6">
-      <p className="text-[#6F7C89] font-mono text-[10px] mb-3">Internal workflow: PHASE_9Q</p>
+      <p className="text-[#6F7C89] font-mono text-[10px] mb-3">
+        Select a stage to inspect evidence. Advanced identifiers live in the evidence drawer.
+      </p>
       <div className="flex items-start gap-0">
         {steps.map((stepData, idx) => {
           const status = stepData.status;
@@ -151,7 +153,7 @@ export default function QualificationPage() {
       <PageHeader
         eyebrow="qualification/"
         title="Candidate Qualification"
-        subtitle="Internal workflow: PHASE_9Q — delivery and evaluation evidence."
+        subtitle="Delivery and evaluation evidence for the selected candidate."
       />
       <p className="px-1 mb-4">
         <a href="/documentation/qualification" className="text-[#22D3EE] font-mono text-xs hover:underline">About this page</a>

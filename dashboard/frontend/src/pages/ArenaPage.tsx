@@ -217,7 +217,7 @@ export default function ArenaPage() {
             <>
               <p className="text-[#6F7C89] font-mono text-[10px] mb-2">Map preview (not live telemetry)</p>
               <div className="min-w-0 overflow-hidden max-w-xl mx-auto">
-                <GeneralsBoard board={preview} />
+                <GeneralsBoard board={preview} variant="arena" />
               </div>
             </>
           )}
@@ -227,7 +227,7 @@ export default function ArenaPage() {
                 LIVE BOARD TELEMETRY NOT EMITTED BY THIS EVALUATOR
               </p>
               <div className="min-w-0 overflow-hidden max-w-xl mx-auto opacity-80">
-                <GeneralsBoard board={preview} />
+                <GeneralsBoard board={preview} variant="arena" />
               </div>
             </>
           )}

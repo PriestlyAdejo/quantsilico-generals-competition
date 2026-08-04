@@ -118,9 +118,15 @@ def main() -> int:
 
     docs_dir = REPO / "docs" / "console"
     md_count = len(list(docs_dir.glob("*.md"))) if docs_dir.is_dir() else 0
+    mdx_registry = (
+        REPO / "dashboard" / "frontend" / "src" / "docs" / "mdx" / "registry.ts"
+    ).is_file()
+    doc_page = (REPO / "dashboard" / "frontend" / "src" / "pages" / "DocumentationPage.tsx").read_text(
+        encoding="utf-8"
+    )
     results["documentation_completeness"] = {
-        "pass": md_count >= 24,
-        "detail": f"{md_count} markdown sections under docs/console",
+        "pass": md_count >= 24 and mdx_registry and "DocMarkdown" in doc_page and "MDX_PAGES" in doc_page,
+        "detail": f"{md_count} markdown sections; MDX registry + DocMarkdown renderer present",
     }
 
     opera = REPO / "docs" / "console" / "21-opera-gx.md"
@@ -158,8 +164,18 @@ def main() -> int:
         "detail": "Automated proxy: color-scheme dark meta present; operator visual approval remains mandatory hard stop",
     }
     results["board_overflow"] = {
-        "pass": "viewBox" in (REPO / "dashboard" / "frontend" / "src" / "components" / "board" / "GeneralsBoard.tsx").read_text(encoding="utf-8"),
-        "detail": "Responsive SVG viewBox present; operator viewport matrix remains part of visual approval",
+        "pass": (
+            "viewBox" in (REPO / "dashboard" / "frontend" / "src" / "components" / "board" / "GeneralsBoard.tsx").read_text(
+                encoding="utf-8"
+            )
+            and 'variant?: "arena"'
+            in (REPO / "dashboard" / "frontend" / "src" / "components" / "board" / "GeneralsBoard.tsx").read_text(
+                encoding="utf-8"
+            )
+            and "variant=\"environment\""
+            in (REPO / "dashboard" / "frontend" / "src" / "pages" / "EnvironmentLabPage.tsx").read_text(encoding="utf-8")
+        ),
+        "detail": "Responsive SVG viewBox + page size variants wired",
     }
 
     # Map remaining named categories from aggregate signals
@@ -189,9 +205,12 @@ def main() -> int:
         "pass": results["frontend_vitest"]["pass"],
         "detail": "Antifallback unit coverage",
     }
+    explain = (REPO / "dashboard" / "frontend" / "src" / "pages" / "ExplainabilityPage.tsx").read_text(
+        encoding="utf-8"
+    )
     results["explainability_mapping"] = {
-        "pass": True,
-        "detail": "Explainability list mapped; empty counterfactuals honest",
+        "pass": "Math.random" not in explain and "generateBoard" not in explain and "EmptyState" in explain,
+        "detail": "No random DEMO concept bars; honest empty states",
     }
     results["api_error_handling"] = {
         "pass": results["backend_integrity_pytest"]["pass"],

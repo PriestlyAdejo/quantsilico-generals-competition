@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDataSource } from "../app/DataSourceProvider";
 import { RepositoryStatus, CommitRecord, CiRun, EnvironmentLock } from "../types/repository";
 import DataSourceBadge from "../components/status/DataSourceBadge";
+import DateTimeCell from "../components/data-display/DateTimeCell";
 import { Check, X, Clock, AlertTriangle, Minus } from "lucide-react";
 
 const statusIcon = (s: string) => {
@@ -89,7 +90,7 @@ export default function RepositoryPage() {
                 </div>
                 <p className="text-[#CDD6DF] font-mono text-xs mt-1">{commit.message}</p>
                 <p className="text-[#6F7C89] font-mono text-xs mt-0.5">
-                  {commit.author} · {commit.committedAt === "NOT RECORDED" ? "NOT RECORDED" : new Date(commit.committedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
+                  {commit.author} · <DateTimeCell iso={commit.committedAt} />
                 </p>
               </div>
             ))}

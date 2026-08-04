@@ -592,6 +592,18 @@ def env_create_session(req: EnvSessionCreate) -> dict[str, Any]:
     return session.public_dict()
 
 
+@router.get("/api/environment/sessions")
+def env_list_sessions() -> dict[str, Any]:
+    rows = env_sessions.list_sessions()
+    return {
+        "schema_version": 1,
+        "kind": "ENV_SESSION_LIST",
+        "sessions": rows,
+        "active_count": len(rows),
+        "max_concurrent": env_sessions.MAX_CONCURRENT,
+    }
+
+
 @router.get("/api/environment/sessions/{session_id}")
 def env_get_session(session_id: str) -> dict[str, Any]:
     session = env_sessions.get_session(session_id)

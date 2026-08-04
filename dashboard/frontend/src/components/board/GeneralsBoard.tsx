@@ -9,6 +9,8 @@ interface Props {
   onCellClick?: (row: number, col: number) => void;
   className?: string;
   interactive?: boolean;
+  /** Page context sizing — caps rendered board without fixed pixel SVG. */
+  variant?: "arena" | "environment" | "explainability" | "counterfactual" | "replay" | "default";
   attributionOverlay?: number[][];
   beliefOverlay?: number[][];
   changedCells?: { row: number; col: number }[];
@@ -57,9 +59,18 @@ interface TooltipState {
 /** Logical cell size inside the viewBox — SVG scales via CSS width 100%. */
 const CELL = 28;
 
+const VARIANT_CLASS: Record<NonNullable<Props["variant"]>, string> = {
+  default: "generals-board--default max-w-[560px]",
+  arena: "generals-board--arena max-w-[540px]",
+  environment: "generals-board--environment max-w-[650px]",
+  explainability: "generals-board--explainability max-w-[520px]",
+  counterfactual: "generals-board--counterfactual max-w-[460px]",
+  replay: "generals-board--replay max-w-[560px]",
+};
+
 export default function GeneralsBoard({
   board, selectedSrc, selectedDst, onCellClick, className = "",
-  interactive = true, attributionOverlay, beliefOverlay,
+  interactive = true, variant = "default", attributionOverlay, beliefOverlay,
   changedCells, riskRegion, pathCells, boardSummary,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -67,6 +78,7 @@ export default function GeneralsBoard({
 
   const vbW = board.width * CELL;
   const vbH = board.height * CELL;
+  const variantClass = VARIANT_CLASS[variant] ?? VARIANT_CLASS.default;
 
   const terrainLayer = useMemo(() => {
     return board.cells.flatMap((row, r) =>
@@ -153,10 +165,11 @@ export default function GeneralsBoard({
   return (
     <div
       ref={containerRef}
-      className={`generals-board relative min-w-0 overflow-hidden ${className}`}
-      style={{ width: "100%", aspectRatio: `${board.width} / ${board.height}`, maxHeight: "min(70vh, 100%)" }}
+      className={`generals-board relative min-w-0 overflow-hidden mx-auto ${variantClass} ${className}`}
+      style={{ width: "100%", aspectRatio: `${board.width} / ${board.height}`, maxHeight: "min(55vh, 100%)" }}
       data-board-summary={boardSummary}
       data-interactive={interactive ? "true" : "false"}
+      data-variant={variant}
     >
       <svg
         viewBox={`0 0 ${vbW} ${vbH}`}

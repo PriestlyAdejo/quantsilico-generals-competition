@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import mdx from "@mdx-js/rollup";
+import remarkGfm from "remark-gfm";
 import tailwindcss from "@tailwindcss/vite";
 import { execSync } from "node:child_process";
 import { writeFileSync, mkdirSync } from "node:fs";
@@ -40,7 +42,15 @@ function buildInfoPlugin() {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), buildInfoPlugin()],
+  plugins: [
+    {
+      enforce: "pre",
+      ...mdx({ remarkPlugins: [remarkGfm] }),
+    },
+    react(),
+    tailwindcss(),
+    buildInfoPlugin(),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useDataSource } from "../app/DataSourceProvider";
 import { PopulationEntry, PayoffMatrix } from "../types/population";
 import DataSourceBadge from "../components/status/DataSourceBadge";
+import DateTimeCell from "../components/data-display/DateTimeCell";
+import { shortDisplayName } from "../utils/displayNames";
 
 function cellColor(v: number | null): string {
   if (v === null) return "#1A1F28";
@@ -70,7 +72,9 @@ export default function PopulationPage() {
         <section>
           <div className="flex items-center justify-between mb-3">
             <p className="text-[#8593A1] font-mono text-xs uppercase tracking-widest">Payoff Matrix</p>
-            <span className="text-[#6F7C89] font-mono text-xs">{matrix.suite} — {new Date(matrix.updatedAt).toLocaleDateString("en-GB")}</span>
+            <span className="text-[#6F7C89] font-mono text-xs">
+              {matrix.suite} — <DateTimeCell iso={matrix.updatedAt} />
+            </span>
           </div>
           <p className="text-[#6F7C89] font-mono text-xs mb-3">Row = agent, Column = opponent. Value = row agent win rate. Use arrow keys to navigate.</p>
 
@@ -79,13 +83,13 @@ export default function PopulationPage() {
               <div />
               {matrix.agents.map((a, c) => (
                 <div key={c} className="text-center py-1 border-b border-[#1E2630]" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "#6F7C89", textTransform: "uppercase" }}>
-                  {a.slice(0, 8)}
+                  {shortDisplayName(a, 10)}
                 </div>
               ))}
               {matrix.matrix.map((row, r) => (
                 <React.Fragment key={r}>
-                  <div className="flex items-center pr-2 border-r border-[#1E2630]" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "#8593A1" }}>
-                    {matrix.agents[r].slice(0, 10)}
+                  <div className="flex items-center pr-2 border-r border-[#1E2630]" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "#8593A1" }} title={matrix.agents[r]}>
+                    {shortDisplayName(matrix.agents[r], 12)}
                   </div>
                   {row.map((val, c) => {
                     const isFocused = focusCell.r === r && focusCell.c === c;

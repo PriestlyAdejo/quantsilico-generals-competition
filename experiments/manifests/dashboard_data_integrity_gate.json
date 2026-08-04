@@ -21,7 +21,7 @@
     },
     "documentation_completeness": {
       "pass": true,
-      "detail": "25 markdown sections under docs/console"
+      "detail": "25 markdown sections; MDX registry + DocMarkdown renderer present"
     },
     "repository_truthfulness": {
       "pass": true,
@@ -49,7 +49,7 @@
     },
     "explainability_mapping": {
       "pass": true,
-      "detail": "Explainability list mapped; empty counterfactuals honest"
+      "detail": "No random DEMO concept bars; honest empty states"
     },
     "replay_recovery": {
       "pass": true,
@@ -61,7 +61,7 @@
     },
     "arena_production_job": {
       "pass": true,
-      "detail": "Exactly one required successful smoke launch via POST /api/jobs/match."
+      "detail": "Exactly one required successful smoke launch."
     },
     "no_production_demo_leakage": {
       "pass": true,
@@ -69,7 +69,7 @@
     },
     "board_overflow": {
       "pass": true,
-      "detail": "Responsive SVG viewBox present; operator viewport matrix remains part of visual approval"
+      "detail": "Responsive SVG viewBox + page size variants wired"
     },
     "chrome_rendering": {
       "pass": true,
@@ -96,13 +96,13 @@
   "supporting_results": {
     "frontend_vitest": {
       "pass": true,
-      "detail": "\n RUN  v3.2.7 C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dashboard/frontend\n\n \u2713 src/smoke.test.ts (7 tests) 29ms\n\n Test Files  1 passed (1)\n      Tests  7 passed (7)\n   Start at  05:48:33\n   Duration  6.79s (transform 446ms, setup 0ms, collect 495ms, tests 29ms, environment 4.00s, prepare 770ms)\n\n$ vitest run\n"
+      "detail": "\n RUN  v3.2.7 C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dashboard/frontend\n\n \u2713 src/smoke.test.ts (7 tests) 14ms\n \u2713 src/utils/formatting.test.ts (4 tests) 37ms\n\n Test Files  2 passed (2)\n      Tests  11 passed (11)\n   Start at  06:48:08\n   Duration  4.28s (transform 440ms, setup 0ms, collect 599ms, tests 52ms, environment 5.24s, prepare 761ms)\n\n$ vitest run\n"
     },
     "backend_integrity_pytest": {
       "pass": true,
-      "detail": "....................                                                     [100%]\n============================== warnings summary ===============================\n.venv-training\\Lib\\site-packages\\fastapi\\testclient.py:1\n  C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\.venv-training\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n20 passed, 1 warning in 18.51s\n"
+      "detail": "....................                                                     [100%]\n============================== warnings summary ===============================\n.venv-training\\Lib\\site-packages\\fastapi\\testclient.py:1\n  C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\.venv-training\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n20 passed, 1 warning in 8.09s\n"
     }
   },
   "note": "Operator visual approval remains mandatory before Part L even if decision=PASS.",
-  "recorded_at": "2026-08-04T04:49:02.207422+00:00"
+  "recorded_at": "2026-08-04T05:48:22.846778+00:00"
 }

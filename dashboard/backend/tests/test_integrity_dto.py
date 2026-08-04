@@ -77,6 +77,9 @@ def test_environment_session_create_and_close() -> None:
     caps = client.get("/api/environment")
     assert caps.status_code == 200
     assert caps.json()["capabilities"]["sessions"] is True
+    listed = client.get("/api/environment/sessions")
+    assert listed.status_code == 200
+    assert "sessions" in listed.json()
     created = client.post("/api/environment/sessions", json={"seed": 7, "map_preset": "standard", "ttl_s": 900})
     # Session create may fail if GeneralsEnv import/runtime unavailable in this env;
     # treat hard 500 as recorded failure for the gate runner rather than silent skip.
@@ -87,5 +90,8 @@ def test_environment_session_create_and_close() -> None:
     got = client.get(f"/api/environment/sessions/{sid}")
     assert got.status_code == 200
     assert got.json()["board"]["width"] >= 1
+    listed2 = client.get("/api/environment/sessions")
+    assert listed2.status_code == 200
+    assert any(s.get("session_id") == sid for s in listed2.json().get("sessions", []))
     closed = client.delete(f"/api/environment/sessions/{sid}")
     assert closed.status_code == 200
