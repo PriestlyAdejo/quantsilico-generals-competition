@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "kind": "RULESET_CONFORMANCE_MATRIX",
+  "created_at": "2026-08-04T15:50:50.999914+00:00",
+  "engine_pin": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "source_registry": "experiments\\manifests\\ruleset_source_registry.json",
+  "rows": [
+    {
+      "id": "map_geometry_padding",
+      "critical": true,
+      "status": "PASS",
+      "tests": [
+        "tests/rules_conformance/test_critical_parity.py::test_local_constants_match_competition_preset",
+        "tests/rules_conformance/test_critical_parity.py::test_competition_reset_pads_to_21",
+        "tests/rules_conformance/test_critical_parity.py::test_padding_mask_for_all_supported_active_sizes"
+      ],
+      "detail_tail": "...                                                                      [100%]\n3 passed in 151.87s (0:02:31)"
+    },
+    {
+      "id": "castle_economy",
+      "critical": true,
+      "status": "PASS",
+      "tests": [
+        "tests/rules_conformance/test_castle_prices.py::test_prices_match_official",
+        "tests/rules_conformance/test_critical_parity.py::test_valid_build_resolves_before_moves_and_deducts_cost",
+        "tests/rules_conformance/test_critical_parity.py::test_invalid_build_is_consumed_as_pass"
+      ],
+      "detail_tail": "...                                                                      [100%]\n3 passed in 18.23s"
+    },
+    {
+      "id": "simultaneous_resolution",
+      "critical": true,
+      "status": "PASS",
+      "tests": [
+        "tests/rules_conformance/test_critical_parity.py::test_move_order_bigger_army_holds_contested_neutral"
+      ],
+      "detail_tail": ".                                                                        [100%]\n1 passed in 15.33s"
+    },
+    {
+      "id": "fog_visibility",
+      "critical": true,
+      "status": "PASS",
+      "tests": [
+        "tests/rules_conformance/test_critical_parity.py::test_visibility_is_local_moore_neighbourhood"
+      ],
+      "detail_tail": ".                                                                        [100%]\n1 passed in 20.09s"
+    },
+    {
+      "id": "logistics_growth",
+      "critical": true,
+      "status": "PASS",
+      "tests": [
+        "tests/rules_conformance/test_critical_parity.py::test_land_growth_every_fifty_turns"
+      ],
+      "detail_tail": ".                                                                        [100%]\n1 passed in 15.10s"
+    },
+    {
+      "id": "deathtouch_terminal",
+      "critical": true,
+      "status": "PASS",
+      "tests": [
+        "tests/rules_conformance/test_critical_parity.py::test_deathtouch_threshold_aligned"
+      ],
+      "detail_tail": ".                                                                        [100%]\n1 passed in 15.99s"
+    }
+  ],
+  "RESEARCH_RULESET_INTEGRITY_GATE": "PASS",
+  "schema_repairs_required": false,
+  "checkpoint_migration_required": false,
+  "notes": [
+    "Core critical rows must PASS before neural Phase 9E training.",
+    "No schema-incompatible repairs applied in this matrix emission."
+  ]
+}

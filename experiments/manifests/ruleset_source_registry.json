@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "kind": "RULESET_SOURCE_REGISTRY",
+  "engine_pin": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "precedence": [
+    "third_party/generals-bots pinned engine (competition mode)",
+    "official Rules/Docs in third_party/generals-bots",
+    "local implementation and tests",
+    "experiment manifests",
+    "assumptions (must be marked ASSUMPTION)"
+  ],
+  "sources": [
+    {
+      "id": "engine_competition_preset",
+      "path": "third_party/generals-bots/generals/core/env.py",
+      "role": "competition preset: 18-21, pad_to=21, build_castles, deathtouch@800, fog"
+    },
+    {
+      "id": "engine_game_step",
+      "path": "third_party/generals-bots/generals/core/game.py",
+      "role": "simultaneous move order, growth, visibility, observation"
+    },
+    {
+      "id": "engine_build_castles",
+      "path": "third_party/generals-bots/generals/modifiers/build_castles.py",
+      "role": "BUILD action, pricing, invalid-build-as-pass, BUILD-before-MOVE"
+    },
+    {
+      "id": "engine_deathtouch",
+      "path": "third_party/generals-bots/generals/modifiers/deathtouch.py",
+      "role": "Deathtouch threshold and mutual-capture draw"
+    },
+    {
+      "id": "engine_protocol",
+      "path": "third_party/generals-bots/competition/protocol.py",
+      "role": "stdio wire frames and action decode"
+    },
+    {
+      "id": "local_rules_constants",
+      "path": "src/generals_bot/rules.py",
+      "role": "agent-side constants mirrored from competition rules"
+    },
+    {
+      "id": "local_castle_cost",
+      "path": "src/generals_bot/castle_cost.py",
+      "role": "agent-side castle price formula"
+    },
+    {
+      "id": "local_legal",
+      "path": "src/generals_bot/legal.py",
+      "role": "agent-side legal MOVE/PASS/BUILD enumeration"
+    },
+    {
+      "id": "local_observation_encoder",
+      "path": "src/generals_bot/models/observation_encoder.py",
+      "role": "21x21 padding mask and fog-safe channels"
+    }
+  ],
+  "notes": [
+    "Do not silently patch the official engine.",
+    "Core parity FAIL blocks neural Phase 9E training.",
+    "When repairs change schemas, migrate checkpoints before Stage 3B."
+  ]
+}
