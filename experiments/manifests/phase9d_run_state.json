@@ -6,9 +6,9 @@
   "stage_status": "COMPLETE",
   "working_branch": "research/draw-conversion-cnn-graph-v1",
   "starting_commit": "79f6f93af45a23029f2d8abeeaf44c68dc77dc87",
-  "last_verified_commit": null,
-  "working_branch_tip": null,
-  "chosen_integration_commit": null,
+  "last_verified_commit": "d09451fa4044b6324f0ec6d81908be64a96b892a",
+  "working_branch_tip": "d09451fa4044b6324f0ec6d81908be64a96b892a",
+  "chosen_integration_commit": "d09451fa4044b6324f0ec6d81908be64a96b892a",
   "gate_decisions": {
     "CNN_OVERNIGHT_READINESS_GATE": "BLOCKED",
     "GRAPH_OVERNIGHT_READINESS_GATE": "BLOCKED",
