@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "GPU_ENVIRONMENT_PROBE",
+  "created_at": "2026-08-04T15:24:26.345761+00:00",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.22631-SP0",
+  "device_policy": {
+    "schema_version": 1,
+    "kind": "DEVICE_POLICY",
+    "require_cuda_for_neural_training": true,
+    "allow_cpu_training": false,
+    "fail_on_silent_cpu_fallback": true,
+    "default_cuda_device": "cuda:0",
+    "allowed_explicit_cpu_contexts": [
+      "competition_deployment_qualification",
+      "official_engine_simulation",
+      "ruleset_differential_tests",
+      "map_generation",
+      "replay_parsing",
+      "dashboard_backend"
+    ],
+    "notes": [
+      "Neural forward/backward/optimisation must run on CUDA when this policy is active.",
+      "Explicit cpu= is rejected for neural training unless allow_cpu_training is true."
+    ]
+  },
+  "torch": {
+    "torch_version": "2.13.0+cu126",
+    "cuda_built": true,
+    "torch_cuda_version": "12.6",
+    "cuda_available": true,
+    "device_count": 1,
+    "device_index": 0,
+    "device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "total_memory_bytes": 8589410304,
+    "capability": "8.6"
+  },
+  "nvidia_smi": {
+    "ok": true,
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+        "driver_version": "581.42",
+        "memory_total_mib": 8192.0,
+        "memory_used_mib": 1579.0,
+        "memory_free_mib": 6442.0,
+        "temperature_c": 84.0,
+        "power_draw_w": 22.9,
+        "utilization_gpu_pct": 24.0
+      }
+    ],
+    "raw": "NVIDIA GeForce RTX 3070 Laptop GPU, 581.42, 8192, 1579, 6442, 84, 22.90, 24"
+  },
+  "resolved_device": "cuda:0",
+  "resolve_error": null,
+  "cuda_matmul_probe_ok": true,
+  "cuda_memory_allocated_bytes_during_probe": 9306112,
+  "GPU_ENVIRONMENT_PROBE_GATE": "PASS"
+}

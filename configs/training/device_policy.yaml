@@ -1,0 +1,17 @@
+# Phase 9E neural training device policy — fail fast, no silent CPU fallback.
+schema_version: 1
+kind: DEVICE_POLICY
+require_cuda_for_neural_training: true
+allow_cpu_training: false
+fail_on_silent_cpu_fallback: true
+default_cuda_device: "cuda:0"
+allowed_explicit_cpu_contexts:
+  - competition_deployment_qualification
+  - official_engine_simulation
+  - ruleset_differential_tests
+  - map_generation
+  - replay_parsing
+  - dashboard_backend
+notes:
+  - Neural forward/backward/optimisation must run on CUDA when this policy is active.
+  - Explicit cpu= is rejected for neural training unless allow_cpu_training is true.

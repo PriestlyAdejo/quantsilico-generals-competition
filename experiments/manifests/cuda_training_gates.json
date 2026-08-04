@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "kind": "CUDA_TRAINING_GATES",
+  "created_at": "2026-08-04T15:26:12.919559+00:00",
+  "device": "cuda:0",
+  "torch": {
+    "torch_version": "2.13.0+cu126",
+    "cuda_built": true,
+    "torch_cuda_version": "12.6",
+    "cuda_available": true,
+    "device_count": 1,
+    "device_index": 0,
+    "device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "total_memory_bytes": 8589410304,
+    "capability": "8.6"
+  },
+  "smoke": {
+    "cnn": {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+      "checkpoint_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "device": "cuda:0",
+      "loss": 2852.22216796875,
+      "params_total": 53,
+      "params_with_grad": 38,
+      "pct_params_with_grad": 0.7169811320754716,
+      "grad_norm_by_module": {
+        "stem": 6961.134033203125,
+        "blocks": 38639.30562591553,
+        "fuse": 1.8963863104581833,
+        "rnn": 5.351234883069992,
+        "mixture": 120.89453125,
+        "spatial_proj": 6087.064697265625,
+        "actor": 14896.098219201202,
+        "aux": 3.307049572467804
+      },
+      "parameter_delta_norm": 0.2764858875616021,
+      "cuda_memory_allocated_bytes": 21906944,
+      "gate": "PASS"
+    },
+    "graph": {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_graph_graph_bc_init_seed7\\chunk_0\\model.json",
+      "checkpoint_sha256": "23699c72fc5a3e0b011900c247c1cdc74c826e7723471c880c5e4df6091fee64",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "device": "cuda:0",
+      "loss": 115.85688018798828,
+      "params_total": 101,
+      "params_with_grad": 86,
+      "pct_params_with_grad": 0.8514851485148515,
+      "grad_norm_by_module": {
+        "input_proj": 41.134613037109375,
+        "pre": 128.9543986171484,
+        "cell_gate": 2.5049590170383453,
+        "cell_cand": 21.418476581573486,
+        "post": 850.2995398044586,
+        "fuse": 34.48571300506592,
+        "rnn": 40.08711624145508,
+        "mixture": 22.758588790893555,
+        "spatial_proj": 92.26301383972168,
+        "actor": 590.9136357593234,
+        "aux": 2.326009690761566
+      },
+      "parameter_delta_norm": 0.3005481418724308,
+      "cuda_memory_allocated_bytes": 22436864,
+      "gate": "PASS"
+    }
+  },
+  "ppo_update_probe": {
+    "cnn": {
+      "architecture": "recurrent_cnn_v2",
+      "device": "cuda:0",
+      "elapsed_s": 18.41222800000105,
+      "ppo_result_keys": [
+        "architecture",
+        "bridge_decision",
+        "checkpoint",
+        "device",
+        "elapsed_s",
+        "history",
+        "legal_action_rate",
+        "nan_free",
+        "note",
+        "resume_ok",
+        "reward_config",
+        "rollout_steps",
+        "telemetry",
+        "updates"
+      ],
+      "history": [
+        {
+          "update": 0.0,
+          "loss": 0.166156604886055,
+          "policy_loss": 0.1539345681667328,
+          "value_loss": 0.026021704077720642,
+          "entropy": 0.07888160645961761,
+          "approx_kl": -0.3045535981655121,
+          "clip_fraction": 0.1875,
+          "explained_variance": 4.331885254282852e-06,
+          "grad_norm": 0.8280991315841675,
+          "learning_rate": 0.0003,
+          "advantage_mean": 1.1548399925231934e-07,
+          "advantage_std": 0.9842507243156433
+        },
+        {
+          "update": 1.0,
+          "loss": -0.012941427528858185,
+          "policy_loss": -0.025029432028532028,
+          "value_loss": 0.024580948054790497,
+          "entropy": 0.020246967673301697,
+          "approx_kl": -0.1365438550710678,
+          "clip_fraction": 0.09375,
+          "explained_variance": 1.1208629551728855e-05,
+          "grad_norm": 0.9018798470497131,
+          "learning_rate": 0.0003,
+          "advantage_mean": 1.7508864402770996e-07,
+          "advantage_std": 0.9842507243156433
+        }
+      ],
+      "env_steps": 64,
+      "action_distribution_delta": 65.12199401855469,
+      "value_prediction_delta": 0.01789608597755432,
+      "parameter_norm_delta": 2.5252998717917308e-05,
+      "nonzero_advantages_observed": true,
+      "checkpoint_written": [
+        "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\phase9e_gpu_smoke\\cnn\\model.json"
+      ],
+      "gate": "PASS",
+      "reasons": [],
+      "raw_summary": {
+        "architecture": "recurrent_cnn_v2",
+        "device": "cuda:0",
+        "rollout_steps": 32,
+        "updates": 2,
+        "legal_action_rate": 1.0,
+        "elapsed_s": 8.087833400000818,
+        "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\phase9e_gpu_smoke\\cnn\\model.json",
+        "resume_ok": true,
+        "nan_free": true,
+        "bridge_decision": "PASS",
+        "note": "Bounded PPO; Phase 9D may pass reward_config for conversion curriculum."
+      }
+    },
+    "graph": {
+      "architecture": "recurrent_graph_belief_v2",
+      "device": "cuda:0",
+      "elapsed_s": 4.503016100003151,
+      "ppo_result_keys": [
+        "architecture",
+        "bridge_decision",
+        "checkpoint",
+        "device",
+        "elapsed_s",
+        "history",
+        "legal_action_rate",
+        "nan_free",
+        "note",
+        "resume_ok",
+        "reward_config",
+        "rollout_steps",
+        "telemetry",
+        "updates"
+      ],
+      "history": [
+        {
+          "update": 0.0,
+          "loss": 1.4133901596069336,
+          "policy_loss": 1.4106059074401855,
+          "value_loss": 0.00709588173776865,
+          "entropy": 0.07636196166276932,
+          "approx_kl": -0.584054708480835,
+          "clip_fraction": 0.5,
+          "explained_variance": -10.76777358392768,
+          "grad_norm": 0.5616123080253601,
+          "learning_rate": 0.0003,
+          "advantage_mean": -2.9802322387695312e-08,
+          "advantage_std": 0.9842509031295776
+        },
+        {
+          "update": 1.0,
+          "loss": 1.542191982269287,
+          "policy_loss": 1.5403639078140259,
+          "value_loss": 0.0059149255976080894,
+          "entropy": 0.11293619126081467,
+          "approx_kl": -1.0707634687423706,
+          "clip_fraction": 0.875,
+          "explained_variance": -0.8840661673066932,
+          "grad_norm": 0.7232780456542969,
+          "learning_rate": 0.0003,
+          "advantage_mean": 1.4901161193847656e-08,
+          "advantage_std": 0.9842507243156433
+        }
+      ],
+      "env_steps": 64,
+      "action_distribution_delta": 3.8293724060058594,
+      "value_prediction_delta": 0.00325920432806015,
+      "parameter_norm_delta": 0.005781685111273305,
+      "nonzero_advantages_observed": true,
+      "checkpoint_written": [
+        "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\phase9e_gpu_smoke\\graph\\model.json"
+      ],
+      "gate": "PASS",
+      "reasons": [],
+      "raw_summary": {
+        "architecture": "recurrent_graph_belief_v2",
+        "device": "cuda:0",
+        "rollout_steps": 32,
+        "updates": 2,
+        "legal_action_rate": 1.0,
+        "elapsed_s": 4.206515099998796,
+        "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\phase9e_gpu_smoke\\graph\\model.json",
+        "resume_ok": true,
+        "nan_free": true,
+        "bridge_decision": "PASS",
+        "note": "Bounded PPO; Phase 9D may pass reward_config for conversion curriculum."
+      }
+    }
+  },
+  "benchmark": {
+    "cnn": {
+      "rows": [
+        {
+          "architecture": "recurrent_cnn_v2",
+          "device": "cpu",
+          "batch": 1,
+          "iters": 20,
+          "seconds": 0.30474300000059884,
+          "samples_per_second": 65.62907105318482
+        },
+        {
+          "architecture": "recurrent_cnn_v2",
+          "device": "cuda:0",
+          "batch": 1,
+          "iters": 20,
+          "seconds": 0.35785279999981867,
+          "samples_per_second": 55.888901805463405
+        },
+        {
+          "architecture": "recurrent_cnn_v2",
+          "device": "cpu",
+          "batch": 4,
+          "iters": 20,
+          "seconds": 0.683318399998825,
+          "samples_per_second": 117.0757292649189
+        },
+        {
+          "architecture": "recurrent_cnn_v2",
+          "device": "cuda:0",
+          "batch": 4,
+          "iters": 20,
+          "seconds": 0.470268599994597,
+          "samples_per_second": 170.11554673418368
+        },
+        {
+          "architecture": "recurrent_cnn_v2",
+          "device": "cpu",
+          "batch": 16,
+          "iters": 20,
+          "seconds": 2.690514699999767,
+          "samples_per_second": 118.9363507287389
+        },
+        {
+          "architecture": "recurrent_cnn_v2",
+          "device": "cuda:0",
+          "batch": 16,
+          "iters": 20,
+          "seconds": 0.39169179999589687,
+          "samples_per_second": 816.9688515392769
+        },
+        {
+          "architecture": "recurrent_cnn_v2",
+          "device": "cpu",
+          "batch": 32,
+          "iters": 20,
+          "seconds": 4.21735389999958,
+          "samples_per_second": 151.75392323609924
+        },
+        {
+          "architecture": "recurrent_cnn_v2",
+          "device": "cuda:0",
+          "batch": 32,
+          "iters": 20,
+          "seconds": 0.36815009999554604,
+          "samples_per_second": 1738.4213667407475
+        }
+      ]
+    },
+    "graph": {
+      "rows": [
+        {
+          "architecture": "recurrent_graph_belief_v2",
+          "device": "cpu",
+          "batch": 1,
+          "iters": 20,
+          "seconds": 0.34345459999894956,
+          "samples_per_second": 58.23185946573774
+        },
+        {
+          "architecture": "recurrent_graph_belief_v2",
+          "device": "cuda:0",
+          "batch": 1,
+          "iters": 20,
+          "seconds": 0.8312287000007927,
+          "samples_per_second": 24.06076691045548
+        },
+        {
+          "architecture": "recurrent_graph_belief_v2",
+          "device": "cpu",
+          "batch": 4,
+          "iters": 20,
+          "seconds": 0.7176984000034281,
+          "samples_per_second": 111.46743534556839
+        },
+        {
+          "architecture": "recurrent_graph_belief_v2",
+          "device": "cuda:0",
+          "batch": 4,
+          "iters": 20,
+          "seconds": 0.6728012999956263,
+          "samples_per_second": 118.90583445739486
+        },
+        {
+          "architecture": "recurrent_graph_belief_v2",
+          "device": "cpu",
+          "batch": 16,
+          "iters": 20,
+          "seconds": 2.8482302999982494,
+          "samples_per_second": 112.35046548033587
+        },
+        {
+          "architecture": "recurrent_graph_belief_v2",
+          "device": "cuda:0",
+          "batch": 16,
+          "iters": 20,
+          "seconds": 0.666810800001258,
+          "samples_per_second": 479.8962464306161
+        },
+        {
+          "architecture": "recurrent_graph_belief_v2",
+          "device": "cpu",
+          "batch": 32,
+          "iters": 20,
+          "seconds": 5.757095399996615,
+          "samples_per_second": 111.16716947236557
+        },
+        {
+          "architecture": "recurrent_graph_belief_v2",
+          "device": "cuda:0",
+          "batch": 32,
+          "iters": 20,
+          "seconds": 0.7025446000043303,
+          "samples_per_second": 910.9741929495369
+        }
+      ]
+    }
+  },
+  "CUDA_TRAINING_SMOKE_GATE": "PASS",
+  "GPU_EXECUTION_GATE": "PASS",
+  "PPO_UPDATE_EFFECTIVENESS_GATE": "PASS"
+}

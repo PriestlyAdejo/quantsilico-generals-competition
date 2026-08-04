@@ -19,6 +19,7 @@ from generals_bot.models.graph import RecurrentGraphBeliefPolicy
 from generals_bot.models.legal_mask import apply_action_mask
 from generals_bot.models.mlp import RecurrentMLPPolicy
 from generals_bot.training.collect_bc import collect_trajectories, load_dataset, save_dataset
+from generals_bot.training.device_policy import assert_module_on_cuda, resolve_training_device
 
 DEFAULT_POLICIES = [
     "heuristic_v0",
@@ -54,11 +55,11 @@ def train_bc(
     device: str | None = None,
     out_dir: Path | None = None,
 ) -> dict[str, Any]:
-    if device is None:
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = resolve_training_device(device, context="behaviour_clone.train_bc")
     torch_device = torch.device(device)
     model = build_model(architecture).to(torch_device)
     model.train()
+    assert_module_on_cuda(model, expected=device)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
 
     train = load_dataset(train_path)

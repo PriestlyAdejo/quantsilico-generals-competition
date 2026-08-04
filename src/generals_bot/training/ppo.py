@@ -32,6 +32,7 @@ from generals_bot.training.conversion_reward import (
     assert_no_privileged_keys,
     count_visible_enemy_cells,
 )
+from generals_bot.training.device_policy import assert_module_on_cuda, resolve_training_device
 
 
 def _gae(rewards: list[float], values: list[float], gamma: float = 0.99, lam: float = 0.95) -> tuple[list[float], list[float]]:
@@ -61,13 +62,13 @@ def run_bounded_ppo(
 ) -> dict[str, Any]:
     reward_cfg = reward_config or CONTROL_V1
     reward_cfg.terminal.validate_ordering()
-    if device is None:
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = resolve_training_device(device, context="ppo.run_bounded_ppo")
     torch_device = torch.device(device)
     model = build_model(architecture).to(torch_device)
     if init_checkpoint and Path(init_checkpoint).is_file():
         apply_state_dict(model, init_checkpoint, map_location=torch_device)
     model.train()
+    assert_module_on_cuda(model, expected=device)
     ema = build_model(architecture).to(torch_device)
     ema.load_state_dict(model.state_dict())
     ema.eval()

@@ -37,6 +37,7 @@ from generals_bot.training.campaign_telemetry import (
     sample_hardware,
 )
 from generals_bot.training.collect_bc import _action_to_jax, _observation_from_arrays
+from generals_bot.training.device_policy import resolve_training_device
 from generals_bot.training.ppo import run_bounded_ppo
 
 REPO = Path(__file__).resolve().parents[3]
@@ -275,8 +276,10 @@ def run_adaptive_initial_for_candidate(
     plateau = config["plateau"]
     opt = config["optimisation"]
     device = opt.get("device", "auto")
-    if device == "auto":
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = resolve_training_device(
+        None if device == "auto" else str(device),
+        context="adaptive_initial.run_candidate",
+    )
 
     architecture = str(candidate["architecture"])
     ckpt = Path(candidate["checkpoint"])
