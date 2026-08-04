@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9E_MATCHED_PILOT_PARTIAL",
+  "note": "Pilot completed fully; alias of phase9e_matched_pilot.json for operator-redirection schema compatibility",
+  "complete_manifest": "experiments/manifests/phase9e_matched_pilot.json",
+  "pairs": {
+    "cnn": {
+      "effect": "NO_MEANINGFUL_IMPROVEMENT",
+      "promising": false
+    },
+    "graph": {
+      "effect": "NO_MEANINGFUL_IMPROVEMENT",
+      "promising": false
+    }
+  },
+  "arms_status": {
+    "cnn_baseline": "COMPLETE",
+    "cnn_curriculum": "COMPLETE",
+    "graph_baseline": "COMPLETE",
+    "graph_curriculum": "COMPLETE"
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9E_OPERATOR_REDIRECTION",
+  "created_at": "2026-08-04T17:32:01.162287+00:00",
+  "process_status": "ALREADY_EXITED",
+  "stop_method": "NONE_REQUIRED_PILOT_COMPLETED",
+  "exit_code": 0,
+  "operator_reason": "OPERATOR_REDIRECTION_AFTER_FULL_FOUR_ARM_NONPROMISING",
+  "pairs": {
+    "cnn": {
+      "effect": "NO_MEANINGFUL_IMPROVEMENT",
+      "promising": false
+    },
+    "graph": {
+      "effect": "NO_MEANINGFUL_IMPROVEMENT",
+      "promising": false
+    }
+  },
+  "arms": {
+    "cnn_baseline": {
+      "env_steps": 12288,
+      "chunks": 24,
+      "stop_reason": "BUDGET",
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\phase9e\\cnn_baseline\\chunk_23\\model.json",
+      "final_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+      "best_validation": {
+        "seat0": {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            54100,
+            54101,
+            54102,
+            54103
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "seat1": {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            54100,
+            54101,
+            54102,
+            54103
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "protocol_faults": 0,
+        "wins": 0,
+        "draws": 8,
+        "losses": 0,
+        "score_rate": 0.5
+      },
+      "status": "COMPLETE"
+    },
+    "cnn_curriculum": {
+      "env_steps": 12288,
+      "chunks": 24,
+      "stop_reason": "BUDGET",
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\phase9e\\cnn_curriculum\\chunk_23\\model.json",
+      "final_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+      "best_validation": {
+        "seat0": {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            54100,
+            54101,
+            54102,
+            54103
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "seat1": {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            54100,
+            54101,
+            54102,
+            54103
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "protocol_faults": 0,
+        "wins": 0,
+        "draws": 8,
+        "losses": 0,
+        "score_rate": 0.5
+      },
+      "status": "COMPLETE"
+    },
+    "graph_baseline": {
+      "env_steps": 12288,
+      "chunks": 24,
+      "stop_reason": "BUDGET",
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\phase9e\\graph_baseline\\chunk_23\\model.json",
+      "final_sha256": "23699c72fc5a3e0b011900c247c1cdc74c826e7723471c880c5e4df6091fee64",
+      "best_validation": {
+        "seat0": {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            54100,
+            54101,
+            54102,
+            54103
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "seat1": {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            54100,
+            54101,
+            54102,
+            54103
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "protocol_faults": 0,
+        "wins": 0,
+        "draws": 8,
+        "losses": 0,
+        "score_rate": 0.5
+      },
+      "status": "COMPLETE"
+    },
+    "graph_curriculum": {
+      "env_steps": 12288,
+      "chunks": 24,
+      "stop_reason": "BUDGET",
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\phase9e\\graph_curriculum\\chunk_23\\model.json",
+      "final_sha256": "23699c72fc5a3e0b011900c247c1cdc74c826e7723471c880c5e4df6091fee64",
+      "best_validation": {
+        "seat0": {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            54100,
+            54101,
+            54102,
+            54103
+          ],
+          "learned_seat": 0,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "seat1": {
+          "wins": 0,
+          "draws": 4,
+          "losses": 0,
+          "games": 4,
+          "score_rate": 0.5,
+          "protocol_faults": 0,
+          "seeds": [
+            54100,
+            54101,
+            54102,
+            54103
+          ],
+          "learned_seat": 1,
+          "opponent": "official_expander",
+          "diagnostics_path": null
+        },
+        "protocol_faults": 0,
+        "wins": 0,
+        "draws": 8,
+        "losses": 0,
+        "score_rate": 0.5
+      },
+      "status": "COMPLETE"
+    }
+  },
+  "log_path": "experiments/manifests/_phase9e_matched_pilot.log",
+  "log_sha256": "680493ddc7dfefefb98513952091a41a0e3189994dd6ec76e39c0967219b1216",
+  "pilot_manifest": "experiments/manifests/phase9e_matched_pilot.json",
+  "confirmation_opened": false,
+  "holdout_unused": true,
+  "graph_curriculum_status": "COMPLETE_NO_MEANINGFUL_IMPROVEMENT"
+}

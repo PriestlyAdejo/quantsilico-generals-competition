@@ -2,47 +2,27 @@
   "schema_version": 1,
   "kind": "PHASE9E_RUN_STATE",
   "research_generation_id": "phase9e_rules_aware_2026-08-04",
-  "current_stage": "STAGE5_MATCHED_PILOT",
-  "stage_status": "IN_PROGRESS",
+  "current_stage": "TERMINAL",
+  "stage_status": "COMPLETE_NONPROMISING",
   "working_branch": "research/rules-aware-phase9e-v1",
   "starting_commit": "b53d9e7716685f896242b528620bc2206ad5c400",
   "recovery_tag": "rules-aware-phase9e-v1-start-b53d9e7",
-  "phase9d_preserved_tip": "b53d9e7716685f896242b528620bc2206ad5c400",
-  "last_verified_commit": "6986017590f84f041f862f721ca54dbd86857635",
-  "source_checkpoints": {
-    "cnn": {
-      "lineage": "cnn_bc_init_seed11",
-      "sha16": "ee70e00bf3883568",
-      "path": "experiments/checkpoints/initial/initial_cnn_cnn_bc_init_seed11/chunk_0/model.json"
-    },
-    "graph": {
-      "lineage": "graph_bc_init_seed7",
-      "sha16": "23699c72fc5a3e0b",
-      "path": "experiments/checkpoints/initial/initial_graph_graph_bc_init_seed7/chunk_0/model.json"
-    }
-  },
+  "last_verified_commit": "4b86e92f25827cf924ed89f3497e1d7bd3ea065e",
   "gate_decisions": {
-    "GPU_ENVIRONMENT_PROBE_GATE": "PASS",
-    "CUDA_TRAINING_SMOKE_GATE": "PASS",
-    "GPU_EXECUTION_GATE": "PASS",
-    "PPO_UPDATE_EFFECTIVENESS_GATE": "PASS",
-    "RESEARCH_RULESET_INTEGRITY_GATE": "PASS",
     "PHASE9E_READINESS_GATE": "PASS",
-    "PHASE9E_MATCHED_PILOT": "IN_PROGRESS"
+    "PHASE9E_MATCHED_PILOT": "COMPLETE",
+    "treatment_cnn": "NO_MEANINGFUL_IMPROVEMENT",
+    "treatment_graph": "NO_MEANINGFUL_IMPROVEMENT",
+    "PHASE9E_SAFE_STOP_GATE": "PASS"
   },
-  "hardware": {
-    "gpu": "NVIDIA GeForce RTX 3070 Laptop GPU",
-    "torch": "2.13.0+cu126",
-    "device": "cuda:0"
-  },
+  "terminal_outcome": "FOUR_ARM_NONPROMISING_REDIRECT_PHASE9F",
   "expanded_confirmation_opened": false,
   "holdout_unused": true,
   "phase10_entered": false,
   "learned_package": "NOT_PACKAGED",
   "notes": [
-    "Phase 9D negative evidence preserved at b53d9e7.",
-    "Stage 1-4 complete: CUDA, ruleset PASS, diagnostic sufficient, readiness PASS.",
-    "Stage 5: BASELINE vs CURRICULUM_ONLY (no teacher refresh); discovery-gated contact curriculum."
+    "All four arms completed 12288 steps with 0W/8D/0L.",
+    "Operator redirection to Phase 9F autonomous rebuild."
   ],
-  "updated_at": "2026-08-04T16:20:00+00:00"
+  "updated_at": "2026-08-04T17:35:00+00:00"
 }
