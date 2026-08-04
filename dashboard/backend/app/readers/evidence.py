@@ -23,6 +23,41 @@ def package_report(stem: str) -> dict[str, Any] | None:
     return read_json(REPO_ROOT / "submission" / "packages" / f"{stem}.report.json")
 
 
+def package_registry_dto() -> dict[str, Any]:
+    """Enumerate local packages from reports; classify from evidence only."""
+    audit = manifest("package_registry_audit.json")
+    if audit:
+        return audit
+    packages_dir = REPO_ROOT / "submission" / "packages"
+    rows: list[dict[str, Any]] = []
+    for report_path in sorted(packages_dir.glob("*.report.json")):
+        stem = report_path.name.replace(".report.json", "")
+        report = read_json(report_path) or {}
+        zip_path = packages_dir / f"{stem}.zip"
+        rows.append(
+            {
+                "stem": stem,
+                "zip_present": zip_path.is_file(),
+                "report_present": True,
+                "report_status": report.get("status"),
+                "sha256": report.get("sha256"),
+                "windows_validation": report.get("windows_validation") or "NOT_RECORDED",
+                "linux_validation": report.get("linux_parity") or "NOT_RECORDED",
+                "classification": "LOCAL_PACKAGED",
+            }
+        )
+    return {
+        "schema_version": 1,
+        "kind": "PACKAGE_REGISTRY",
+        "packages": rows,
+        "learned_candidates": [
+            {"arm_id": "cnn_bc_init_seed11", "package_eligibility": "NOT_PACKAGED"},
+            {"arm_id": "graph_bc_init_seed7", "package_eligibility": "NOT_PACKAGED"},
+        ],
+        "active_portal_package": "heuristic_v2_preppo_8f7405fe9834161c_packaged",
+    }
+
+
 def submitted_package_dto() -> dict[str, Any]:
     report = package_report("heuristic_v2_preppo_8f7405fe9834161c_packaged") or {}
     obs = manifest("official_portal_observation_heuristic_v2_preppo_2026-08-04.json") or {}
@@ -53,6 +88,7 @@ def submitted_package_dto() -> dict[str, Any]:
             "The embedded bot_commit contains stale metadata (ee06778) and is retained for auditability only."
         ),
         "learned_model_included": False,
+        "package_registry": package_registry_dto(),
         "report_path": rel(
             REPO_ROOT / "submission" / "packages" / "heuristic_v2_preppo_8f7405fe9834161c_packaged.report.json"
         )

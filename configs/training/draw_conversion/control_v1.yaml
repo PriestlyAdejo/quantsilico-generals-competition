@@ -1,0 +1,19 @@
+# Phase 9D CONTROL — continue sparse terminal reward vs pass opponent.
+schema_version: 1
+kind: DRAW_CONVERSION_REWARD_CONFIG
+version: control_v1
+diagnosis: N/A
+primary_reward_family: sparse_terminal
+curriculum_mechanism: pass_opponent
+training_opponent: pass
+terminal:
+  win: 1.0
+  draw: 0.0
+  loss: -1.0
+  name: win1_draw0_loss-1
+contact_shaping:
+  enabled: false
+  bonus_per_new_enemy_cell: 0.05
+  max_per_step: 0.15
+  max_episode_cumulative: 0.6
+  name: contact_visible_enemy_delta

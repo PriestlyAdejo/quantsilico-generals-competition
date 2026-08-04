@@ -1,4 +1,4 @@
-"""Bounded recurrent PPO smoke trainer (bridge PASS/PARTIAL only)."""
+"""Bounded recurrent PPO trainer (bridge smoke + Phase 9D continuation)."""
 
 from __future__ import annotations
 
@@ -26,6 +26,12 @@ from generals_bot.models.model_forward import adapt_forward_output
 from generals_bot.models.observation_encoder import encode_globals_numpy, encode_grids_numpy
 from generals_bot.training.bridge_benchmark import extract_numpy_boards
 from generals_bot.training.collect_bc import _action_to_jax, _observation_from_arrays
+from generals_bot.training.conversion_reward import (
+    CONTROL_V1,
+    RewardConfig,
+    assert_no_privileged_keys,
+    count_visible_enemy_cells,
+)
 
 
 def _gae(rewards: list[float], values: list[float], gamma: float = 0.99, lam: float = 0.95) -> tuple[list[float], list[float]]:
@@ -51,7 +57,10 @@ def run_bounded_ppo(
     device: str | None = None,
     init_checkpoint: Path | None = None,
     out_dir: Path | None = None,
+    reward_config: RewardConfig | None = None,
 ) -> dict[str, Any]:
+    reward_cfg = reward_config or CONTROL_V1
+    reward_cfg.terminal.validate_ordering()
     if device is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
     torch_device = torch.device(device)
@@ -70,9 +79,21 @@ def run_bounded_ppo(
     state = make_board(env, seed)
     h, w = (int(d) for d in state.armies.shape)
 
+    opp_policy = None
+    opp_state = None
+    if reward_cfg.training_opponent != "pass":
+        from generals_bot.observation import GameContext
+        from generals_bot.policies.base import TraceLevel
+        from generals_bot.selector import create_policy
+
+        opp_policy = create_policy(reward_cfg.training_opponent, seed=seed)
+        opp_state = opp_policy.initial_state(GameContext(1, h, w))
+
     history: list[dict[str, float]] = []
     t0 = time.perf_counter()
     legal_rate = 1.0
+    episode_shaping = 0.0
+    prev_enemy_cells = 0
 
     for update in range(updates):
         cells_buf: list[np.ndarray] = []
@@ -90,8 +111,6 @@ def run_bounded_ppo(
             eng = get_obs(state, 0)
             tg, og, ag, _g, meta = extract_numpy_boards(eng, h, w)
             cells = encode_grids_numpy(tg, og, ag)
-            from generals_bot.observation import Observation
-
             obs = _observation_from_arrays(tg, og, ag, meta)
             glob = encode_globals_numpy(obs)
             cell_t = torch.from_numpy(cells).unsqueeze(0).to(torch_device)
@@ -107,11 +126,6 @@ def run_bounded_ppo(
                     cell_mem = fwd.cell_memory
                 hidden = fwd.hidden
                 logits = fwd.logits
-                # Pass-safe mask: pass always legal; full enum omitted for smoke speed.
-                mask = torch.zeros(1, ACTION_DIM, dtype=torch.bool, device=torch_device)
-                mask[0, 0] = True
-                # Also allow model free choice among finite logits by using pass-only for stability in smoke
-                # Use full legal enum for correctness of legal-action rate.
                 from generals_bot.models.legal_mask import legal_mask_observation
 
                 mask = legal_mask_observation(obs, device=torch_device).unsqueeze(0)
@@ -129,15 +143,50 @@ def run_bounded_ppo(
             val_buf.append(float(value.item()))
 
             agent_action = index_to_action(idx)
-            pass_a = jnp.array([1, 0, 0, 0, 0], dtype=jnp.int32)
-            state, info = transition(state, jnp.stack([_action_to_jax(agent_action), pass_a]))
-            reward = 0.0
+            if opp_policy is None:
+                opp_a = jnp.array([1, 0, 0, 0, 0], dtype=jnp.int32)
+            else:
+                from generals_bot.observation import GameContext
+                from generals_bot.policies.base import TraceLevel
+
+                eng1 = get_obs(state, 1)
+                t1, o1, a1, _, m1 = extract_numpy_boards(eng1, h, w)
+                obs1 = _observation_from_arrays(t1, o1, a1, m1)
+                d1 = opp_policy.act(obs1, opp_state, deterministic=True, trace=TraceLevel.NONE, deadline=None)
+                opp_state = d1.new_state
+                opp_a = _action_to_jax(d1.action)
+            state, info = transition(state, jnp.stack([_action_to_jax(agent_action), opp_a]))
+
+            eng_next = get_obs(state, 0)
+            _, og_next, _, _, _ = extract_numpy_boards(eng_next, h, w)
+            next_enemy = count_visible_enemy_cells(og_next)
+            assert_no_privileged_keys({"owner_grid_visible": True, "prev_enemy_cells": prev_enemy_cells})
+            shaping = reward_cfg.contact_shaping.step_bonus(
+                prev_enemy_cells=prev_enemy_cells,
+                curr_enemy_cells=next_enemy,
+                episode_cum=episode_shaping,
+            )
+            episode_shaping += shaping
+            prev_enemy_cells = next_enemy
+
+            reward = float(shaping)
             if bool(info.is_done):
-                reward = 1.0 if int(info.winner) == 0 else -1.0
+                winner = int(info.winner)
+                term = reward_cfg.terminal.terminal_reward(
+                    winner=None if winner < 0 else winner, perspective=0
+                )
+                reward += float(term)
                 state = make_board(env, seed + update + 1)
+                h, w = (int(d) for d in state.armies.shape)
                 hidden = model.initial_hidden(1, device=torch_device)
                 if cell_mem is not None:
                     cell_mem = model.initial_cell_memory(1, device=torch_device)
+                episode_shaping = 0.0
+                prev_enemy_cells = 0
+                if opp_policy is not None:
+                    from generals_bot.observation import GameContext
+
+                    opp_state = opp_policy.initial_state(GameContext(1, h, w))
             rew_buf.append(reward)
 
         advantages, returns = _gae(rew_buf, val_buf)
@@ -149,7 +198,6 @@ def run_bounded_ppo(
         globs_t = torch.from_numpy(np.stack(glob_buf)).to(torch_device)
         acts_t = torch.tensor(act_buf, dtype=torch.long, device=torch_device)
 
-        # Single PPO epoch over the rollout (bounded smoke).
         b = cells_t.shape[0]
         hidden = model.initial_hidden(b, device=torch_device)
         if hasattr(model, "initial_cell_memory"):
@@ -160,7 +208,6 @@ def run_bounded_ppo(
             raw = model.forward_tensors(flat, globs_t, hidden, deterministic=False)
         fwd = adapt_forward_output(raw)
         logits = fwd.logits
-        # Recompute with pass-only fallback mask bits for chosen actions only.
         mask = torch.zeros(b, ACTION_DIM, dtype=torch.bool, device=torch_device)
         mask.scatter_(1, acts_t.unsqueeze(1), True)
         mask[:, 0] = True
@@ -190,7 +237,6 @@ def run_bounded_ppo(
         loss.backward()
         grad_norm = float(nn.utils.clip_grad_norm_(model.parameters(), 0.5))
         opt.step()
-        # EMA
         with torch.no_grad():
             for p, q in zip(ema.parameters(), model.parameters(), strict=True):
                 p.mul_(0.99).add_(q, alpha=0.01)
@@ -217,7 +263,6 @@ def run_bounded_ppo(
     out_dir.mkdir(parents=True, exist_ok=True)
     ckpt = out_dir / "model"
     save_checkpoint(model, ckpt, architecture=architecture, config=model.config_dict())  # type: ignore[attr-defined]
-    # Resume smoke: reload and run one dummy forward.
     resumed = build_model(architecture).to(torch_device)
     apply_state_dict(resumed, ckpt.with_suffix(".json"), map_location=torch_device)
     resumed.eval()
@@ -249,10 +294,10 @@ def run_bounded_ppo(
         "resume_ok": True,
         "nan_free": True,
         "bridge_decision": "PASS",
-        "note": "Bounded PPO smoke only; not a marathon campaign.",
+        "reward_config": reward_cfg.to_dict(),
+        "note": "Bounded PPO; Phase 9D may pass reward_config for conversion curriculum.",
     }
     (out_dir / "ppo_report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    # Do not overwrite the shared smoke manifest from DEVELOPMENT / custom out_dir runs.
     if not custom_out:
         man = Path("experiments/manifests/ppo_smoke.json")
         man.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -279,7 +324,6 @@ def main() -> None:
         device=args.device,
         init_checkpoint=Path(args.init_checkpoint) if args.init_checkpoint else None,
     )
-    # Persist per-architecture smoke manifest for dashboard aggregation.
     man = Path("experiments/manifests") / f"ppo_smoke_{args.architecture}.json"
     man.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     report["manifest"] = str(man)

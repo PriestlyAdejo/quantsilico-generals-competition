@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9D_SEED_PARTITIONS",
+  "gate_name": "PHASE9D_SEED_PARTITIONS",
+  "research_generation_id": "phase9d_draw_conversion_2026-08-04",
+  "immutable": true,
+  "decision": "FROZEN",
+  "reasons": [
+    "All evaluation partitions are disjoint.",
+    "Expanded confirmation sealed until matched-pair replication and checkpoint freeze complete.",
+    "Promotion holdout reserved and untouched."
+  ],
+  "blockers": [],
+  "partitions": {
+    "diagnosis_seeds": {
+      "seeds": [2100, 2101],
+      "purpose": "Draw-behaviour diagnosis only (both seats → 4 games/arch; expand with 2102,2103 if needed)",
+      "sealed_after_use": false
+    },
+    "continuation_training_seeds": {
+      "seeds": [9001],
+      "purpose": "Matched pilot PPO continuation seed (shared across four arms)"
+    },
+    "pilot_monitoring_seeds": {
+      "seeds": [3100, 3101, 3102, 3103],
+      "purpose": "Pilot validation windows only; must not satisfy overnight or expanded confirmation"
+    },
+    "replication_training_seeds": {
+      "seeds": [9002],
+      "purpose": "Matched-pair replication continuation seed"
+    },
+    "replication_monitoring_seeds": {
+      "seeds": [3200, 3201, 3202, 3203],
+      "purpose": "Replication validation windows only"
+    },
+    "expanded_confirmation_seeds": {
+      "seeds": [4000, 4001, 4002, 4003],
+      "optional_expansion_seeds": [4004],
+      "purpose": "Fresh confirmation after freeze; 3 paired seeds × both seats × 5 opponents = 30 games; optional 4th seed → 40",
+      "sealed_until": [
+        "four_arm_pilot_complete",
+        "promising_treatments_identified",
+        "matched_pair_replication_complete",
+        "checkpoint_freeze_complete"
+      ]
+    },
+    "promotion_holdout_seeds": {
+      "seeds": [90000, 90001, 90002, 90003, 90004, 90005, 90006, 90007],
+      "purpose": "Promotion holdout — completely untouched in Phase 9D",
+      "untouched": true
+    }
+  },
+  "disjointness_check": {
+    "all_evaluation_seeds_unique": true,
+    "note": "Training seeds 9001/9002 are disjoint from all evaluation partitions."
+  },
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "created_at": "2026-08-04T13:20:00+00:00",
+  "supersedes": null,
+  "superseded_by": null
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "kind": "PACKAGE_REGISTRY_AUDIT",
+  "gate_name": "PACKAGE_REGISTRY_AUDIT",
+  "research_generation_id": "phase9d_draw_conversion_2026-08-04",
+  "decision": "COMPLETE",
+  "reasons": [
+    "Classifications derived from ZIP presence, package reports, Windows/Linux fields, upload records, and portal attribution — not filenames alone."
+  ],
+  "blockers": [],
+  "packages": [
+    {
+      "stem": "heuristic_v0_packaged",
+      "zip_present": true,
+      "report_present": true,
+      "report_status": "PACKAGED",
+      "sha256": "8c2594561b9f3a5968b86d75c95a399f71f18f137f39cf7ba20228c0abc029dd",
+      "windows_validation": "NOT_RECORDED",
+      "linux_validation": "NOT_RECORDED",
+      "manual_upload_record": "NOT_RECORDED",
+      "portal_attribution": "NOT_RECORDED",
+      "classification": "LOCAL_PACKAGED",
+      "secondary_classification": "OBSOLETE_FALLBACK",
+      "notes": ["Report status PACKAGED only; notes require Linux parity for UPLOAD_READY."]
+    },
+    {
+      "stem": "heuristic_v1_packaged",
+      "zip_present": true,
+      "report_present": true,
+      "report_status": "UPLOAD_READY",
+      "sha256": "4af60c94b16acdf20e27b315780f78dd1dc346e8f1fd5c563450cbdbfd32c863",
+      "windows_validation": "PASS",
+      "linux_validation": "PASS",
+      "upload_ready_flag": true,
+      "manual_upload_record": "TEMPLATE_OR_INCOMPLETE",
+      "portal_attribution": "NOT_ACTIVE",
+      "classification": "UPLOAD_READY",
+      "secondary_classification": "HISTORICALLY_PACKAGED_NOT_ACTIVE_PORTAL",
+      "notes": [
+        "Report claims Linux parity PASS and UPLOAD_READY.",
+        "UPLOAD_RECORD.md appears incomplete for active portal claim.",
+        "Not the active portal submission per portal_attribution_gate."
+      ]
+    },
+    {
+      "stem": "heuristic_v2_preppo_8f7405fe9834161c_packaged",
+      "zip_present": true,
+      "report_present": true,
+      "report_status": "SUBMITTED",
+      "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+      "windows_validation": "PASS",
+      "linux_validation": "PASS",
+      "upload_ready_flag": true,
+      "submitted_flag": true,
+      "manual_upload_record": "UPLOAD_RECORD_heuristic_v2_preppo.md",
+      "portal_attribution": "RESOLVED",
+      "portal_attribution_manifest": "experiments/manifests/portal_attribution_gate.json",
+      "canonical_candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "portal_verdict": "QUALIFIED",
+      "learned_model_included": false,
+      "classification": "ACTIVE_PORTAL_SUBMISSION",
+      "secondary_classification": "HISTORICALLY_SUBMITTED",
+      "notes": ["Matches portal_attribution_gate canonical package SHA and candidate id."]
+    }
+  ],
+  "learned_candidates": [
+    {
+      "arm_id": "cnn_bc_init_seed11",
+      "package_eligibility": "NOT_PACKAGED",
+      "reason": "LEARNED PROMOTION HAS NOT PASSED"
+    },
+    {
+      "arm_id": "graph_bc_init_seed7",
+      "package_eligibility": "NOT_PACKAGED",
+      "reason": "LEARNED PROMOTION HAS NOT PASSED"
+    }
+  ],
+  "active_portal_package": "heuristic_v2_preppo_8f7405fe9834161c_packaged",
+  "engine_sha": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "created_at": "2026-08-04T13:22:00+00:00",
+  "supersedes": null,
+  "superseded_by": null
+}
