@@ -2,17 +2,18 @@
   "schema_version": 1,
   "kind": "PHASE9_PHASE10_RUN_STATE",
   "research_generation_id": "phase9_phase10_automatic_2026-08-04",
-  "current_stage": "CONSOLE_CORRECTION",
-  "stage_status": "GATES_PENDING_COMMIT",
+  "current_stage": "CONSOLE_GATES",
+  "stage_status": "PASS",
   "working_branch": "fix/console-and-phase9-phase10",
   "starting_commit": "3c80b5c8b3a1fa08e41c7298fb685e3ed0cd9cbb",
-  "latest_commit": "3c80b5c8b3a1fa08e41c7298fb685e3ed0cd9cbb",
-  "last_verified_commit": "3c80b5c8b3a1fa08e41c7298fb685e3ed0cd9cbb",
+  "latest_commit": "7ac2a1cb6d5384a9be0b66321b566a847b23e8e3",
+  "last_verified_commit": "7ac2a1cb6d5384a9be0b66321b566a847b23e8e3",
   "active_campaign_id": null,
   "active_checkpoint": null,
   "gate_decisions": {
     "DASHBOARD_DATA_INTEGRITY_GATE": "PASS",
-    "ARENA_BROWSER_SMOKE": "PASS"
+    "ARENA_BROWSER_SMOKE": "PASS",
+    "CONSOLE_GATES": "PASS"
   },
   "terminal_outcome": null,
   "recovery_tag": "dashboard-before-phase9-automatic-run-3c80b5c",
@@ -20,7 +21,8 @@
     "Dashboard stopped before source changes.",
     "Untracked experiment leftovers left untouched.",
     "GPU: RTX 3070 Laptop 8192 MiB; idle temp observed 85C at preflight.",
-    "Console correction implemented; integrity gate PASS; arena smoke PASS; awaiting commit + push recovery."
+    "Console correction verified: vitest + integrity DTO + integrity gate + arena smoke PASS.",
+    "Feature branch not fast-forwarded; recovery push on working branch only."
   ],
-  "updated_at": "2026-08-04T05:50:00+00:00"
+  "updated_at": "2026-08-04T05:50:30+00:00"
 }
