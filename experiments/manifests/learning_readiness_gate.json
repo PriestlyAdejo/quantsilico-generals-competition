@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "kind": "LEARNING_READINESS_GATE",
+  "decision": "PASS",
+  "blockers": [],
+  "warnings": [],
+  "checks": {
+    "observation_encode": {
+      "ok": true,
+      "cells_shape": [
+        10,
+        21,
+        21
+      ],
+      "globals_shape": [
+        9
+      ],
+      "mask_true": 25,
+      "mask_dim": 3970
+    },
+    "fog_semantics_smoke": {
+      "ok": true,
+      "note": "encoder accepts partial Observation grids; full fog suite lives in unit tests"
+    },
+    "recurrent_mlp_v1": {
+      "architecture": "recurrent_mlp_v1",
+      "forward_ok": true,
+      "recurrent_step_ok": true,
+      "hidden_reset_ok": true,
+      "legal_sampled_actions_ok": true,
+      "param_count": 952820,
+      "checkpoint_roundtrip": true,
+      "checkpoint_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\readiness\\recurrent_mlp_v1\\readiness.json",
+      "reload_finite": true,
+      "ok": true
+    },
+    "recurrent_cnn_v2": {
+      "architecture": "recurrent_cnn_v2",
+      "forward_ok": true,
+      "recurrent_step_ok": true,
+      "hidden_reset_ok": true,
+      "legal_sampled_actions_ok": true,
+      "param_count": 225265,
+      "checkpoint_roundtrip": true,
+      "checkpoint_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\readiness\\recurrent_cnn_v2\\readiness.json",
+      "reload_finite": true,
+      "ok": true
+    },
+    "recurrent_graph_belief_v2": {
+      "architecture": "recurrent_graph_belief_v2",
+      "forward_ok": true,
+      "recurrent_step_ok": true,
+      "hidden_reset_ok": true,
+      "legal_sampled_actions_ok": true,
+      "param_count": 161137,
+      "checkpoint_roundtrip": true,
+      "checkpoint_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\readiness\\recurrent_graph_belief_v2\\readiness.json",
+      "reload_finite": true,
+      "ok": true
+    },
+    "cpu_latency_ms": {
+      "n": 3,
+      "p50": 148.52839999366552,
+      "p95": 148.52839999366552,
+      "p99": 148.52839999366552,
+      "max": 222.69869997398928,
+      "note": "synthetic blank obs; not official match telemetry"
+    },
+    "legal_action_rate": 1.0,
+    "bridge_report": {
+      "path": "experiments/manifests/jax_pytorch_bridge_benchmark.json",
+      "decision": "PASS"
+    },
+    "known_architectures": [
+      "recurrent_cnn_v1",
+      "recurrent_cnn_v2",
+      "recurrent_graph_belief_v1",
+      "recurrent_graph_belief_v2",
+      "recurrent_mlp_v1"
+    ],
+    "no_pyg_required": {
+      "ok": true,
+      "note": "recurrent_graph_belief_v2 uses pure PyTorch message passing"
+    },
+    "promotion_holdout_leakage": {
+      "ok": true,
+      "note": "readiness probe uses synthetic Observation only; no holdout seeds"
+    }
+  },
+  "architectures": [
+    "recurrent_mlp_v1",
+    "recurrent_cnn_v2",
+    "recurrent_graph_belief_v2"
+  ],
+  "notes": [
+    "LEARNING_READINESS_GATE is engineering readiness, not LEARNED_PROMOTION_GATE.",
+    "PORTAL_SUBMISSION_GATE QUALIFIED is unrelated to this gate.",
+    "No PyG required; pure-PyTorch graph path only.",
+    "MLP=bridge control; CNN=learned control; graph-belief=principal challenger."
+  ]
+}

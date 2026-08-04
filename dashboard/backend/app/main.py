@@ -152,30 +152,66 @@ def models() -> dict[str, Any]:
 
 @app.get("/api/submission")
 def submission() -> dict[str, Any]:
-    pkg = REPO_ROOT / "submission" / "packages" / "heuristic_v1_packaged.zip"
-    report = REPO_ROOT / "submission" / "packages" / "heuristic_v1_packaged.report.json"
-    parity = REPO_ROOT / "experiments" / "manifests" / "linux_parity_report.json"
+    """Active portal submission + packaged artefacts (manual records; no portal mutation)."""
+    active_obs = (
+        REPO_ROOT
+        / "experiments"
+        / "manifests"
+        / "official_portal_observation_heuristic_v2_preppo_2026-08-04.json"
+    )
+    v2_report = (
+        REPO_ROOT
+        / "submission"
+        / "packages"
+        / "heuristic_v2_preppo_8f7405fe9834161c_packaged.report.json"
+    )
+    v1_report = REPO_ROOT / "submission" / "packages" / "heuristic_v1_packaged.report.json"
+    parity = REPO_ROOT / "experiments" / "manifests" / "linux_parity_report_preppo.json"
     payload: dict[str, Any] = {
         "schema_version": 1,
-        "candidate": "heuristic_v1",
-        "status": "PACKAGED",
-        "upload_ready": False,
-        "package_exists": pkg.exists(),
-        "package_path": str(pkg) if pkg.exists() else None,
-        "manual_upload_instructions": "submission/MANUAL_UPLOAD.md",
-        "notes": ["No upload button; UPLOAD_READY requires Linux parity"],
+        "kind": "SUBMISSION_DASHBOARD",
+        "active_portal_submission": None,
+        "versions": [],
+        "notes": [
+            "No upload button; portal mutations are operator-only.",
+            "Do not merge multi-version results without an explicit aggregate legend.",
+        ],
     }
-    if report.exists():
-        rep = json.loads(report.read_text(encoding="utf-8"))
-        payload["report"] = rep
-        payload["status"] = rep.get("status", payload["status"])
-        payload["upload_ready"] = bool(rep.get("upload_ready"))
+    if active_obs.exists():
+        obs = json.loads(active_obs.read_text(encoding="utf-8"))
+        payload["active_portal_submission"] = obs.get("active_submission")
+        payload["gate_status"] = obs.get("gate_status_at_observation")
+        payload["public_leaderboard_snapshot"] = obs.get("public_leaderboard_snapshot")
+        payload["recording"] = obs.get("recording")
+    for report_path, label in (
+        (v2_report, "heuristic_v2_preppo"),
+        (v1_report, "heuristic_v1"),
+    ):
+        if not report_path.exists():
+            continue
+        rep = json.loads(report_path.read_text(encoding="utf-8"))
+        payload["versions"].append(
+            {
+                "label": label,
+                "candidate": rep.get("candidate"),
+                "package_sha256": rep.get("sha256"),
+                "status": rep.get("status"),
+                "upload_ready": rep.get("upload_ready"),
+                "windows_validation": rep.get("windows_validation"),
+                "linux_parity": rep.get("linux_parity"),
+                "report_path": str(report_path.relative_to(REPO_ROOT)).replace("\\", "/"),
+            }
+        )
+    if v2_report.exists():
+        rep = json.loads(v2_report.read_text(encoding="utf-8"))
+        payload["candidate"] = rep.get("candidate")
+        payload["status"] = "SUBMITTED"
+        payload["upload_ready"] = True
         payload["package_hash"] = rep.get("sha256")
-        payload["zip_size"] = rep.get("zip_size")
-        payload["unpacked_size"] = rep.get("unpacked_size")
-        payload["file_count"] = rep.get("file_count")
-        payload["windows_validation"] = rep.get("windows_validation")
-        payload["linux_parity"] = rep.get("linux_parity")
+        payload["manual_upload_instructions"] = (
+            "submission/MANUAL_UPLOAD_heuristic_v2_preppo.md"
+        )
+        payload["upload_record"] = "submission/UPLOAD_RECORD_heuristic_v2_preppo.md"
     if parity.exists():
         payload["linux_parity_report"] = json.loads(parity.read_text(encoding="utf-8"))
     return payload
@@ -278,29 +314,56 @@ def explainability() -> dict[str, Any]:
 @app.get("/api/qualification")
 def qualification() -> dict[str, Any]:
     """Qualification view: portal observations + local W/D/L suites (real traces only)."""
-    portal = REPO_ROOT / "experiments" / "manifests" / "official_portal_results_2026-08-03.json"
+    portal_legacy = REPO_ROOT / "experiments" / "manifests" / "official_portal_results_2026-08-03.json"
+    portal_v2 = (
+        REPO_ROOT
+        / "experiments"
+        / "manifests"
+        / "official_portal_observation_heuristic_v2_preppo_2026-08-04.json"
+    )
     suites_dir = REPO_ROOT / "experiments" / "manifests"
     suite_files = sorted(suites_dir.glob("qualification_*.json"))
     phase9q = REPO_ROOT / "experiments" / "manifests" / "phase_9q_milestone.json"
     reward = REPO_ROOT / "experiments" / "manifests" / "ppo_reward_audit.json"
     draw_diag = REPO_ROOT / "experiments" / "manifests" / "expander_draw_diagnostics_9q.json"
+    readiness = REPO_ROOT / "experiments" / "manifests" / "learning_readiness_gate.json"
+    preppo = REPO_ROOT / "experiments" / "manifests" / "phase_9q_pre_ppo_submission_gate.json"
     payload: dict[str, Any] = {
         "schema_version": 1,
         "kind": "QUALIFICATION_DASHBOARD",
-        "phase": "9Q",
-        "champion_until_promoted": "heuristic_v1",
-        "candidate_lineage": "heuristic_v2_qualifier",
+        "phase": "9Q→5 learning",
+        "champion_until_promoted": "heuristic_v2f_plus_planner_terminal_fix",
+        "candidate_lineage": "heuristic_v2_preppo_8f7405fe9834161c",
+        "gate_names": {
+            "HEURISTIC_DEVELOPMENT_GATE": "internal research Expander discovery/conversion suite",
+            "PRE_PPO_SUBMISSION_GATE": "local comparison vs previously submitted package",
+            "PORTAL_SUBMISSION_GATE": "portal Expander 3-game gate (QUALIFIED ≠ final tournament)",
+            "LEARNING_READINESS_GATE": "engineering readiness before PPO campaigns",
+            "LEARNED_PROMOTION_GATE": "learned model may replace heuristic champion",
+        },
         "milestones": ["turn_800_deathtouch", "turn_1050_draw_avoidance", "turn_1150", "turn_1200"],
         "portal": None,
+        "portal_active_v2": None,
         "phase_9q": None,
+        "pre_ppo_submission_gate": None,
+        "learning_readiness": None,
         "local_suites": [],
         "development_groups": {},
         "draw_diagnostics": None,
         "reward_audit": None,
-        "note": "Wire real traces only; score_rate alone is insufficient.",
+        "note": (
+            "Never use unqualified QUALIFIED without naming PORTAL_SUBMISSION_GATE. "
+            "Wire real traces only; score_rate alone is insufficient."
+        ),
     }
-    if portal.exists():
-        payload["portal"] = json.loads(portal.read_text(encoding="utf-8"))
+    if portal_legacy.exists():
+        payload["portal"] = json.loads(portal_legacy.read_text(encoding="utf-8"))
+    if portal_v2.exists():
+        payload["portal_active_v2"] = json.loads(portal_v2.read_text(encoding="utf-8"))
+    if preppo.exists():
+        payload["pre_ppo_submission_gate"] = json.loads(preppo.read_text(encoding="utf-8"))
+    if readiness.exists():
+        payload["learning_readiness"] = json.loads(readiness.read_text(encoding="utf-8"))
     if phase9q.exists():
         payload["phase_9q"] = json.loads(phase9q.read_text(encoding="utf-8"))
     if draw_diag.exists():
@@ -318,7 +381,28 @@ def qualification() -> dict[str, Any]:
 
 @app.get("/api/competition")
 def competition() -> dict[str, Any]:
-    return {"schema_version": 1, "submissions": [], "note": "manual records only"}
+    v2 = (
+        REPO_ROOT
+        / "experiments"
+        / "manifests"
+        / "official_portal_observation_heuristic_v2_preppo_2026-08-04.json"
+    )
+    probe = REPO_ROOT / "experiments" / "manifests" / "portal_public_attribution_probe.json"
+    payload: dict[str, Any] = {
+        "schema_version": 1,
+        "kind": "COMPETITION_PORTAL_MANUAL",
+        "submissions": [],
+        "attribution_probe": None,
+        "note": "manual records only; no portal mutation endpoints",
+    }
+    if v2.exists():
+        obs = json.loads(v2.read_text(encoding="utf-8"))
+        payload["submissions"].append(obs.get("active_submission"))
+        payload["leaderboard_snapshot"] = obs.get("public_leaderboard_snapshot")
+        payload["gate_status"] = obs.get("gate_status_at_observation")
+    if probe.exists():
+        payload["attribution_probe"] = json.loads(probe.read_text(encoding="utf-8"))
+    return payload
 
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"

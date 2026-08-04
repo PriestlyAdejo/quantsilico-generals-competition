@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "kind": "OFFICIAL_PORTAL_OBSERVATION",
+  "recording": "MANUALLY_RECORDED",
+  "observed_at": "2026-08-04T00:53:00+01:00",
+  "operator": "QuantSilico",
+  "public_player_id": 88151,
+  "public_profile_url": "https://www.generals.bot/player?name=QuantSilico&id=88151",
+  "submissions_url": "https://www.generals.bot/submissions",
+  "active_submission": {
+    "portal_submission_label": "heuristic_v2_preppo_8f7405fe983…",
+    "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+    "package_sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "config_hash": "8f7405fe9834161c",
+    "package_content_source_commit": "027ff5d65f5b537133d76785c3a82bcf0459bc70",
+    "embedded_manifest_bot_commit": "ee067782efc006e8b31daa2d3ac0625dc5b2dfdb",
+    "repository_completion_commit": "26954e6f1df3209eca456677dacbe5c6960e2563",
+    "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+    "portal_display_upload_time": "4 Aug 2026, 00:37",
+    "upload_time_utc_inferred": "2026-08-03T23:37:00Z",
+    "upload_time_inference_note": "Assumes portal renders browser-local British Summer Time (UTC+1).",
+    "displayed_package_size": "209 KB",
+    "zip_bytes_on_disk": 214205,
+    "portal_expander_gate": {"display": "W/D/W", "wins": 2, "draws": 1, "losses": 0},
+    "portal_hunter_informational": {"display": "L/W/L", "wins": 1, "draws": 0, "losses": 2},
+    "portal_faults": 0,
+    "portal_verdict": "QUALIFIED",
+    "portal_gate_name": "PORTAL_SUBMISSION_GATE",
+    "final_tournament_qualified": false,
+    "lifecycle": "SUBMITTED",
+    "attribution_method": "MANUAL_OPERATOR_ASSIGNMENT",
+    "attribution_confidence": "HIGH",
+    "learned_model_included": false,
+    "notes": [
+      "QUALIFIED means portal submission gate passed and bot entered continuous leaderboard.",
+      "Not final-tournament qualification (top-20 / cutoff).",
+      "Operator deleted inferior older portal submissions; this version left active."
+    ]
+  },
+  "public_leaderboard_snapshot": {
+    "rank": 71,
+    "of": 80,
+    "elo": 1039,
+    "record": {"wins": 14, "losses": 9, "draws": 13},
+    "games": 36,
+    "displayed_raw_win_rate": 0.39,
+    "score_rate_draws_half": 0.569,
+    "score_rate_note": "14W + 0.5*13D = 20.5 / 36 ≈ 56.9%"
+  },
+  "gate_status_at_observation": {
+    "HEURISTIC_DEVELOPMENT_GATE": "FAIL",
+    "PRE_PPO_SUBMISSION_GATE": "PASS",
+    "PORTAL_SUBMISSION_GATE": "PASS",
+    "LEARNING_READINESS_GATE": "PENDING_AT_RECORD_TIME",
+    "LEARNED_PROMOTION_GATE": "NONE",
+    "PPO_AT_UPLOAD": "NOT_STARTED"
+  },
+  "version_attribution_probe": {
+    "path": "experiments/manifests/portal_public_attribution_probe.json",
+    "finding": "NO_PUBLIC_PACKAGE_HASH_OR_SUBMISSION_ID_BESIDE_MATCHES",
+    "recommended_attribution_method": "MANUAL_OPERATOR_ASSIGNMENT"
+  }
+}

@@ -5,6 +5,12 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from generals_bot.schemas.portal import (
+    GateStatusBoard,
+    PortalMatchObservation,
+    PortalSubmissionVersion,
+)
+
 SCHEMA_VERSION = 1
 
 
@@ -39,6 +45,13 @@ class MatchResultRecord:
     replay_path: str | None = None
     telemetry_path: str | None = None
     seed_split: str | None = None
+    portal_match_id: str | None = None
+    portal_submission_id: str | None = None
+    portal_submission_label: str | None = None
+    package_sha256: str | None = None
+    candidate_id: str | None = None
+    attribution_method: str | None = None
+    attribution_confidence: str | None = None
     notes: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
@@ -92,3 +105,14 @@ class ModelManifest:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
+
+
+__all__ = [
+    "SCHEMA_VERSION",
+    "MatchResultRecord",
+    "ExperimentManifest",
+    "ModelManifest",
+    "PortalSubmissionVersion",
+    "PortalMatchObservation",
+    "GateStatusBoard",
+]

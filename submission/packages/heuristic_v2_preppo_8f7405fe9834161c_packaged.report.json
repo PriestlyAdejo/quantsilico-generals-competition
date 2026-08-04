@@ -6,18 +6,25 @@
   "unpacked_size": 208273,
   "file_count": 42,
   "run_sh_present": true,
-  "status": "UPLOAD_READY",
+  "status": "SUBMITTED",
   "notes": [
     "Windows package built; Linux parity required for UPLOAD_READY",
     "structure validation only; Linux parity not implied",
     "Windows clean-package handshake+EOF smoke PASS",
-    "Linux parity PASS; marked UPLOAD_READY (manual upload only)"
+    "Linux parity PASS; marked UPLOAD_READY (manual upload only)",
+    "Operator uploaded 4 Aug 2026 00:37 (portal display); PORTAL_SUBMISSION_GATE QUALIFIED; ZIP bytes unchanged"
   ],
   "bot_commit": "ee067782efc006e8b31daa2d3ac0625dc5b2dfdb",
+  "package_content_source_commit": "027ff5d65f5b537133d76785c3a82bcf0459bc70",
+  "repository_completion_commit": "26954e6f1df3209eca456677dacbe5c6960e2563",
   "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
   "windows_validation": "PASS",
   "linux_parity": "PASS",
   "upload_ready": true,
+  "submitted": true,
+  "portal_verdict": "QUALIFIED",
+  "portal_gate_name": "PORTAL_SUBMISSION_GATE",
+  "learned_model_included": false,
   "extra": {
     "package_stem": "heuristic_v2_preppo_8f7405fe9834161c",
     "linux_report": {
