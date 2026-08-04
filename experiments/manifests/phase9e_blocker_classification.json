@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9E_INDEPENDENT_BLOCKER_CLASSIFICATION",
+  "created_at": "2026-08-04T16:00:00+00:00",
+  "evidence": [
+    "experiments/manifests/phase9d_rules_aware_historical_audit.json",
+    "experiments/manifests/phase9e_diagnostic_capture.json",
+    "experiments/manifests/ruleset_conformance_matrix.json"
+  ],
+  "cnn": {
+    "architecture": "recurrent_cnn_v2",
+    "source_sha16": "ee70e00bf3883568",
+    "primary_blocker": "CONTACT_FAILURE",
+    "secondary_blocker": "DISCOVERY_FAILURE",
+    "rules_integrity": "PASS",
+    "silent_invalid_actions": 0,
+    "diagnostic_wdl": {"W": 0, "D": 12, "L": 0},
+    "diagnostic_contact_rate": 0.0833,
+    "diagnostic_discovery_rate": 0.1667,
+    "diagnostic_mean_attack_attempts": 0.1667,
+    "build_prices_observed": false,
+    "belief_aux_available": true,
+    "notes": [
+      "Not a protocol/legality failure.",
+      "Rare contact/discovery within 80 turns across Expander/Hunter/portal heuristic.",
+      "No BUILD attempts observed in diagnostic window."
+    ]
+  },
+  "graph": {
+    "architecture": "recurrent_graph_belief_v2",
+    "source_sha16": "23699c72fc5a3e0b",
+    "primary_blocker": "CONTACT_FAILURE",
+    "secondary_blocker": "DISCOVERY_FAILURE",
+    "rules_integrity": "PASS",
+    "silent_invalid_actions": 0,
+    "diagnostic_wdl": {"W": 0, "D": 11, "L": 1},
+    "diagnostic_contact_rate": 0.0,
+    "diagnostic_discovery_rate": 0.25,
+    "diagnostic_mean_attack_attempts": 0.0,
+    "build_prices_observed": false,
+    "belief_aux_available": true,
+    "notes": [
+      "Same primary strategic failure family as CNN.",
+      "Zero contact_rate in diagnostic suite; one loss vs Hunter.",
+      "Belief/aux heads present; not a missing-head defect."
+    ]
+  },
+  "shared_curriculum_implication": {
+    "first_pilot_design": "BASELINE vs CURRICULUM_ONLY",
+    "teacher_refresh_in_first_pilot": false,
+    "curriculum_target": "staged_discovery_then_contact",
+    "reward_family_limit": 1,
+    "avoid": "Do not reuse Phase 9D conversion_v1 contact shaping alone as the sole novelty without staging"
+  },
+  "evidence_status": "SUFFICIENT_FOR_BLOCKER_CLASSIFICATION",
+  "insufficient_evidence": false
+}

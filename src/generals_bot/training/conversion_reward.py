@@ -40,15 +40,39 @@ class ContactShapingConfig:
     max_per_step: float = 0.15
     max_episode_cumulative: float = 0.6
     name: str = "contact_visible_enemy_delta"
+    # Phase 9E curriculum: one-shot discovery bonus + gate contact until discovery.
+    discovery_bonus_once: float = 0.0
+    gate_contact_until_discovery: bool = False
 
-    def step_bonus(self, *, prev_enemy_cells: int, curr_enemy_cells: int, episode_cum: float) -> float:
+    def step_bonus(
+        self,
+        *,
+        prev_enemy_cells: int,
+        curr_enemy_cells: int,
+        episode_cum: float,
+        discovered: bool,
+    ) -> tuple[float, bool]:
+        """Return (bonus, discovered_after)."""
         if not self.enabled:
-            return 0.0
+            return 0.0, discovered or curr_enemy_cells > 0
+        newly_discovered = (not discovered) and curr_enemy_cells > 0
+        discovered_after = discovered or curr_enemy_cells > 0
+        bonus = 0.0
+        if newly_discovered and self.discovery_bonus_once > 0:
+            room = max(0.0, self.max_episode_cumulative - episode_cum)
+            bonus += float(min(self.discovery_bonus_once, room))
+        if self.gate_contact_until_discovery and not discovered_after:
+            return bonus, discovered_after
+        # After discovery (or if ungated), apply visible-enemy delta shaping.
+        if self.gate_contact_until_discovery and newly_discovered:
+            # Contact delta on the discovery step uses prev=0 → curr; allow it.
+            pass
         delta = max(0, curr_enemy_cells - prev_enemy_cells)
         raw = delta * self.bonus_per_new_enemy_cell
         capped = min(raw, self.max_per_step)
-        room = max(0.0, self.max_episode_cumulative - episode_cum)
-        return float(min(capped, room))
+        room = max(0.0, self.max_episode_cumulative - episode_cum - bonus)
+        bonus += float(min(capped, room))
+        return bonus, discovered_after
 
 
 @dataclass(frozen=True)
@@ -92,6 +116,8 @@ class RewardConfig:
                         "max_per_step",
                         "max_episode_cumulative",
                         "name",
+                        "discovery_bonus_once",
+                        "gate_contact_until_discovery",
                     )
                     if k in contact
                 }
@@ -126,6 +152,25 @@ CONVERSION_V1 = RewardConfig(
     diagnosis="CONTACT_FAILURE",
     primary_reward_family="contact_visible_enemy_delta",
     curriculum_mechanism="train_vs_official_expander",
+)
+
+# Phase 9E curriculum-only: discovery-gated contact (one reward family), vs Expander.
+CURRICULUM_DISCOVERY_V1 = RewardConfig(
+    version="curriculum_discovery_v1",
+    terminal=TerminalRewardConfig(),
+    contact_shaping=ContactShapingConfig(
+        enabled=True,
+        bonus_per_new_enemy_cell=0.05,
+        max_per_step=0.15,
+        max_episode_cumulative=0.6,
+        name="discovery_gated_visible_enemy",
+        discovery_bonus_once=0.2,
+        gate_contact_until_discovery=True,
+    ),
+    training_opponent="official_expander",
+    diagnosis="CONTACT_FAILURE+DISCOVERY_FAILURE",
+    primary_reward_family="discovery_gated_visible_enemy",
+    curriculum_mechanism="discovery_gate_then_contact_vs_expander",
 )
 
 

@@ -1,0 +1,45 @@
+# Phase 9E matched BASELINE vs CURRICULUM_ONLY pilot budget (frozen before launch).
+schema_version: 1
+kind: PHASE9E_PILOT_BUDGET
+version: pilot_v1
+derived_from:
+  - experiments/reports/gpu_training_benchmark.md
+  - configs/training/draw_conversion/pilot_v1.yaml
+  - measured_cuda_throughput_note: env-bound PPO; CUDA helps batched forwards
+principal_budget_unit: environment_steps
+rollout_environments: 1
+budgets:
+  chunk_env_steps: 512
+  chunk_updates: 4
+  rollout_steps: 128
+  min_env_steps: 6144
+  target_env_steps: 12288
+  max_env_steps: 24576
+  validation_interval_chunks: 2
+  games_per_monitoring_window: 4
+  both_seat_allocation: true
+  max_wall_clock_min_per_arm: 60
+  checkpoint_interval_chunks: 2
+early_stop:
+  protocol_fault: true
+  plateau_windows: 3
+  plateau_min_score_rate_delta: 0.02
+adaptive_budget:
+  enabled: false
+  note: Equal env-step budgets for BASELINE and CURRICULUM_ONLY; no treatment-only extension
+optimisation:
+  lr: 0.0003
+  clip: 0.2
+  device: cuda:0
+validation:
+  opponent: official_expander
+  max_turns: 100
+  monitoring_partition: full_game_monitoring_seeds
+training_partition: full_game_training_seeds
+guards:
+  equal_budgets_across_matched_arms: true
+  no_teacher_refresh: true
+  no_confirmation_seeds: true
+  no_holdout_seeds: true
+  no_git_during_active_gpu_job: true
+  one_arm_at_a_time: true

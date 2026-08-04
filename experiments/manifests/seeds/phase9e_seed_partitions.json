@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9E_SEED_PARTITIONS",
+  "immutable": true,
+  "decision": "FROZEN",
+  "research_generation_id": "phase9e_rules_aware_2026-08-04",
+  "creation_commit_pending": false,
+  "generation_method": "deterministic_declared_ranges_disjoint_from_phase9d_eval",
+  "promotion_holdout_source": "experiments/manifests/seeds/phase9d_seed_partitions.json#partitions.promotion_holdout_seeds",
+  "creation_commit_note": "Frozen before Stage 3B; SHA recorded at commit containing this manifest",
+  "partitions": {
+    "rules_audit_diagnostic_seeds": {
+      "seeds": [51000, 51001],
+      "purpose": "Stage 3B rules-aware diagnostic capture only; cannot satisfy readiness"
+    },
+    "teacher_generation_seeds": {
+      "seeds": [52000, 52001, 52002, 52003, 52004, 52005, 52006, 52007],
+      "purpose": "Teacher demonstration generation; unused in first BASELINE vs CURRICULUM_ONLY pilot"
+    },
+    "staged_training_seeds": {
+      "seeds": [53001],
+      "purpose": "Staged curriculum PPO training seed"
+    },
+    "staged_monitoring_seeds": {
+      "seeds": [53100, 53101, 53102, 53103],
+      "purpose": "Staged monitoring windows only; guide curriculum stop only"
+    },
+    "full_game_training_seeds": {
+      "seeds": [54001],
+      "purpose": "Full-game continuation training seed"
+    },
+    "full_game_monitoring_seeds": {
+      "seeds": [54100, 54101, 54102, 54103],
+      "purpose": "Full-game monitoring; guide treatment selection only"
+    },
+    "replication_training_seeds": {
+      "seeds": [55001],
+      "purpose": "Matched-pair replication training seed"
+    },
+    "replication_monitoring_seeds": {
+      "seeds": [55100, 55101, 55102, 55103],
+      "purpose": "Replication monitoring windows"
+    },
+    "candidate_selection_seeds": {
+      "seeds": [56000, 56001, 56002, 56003],
+      "purpose": "Freeze selected checkpoint evidence; not confirmation"
+    },
+    "expanded_confirmation_seeds": {
+      "seeds": [57000, 57001, 57002, 57003],
+      "purpose": "Sealed until replication + checkpoint freeze",
+      "sealed": true
+    },
+    "promotion_holdout_seeds": {
+      "seeds": [90000, 90001, 90002, 90003, 90004, 90005, 90006, 90007],
+      "purpose": "Referenced from Phase 9D immutable holdout — not regenerated",
+      "untouched": true,
+      "referenced_not_regenerated": true
+    }
+  },
+  "rules": [
+    "No evaluation seed appears in another evaluation partition",
+    "Diagnostic seeds cannot satisfy training-readiness performance",
+    "Staged monitoring may guide curriculum stopping only",
+    "Full-game monitoring may guide treatment selection only",
+    "Candidate-selection evidence freezes the selected checkpoint",
+    "Expanded confirmation remains sealed until replication and checkpoint freeze",
+    "Promotion holdout remains sealed until promotion-holdout readiness passes",
+    "Procedural map hashes recorded as games are generated"
+  ],
+  "disjointness_check": {
+    "all_listed_seeds_unique_across_partitions": true
+  },
+  "map_hash_registry_path": "experiments/manifests/seeds/phase9e_map_hash_registry.json",
+  "created_at": "2026-08-04T16:05:00+00:00"
+}

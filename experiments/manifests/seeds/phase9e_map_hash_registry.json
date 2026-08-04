@@ -1,0 +1,196 @@
+{
+  "hashes": {
+    "cnn:51000:0:official_expander": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51000:0:official_hunter": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51000:0:heuristic_v2f_plus_planner_terminal_fix": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51000:1:official_expander": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51000:1:official_hunter": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51000:1:heuristic_v2f_plus_planner_terminal_fix": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51001:0:official_expander": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51001:0:official_hunter": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51001:0:heuristic_v2f_plus_planner_terminal_fix": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51001:1:official_expander": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51001:1:official_hunter": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "cnn:51001:1:heuristic_v2f_plus_planner_terminal_fix": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51000:0:official_expander": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51000:0:official_hunter": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51000:0:heuristic_v2f_plus_planner_terminal_fix": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51000:1:official_expander": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51000:1:official_hunter": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51000:1:heuristic_v2f_plus_planner_terminal_fix": {
+      "map_hash": "c153b602ad8635d0",
+      "board_hw": [
+        18,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51001:0:official_expander": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51001:0:official_hunter": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51001:0:heuristic_v2f_plus_planner_terminal_fix": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51001:1:official_expander": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51001:1:official_hunter": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    },
+    "graph:51001:1:heuristic_v2f_plus_planner_terminal_fix": {
+      "map_hash": "f07b47c29cf6c8f1",
+      "board_hw": [
+        20,
+        19
+      ],
+      "partition": "rules_audit_diagnostic_seeds"
+    }
+  }
+}

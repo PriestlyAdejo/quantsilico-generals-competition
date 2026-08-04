@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9D_RULES_AWARE_HISTORICAL_AUDIT",
+  "created_at": "2026-08-04T16:00:00+00:00",
+  "phase9d_tip": "b53d9e7716685f896242b528620bc2206ad5c400",
+  "engine_pin": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "sources": [
+    "experiments/manifests/phase9d_draw_conversion_terminal_report.md",
+    "experiments/manifests/phase9d_matched_pilot.json",
+    "experiments/manifests/draw_behaviour_diagnosis_cnn.json",
+    "experiments/manifests/draw_behaviour_diagnosis_graph.json",
+    "experiments/manifests/conversion_intervention_spec.json",
+    "experiments/manifests/cnn_overnight_readiness_gate.json",
+    "experiments/manifests/graph_overnight_readiness_gate.json"
+  ],
+  "historical_wdl": {
+    "cnn_control": {"W": 0, "D": 8, "L": 0, "faults": 0},
+    "cnn_conversion": {"W": 0, "D": 8, "L": 0, "faults": 0},
+    "graph_control": {"W": 0, "D": 8, "L": 0, "faults": 0},
+    "graph_conversion": {"W": 0, "D": 8, "L": 0, "faults": 0}
+  },
+  "treatment_effect": {
+    "cnn": "NO_MEANINGFUL_IMPROVEMENT",
+    "graph": "NO_MEANINGFUL_IMPROVEMENT"
+  },
+  "metrics": {
+    "protocol_faults": {"status": "AVAILABLE", "value": 0},
+    "wins_draws_losses": {"status": "AVAILABLE", "value": "0W/8D/0L all arms"},
+    "first_contact_turn": {"status": "AVAILABLE", "value": null, "note": "null across diagnosis games"},
+    "discovery_turn": {"status": "AVAILABLE", "value": null},
+    "attack_attempts": {"status": "AVAILABLE", "value": 0},
+    "pass_rate": {"status": "AVAILABLE", "note": "low deliberate pass rates in diagnosis (~0.03-0.05)"},
+    "dominant_diagnosis": {"status": "AVAILABLE", "value": "CONTACT_FAILURE"},
+    "secondary_diagnosis": {"status": "AVAILABLE", "value": "DISCOVERY_FAILURE"},
+    "invalid_silent_pass_reasons": {"status": "UNAVAILABLE"},
+    "live_castle_price_decomposition": {"status": "UNAVAILABLE"},
+    "simultaneous_resolution_order": {"status": "UNAVAILABLE"},
+    "castle_production_mobilisation": {"status": "UNAVAILABLE"},
+    "deathtouch_opportunities": {"status": "UNAVAILABLE"},
+    "model_visible_belief_state": {"status": "UNAVAILABLE"}
+  },
+  "independent_blocker_classification_preliminary": {
+    "cnn": {
+      "primary": "CONTACT_FAILURE",
+      "secondary": "DISCOVERY_FAILURE",
+      "evidence_sufficiency": "INSUFFICIENT_FOR_CURRICULUM_DETAIL",
+      "note": "Strategic failure mode clear; rules-aware mechanism detail UNAVAILABLE → Stage 3B required"
+    },
+    "graph": {
+      "primary": "CONTACT_FAILURE",
+      "secondary": "DISCOVERY_FAILURE",
+      "evidence_sufficiency": "INSUFFICIENT_FOR_CURRICULUM_DETAIL",
+      "note": "Same top-level diagnosis as CNN; still needs Stage 3B for mechanism metrics"
+    }
+  },
+  "do_not_rewrite_phase9d": true,
+  "stage3b_required": true,
+  "reason_stage3b_required": "Critical gameplay metrics UNAVAILABLE in historical artefacts"
+}

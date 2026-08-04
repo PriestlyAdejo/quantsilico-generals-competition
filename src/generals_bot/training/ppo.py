@@ -95,6 +95,7 @@ def run_bounded_ppo(
     legal_rate = 1.0
     episode_shaping = 0.0
     prev_enemy_cells = 0
+    discovered = False
 
     for update in range(updates):
         cells_buf: list[np.ndarray] = []
@@ -162,10 +163,11 @@ def run_bounded_ppo(
             _, og_next, _, _, _ = extract_numpy_boards(eng_next, h, w)
             next_enemy = count_visible_enemy_cells(og_next)
             assert_no_privileged_keys({"owner_grid_visible": True, "prev_enemy_cells": prev_enemy_cells})
-            shaping = reward_cfg.contact_shaping.step_bonus(
+            shaping, discovered = reward_cfg.contact_shaping.step_bonus(
                 prev_enemy_cells=prev_enemy_cells,
                 curr_enemy_cells=next_enemy,
                 episode_cum=episode_shaping,
+                discovered=discovered,
             )
             episode_shaping += shaping
             prev_enemy_cells = next_enemy
@@ -184,6 +186,7 @@ def run_bounded_ppo(
                     cell_mem = model.initial_cell_memory(1, device=torch_device)
                 episode_shaping = 0.0
                 prev_enemy_cells = 0
+                discovered = False
                 if opp_policy is not None:
                     from generals_bot.observation import GameContext
 

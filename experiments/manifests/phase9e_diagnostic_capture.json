@@ -1,0 +1,1566 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9E_DIAGNOSTIC_CAPTURE",
+  "created_at": "2026-08-04T15:58:11.551844+00:00",
+  "elapsed_s": 93.95250600000145,
+  "budget": {
+    "schema_version": 1,
+    "kind": "PHASE9E_DIAGNOSTIC_CAPTURE_BUDGET",
+    "immutable_after_open": true,
+    "opened": true,
+    "partition": "rules_audit_diagnostic_seeds",
+    "initial_games_per_architecture": 12,
+    "allocation": {
+      "seeds": [
+        51000,
+        51001
+      ],
+      "seats": [
+        0,
+        1
+      ],
+      "opponents": [
+        "official_expander",
+        "official_hunter",
+        "heuristic_v2f_plus_planner_terminal_fix"
+      ],
+      "board_shapes": "as_sampled_by_competition_make_board_per_seed",
+      "note": "2 seeds \u00d7 2 seats \u00d7 3 opponents = 12 games/architecture"
+    },
+    "maximum_instrumentation_retries": 1,
+    "maximum_total_diagnostic_games": 48,
+    "maximum_wall_clock_minutes": 90,
+    "required_observables": [
+      "observations_summary",
+      "model_visible_aux_belief",
+      "legal_action_count",
+      "selected_action",
+      "action_in_legal_set",
+      "silent_invalid_flag",
+      "engine_transition_winner_delta",
+      "castle_price_at_build_candidates",
+      "growth_events",
+      "contact_discovery_attack_metrics",
+      "board_hw"
+    ],
+    "no_gradients": true,
+    "no_confirmation_or_holdout_seeds": true,
+    "created_at": "2026-08-04T16:05:00+00:00",
+    "opened_at": "2026-08-04T15:56:37.596477+00:00"
+  },
+  "games": [
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51000,
+      "seat": 0,
+      "opponent": "official_expander",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 17.5,
+      "model_visible_aux_belief": {
+        "value": -0.27740612626075745,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081710159778595,
+          "norm": 0.630914032459259
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47486940026283264,
+          "norm": 0.47486940026283264
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022709697484970093,
+          "norm": 0.14789575338363647
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51000,
+      "seat": 0,
+      "opponent": "official_hunter",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 35,
+      "contact_turn": 78,
+      "discovery_turn": 68,
+      "attack_attempts": 2,
+      "legal_action_count_mean": 17.75,
+      "model_visible_aux_belief": {
+        "value": -0.27740612626075745,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081710159778595,
+          "norm": 0.630914032459259
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47486940026283264,
+          "norm": 0.47486940026283264
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022709697484970093,
+          "norm": 0.14789575338363647
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51000,
+      "seat": 0,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 17.5,
+      "model_visible_aux_belief": {
+        "value": -0.27740612626075745,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081710159778595,
+          "norm": 0.630914032459259
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47486940026283264,
+          "norm": 0.47486940026283264
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022709697484970093,
+          "norm": 0.14789575338363647
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51000,
+      "seat": 1,
+      "opponent": "official_expander",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 20.85,
+      "model_visible_aux_belief": {
+        "value": -0.27740606665611267,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081710159778595,
+          "norm": 0.6309140920639038
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47486940026283264,
+          "norm": 0.47486940026283264
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.02270970679819584,
+          "norm": 0.14789576828479767
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51000,
+      "seat": 1,
+      "opponent": "official_hunter",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 20.85,
+      "model_visible_aux_belief": {
+        "value": -0.27740606665611267,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081710159778595,
+          "norm": 0.6309140920639038
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47486940026283264,
+          "norm": 0.47486940026283264
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.02270970679819584,
+          "norm": 0.14789576828479767
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51000,
+      "seat": 1,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 20.85,
+      "model_visible_aux_belief": {
+        "value": -0.27740606665611267,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081710159778595,
+          "norm": 0.6309140920639038
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47486940026283264,
+          "norm": 0.47486940026283264
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.02270970679819584,
+          "norm": 0.14789576828479767
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51001,
+      "seat": 0,
+      "opponent": "official_expander",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 14.525,
+      "model_visible_aux_belief": {
+        "value": -0.27739137411117554,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081945598125458,
+          "norm": 0.6309216618537903
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47487059235572815,
+          "norm": 0.47487059235572815
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022712916135787964,
+          "norm": 0.14789597690105438
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51001,
+      "seat": 0,
+      "opponent": "official_hunter",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": 72,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 14.525,
+      "model_visible_aux_belief": {
+        "value": -0.27739137411117554,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081945598125458,
+          "norm": 0.6309216618537903
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47487059235572815,
+          "norm": 0.47487059235572815
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022712916135787964,
+          "norm": 0.14789597690105438
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51001,
+      "seat": 0,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 14.525,
+      "model_visible_aux_belief": {
+        "value": -0.27739137411117554,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081945598125458,
+          "norm": 0.6309216618537903
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47487059235572815,
+          "norm": 0.47487059235572815
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022712916135787964,
+          "norm": 0.14789597690105438
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51001,
+      "seat": 1,
+      "opponent": "official_expander",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 6.075,
+      "model_visible_aux_belief": {
+        "value": -0.27739137411117554,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081944108009338,
+          "norm": 0.6309216022491455
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47487059235572815,
+          "norm": 0.47487059235572815
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022712917998433113,
+          "norm": 0.14789597690105438
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51001,
+      "seat": 1,
+      "opponent": "official_hunter",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 6.075,
+      "model_visible_aux_belief": {
+        "value": -0.27739137411117554,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081944108009338,
+          "norm": 0.6309216022491455
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47487059235572815,
+          "norm": 0.47487059235572815
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022712917998433113,
+          "norm": 0.14789597690105438
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint_sha16": "ee70e00bf3883568",
+      "seed": 51001,
+      "seat": 1,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 3,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 6.075,
+      "model_visible_aux_belief": {
+        "value": -0.27739137411117554,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": 0.16081944108009338,
+          "norm": 0.6309216022491455
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3349517285823822
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.47487059235572815,
+          "norm": 0.47487059235572815
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.022712917998433113,
+          "norm": 0.14789597690105438
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "cnn"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51000,
+      "seat": 0,
+      "opponent": "official_expander",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 18,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 22.95,
+      "model_visible_aux_belief": {
+        "value": 0.037863027304410934,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.026983041316270828,
+          "norm": 0.25645941495895386
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3339506983757019
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4911208152770996,
+          "norm": 0.4911208152770996
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06263108551502228,
+          "norm": 0.21589533984661102
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51000,
+      "seat": 0,
+      "opponent": "official_hunter",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 76,
+      "result": "loss",
+      "winner": 1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 17,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 37,
+      "contact_turn": null,
+      "discovery_turn": 73,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 21.263157894736842,
+      "model_visible_aux_belief": {
+        "value": 0.037863027304410934,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.026983041316270828,
+          "norm": 0.25645941495895386
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3339506983757019
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4911208152770996,
+          "norm": 0.4911208152770996
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06263108551502228,
+          "norm": 0.21589533984661102
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51000,
+      "seat": 0,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 17,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 22.875,
+      "model_visible_aux_belief": {
+        "value": 0.037863027304410934,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.026983041316270828,
+          "norm": 0.25645941495895386
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.3339506983757019
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4911208152770996,
+          "norm": 0.4911208152770996
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06263108551502228,
+          "norm": 0.21589533984661102
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51000,
+      "seat": 1,
+      "opponent": "official_expander",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 4,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 21.75,
+      "model_visible_aux_belief": {
+        "value": 0.03683540225028992,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.027736030519008636,
+          "norm": 0.25866878032684326
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.333958238363266
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4909290075302124,
+          "norm": 0.4909290075302124
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06288193166255951,
+          "norm": 0.21886685490608215
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51000,
+      "seat": 1,
+      "opponent": "official_hunter",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 4,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 16.375,
+      "model_visible_aux_belief": {
+        "value": 0.03683540225028992,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.027736030519008636,
+          "norm": 0.25866878032684326
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.333958238363266
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4909290075302124,
+          "norm": 0.4909290075302124
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06288193166255951,
+          "norm": 0.21886685490608215
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51000,
+      "seat": 1,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "board_hw": [
+        18,
+        19
+      ],
+      "map_hash": "c153b602ad8635d0",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 4,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 20.525,
+      "model_visible_aux_belief": {
+        "value": 0.03683540225028992,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.027736030519008636,
+          "norm": 0.25866878032684326
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111119389534,
+          "norm": 0.333958238363266
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4909290075302124,
+          "norm": 0.4909290075302124
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06288193166255951,
+          "norm": 0.21886685490608215
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51001,
+      "seat": 0,
+      "opponent": "official_expander",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 4,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 20.625,
+      "model_visible_aux_belief": {
+        "value": 0.036783650517463684,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.02777622453868389,
+          "norm": 0.2587911784648895
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111268401146,
+          "norm": 0.33395862579345703
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4909197986125946,
+          "norm": 0.4909197986125946
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.0628928393125534,
+          "norm": 0.2190185785293579
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51001,
+      "seat": 0,
+      "opponent": "official_hunter",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 4,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": 66,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 18.325,
+      "model_visible_aux_belief": {
+        "value": 0.036783650517463684,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.02777622453868389,
+          "norm": 0.2587911784648895
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111268401146,
+          "norm": 0.33395862579345703
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4909197986125946,
+          "norm": 0.4909197986125946
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.0628928393125534,
+          "norm": 0.2190185785293579
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51001,
+      "seat": 0,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 4,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 19.1,
+      "model_visible_aux_belief": {
+        "value": 0.036783650517463684,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.02777622453868389,
+          "norm": 0.2587911784648895
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.1111111268401146,
+          "norm": 0.33395862579345703
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.4909197986125946,
+          "norm": 0.4909197986125946
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.0628928393125534,
+          "norm": 0.2190185785293579
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51001,
+      "seat": 1,
+      "opponent": "official_expander",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 23,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 15.85,
+      "model_visible_aux_belief": {
+        "value": 0.036068838089704514,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.028323914855718613,
+          "norm": 0.2604960501194
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.11111108958721161,
+          "norm": 0.3339638113975525
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.490807443857193,
+          "norm": 0.490807443857193
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06296797841787338,
+          "norm": 0.22105015814304352
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51001,
+      "seat": 1,
+      "opponent": "official_hunter",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 23,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 39,
+      "contact_turn": null,
+      "discovery_turn": 74,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 16.15,
+      "model_visible_aux_belief": {
+        "value": 0.036068838089704514,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.028323914855718613,
+          "norm": 0.2604960501194
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.11111108958721161,
+          "norm": 0.3339638113975525
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.490807443857193,
+          "norm": 0.490807443857193
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06296797841787338,
+          "norm": 0.22105015814304352
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    },
+    {
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint_sha16": "23699c72fc5a3e0b",
+      "seed": 51001,
+      "seat": 1,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "board_hw": [
+        20,
+        19
+      ],
+      "map_hash": "f07b47c29cf6c8f1",
+      "turns": 80,
+      "result": "draw",
+      "winner": -1,
+      "silent_invalid_actions": 0,
+      "deliberate_pass_count": 24,
+      "build_attempts": 0,
+      "build_prices_sampled": [],
+      "growth_events": 40,
+      "contact_turn": null,
+      "discovery_turn": null,
+      "attack_attempts": 0,
+      "legal_action_count_mean": 17.45,
+      "model_visible_aux_belief": {
+        "value": 0.036068838089704514,
+        "logits_finite": true,
+        "belief": {
+          "shape": [
+            1,
+            8
+          ],
+          "mean": -0.028323914855718613,
+          "norm": 0.2604960501194
+        },
+        "opponent_style": {
+          "shape": [
+            1,
+            9
+          ],
+          "mean": 0.11111108958721161,
+          "norm": 0.3339638113975525
+        },
+        "general_loss_risk": {
+          "shape": [
+            1
+          ],
+          "mean": 0.490807443857193,
+          "norm": 0.490807443857193
+        },
+        "concepts": {
+          "shape": [
+            1,
+            4
+          ],
+          "mean": -0.06296797841787338,
+          "norm": 0.22105015814304352
+        }
+      },
+      "official_build_cost_grid_probe": true,
+      "arch_key": "graph"
+    }
+  ],
+  "summary": {
+    "cnn": {
+      "games": 12,
+      "wdl": {
+        "W": 0,
+        "D": 12,
+        "L": 0
+      },
+      "silent_invalid_total": 0,
+      "contact_rate": 0.08333333333333333,
+      "discovery_rate": 0.16666666666666666,
+      "mean_attack_attempts": 0.16666666666666666,
+      "belief_keys_seen": [
+        "belief",
+        "concepts",
+        "general_loss_risk",
+        "opponent_style"
+      ],
+      "build_prices_observed": false,
+      "growth_events_total": 475
+    },
+    "graph": {
+      "games": 12,
+      "wdl": {
+        "W": 0,
+        "D": 11,
+        "L": 1
+      },
+      "silent_invalid_total": 0,
+      "contact_rate": 0.0,
+      "discovery_rate": 0.25,
+      "mean_attack_attempts": 0.0,
+      "belief_keys_seen": [
+        "belief",
+        "concepts",
+        "general_loss_risk",
+        "opponent_style"
+      ],
+      "build_prices_observed": false,
+      "growth_events_total": 476
+    }
+  },
+  "evidence_status": "SUFFICIENT_FOR_BLOCKER_CLASSIFICATION",
+  "missing": [],
+  "instrumentation_retry_used": 0,
+  "notes": [
+    "Not a Phase 9D rerun; does not rewrite Phase 9D W/D/L or gates.",
+    "No gradients; diagnostic seeds only."
+  ]
+}

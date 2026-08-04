@@ -28,12 +28,29 @@ def test_shaping_upper_bounds() -> None:
     c = CONVERSION_V1.contact_shaping
     assert c.enabled
     ep = 0.0
+    discovered = False
     for _ in range(100):
-        b = c.step_bonus(prev_enemy_cells=0, curr_enemy_cells=10, episode_cum=ep)
+        b, discovered = c.step_bonus(
+            prev_enemy_cells=0, curr_enemy_cells=10, episode_cum=ep, discovered=discovered
+        )
         assert b <= c.max_per_step + 1e-9
         ep += b
     assert ep <= c.max_episode_cumulative + 1e-9
     assert ep < CONTROL_V1.terminal.win
+
+
+def test_discovery_gated_curriculum_fires_once() -> None:
+    from generals_bot.training.conversion_reward import CURRICULUM_DISCOVERY_V1
+
+    c = CURRICULUM_DISCOVERY_V1.contact_shaping
+    b0, d0 = c.step_bonus(prev_enemy_cells=0, curr_enemy_cells=0, episode_cum=0.0, discovered=False)
+    assert b0 == 0.0 and d0 is False
+    b1, d1 = c.step_bonus(prev_enemy_cells=0, curr_enemy_cells=3, episode_cum=0.0, discovered=False)
+    assert d1 is True
+    assert b1 >= c.discovery_bonus_once
+    b2, d2 = c.step_bonus(prev_enemy_cells=3, curr_enemy_cells=3, episode_cum=b1, discovered=True)
+    assert d2 is True
+    assert b2 == 0.0
 
 
 def test_no_privileged_state_access() -> None:

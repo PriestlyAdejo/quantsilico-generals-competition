@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9E_DIAGNOSTIC_CAPTURE_BUDGET",
+  "immutable_after_open": true,
+  "opened": true,
+  "partition": "rules_audit_diagnostic_seeds",
+  "initial_games_per_architecture": 12,
+  "allocation": {
+    "seeds": [
+      51000,
+      51001
+    ],
+    "seats": [
+      0,
+      1
+    ],
+    "opponents": [
+      "official_expander",
+      "official_hunter",
+      "heuristic_v2f_plus_planner_terminal_fix"
+    ],
+    "board_shapes": "as_sampled_by_competition_make_board_per_seed",
+    "note": "2 seeds \u00d7 2 seats \u00d7 3 opponents = 12 games/architecture"
+  },
+  "maximum_instrumentation_retries": 1,
+  "maximum_total_diagnostic_games": 48,
+  "maximum_wall_clock_minutes": 90,
+  "required_observables": [
+    "observations_summary",
+    "model_visible_aux_belief",
+    "legal_action_count",
+    "selected_action",
+    "action_in_legal_set",
+    "silent_invalid_flag",
+    "engine_transition_winner_delta",
+    "castle_price_at_build_candidates",
+    "growth_events",
+    "contact_discovery_attack_metrics",
+    "board_hw"
+  ],
+  "no_gradients": true,
+  "no_confirmation_or_holdout_seeds": true,
+  "created_at": "2026-08-04T16:05:00+00:00",
+  "opened_at": "2026-08-04T15:56:37.596477+00:00"
+}

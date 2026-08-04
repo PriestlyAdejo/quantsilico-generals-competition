@@ -2,13 +2,13 @@
   "schema_version": 1,
   "kind": "PHASE9E_RUN_STATE",
   "research_generation_id": "phase9e_rules_aware_2026-08-04",
-  "current_stage": "STAGE1_GPU",
-  "stage_status": "COMPLETE",
+  "current_stage": "STAGE5_MATCHED_PILOT",
+  "stage_status": "IN_PROGRESS",
   "working_branch": "research/rules-aware-phase9e-v1",
   "starting_commit": "b53d9e7716685f896242b528620bc2206ad5c400",
   "recovery_tag": "rules-aware-phase9e-v1-start-b53d9e7",
   "phase9d_preserved_tip": "b53d9e7716685f896242b528620bc2206ad5c400",
-  "last_verified_commit": null,
+  "last_verified_commit": "6986017590f84f041f862f721ca54dbd86857635",
   "source_checkpoints": {
     "cnn": {
       "lineage": "cnn_bc_init_seed11",
@@ -26,7 +26,9 @@
     "CUDA_TRAINING_SMOKE_GATE": "PASS",
     "GPU_EXECUTION_GATE": "PASS",
     "PPO_UPDATE_EFFECTIVENESS_GATE": "PASS",
-    "PHASE9E_READINESS_GATE": "PENDING"
+    "RESEARCH_RULESET_INTEGRITY_GATE": "PASS",
+    "PHASE9E_READINESS_GATE": "PASS",
+    "PHASE9E_MATCHED_PILOT": "IN_PROGRESS"
   },
   "hardware": {
     "gpu": "NVIDIA GeForce RTX 3070 Laptop GPU",
@@ -39,9 +41,8 @@
   "learned_package": "NOT_PACKAGED",
   "notes": [
     "Phase 9D negative evidence preserved at b53d9e7.",
-    "Stage 1: fail-fast device policy; CUDA smoke/execution/PPO update gates PASS.",
-    "Checkpoint migration timing: migrate before Stage 3B if Stage 2 schema repairs require it.",
-    "Diagnostic budget must be predeclared before opening rules_audit_diagnostic_seeds."
+    "Stage 1-4 complete: CUDA, ruleset PASS, diagnostic sufficient, readiness PASS.",
+    "Stage 5: BASELINE vs CURRICULUM_ONLY (no teacher refresh); discovery-gated contact curriculum."
   ],
-  "updated_at": "2026-08-04T15:35:00+00:00"
+  "updated_at": "2026-08-04T16:20:00+00:00"
 }
