@@ -449,11 +449,25 @@ def training() -> dict[str, Any]:
                 "path": "experiments/manifests/bounded_development_ppo.json",
             }
         )
+
+    from generals_bot.training.campaign_telemetry import list_campaigns
+
+    live_campaigns = list_campaigns(include_stale=True)
+    active = None
+    for live in live_campaigns:
+        if live.get("state") == "RUNNING":
+            active = live
+            break
+    if active is None and live_campaigns:
+        # Prefer most recently updated completed/interrupted record for observer reconnect
+        active = max(live_campaigns, key=lambda r: float(r.get("heartbeat_unix") or 0.0))
+
     return {
         "schema_version": 1,
         "kind": "TRAINING_SMOKE_DASHBOARD",
         "campaigns": campaigns,
-        "active": None,
+        "live_campaigns": live_campaigns,
+        "active": active,
         "charts": charts,
         "smoke": {
             "learning_readiness": readiness,
@@ -472,10 +486,34 @@ def training() -> dict[str, Any]:
             "bc_accuracies": "smoke-training accuracy, not competitive game performance",
             "ppo_smoke": "pipeline ran with legal actions and resume; not a win-rate claim",
             "charts": "Only producer-emitted points are shown; missing fields are NOT RECORDED",
+            "live": "Observer polls durable campaign records; closing the browser does not stop training",
         },
         "graph_latency_warning": GRAPH_LATENCY_WARNING,
         "launch_enabled": False,
     }
+
+
+@router.get("/api/campaigns")
+def campaigns_list() -> dict[str, Any]:
+    from generals_bot.training.campaign_telemetry import list_campaigns
+
+    rows = list_campaigns(include_stale=True)
+    return {
+        "schema_version": 1,
+        "kind": "CAMPAIGN_TELEMETRY_LIST",
+        "campaigns": rows,
+        "active_count": sum(1 for r in rows if r.get("state") == "RUNNING"),
+    }
+
+
+@router.get("/api/campaigns/{campaign_id}")
+def campaign_by_id(campaign_id: str) -> dict[str, Any]:
+    from generals_bot.training.campaign_telemetry import load_campaign
+
+    rec = load_campaign(campaign_id)
+    if rec is None:
+        raise HTTPException(404, "campaign telemetry not found")
+    return rec
 
 
 @router.get("/api/population")

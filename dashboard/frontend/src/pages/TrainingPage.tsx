@@ -43,6 +43,7 @@ export default function TrainingPage() {
   const [completedRuns, setCompletedRuns] = useState<TrainingRun[]>([]);
   const [activeRun, setActiveRun] = useState<TrainingRun | null>(null);
   const [metrics, setMetrics] = useState<TrainingMetric[]>([]);
+  const [liveCampaign, setLiveCampaign] = useState<Record<string, unknown> | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const stepRef = useRef(0);
 
@@ -55,6 +56,39 @@ export default function TrainingPage() {
     ds.listTrainingRuns().then((runs) => {
       setCompletedRuns(runs.filter((r) => r.status === "complete"));
     });
+  }, [ds]);
+
+  // Durable campaign observer — polls persisted records; browser close ≠ stop training.
+  useEffect(() => {
+    if (import.meta.env.VITE_DASHBOARD_DATA_MODE === "demo") return;
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const data = await ds.getJson<{
+          campaigns?: Record<string, unknown>[];
+          active?: Record<string, unknown> | null;
+        }>("/api/training");
+        if (cancelled) return;
+        const active = data.active ?? null;
+        const running = (data.campaigns as unknown as undefined) ;
+        void running;
+        const liveList = (data as { live_campaigns?: Record<string, unknown>[] }).live_campaigns;
+        const preferred =
+          active ??
+          (Array.isArray(liveList)
+            ? liveList.find((c) => c.state === "RUNNING") ?? liveList[0] ?? null
+            : null);
+        setLiveCampaign(preferred);
+      } catch {
+        if (!cancelled) setLiveCampaign(null);
+      }
+    };
+    void poll();
+    const id = window.setInterval(() => void poll(), 8000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(id);
+    };
   }, [ds]);
 
   useEffect(() => {
@@ -170,9 +204,31 @@ export default function TrainingPage() {
       )}
 
       {!activeRun && import.meta.env.VITE_DASHBOARD_DATA_MODE !== "demo" && (
-        <Panel title="Campaign status" eyebrow="training/" className="mb-6">
-          <p className="text-[#8593A1] font-mono text-xs mb-2">NO ACTIVE CAMPAIGN — browse recorded DEVELOPMENT evidence below.</p>
-          <p className="text-[#6F7C89] font-mono text-[10px]">Long training launches remain disabled in this console. See Documentation → Training.</p>
+        <Panel title="Live campaign observer" eyebrow="telemetry/" className="mb-6">
+          {liveCampaign ? (
+            <div className="space-y-2 font-mono text-xs text-[#CDD6DF]">
+              <DataSourceBadge kind="LIVE_LOCAL_STATE" />
+              <div>ID: <span className="text-[#FFB000]">{String(liveCampaign.campaign_id ?? "—")}</span></div>
+              <div>State: <span className="text-[#22D3EE]">{String(liveCampaign.state ?? "—")}</span></div>
+              <div>Stage: {String(liveCampaign.stage ?? "—")}</div>
+              <div>Env steps: {String(liveCampaign.env_steps ?? "NOT RECORDED")}</div>
+              <div>PPO updates: {String(liveCampaign.ppo_updates ?? "NOT RECORDED")}</div>
+              <div>Elapsed: {typeof liveCampaign.elapsed_s === "number" ? `${Math.round(liveCampaign.elapsed_s)}s` : "NOT RECORDED"}</div>
+              <div>Checkpoint: <span className="text-[#8593A1] break-all">{String(liveCampaign.current_checkpoint ?? "NOT RECORDED")}</span></div>
+              <div>Best checkpoint: <span className="text-[#8593A1] break-all">{String(liveCampaign.best_checkpoint ?? "NOT RECORDED")}</span></div>
+              <div>Plateau remaining: {String(liveCampaign.plateau_patience_remaining ?? "NOT RECORDED")}</div>
+              <div>Stop reason: {String(liveCampaign.final_stop_reason ?? "—")}</div>
+              <div>Heartbeat: {String(liveCampaign.heartbeat_at ?? "NOT RECORDED")}</div>
+              <p className="text-[#6F7C89] text-[10px] mt-2">
+                Closing this browser does not stop training. Observer reconnects to durable records under var/dashboard/campaigns/.
+              </p>
+            </div>
+          ) : (
+            <>
+              <p className="text-[#8593A1] font-mono text-xs mb-2">NO ACTIVE CAMPAIGN — browse recorded DEVELOPMENT evidence below.</p>
+              <p className="text-[#6F7C89] font-mono text-[10px]">Long training launches remain CLI-driven. This page observes durable telemetry only.</p>
+            </>
+          )}
         </Panel>
       )}
 

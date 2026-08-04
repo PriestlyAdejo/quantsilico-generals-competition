@@ -1,0 +1,44 @@
+# Adaptive INITIAL campaign — measurable stop criteria (amendment 4 / Part 6).
+# Primary selection metric: validation score rate.
+# Environment steps are the primary budget; wall clock is a safety ceiling.
+
+schema_version: 1
+kind: ADAPTIVE_INITIAL_CONFIG
+campaign_stage: INITIAL
+
+budgets:
+  max_env_steps_per_candidate: 2048
+  max_wall_clock_min: 120
+  chunk_env_steps: 512
+  chunk_updates: 4
+  min_validation_evals: 3
+
+validation:
+  opponent: expander
+  games_per_eval: 2
+  max_turns: 100
+  seeds_start: 1000
+  # Holdout seeds must never be used here.
+
+plateau:
+  # Stop when validation score rate fails to improve by this absolute amount
+  # for `patience` consecutive validation evals.
+  min_improvement: 0.02
+  patience: 2
+
+optimisation:
+  lr: 0.0003
+  clip: 0.2
+  device: auto
+
+guards:
+  persist_every_update: true
+  heartbeat_max_s: 30
+  thermal_stop: true
+  no_git_during_run: true
+  no_holdout_seeds: true
+
+note: >
+  Longer training is not assumed better. A candidate may stop before 120 minutes
+  on plateau, or continue toward the cap while validation score rate improves.
+  Env-step budget is the primary work unit; wall clock is only a safety ceiling.

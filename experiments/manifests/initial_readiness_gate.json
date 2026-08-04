@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "kind": "INITIAL_READINESS_GATE",
+  "decision": "READY",
+  "status": "READY",
+  "selected_candidates": [
+    {
+      "slot": "cnn",
+      "arm_id": "cnn_bc_init_seed11",
+      "architecture": "recurrent_cnn_v2",
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\dev_ppo\\cnn_bc_init_seed11\\model.json",
+      "seed": 11,
+      "init": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\bc\\tiny_recurrent_cnn_v2\\model.json"
+    },
+    {
+      "slot": "graph",
+      "arm_id": "graph_bc_init_seed7",
+      "architecture": "recurrent_graph_belief_v2",
+      "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\dev_ppo\\graph_bc_init_seed7\\model.json",
+      "seed": 7,
+      "init": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\bc\\tiny_recurrent_graph_belief_v2\\model.json"
+    }
+  ],
+  "max_candidates": 2,
+  "rule": "At most one CNN + one graph; none \u2192 terminal without INITIAL",
+  "blockers": [],
+  "source_audit": "DEVELOPMENT_ARM_AUDIT",
+  "hierarchy_note": "Rank order: engineering_ok \u2192 validation_score_rate (if present) \u2192 BC init preferred \u2192 mean explained_variance \u2192 lower loss growth. DEVELOPMENT arms in this manifest do not record validation_score_rate.",
+  "evaluated_at": "2026-08-04T06:01:19.278524+00:00",
+  "note": "Holdout seeds remain unused. Durable campaign telemetry is required before adaptive INITIAL launch."
+}
