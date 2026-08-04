@@ -30,10 +30,12 @@ if ($recorded) {
 
 $portOwners = @()
 try {
-  $portOwners = Get-NetTCPConnection -LocalAddress 127.0.0.1 -LocalPort 8765 -State Listen -ErrorAction SilentlyContinue |
-    Select-Object -ExpandProperty OwningProcess -Unique
+  $portOwners = @(
+    Get-NetTCPConnection -LocalAddress 127.0.0.1 -LocalPort 8765 -State Listen -ErrorAction SilentlyContinue |
+      Select-Object -ExpandProperty OwningProcess -Unique
+  )
 } catch {}
-if ($portOwners -and $portOwners.Count -gt 0) {
+if ($portOwners.Count -gt 0) {
   Write-Host ("port_8765_bound: true owners=" + ($portOwners -join ','))
 } else {
   Write-Host "port_8765_bound: false"
