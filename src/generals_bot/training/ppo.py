@@ -208,6 +208,7 @@ def run_bounded_ppo(
             }
         )
 
+    custom_out = out_dir is not None
     out_dir = out_dir or Path("experiments/checkpoints/ppo") / architecture
     out_dir.mkdir(parents=True, exist_ok=True)
     ckpt = out_dir / "model"
@@ -247,9 +248,11 @@ def run_bounded_ppo(
         "note": "Bounded PPO smoke only; not a marathon campaign.",
     }
     (out_dir / "ppo_report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    man = Path("experiments/manifests/ppo_smoke.json")
-    man.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    report["manifest"] = str(man)
+    # Do not overwrite the shared smoke manifest from DEVELOPMENT / custom out_dir runs.
+    if not custom_out:
+        man = Path("experiments/manifests/ppo_smoke.json")
+        man.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        report["manifest"] = str(man)
     return report
 
 
