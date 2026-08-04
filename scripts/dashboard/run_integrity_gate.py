@@ -49,15 +49,20 @@ def python_exe() -> str:
 
 
 def run(cmd: list[str], cwd: Path | None = None, env: dict | None = None) -> tuple[int, str]:
-    merged = dict(**{**dict(**__import__("os").environ), **(env or {})})
+    import os
+
+    merged = {**os.environ, **(env or {})}
+    # Windows: allow resolving .cmd wrappers (pnpm.cmd) via the shell PATH.
+    use_shell = os.name == "nt"
     p = subprocess.run(
-        cmd,
+        cmd if not use_shell else subprocess.list2cmdline(cmd),
         cwd=str(cwd or REPO),
         text=True,
         capture_output=True,
         encoding="utf-8",
         errors="replace",
         env=merged,
+        shell=use_shell,
     )
     out = (p.stdout or "") + (p.stderr or "")
     return p.returncode, out
