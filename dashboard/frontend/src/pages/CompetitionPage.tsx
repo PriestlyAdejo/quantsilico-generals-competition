@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDataSource } from "../data/DataSourceContext";
 import { ApiError } from "../data/types";
-import { PageHeader, Panel } from "../components/data-display/Panel";
-import { BackendUnavailable, LoadingState } from "../components/feedback/States";
-import { ProvenanceBadge } from "../components/status/StatusBadge";
-import { StatusBadge } from "../components/status/StatusBadge";
+import { MetricCard, PageHeader, Panel } from "../components/data-display/Panel";
+import { RawRecordDrawer } from "../components/feedback/RawRecordDrawer";
+import { BackendUnavailable, EmptyState, LoadingState } from "../components/feedback/States";
+import { ProvenanceBadge, StatusBadge } from "../components/status/StatusBadge";
 
 export default function CompetitionPage() {
   const ds = useDataSource();
   const [data, setData] = useState<Record<string, unknown> | null>(null);
   const [down, setDown] = useState(false);
+  const [rawOpen, setRawOpen] = useState(false);
 
   useEffect(() => {
     const ac = new AbortController();
@@ -24,50 +25,56 @@ export default function CompetitionPage() {
   if (down) return <BackendUnavailable />;
   if (!data) return <LoadingState />;
 
-  const active = (data.active_submission || {}) as Record<string, unknown>;
   const snap = (data.profile_snapshot || null) as Record<string, unknown> | null;
-  const probe = (data.attribution_probe || {}) as Record<string, unknown>;
+  const active = (data.active_portal_submission || data.active_submission || {}) as Record<string, unknown>;
 
   return (
     <div>
       <PageHeader
+        eyebrow="$ COMPETITION /"
         title="Competition"
-        subtitle="Manual portal observations only. Snapshots are not live Elo."
+        subtitle="Official portal observations and manually recorded submissions."
       />
-      <Panel title="Active submission">
-        <div className="pre">{JSON.stringify(active, null, 2)}</div>
-      </Panel>
-      {snap ? (
-        <Panel title="PORTAL PROFILE SNAPSHOT">
-          <div className="row" style={{ marginBottom: "0.5rem" }}>
-            <ProvenanceBadge
-              provenance={String(snap.provenance || "MANUALLY_RECORDED")}
-              observedAt={String(snap.observed_at || "")}
-            />
-            <StatusBadge value={String(snap.attribution_method || "UNATTRIBUTED")} />
-          </div>
-          <p className="muted">
-            Observed {String(snap.observed_at)} · source {String(snap.source_reference)} · not live
-          </p>
-          <div className="pre">
-            {`rank: ${snap.rank} / ${snap.of}
-elo: ${snap.elo}
-games: ${snap.games}
-record: ${JSON.stringify(snap.record)}
-`}
-          </div>
+      <div className="banner warning">
+        Portal profile snapshots are non-live. Do not imply exact per-match package attribution.
+      </div>
+      <div className="metric-grid">
+        <MetricCard label="Active candidate" value={String(active.candidate_id || active.candidate || "—")} tone="accent" />
+        <MetricCard label="Portal verdict" value={String(data.portal_verdict || "—")} />
+        <MetricCard label="Attribution" value={String(snap?.attribution_method || "MANUAL_OPERATOR_ASSIGNMENT")} />
+      </div>
+      <div className="grid-2">
+        <Panel title="Portal profile snapshot" actions={<button type="button" className="btn ghost" onClick={() => setRawOpen(true)}>Raw</button>}>
+          {snap ? (
+            <>
+              <ProvenanceBadge provenance={String(snap.provenance || "MANUALLY_RECORDED")} observedAt={String(snap.observed_at || "")} />
+              <dl className="kv">
+                <dt>Live</dt>
+                <dd>{String(snap.live ?? false)}</dd>
+                <dt>Rank</dt>
+                <dd>{String(snap.rank ?? "NOT RECORDED")}</dd>
+                <dt>Source</dt>
+                <dd className="mono">{String(snap.source_reference || "—")}</dd>
+              </dl>
+            </>
+          ) : (
+            <EmptyState title="NO PORTAL OBSERVATION IMPORTED" detail="Import a manual portal observation record to populate this card." />
+          )}
         </Panel>
-      ) : null}
-      <Panel title="Attribution probe">
-        <p>{String(probe.finding || "No probe")}</p>
-        <p className="muted">{String(probe.warning || "")}</p>
-      </Panel>
-      <Panel title="Match archive">
-        <p className="muted">
-          Many matches remain UNATTRIBUTED or MANUAL_OPERATOR_ASSIGNMENT because the public portal does
-          not expose package hash beside each replay.
-        </p>
-      </Panel>
+        <Panel title="Active submission summary">
+          <dl className="kv">
+            <dt>Package hash</dt>
+            <dd className="mono">{String(active.package_sha256 || "—")}</dd>
+            <dt>Config hash</dt>
+            <dd className="mono">{String(active.config_hash || "—")}</dd>
+            <dt>Gate at observation</dt>
+            <dd>
+              <StatusBadge value="HISTORICAL" /> upload-time only
+            </dd>
+          </dl>
+        </Panel>
+      </div>
+      <RawRecordDrawer open={rawOpen} onClose={() => setRawOpen(false)} title="Competition raw" recordId="competition" schema="COMPETITION" provenance="PORTAL_OBSERVATION" raw={data} />
     </div>
   );
 }

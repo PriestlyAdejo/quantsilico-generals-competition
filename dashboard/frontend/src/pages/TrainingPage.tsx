@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDataSource } from "../data/DataSourceContext";
 import { ApiError } from "../data/types";
+import { ChartCard, PageHeader, Panel } from "../components/data-display/Panel";
 import { MetricChart } from "../components/data-display/MetricChart";
-import { PageHeader, Panel } from "../components/data-display/Panel";
+import { RawRecordDrawer } from "../components/feedback/RawRecordDrawer";
 import { BackendUnavailable, LoadingState } from "../components/feedback/States";
 
 const TABS = [
@@ -23,6 +24,7 @@ type ChartDto = {
   points: Record<string, number | string>[];
   missing?: string[];
   note?: string | null;
+  producer?: string;
 };
 
 export default function TrainingPage() {
@@ -31,6 +33,7 @@ export default function TrainingPage() {
   const [tab, setTab] = useState<(typeof TABS)[number]>("Overview");
   const [data, setData] = useState<Record<string, unknown> | null>(null);
   const [down, setDown] = useState(false);
+  const [rawOpen, setRawOpen] = useState(false);
 
   useEffect(() => {
     const ac = new AbortController();
@@ -56,6 +59,7 @@ export default function TrainingPage() {
   return (
     <div>
       <PageHeader
+        eyebrow="$ TRAINING /"
         title="Training Cockpit"
         subtitle="Producer charts only. No long campaign launch from this console."
       />
@@ -74,22 +78,40 @@ export default function TrainingPage() {
           </button>
         ))}
       </div>
-      <Panel title={tab}>
+      <Panel
+        title={tab}
+        actions={
+          <button type="button" className="btn ghost" onClick={() => setRawOpen(true)}>
+            View raw record
+          </button>
+        }
+      >
         {tab === "Overview" ? (
           <>
             <p className="muted">{labels.bc_accuracies}</p>
             <p className="muted">{labels.ppo_smoke}</p>
             <p className="muted">{labels.charts}</p>
-            <div className="pre">
-              {Object.entries(reports)
-                .map(([arch, rep]) => `${arch} train_acc(smoke)=${rep.final_train_action_acc}`)
-                .join("\n") || "No BC tiny report"}
+            <div className="metric-grid">
+              {Object.entries(reports).map(([arch, rep]) => (
+                <div key={arch} className="metric-card">
+                  <div className="label">{arch}</div>
+                  <div className="value">{String(rep.final_train_action_acc ?? "NOT RECORDED")}</div>
+                  <div className="sublabel">BC smoke train_acc</div>
+                </div>
+              ))}
             </div>
             {campaigns.length ? (
-              <div className="pre" style={{ marginTop: "0.75rem" }}>
-                {JSON.stringify(campaigns, null, 2)}
-              </div>
-            ) : null}
+              <ul className="stack">
+                {campaigns.map((c) => (
+                  <li key={String(c.id)}>
+                    <strong>{String(c.kind)}</strong> · graph allowed={String(c.graph_training_allowed)} ·{" "}
+                    {String(c.path)}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="muted">No DEVELOPMENT campaign summary yet.</p>
+            )}
             <div className="warning" style={{ marginTop: "0.75rem" }}>
               {String(data.graph_latency_warning || "")}
             </div>
@@ -99,14 +121,23 @@ export default function TrainingPage() {
           <>
             {charts.length ? (
               charts.map((c) => (
-                <MetricChart
+                <ChartCard
                   key={c.id}
                   title={c.title}
-                  points={c.points}
-                  seriesKeys={c.series_keys}
-                  missing={c.missing}
-                  note={c.note}
-                />
+                  provenance={{
+                    manifestId: c.id,
+                    kind: "PPO_TELEMETRY",
+                    missingFields: c.missing,
+                  }}
+                >
+                  <MetricChart
+                    title={c.title}
+                    points={c.points}
+                    seriesKeys={c.series_keys}
+                    missing={c.missing}
+                    note={c.note}
+                  />
+                </ChartCard>
               ))
             ) : (
               <p className="muted">NOT RECORDED — no PPO producer charts</p>
@@ -114,20 +145,42 @@ export default function TrainingPage() {
           </>
         ) : null}
         {tab === "Hardware" ? (
-          <>
-            <h4>Competition-size latency gate</h4>
-            <div className="pre">{JSON.stringify(latency || { state: "NOT RECORDED" }, null, 2)}</div>
-            <h4>Official venv CPU load</h4>
-            <div className="pre">{JSON.stringify(smoke.official_venv_cpu_load || {}, null, 2)}</div>
-          </>
+          <ChartCard
+            title="Competition-size latency gate"
+            provenance={{
+              manifestId: "competition_size_latency_gate.json",
+              kind: "COMPETITION_SIZE_LATENCY_GATE",
+            }}
+          >
+            <dl className="kv">
+              <dt>CNN</dt>
+              <dd>{String((latency?.classification as Record<string, string> | undefined)?.recurrent_cnn_v2 || "NOT RECORDED")}</dd>
+              <dt>Graph</dt>
+              <dd>
+                {String(
+                  (latency?.classification as Record<string, string> | undefined)?.recurrent_graph_belief_v2 ||
+                    "NOT RECORDED",
+                )}
+              </dd>
+            </dl>
+          </ChartCard>
         ) : null}
         {tab === "Evaluation" ? (
-          <div className="pre">{JSON.stringify(smoke.equal_budget_dev_comparison || {}, null, 2)}</div>
+          <p className="muted">Equal-budget comparison is available via raw drawer when recorded — not a win-rate claim.</p>
         ) : null}
         {tab === "Logs" || tab === "Auxiliary Heads" ? (
-          <div className="pre">{JSON.stringify(smoke.ppo || [], null, 2)}</div>
+          <p className="muted">Structured log streams are NOT RECORDED. Use raw drawer for smoke manifests.</p>
         ) : null}
       </Panel>
+      <RawRecordDrawer
+        open={rawOpen}
+        onClose={() => setRawOpen(false)}
+        title="Training raw"
+        recordId="training"
+        schema="TRAINING_SMOKE_DASHBOARD"
+        provenance="LIVE_REPOSITORY"
+        raw={data}
+      />
     </div>
   );
 }
