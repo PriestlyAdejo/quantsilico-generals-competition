@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "kind": "ADAPTIVE_INITIAL_CAMPAIGN",
+  "status": "COMPLETED",
+  "config": "configs/training/initial/adaptive_initial_v1.yaml",
+  "config_hash": "45836e8ab2d1bc19",
+  "candidates": [
+    {
+      "campaign_id": "initial_cnn_cnn_bc_init_seed11",
+      "arm_id": "cnn_bc_init_seed11",
+      "architecture": "recurrent_cnn_v2",
+      "stop_reason": "PLATEAU",
+      "env_steps": 1536,
+      "ppo_updates": 12,
+      "elapsed_s": 105.85582910000085,
+      "best_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+      "best_validation": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 200,
+        "seeds": [
+          1040,
+          1041
+        ],
+        "opponent": "official_expander"
+      },
+      "validation_history": [
+        {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 200,
+          "seeds": [
+            1040,
+            1041
+          ],
+          "opponent": "official_expander"
+        },
+        {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 200,
+          "seeds": [
+            1080,
+            1081
+          ],
+          "opponent": "official_expander"
+        },
+        {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 200,
+          "seeds": [
+            1120,
+            1121
+          ],
+          "opponent": "official_expander"
+        }
+      ],
+      "telemetry_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\var\\dashboard\\campaigns\\initial_cnn_cnn_bc_init_seed11.json"
+    },
+    {
+      "campaign_id": "initial_graph_graph_bc_init_seed7",
+      "arm_id": "graph_bc_init_seed7",
+      "architecture": "recurrent_graph_belief_v2",
+      "stop_reason": "PLATEAU",
+      "env_steps": 1536,
+      "ppo_updates": 12,
+      "elapsed_s": 68.57868650000091,
+      "best_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_graph_graph_bc_init_seed7\\chunk_0\\model.json",
+      "best_validation": {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 200,
+        "seeds": [
+          1040,
+          1041
+        ],
+        "opponent": "official_expander"
+      },
+      "validation_history": [
+        {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 200,
+          "seeds": [
+            1040,
+            1041
+          ],
+          "opponent": "official_expander"
+        },
+        {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 200,
+          "seeds": [
+            1080,
+            1081
+          ],
+          "opponent": "official_expander"
+        },
+        {
+          "wins": 0,
+          "draws": 2,
+          "losses": 0,
+          "games": 2,
+          "score_rate": 0.5,
+          "protocol_faults": 200,
+          "seeds": [
+            1120,
+            1121
+          ],
+          "opponent": "official_expander"
+        }
+      ],
+      "telemetry_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\var\\dashboard\\campaigns\\initial_graph_graph_bc_init_seed7.json"
+    }
+  ],
+  "ranked": [
+    {
+      "arm_id": "cnn_bc_init_seed11",
+      "score_rate": 0.5,
+      "stop_reason": "PLATEAU"
+    },
+    {
+      "arm_id": "graph_bc_init_seed7",
+      "score_rate": 0.5,
+      "stop_reason": "PLATEAU"
+    }
+  ],
+  "best": {
+    "campaign_id": "initial_cnn_cnn_bc_init_seed11",
+    "arm_id": "cnn_bc_init_seed11",
+    "architecture": "recurrent_cnn_v2",
+    "stop_reason": "PLATEAU",
+    "env_steps": 1536,
+    "ppo_updates": 12,
+    "elapsed_s": 105.85582910000085,
+    "best_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+    "best_validation": {
+      "wins": 0,
+      "draws": 2,
+      "losses": 0,
+      "games": 2,
+      "score_rate": 0.5,
+      "protocol_faults": 200,
+      "seeds": [
+        1040,
+        1041
+      ],
+      "opponent": "official_expander"
+    },
+    "validation_history": [
+      {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 200,
+        "seeds": [
+          1040,
+          1041
+        ],
+        "opponent": "official_expander"
+      },
+      {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 200,
+        "seeds": [
+          1080,
+          1081
+        ],
+        "opponent": "official_expander"
+      },
+      {
+        "wins": 0,
+        "draws": 2,
+        "losses": 0,
+        "games": 2,
+        "score_rate": 0.5,
+        "protocol_faults": 200,
+        "seeds": [
+          1120,
+          1121
+        ],
+        "opponent": "official_expander"
+      }
+    ],
+    "telemetry_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\var\\dashboard\\campaigns\\initial_cnn_cnn_bc_init_seed11.json"
+  }
+}

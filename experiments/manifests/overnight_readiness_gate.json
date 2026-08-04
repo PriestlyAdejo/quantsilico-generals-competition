@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "kind": "OVERNIGHT_READINESS_GATE",
+  "decision": "BLOCKED",
+  "status": "BLOCKED",
+  "blockers": [
+    "best validation wins=0 (require >0 before overnight)",
+    "best validation protocol_faults=200 (require 0)",
+    "validation score_rate=0.5 is draw-dominated with zero wins \u2014 not overnight-ready"
+  ],
+  "warnings": [],
+  "best_candidate": {
+    "arm_id": "cnn_bc_init_seed11",
+    "architecture": "recurrent_cnn_v2",
+    "stop_reason": "PLATEAU",
+    "best_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\initial\\initial_cnn_cnn_bc_init_seed11\\chunk_0\\model.json",
+    "best_validation": {
+      "wins": 0,
+      "draws": 2,
+      "losses": 0,
+      "games": 2,
+      "score_rate": 0.5,
+      "protocol_faults": 200,
+      "seeds": [
+        1040,
+        1041
+      ],
+      "opponent": "official_expander"
+    }
+  },
+  "holdout_unused": true,
+  "evaluated_at": "2026-08-04T06:07:45.265855+00:00",
+  "note": "Overnight requires real validation wins with zero protocol faults. Holdout remains sealed."
+}

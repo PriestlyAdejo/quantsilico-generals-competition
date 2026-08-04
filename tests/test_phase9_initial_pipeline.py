@@ -61,3 +61,16 @@ def test_durable_campaign_telemetry_roundtrip(tmp_path: Path, monkeypatch) -> No
     assert again is not None
     assert again["env_steps"] == 128
     assert campaign_path("test_campaign_1").is_file()
+
+
+def test_overnight_readiness_blocked_on_draw_only_initial() -> None:
+    from generals_bot.training.overnight_readiness import evaluate_overnight_readiness
+
+    initial = json.loads(
+        (REPO / "experiments" / "manifests" / "adaptive_initial_campaign.json").read_text(encoding="utf-8")
+    )
+    gate = evaluate_overnight_readiness(initial)
+    assert gate["kind"] == "OVERNIGHT_READINESS_GATE"
+    assert gate["decision"] == "BLOCKED"
+    assert gate["holdout_unused"] is True
+    assert any("wins" in b for b in gate["blockers"])

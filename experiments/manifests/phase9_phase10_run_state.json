@@ -2,27 +2,28 @@
   "schema_version": 1,
   "kind": "PHASE9_PHASE10_RUN_STATE",
   "research_generation_id": "phase9_phase10_automatic_2026-08-04",
-  "current_stage": "ADAPTIVE_INITIAL",
-  "stage_status": "RUNNING",
+  "current_stage": "OVERNIGHT_READINESS",
+  "stage_status": "BLOCKED",
   "working_branch": "fix/console-and-phase9-phase10",
   "starting_commit": "3c80b5c8b3a1fa08e41c7298fb685e3ed0cd9cbb",
-  "latest_commit": "1f96e1dc31c2f2d0ec3363ef1974c5e73f892eb9",
+  "latest_commit": "65cc3c24c3a571f59db694af5ed427b820682cfd",
   "last_verified_commit": "1f96e1dc31c2f2d0ec3363ef1974c5e73f892eb9",
-  "active_campaign_id": "initial_cnn_cnn_bc_init_seed11",
+  "active_campaign_id": null,
   "active_checkpoint": null,
   "gate_decisions": {
     "DASHBOARD_DATA_INTEGRITY_GATE": "PASS",
     "ARENA_BROWSER_SMOKE": "PASS",
     "CONSOLE_GATES": "PASS",
-    "INITIAL_READINESS_GATE": "READY"
+    "INITIAL_READINESS_GATE": "READY",
+    "ADAPTIVE_INITIAL": "COMPLETED",
+    "OVERNIGHT_READINESS_GATE": "BLOCKED"
   },
-  "terminal_outcome": null,
+  "terminal_outcome": "OVERNIGHT_READINESS_BLOCKED",
   "recovery_tag": "dashboard-before-phase9-automatic-run-3c80b5c",
   "notes": [
-    "Console gates PASS; feature branch remains at 3c80b5c.",
-    "DEVELOPMENT audit selected cnn_bc_init_seed11 and graph_bc_init_seed7.",
-    "Adaptive INITIAL launching with durable telemetry; holdout unused.",
-    "No Git during active training."
+    "Adaptive INITIAL plateaued with draw-only validation and high protocol faults.",
+    "Holdout never opened. No package. Heuristic remains active submission.",
+    "Integrate blocked-readiness terminal commit after tests; feature FF only then."
   ],
-  "updated_at": "2026-08-04T06:02:00+00:00"
+  "updated_at": "2026-08-04T06:10:00+00:00"
 }
