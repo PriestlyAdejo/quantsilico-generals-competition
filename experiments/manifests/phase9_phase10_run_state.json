@@ -2,12 +2,13 @@
   "schema_version": 1,
   "kind": "PHASE9_PHASE10_RUN_STATE",
   "research_generation_id": "phase9_phase10_automatic_2026-08-04",
-  "current_stage": "OVERNIGHT_READINESS",
-  "stage_status": "BLOCKED",
+  "current_stage": "TERMINAL_FINALISATION",
+  "stage_status": "COMPLETE",
   "working_branch": "fix/console-and-phase9-phase10",
   "starting_commit": "3c80b5c8b3a1fa08e41c7298fb685e3ed0cd9cbb",
-  "latest_commit": "65cc3c24c3a571f59db694af5ed427b820682cfd",
-  "last_verified_commit": "1f96e1dc31c2f2d0ec3363ef1974c5e73f892eb9",
+  "latest_commit": "68f94c475e642ebe7d2b8810acea96bb3f1edb3d",
+  "last_verified_commit": "68f94c475e642ebe7d2b8810acea96bb3f1edb3d",
+  "integration_commit": "68f94c475e642ebe7d2b8810acea96bb3f1edb3d",
   "active_campaign_id": null,
   "active_checkpoint": null,
   "gate_decisions": {
@@ -21,9 +22,9 @@
   "terminal_outcome": "OVERNIGHT_READINESS_BLOCKED",
   "recovery_tag": "dashboard-before-phase9-automatic-run-3c80b5c",
   "notes": [
-    "Adaptive INITIAL plateaued with draw-only validation and high protocol faults.",
+    "Integrate blocked-readiness terminal commit 68f94c4 into feature via FF.",
     "Holdout never opened. No package. Heuristic remains active submission.",
-    "Integrate blocked-readiness terminal commit after tests; feature FF only then."
+    "Dashboard: http://127.0.0.1:8765"
   ],
-  "updated_at": "2026-08-04T06:10:00+00:00"
+  "updated_at": "2026-08-04T06:12:00+00:00"
 }
