@@ -31,7 +31,7 @@ def submitted_package_dto() -> dict[str, Any]:
         "schema_version": 1,
         "candidate": report.get("candidate")
         or active.get("candidate_id")
-        or "heuristic_v2f_plus_planner_terminal_form",
+        or "heuristic_v2f_plus_planner_terminal_force",
         "package_path": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
         "package_sha256": report.get("sha256")
         or active.get("package_sha256")

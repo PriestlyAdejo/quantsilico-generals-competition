@@ -15,13 +15,13 @@ def test_health() -> None:
     assert res.json()["bind"] == "127.0.0.1"
 
 
-def test_job_allowlist_includes_submitted_form_not_force() -> None:
+def test_job_allowlist_includes_submitted_force_not_form_typo() -> None:
     res = client.get("/api/jobs/allowlist")
     assert res.status_code == 200
     body = res.json()
     assert "MATCH" in body["jobs"]
-    assert "heuristic_v2f_plus_planner_terminal_form" in body["candidates"]
-    assert "heuristic_v2f_plus_planner_terminal_force" not in body["candidates"]
+    assert "heuristic_v2f_plus_planner_terminal_force" in body["candidates"]
+    assert "heuristic_v2f_plus_planner_terminal_form" not in body["candidates"]
 
 
 def test_rejects_unknown_candidate() -> None:

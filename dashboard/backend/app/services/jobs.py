@@ -65,6 +65,11 @@ def _now() -> str:
 
 def resolve_candidate_allowlist() -> set[str]:
     """Prefer the live policy registry; always include verified submitted ID."""
+    from generals_bot.candidate_identity import (
+        EXECUTABLE_REGISTRY_ID,
+        canonicalize_candidate_id,
+    )
+
     base = {
         "pass",
         "pass_bot",
@@ -76,7 +81,7 @@ def resolve_candidate_allowlist() -> set[str]:
         "heuristic_v0",
         "heuristic_v1",
         "heuristic_v2_qualifier",
-        "heuristic_v2f_plus_planner_terminal_form",
+        EXECUTABLE_REGISTRY_ID,
         "heuristic_aggressive",
         "heuristic_defensive",
         "heuristic_castle",
@@ -88,10 +93,11 @@ def resolve_candidate_allowlist() -> set[str]:
         base.update(list_policies())
     except Exception:
         pass
-    # Never invent terminal_force.
-    base.discard("heuristic_v2f_plus_planner_terminal_force")
-    return base
-
+    # Drop dashboard typo alias — not a distinct executable policy.
+    base.discard("heuristic_v2f_plus_planner_terminal_form")
+    base.add(EXECUTABLE_REGISTRY_ID)
+    # Normalise any accidental alias insertions.
+    return {canonicalize_candidate_id(x) for x in base}
 
 class FilesystemJobService:
     """Local filesystem job store under var/dashboard/jobs/."""

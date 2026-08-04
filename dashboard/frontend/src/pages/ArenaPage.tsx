@@ -10,7 +10,7 @@ export default function ArenaPage() {
   const ds = useDataSource();
   const [caps, setCaps] = useState<CapabilitiesResponse | null>(null);
   const [candidates, setCandidates] = useState<string[]>([]);
-  const [candidate, setCandidate] = useState("heuristic_v2f_plus_planner_terminal_form");
+  const [candidate, setCandidate] = useState("heuristic_v2f_plus_planner_terminal_force");
   const [opponent, setOpponent] = useState("expander");
   const [seed, setSeed] = useState(0);
   const [job, setJob] = useState<JobRecord | null>(null);

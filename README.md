@@ -28,18 +28,29 @@ Do not silently modify the official engine.
 
 ## Current implementation status
 
-**Feature branch in progress:** `feature/full-research-platform-v0`
+**Feature branch:** `feature/full-research-platform-v0`
 
-Implemented through Phase 2a vertical slice:
+- Heuristic v2 pre-PPO package: **SUBMITTED** (portal submission gate PASS; not final-tournament qualification)
+- Learning readiness / BC / PPO smoke: **PASS** (no learned champion; `LEARNED_PROMOTION_GATE = NONE`)
+- Research console: terminal-amber dashboard on `127.0.0.1:8765` (ApiDataSource; no silent demo)
 
-- protocol / legal actions / castle pricing
-- pass, legal-random, heuristic_v0 baselines
-- Windows-safe live-like match runner
-- CLI (`doctor`, `match`, `submission`)
-- heuristic submission package (`PACKAGED`, not `UPLOAD_READY`)
-- minimal dashboard sources (Arena / Replay / Overview)
+### Dashboard (Windows)
 
-Still pending: heuristic v1 family, full dashboard stack install, learning, PSRO, explainability, Linux `UPLOAD_READY` gate.
+Execution-policy-safe wrappers (no machine-wide policy change):
+
+```bat
+cd /d "C:\Users\pries\Documents\Projects\quantsilico-generals-competition"
+scripts\dashboard\start.cmd
+scripts\dashboard\open.cmd
+scripts\dashboard\status.cmd
+scripts\dashboard\stop.cmd
+```
+
+Requires `.venv-training` and `dashboard/frontend` dependencies (`pnpm install` once).
+
+Health: `Invoke-RestMethod http://127.0.0.1:8765/api/health`
+
+Still later: Phase 7–8 full campaigns, learned promotion, INITIAL/OVERNIGHT/MARATHON.
 
 ## Planned tracks
 

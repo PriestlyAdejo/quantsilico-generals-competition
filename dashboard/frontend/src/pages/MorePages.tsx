@@ -163,8 +163,15 @@ export function DocumentationPage() {
       <PageHeader title="Documentation" subtitle="Structured console guidance (no raw HTML injection)." />
       <Panel title="Startup">
         <p>
-          Use <code>scripts/dashboard/start.ps1</code> with <code>.venv-training</code>. API binds to
-          127.0.0.1:8765.
+          Preferred Windows commands (ExecutionPolicy Bypass wrappers, no Admin):
+        </p>
+        <div className="pre">{`scripts\\dashboard\\start.cmd
+scripts\\dashboard\\open.cmd
+scripts\\dashboard\\status.cmd
+scripts\\dashboard\\stop.cmd`}</div>
+        <p>
+          API binds to <code>127.0.0.1:8765</code>. Production mode uses ApiDataSource. Demo mode is
+          explicit opt-in only. Portal upload and Git mutation are unavailable.
         </p>
       </Panel>
       <Panel title="Gates">

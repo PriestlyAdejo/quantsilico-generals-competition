@@ -10,6 +10,7 @@ from typing import Any, Literal
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
+from generals_bot.candidate_identity import candidate_identity_record
 from dashboard.backend.app.capabilities import build_capabilities
 from dashboard.backend.app.paths import REPO_ROOT, assert_allowlisted_path, rel, safe_replay_id
 from dashboard.backend.app.readers.evidence import (
@@ -46,13 +47,21 @@ def _git(*args: str, cwd: Path | None = None) -> str:
 
 @router.get("/api/health")
 def health() -> dict[str, Any]:
-    return {
+    payload: dict[str, Any] = {
         "status": "ok",
         "bind": "127.0.0.1",
         "repo": ".",
         "env": "training",
         "schema_version": 1,
+        "service": "QuantSilico Generals Research Console",
     }
+    try:
+        payload["branch"] = _git("branch", "--show-current")
+        payload["commit"] = _git("rev-parse", "HEAD")
+    except Exception:
+        payload["branch"] = None
+        payload["commit"] = None
+    return payload
 
 
 @router.get("/api/capabilities")
@@ -98,6 +107,7 @@ def overview() -> dict[str, Any]:
             "bridge": (manifest("jax_pytorch_bridge_benchmark.json") or {}).get("decision"),
             "note": "Smoke/infrastructure results only — not competitive performance.",
         },
+        "candidate_identity": candidate_identity_record(),
         # Deliberately omit live Elo/rank here.
     }
 
@@ -165,7 +175,7 @@ def models() -> dict[str, Any]:
     cpu = manifest("official_venv_cpu_load.json") or {}
     models_out = [
         {
-            "id": "heuristic_v2f_plus_planner_terminal_form",
+            "id": "heuristic_v2f_plus_planner_terminal_force",
             "architecture": "heuristic",
             "lifecycle": "EVALUATED",
             "competitive_role": "BASELINE",
@@ -369,7 +379,7 @@ def qualification() -> dict[str, Any]:
     return {
         "schema_version": 1,
         "kind": "QUALIFICATION_DASHBOARD",
-        "champion_until_promoted": "heuristic_v2f_plus_planner_terminal_form",
+        "champion_until_promoted": "heuristic_v2f_plus_planner_terminal_force",
         "gates": {
             "HEURISTIC_DEVELOPMENT_GATE": "FAIL",
             "PRE_PPO_SUBMISSION_GATE": "PASS",
