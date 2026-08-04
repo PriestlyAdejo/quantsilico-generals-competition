@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDataSource } from "../data/DataSourceContext";
 import { ApiError } from "../data/types";
+import { MetricChart } from "../components/data-display/MetricChart";
 import { PageHeader, Panel } from "../components/data-display/Panel";
 import { BackendUnavailable, LoadingState } from "../components/feedback/States";
 
@@ -14,6 +15,15 @@ const TABS = [
   "Evaluation",
   "Logs",
 ] as const;
+
+type ChartDto = {
+  id: string;
+  title: string;
+  series_keys: string[];
+  points: Record<string, number | string>[];
+  missing?: string[];
+  note?: string | null;
+};
 
 export default function TrainingPage() {
   const ds = useDataSource();
@@ -39,12 +49,15 @@ export default function TrainingPage() {
   const labels = (data.labels || {}) as Record<string, string>;
   const bc = smoke.bc_tiny as Record<string, unknown> | undefined;
   const reports = (bc?.reports || {}) as Record<string, { final_train_action_acc?: number }>;
+  const charts = (data.charts as ChartDto[]) || [];
+  const latency = smoke.competition_size_latency_gate as Record<string, unknown> | undefined;
+  const campaigns = (data.campaigns as Record<string, unknown>[]) || [];
 
   return (
     <div>
       <PageHeader
         title="Training Cockpit"
-        subtitle="Smoke evidence only. No long campaign launch from this console."
+        subtitle="Producer charts only. No long campaign launch from this console."
       />
       {runId ? <p className="muted">Selected run: {runId}</p> : null}
       <div className="tabs" role="tablist">
@@ -66,23 +79,52 @@ export default function TrainingPage() {
           <>
             <p className="muted">{labels.bc_accuracies}</p>
             <p className="muted">{labels.ppo_smoke}</p>
+            <p className="muted">{labels.charts}</p>
             <div className="pre">
               {Object.entries(reports)
                 .map(([arch, rep]) => `${arch} train_acc(smoke)=${rep.final_train_action_acc}`)
                 .join("\n") || "No BC tiny report"}
             </div>
+            {campaigns.length ? (
+              <div className="pre" style={{ marginTop: "0.75rem" }}>
+                {JSON.stringify(campaigns, null, 2)}
+              </div>
+            ) : null}
             <div className="warning" style={{ marginTop: "0.75rem" }}>
               {String(data.graph_latency_warning || "")}
             </div>
           </>
         ) : null}
+        {tab === "Optimisation" || tab === "Performance" ? (
+          <>
+            {charts.length ? (
+              charts.map((c) => (
+                <MetricChart
+                  key={c.id}
+                  title={c.title}
+                  points={c.points}
+                  seriesKeys={c.series_keys}
+                  missing={c.missing}
+                  note={c.note}
+                />
+              ))
+            ) : (
+              <p className="muted">NOT RECORDED — no PPO producer charts</p>
+            )}
+          </>
+        ) : null}
         {tab === "Hardware" ? (
-          <div className="pre">{JSON.stringify(smoke.official_venv_cpu_load || {}, null, 2)}</div>
+          <>
+            <h4>Competition-size latency gate</h4>
+            <div className="pre">{JSON.stringify(latency || { state: "NOT RECORDED" }, null, 2)}</div>
+            <h4>Official venv CPU load</h4>
+            <div className="pre">{JSON.stringify(smoke.official_venv_cpu_load || {}, null, 2)}</div>
+          </>
         ) : null}
         {tab === "Evaluation" ? (
           <div className="pre">{JSON.stringify(smoke.equal_budget_dev_comparison || {}, null, 2)}</div>
         ) : null}
-        {tab === "Logs" || tab === "Optimisation" || tab === "Performance" || tab === "Auxiliary Heads" ? (
+        {tab === "Logs" || tab === "Auxiliary Heads" ? (
           <div className="pre">{JSON.stringify(smoke.ppo || [], null, 2)}</div>
         ) : null}
       </Panel>

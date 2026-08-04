@@ -51,10 +51,24 @@ export function PopulationPage() {
     return () => ac.abort();
   }, [ds]);
   if (!data) return <LoadingState />;
+  const recorded = String(data.state).includes("RECORDED") && !String(data.state).includes("NOT YET");
   return (
     <div>
-      <PageHeader title="Population" />
-      <EmptyState title={String(data.state)} detail={String(data.note || "")} />
+      <PageHeader title="Population" subtitle="Empirical payoff / PFSP evidence only." />
+      {recorded ? (
+        <Panel title={String(data.state)}>
+          <p className="muted">{String(data.note || "")}</p>
+          <div className="pre">{JSON.stringify({
+            population: data.population,
+            games_total: data.games_total,
+            synthetic: data.synthetic,
+            pfsp: data.pfsp,
+            psro: data.psro,
+          }, null, 2)}</div>
+        </Panel>
+      ) : (
+        <EmptyState title={String(data.state)} detail={String(data.note || "")} />
+      )}
     </div>
   );
 }
@@ -68,10 +82,19 @@ export function ExplainabilityPage() {
     return () => ac.abort();
   }, [ds]);
   if (!data) return <LoadingState />;
+  const present = String(data.state).includes("PRESENT");
   return (
     <div>
-      <PageHeader title="Explainability" />
-      <EmptyState title={String(data.state)} detail={String(data.note || "")} />
+      <PageHeader title="Explainability" subtitle="Frozen-checkpoint smoke — LEARNED_PROMOTION stays NONE." />
+      {present ? (
+        <Panel title={String(data.state)}>
+          <p className="muted">{String(data.note || "")}</p>
+          <p className="muted">LEARNED_PROMOTION_GATE: {String(data.learned_promotion_gate || "NONE")}</p>
+          <div className="pre">{JSON.stringify(data.explanations, null, 2)}</div>
+        </Panel>
+      ) : (
+        <EmptyState title={String(data.state)} detail={String(data.note || "")} />
+      )}
     </div>
   );
 }

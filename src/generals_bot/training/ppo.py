@@ -171,9 +171,20 @@ def run_bounded_ppo(
         value_loss = F.mse_loss(out["value"], ret_t)
         loss = policy_loss + 0.5 * value_loss - 0.01 * entropy
         assert torch.isfinite(loss), "NaN/Inf PPO loss"
+        with torch.no_grad():
+            approx_kl = float((old_logp - new_logp).mean().item())
+            clip_fraction = float(((ratio - 1.0).abs() > clip).float().mean().item())
+            adv_mean = float(adv_t.mean().item())
+            adv_std = float(adv_t.std(unbiased=False).item())
+            var_y = float(ret_t.var(unbiased=False).item())
+            explained_variance = (
+                float(1.0 - (ret_t - out["value"].detach()).var(unbiased=False).item() / (var_y + 1e-8))
+                if var_y > 1e-12
+                else 0.0
+            )
         opt.zero_grad(set_to_none=True)
         loss.backward()
-        nn.utils.clip_grad_norm_(model.parameters(), 0.5)
+        grad_norm = float(nn.utils.clip_grad_norm_(model.parameters(), 0.5))
         opt.step()
         # EMA
         with torch.no_grad():
@@ -187,6 +198,13 @@ def run_bounded_ppo(
                 "policy_loss": float(policy_loss.item()),
                 "value_loss": float(value_loss.item()),
                 "entropy": float(entropy.item()),
+                "approx_kl": approx_kl,
+                "clip_fraction": clip_fraction,
+                "explained_variance": explained_variance,
+                "grad_norm": grad_norm,
+                "learning_rate": float(lr),
+                "advantage_mean": adv_mean,
+                "advantage_std": adv_std,
             }
         )
 
@@ -211,12 +229,15 @@ def run_bounded_ppo(
             out = resumed.forward_tensors(flat, dummy_glob, h0)
         assert torch.isfinite(out["logits"]).all()
 
+    from generals_bot.training.telemetry_schema import annotate_history
+
     report = {
         "architecture": architecture,
         "device": device,
         "rollout_steps": rollout_steps,
         "updates": updates,
         "history": history,
+        "telemetry": annotate_history(history, producer="generals_bot.training.ppo"),
         "legal_action_rate": legal_rate,
         "elapsed_s": time.perf_counter() - t0,
         "checkpoint": str(ckpt.with_suffix(".json")),

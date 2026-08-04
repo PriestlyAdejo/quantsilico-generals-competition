@@ -173,9 +173,22 @@ def experiment_detail(experiment_id: str) -> dict[str, Any]:
 def models() -> dict[str, Any]:
     pkg = submitted_package_dto()
     cpu = manifest("official_venv_cpu_load.json") or {}
+    latency = manifest("competition_size_latency_gate.json") or {}
+    classification = latency.get("classification") or {}
+    cnn_lat = classification.get("recurrent_cnn_v2", "NOT RECORDED")
+    graph_lat = classification.get("recurrent_graph_belief_v2", "NOT RECORDED")
+    graph_deploy = (
+        "ELIGIBLE_FOR_DEV"
+        if graph_lat == "PASS"
+        else (
+            "BLOCKED_FOR_DEPLOYMENT"
+            if graph_lat in {"PARTIAL", "FAIL"}
+            else "NOT RECORDED"
+        )
+    )
     models_out = [
         {
-            "id": "heuristic_v2f_plus_planner_terminal_force",
+            "id": "heuristic_v2f_plus_planner_terminal_fix",
             "architecture": "heuristic",
             "lifecycle": "EVALUATED",
             "competitive_role": "BASELINE",
@@ -199,6 +212,7 @@ def models() -> dict[str, Any]:
             "competitive_role": "NONE",
             "delivery_status": "NOT_APPLICABLE",
             "compatibility": "CPU_COMPATIBLE" if cpu.get("all_ok") else "UNKNOWN",
+            "competition_size_latency": cnn_lat,
             "notes": ["Learned control smoke only"],
         },
         {
@@ -208,8 +222,13 @@ def models() -> dict[str, Any]:
             "competitive_role": "NONE",
             "delivery_status": "NOT_APPLICABLE",
             "compatibility": "CPU_COMPATIBLE" if cpu.get("all_ok") else "UNKNOWN",
+            "competition_size_latency": graph_lat,
+            "deployment_status": graph_deploy,
             "graph_latency_warning": GRAPH_LATENCY_WARNING,
-            "notes": ["Principal challenger smoke; latency not competition-validated"],
+            "notes": [
+                "Principal challenger smoke",
+                "Blank 8x8 ~139ms warning is not the competition-size gate",
+            ],
         },
     ]
     return {
@@ -219,6 +238,7 @@ def models() -> dict[str, Any]:
         "learned_champion_note": "NO LEARNED CHAMPION",
         "heuristic_baseline": pkg.get("candidate"),
         "pyg_needed": False,
+        "competition_size_latency_gate": latency or None,
         "graph_latency_warning": GRAPH_LATENCY_WARNING,
     }
 
@@ -318,32 +338,93 @@ def run_match(req: MatchRequest) -> dict[str, Any]:
 
 @router.get("/api/training")
 def training() -> dict[str, Any]:
+    from generals_bot.training.telemetry_schema import annotate_history
+
     readiness = manifest("learning_readiness_gate.json")
     bridge = manifest("jax_pytorch_bridge_benchmark.json")
     bc = manifest("bc_tiny.json")
     equal = manifest("equal_budget_dev_comparison.json")
     cpu = manifest("official_venv_cpu_load.json")
+    latency = manifest("competition_size_latency_gate.json")
+    development = manifest("bounded_development_ppo.json")
     ppo = []
+    charts = []
     root = REPO_ROOT / "experiments" / "manifests"
     if root.exists():
         for path in sorted(root.glob("ppo_smoke*.json")):
-            ppo.append({"id": path.stem, "path": rel(path), "data": json.loads(path.read_text(encoding="utf-8"))})
+            data = json.loads(path.read_text(encoding="utf-8"))
+            telem = data.get("telemetry") or annotate_history(
+                data.get("history"), producer=f"manifest:{path.stem}"
+            )
+            ppo.append({"id": path.stem, "path": rel(path), "data": data, "telemetry": telem})
+            charts.append(
+                {
+                    "id": path.stem,
+                    "title": f"PPO metrics — {path.stem}",
+                    "producer": telem.get("producer"),
+                    "schema_version": telem.get("schema_version"),
+                    "series_keys": ["loss", "policy_loss", "value_loss", "entropy"],
+                    "points": telem.get("points") or [],
+                    "missing": telem.get("missing") or [],
+                    "note": telem.get("note"),
+                }
+            )
+    if development and isinstance(development.get("arms"), dict):
+        for arm_id, arm in development["arms"].items():
+            if not isinstance(arm, dict) or "history" not in arm:
+                continue
+            telem = arm.get("telemetry") or annotate_history(
+                arm.get("history"), producer=f"development:{arm_id}"
+            )
+            charts.append(
+                {
+                    "id": f"dev_{arm_id}",
+                    "title": f"DEVELOPMENT PPO — {arm_id}",
+                    "producer": telem.get("producer"),
+                    "schema_version": telem.get("schema_version"),
+                    "series_keys": ["loss", "policy_loss", "value_loss", "entropy"],
+                    "points": telem.get("points") or [],
+                    "missing": telem.get("missing") or [],
+                    "note": telem.get("note"),
+                }
+            )
+    campaigns = []
+    if development:
+        campaigns.append(
+            {
+                "id": "bounded_development_ppo",
+                "kind": development.get("kind"),
+                "limits": development.get("limits"),
+                "graph_training_allowed": development.get("graph_training_allowed"),
+                "graph_deployment_status": development.get("graph_deployment_status"),
+                "stopped_reason": development.get("stopped_reason"),
+                "elapsed_s": development.get("elapsed_s"),
+                "path": "experiments/manifests/bounded_development_ppo.json",
+            }
+        )
     return {
         "schema_version": 1,
         "kind": "TRAINING_SMOKE_DASHBOARD",
-        "campaigns": [],
+        "campaigns": campaigns,
         "active": None,
+        "charts": charts,
         "smoke": {
             "learning_readiness": readiness,
-            "bridge": {"decision": (bridge or {}).get("decision"), "path": "experiments/manifests/jax_pytorch_bridge_benchmark.json"},
+            "bridge": {
+                "decision": (bridge or {}).get("decision"),
+                "path": "experiments/manifests/jax_pytorch_bridge_benchmark.json",
+            },
             "bc_tiny": bc,
             "ppo": ppo,
             "equal_budget_dev_comparison": equal,
             "official_venv_cpu_load": cpu,
+            "competition_size_latency_gate": latency,
+            "bounded_development_ppo": development,
         },
         "labels": {
             "bc_accuracies": "smoke-training accuracy, not competitive game performance",
             "ppo_smoke": "pipeline ran with legal actions and resume; not a win-rate claim",
+            "charts": "Only producer-emitted points are shown; missing fields are NOT RECORDED",
         },
         "graph_latency_warning": GRAPH_LATENCY_WARNING,
         "launch_enabled": False,
@@ -352,22 +433,47 @@ def training() -> dict[str, Any]:
 
 @router.get("/api/population")
 def population() -> dict[str, Any]:
+    payoff = manifest("payoff_population_smoke.json") or manifest("payoff_pfsp_development.json")
+    pfsp = manifest("pfsp_empirical.json")
+    psro = manifest("psro_lightweight.json")
+    if not payoff:
+        return {
+            "schema_version": 1,
+            "population": [],
+            "payoff_matrix": None,
+            "state": "POPULATION DEVELOPMENT NOT YET RECORDED",
+            "note": "Phase 7 PFSP work has not produced recorded population evidence yet.",
+        }
     return {
         "schema_version": 1,
-        "population": [],
-        "payoff_matrix": None,
-        "state": "POPULATION DEVELOPMENT NOT YET RECORDED",
-        "note": "Phase 7 PFSP work has not produced recorded population evidence yet.",
+        "population": payoff.get("labels") or [],
+        "payoff_matrix": payoff,
+        "pfsp": pfsp,
+        "psro": psro,
+        "state": "POPULATION EVIDENCE RECORDED",
+        "note": "Empirical payoff / PFSP only — not a promotion claim.",
+        "games_total": payoff.get("games_total"),
+        "synthetic": payoff.get("synthetic", False),
     }
 
 
 @router.get("/api/explainability")
 def explainability() -> dict[str, Any]:
+    report = manifest("explainability_report.json")
+    heuristic = manifest("heuristic_trace_smoke.json")
+    if not report and not heuristic:
+        return {
+            "schema_version": 1,
+            "explanations": [],
+            "state": "NO EXPLANATION RECORD",
+            "note": "Phase 8 explainability records from frozen checkpoints are not yet generated.",
+        }
     return {
         "schema_version": 1,
-        "explanations": [],
-        "state": "NO EXPLANATION RECORD",
-        "note": "Phase 8 explainability records from frozen checkpoints are not yet generated.",
+        "explanations": [x for x in (report, heuristic) if x],
+        "state": "EXPLANATION RECORD PRESENT",
+        "note": "Frozen-checkpoint / heuristic smoke explanations — not a promotion claim.",
+        "learned_promotion_gate": "NONE",
     }
 
 
@@ -379,7 +485,7 @@ def qualification() -> dict[str, Any]:
     return {
         "schema_version": 1,
         "kind": "QUALIFICATION_DASHBOARD",
-        "champion_until_promoted": "heuristic_v2f_plus_planner_terminal_force",
+        "champion_until_promoted": "heuristic_v2f_plus_planner_terminal_fix",
         "gates": {
             "HEURISTIC_DEVELOPMENT_GATE": "FAIL",
             "PRE_PPO_SUBMISSION_GATE": "PASS",

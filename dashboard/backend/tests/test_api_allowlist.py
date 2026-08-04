@@ -15,13 +15,14 @@ def test_health() -> None:
     assert res.json()["bind"] == "127.0.0.1"
 
 
-def test_job_allowlist_includes_submitted_force_not_form_typo() -> None:
+def test_job_allowlist_includes_submitted_fix_not_typos() -> None:
     res = client.get("/api/jobs/allowlist")
     assert res.status_code == 200
     body = res.json()
     assert "MATCH" in body["jobs"]
-    assert "heuristic_v2f_plus_planner_terminal_force" in body["candidates"]
+    assert "heuristic_v2f_plus_planner_terminal_fix" in body["candidates"]
     assert "heuristic_v2f_plus_planner_terminal_form" not in body["candidates"]
+    assert "heuristic_v2f_plus_planner_terminal_force" not in body["candidates"]
 
 
 def test_rejects_unknown_candidate() -> None:
@@ -106,10 +107,32 @@ def test_spa_fallback_non_api() -> None:
 def test_population_empty_state() -> None:
     res = client.get("/api/population")
     assert res.status_code == 200
-    assert "NOT YET RECORDED" in res.json()["state"]
+    body = res.json()
+    assert body["state"] in {
+        "POPULATION DEVELOPMENT NOT YET RECORDED",
+        "POPULATION EVIDENCE RECORDED",
+    }
 
 
 def test_models_graph_latency_warning() -> None:
     res = client.get("/api/models")
     assert res.status_code == 200
     assert "139" in res.json()["graph_latency_warning"]
+
+
+def test_training_exposes_charts_schema() -> None:
+    res = client.get("/api/training")
+    assert res.status_code == 200
+    body = res.json()
+    assert "charts" in body
+    assert body["labels"]["charts"]
+    latency = body["smoke"].get("competition_size_latency_gate")
+    if latency:
+        assert "classification" in latency
+
+
+def test_candidate_identity_canonical_is_terminal_fix() -> None:
+    res = client.get("/api/overview")
+    assert res.status_code == 200
+    ident = res.json()["candidate_identity"]
+    assert ident["submitted_evidence_id"] == "heuristic_v2f_plus_planner_terminal_fix"

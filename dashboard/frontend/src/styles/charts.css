@@ -11,3 +11,25 @@
   color: var(--body-secondary);
   font-size: 0.85rem;
 }
+
+.chart-block {
+  margin: 0.75rem 0 1.25rem;
+}
+
+.chart-block h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+}
+
+.metric-chart {
+  width: 100%;
+  max-width: 28rem;
+  height: auto;
+  background: color-mix(in srgb, var(--panel, #f7f3eb) 88%, #fff);
+  border: 1px solid color-mix(in srgb, var(--border, #d8d0c4) 80%, transparent);
+}
+
+.chart-legend {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+}

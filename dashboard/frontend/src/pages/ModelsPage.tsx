@@ -29,6 +29,8 @@ export default function ModelsPage() {
 
   const models = (data.models as Record<string, unknown>[]) || [];
   const warning = String(data.graph_latency_warning || "");
+  const latency = data.competition_size_latency_gate as Record<string, unknown> | undefined;
+  const classification = (latency?.classification || {}) as Record<string, string>;
 
   return (
     <div>
@@ -42,6 +44,16 @@ export default function ModelsPage() {
       <Panel title="Learned champion">
         <strong>{String(data.learned_champion_note || "NO LEARNED CHAMPION")}</strong>
       </Panel>
+      <Panel title="Competition-size latency">
+        {latency ? (
+          <div className="pre">
+            {`recurrent_cnn_v2: ${classification.recurrent_cnn_v2 || "NOT RECORDED"}
+recurrent_graph_belief_v2: ${classification.recurrent_graph_belief_v2 || "NOT RECORDED"}`}
+          </div>
+        ) : (
+          <EmptyState title="NOT RECORDED" detail="Run competition-size latency gate before claiming CPU readiness." />
+        )}
+      </Panel>
       <Panel title="Registry">
         <div className="table-wrap">
           <table className="data">
@@ -53,6 +65,7 @@ export default function ModelsPage() {
                 <th>Role</th>
                 <th>Delivery</th>
                 <th>Compatibility</th>
+                <th>Latency</th>
               </tr>
             </thead>
             <tbody>
@@ -71,6 +84,9 @@ export default function ModelsPage() {
                   </td>
                   <td>
                     <StatusBadge value={String(m.compatibility)} />
+                  </td>
+                  <td>
+                    <StatusBadge value={String(m.competition_size_latency || "n/a")} />
                   </td>
                 </tr>
               ))}
