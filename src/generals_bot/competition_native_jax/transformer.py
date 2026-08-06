@@ -104,9 +104,15 @@ def forward(
     global_vec: np.ndarray,
     weights: TransformerWeights,
 ) -> dict[str, np.ndarray]:
-    """spatial [C,21,21], global [G] -> logits + value bins."""
+    """spatial [C,21,21], global [G] -> logits + value bins.
+
+    Embedding width and depth are taken from ``weights`` so student shapes can be
+    benchmarked without changing locked teacher defaults in constants.py.
+    """
+    emb = int(weights.patch_proj.shape[1])
+    n_layers = len(weights.attn_w)
     # Patchify
-    tokens = np.zeros((NUM_PATCHES, EMB_DIM), dtype=np.float32)
+    tokens = np.zeros((NUM_PATCHES, emb), dtype=np.float32)
     for p in range(NUM_PATCHES):
         pr, pc = divmod(p, PATCH_GRID)
         r0, c0 = pr * PATCH, pc * PATCH
@@ -114,7 +120,7 @@ def forward(
         tokens[p] = patch @ weights.patch_proj
     cls = weights.cls + (global_vec @ weights.global_proj)
     x = np.concatenate([cls[None, :], tokens], axis=0) + weights.pos
-    for i in range(N_LAYERS):
+    for i in range(n_layers):
         x = _layernorm(x + _mha(x, weights.attn_w[i], weights.attn_out[i]))
         h = np.maximum(0, x @ weights.ff_w1[i])
         x = _layernorm(x + h @ weights.ff_w2[i])
@@ -147,7 +153,7 @@ def weights_to_dict(w: TransformerWeights) -> dict[str, np.ndarray]:
         "pass_head": w.pass_head,
         "value_head": w.value_head,
     }
-    for i in range(N_LAYERS):
+    for i in range(len(w.attn_w)):
         d[f"attn_w_{i}"] = w.attn_w[i]
         d[f"attn_out_{i}"] = w.attn_out[i]
         d[f"ff_w1_{i}"] = w.ff_w1[i]
@@ -156,15 +162,18 @@ def weights_to_dict(w: TransformerWeights) -> dict[str, np.ndarray]:
 
 
 def weights_from_dict(d: dict[str, np.ndarray]) -> TransformerWeights:
+    layer_ids = sorted(
+        int(k.split("_")[-1]) for k in d if k.startswith("attn_w_")
+    )
     w = TransformerWeights(
         patch_proj=d["patch_proj"],
         cls=d["cls"],
         pos=d["pos"],
         global_proj=d["global_proj"],
-        attn_w=[d[f"attn_w_{i}"] for i in range(N_LAYERS)],
-        attn_out=[d[f"attn_out_{i}"] for i in range(N_LAYERS)],
-        ff_w1=[d[f"ff_w1_{i}"] for i in range(N_LAYERS)],
-        ff_w2=[d[f"ff_w2_{i}"] for i in range(N_LAYERS)],
+        attn_w=[d[f"attn_w_{i}"] for i in layer_ids],
+        attn_out=[d[f"attn_out_{i}"] for i in layer_ids],
+        ff_w1=[d[f"ff_w1_{i}"] for i in layer_ids],
+        ff_w2=[d[f"ff_w2_{i}"] for i in layer_ids],
         move_head=d["move_head"],
         build_head=d["build_head"],
         pass_head=d["pass_head"],

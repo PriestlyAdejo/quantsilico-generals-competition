@@ -1,13 +1,25 @@
 {
   "schema_version": 1,
   "kind": "COMPETITION_NATIVE_JAX_ARCHITECTURE_AUDIT",
-  "classification": "NUMPY_PROTOTYPE_ONLY",
-  "jax_hot_path_matches": 0,
-  "model": "MISSING",
-  "rollout": "MISSING",
-  "gae": "MISSING",
-  "ppo": "MISSING",
-  "storage": "MISSING",
+  "classification": "JAX_CORE_IMPLEMENTED_GPU_UNVERIFIED",
+  "prior_classification": "NUMPY_PROTOTYPE_ONLY",
+  "jax_hot_path_files": [
+    "src/generals_bot/competition_native_jax/transformer_jax.py",
+    "src/generals_bot/competition_native_jax/inference_jax.py",
+    "train/competition_native_jax/gae_jax.py",
+    "train/competition_native_jax/ppo_jax.py",
+    "train/competition_native_jax/ema_jax.py",
+    "train/competition_native_jax/rollout_selfplay_jax.py",
+    "train/competition_native_jax/train_jax.py"
+  ],
+  "model": "PRESENT_JAX_PYTREE",
+  "rollout": "PRESENT_JAX_POLICY_ENV_PYTHON_LOOP",
+  "gae": "PRESENT_LAX_SCAN",
+  "ppo": "PRESENT_OPTAX",
+  "ema": "PRESENT",
+  "storage": "NPZ_LEAVES",
   "numpy_allowed_as": "deployment_reference_only",
-  "s4_reclassification": "PARTIAL"
+  "s4_reclassification": "PARTIAL_GPU_PENDING",
+  "cpu_correctness": "PASSED",
+  "gpu_jax_verified": false
 }

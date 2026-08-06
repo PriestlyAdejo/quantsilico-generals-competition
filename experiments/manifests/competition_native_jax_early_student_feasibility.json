@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_EARLY_STUDENT_FEASIBILITY",
+  "status": "STUDENT_SHAPE_FEASIBLE",
+  "note": "Random/smoke weights only. Not distillation. Teacher training not yet selected.",
+  "limits_ref": "experiments/manifests/competition_native_jax_deployment_limits.json",
+  "max_p99_for_promotion_s": 0.1,
+  "shapes": [
+    {
+      "name": "teacher_locked",
+      "emb": 192,
+      "layers": 4,
+      "heads": 4,
+      "cold_start_s": 0.9250060000049416,
+      "p50_s": 1.4505651000072248,
+      "p95_s": 3.4180970000161324,
+      "p99_s": 3.4180970000161324,
+      "credible_cpu_package_path": false,
+      "status": "TOO_SLOW"
+    },
+    {
+      "name": "student_emb96_d2_h4",
+      "emb": 96,
+      "layers": 2,
+      "heads": 4,
+      "cold_start_s": 0.020516299991868436,
+      "p50_s": 0.02147000000695698,
+      "p95_s": 0.031175500014796853,
+      "p99_s": 0.031175500014796853,
+      "credible_cpu_package_path": true,
+      "status": "OK"
+    },
+    {
+      "name": "student_emb64_d2_h4",
+      "emb": 64,
+      "layers": 2,
+      "heads": 4,
+      "cold_start_s": 0.011388199985958636,
+      "p50_s": 0.010012099985033274,
+      "p95_s": 0.013184999988880008,
+      "p99_s": 0.013184999988880008,
+      "credible_cpu_package_path": true,
+      "status": "OK"
+    },
+    {
+      "name": "student_emb48_d1_h4",
+      "emb": 48,
+      "layers": 1,
+      "heads": 4,
+      "cold_start_s": 0.008553200023015961,
+      "p50_s": 0.006767299986677244,
+      "p95_s": 0.007259400008479133,
+      "p99_s": 0.007259400008479133,
+      "credible_cpu_package_path": true,
+      "status": "OK"
+    }
+  ],
+  "selected_student_shape": {
+    "name": "student_emb96_d2_h4",
+    "emb": 96,
+    "layers": 2,
+    "heads": 4,
+    "cold_start_s": 0.020516299991868436,
+    "p50_s": 0.02147000000695698,
+    "p95_s": 0.031175500014796853,
+    "p99_s": 0.031175500014796853,
+    "credible_cpu_package_path": true,
+    "status": "OK"
+  },
+  "distillation_authorized": false
+}

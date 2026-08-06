@@ -1,17 +1,24 @@
 {
   "schema_version": 1,
   "kind": "COMPETITION_NATIVE_JAX_DAYTIME_TRAINING_SUMMARY",
-  "correctness": "PASSED",
-  "smoke": "COMPLETED_PROTOTYPE",
-  "smoke_transitions": 52,
-  "smoke_tps": 0.512335555890687,
-  "short_day": "SKIPPED_WITH_REASON",
-  "medium_day": "SKIPPED_WITH_REASON",
-  "skip_reason": "GATE_PROPAGATION: GPU execution FAILED_NO_JAX_GPU; measured prototype TPS insufficient for meaningful daytime budgets (BLOCKED_COMPUTE).",
-  "checkpoints": {
-    "smoke_raw": "experiments/competition_native_jax/smoke/smoke_raw.npz",
-    "smoke_ema": "experiments/competition_native_jax/smoke/smoke_ema.npz"
+  "status": "BLOCKED_COMPUTE",
+  "gpu_correctness_cpu_jax": "PASSED",
+  "gpu_correctness_path": "experiments/competition_native_jax/gpu_correctness/gpu_correctness_gate.json",
+  "tiny_training": "NOT_RUN_NO_GPU_JAX_VERIFIED",
+  "smoke_training_jax": "NOT_RUN_NO_GPU_JAX_VERIFIED",
+  "short_day": {
+    "status": "SKIPPED_WITH_REASON",
+    "reason": "BLOCKED_COMPUTE: AWAITING_OPERATOR_ACTION on Ubuntu WSL first-user OOBE; GPU_JAX_VERIFIED=false"
   },
-  "canonical_lineage": "from_scratch_numpy_prototype",
-  "external_checkpoint_used": false
+  "medium_day": {
+    "status": "SKIPPED_WITH_REASON",
+    "reason": "BLOCKED_COMPUTE: short-day gate did not pass"
+  },
+  "raw_vs_ema": "N/A_NO_TRAINED_CHECKPOINT",
+  "selected_base_checkpoint": null,
+  "blocker": "BLOCKED_COMPUTE",
+  "student_feasibility": "STUDENT_SHAPE_FEASIBLE (random weights; not distillation)",
+  "student_feasibility_path": "experiments/manifests/competition_native_jax_early_student_feasibility.json",
+  "deployment_classification": "TEACHER_REQUIRES_STUDENT",
+  "note": "Genuine JAX+Optax core exists on CPU; meaningful daytime train deferred until GPU_JAX_VERIFIED."
 }

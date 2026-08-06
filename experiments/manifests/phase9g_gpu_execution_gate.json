@@ -1,16 +1,29 @@
 {
   "schema_version": 1,
   "kind": "PHASE9G_GPU_EXECUTION_GATE",
-  "device": {
-    "numpy": true,
-    "jax_backend": "cpu",
-    "jax_devices": [
-      "cpu:0"
-    ],
-    "torch_cuda": false,
-    "jax_gpu": false
+  "status": "AWAITING_OPERATOR_ACTION",
+  "not_a_cuda_or_jax_failure": true,
+  "classification_rule": "ELEVATION_VS_REBOOT_RULE",
+  "windows_gpu": {
+    "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "driver_version": "581.42",
+    "memory_mib": 8192
   },
-  "status": "FAILED_NO_JAX_GPU",
-  "torch_cuda": false,
-  "note": "JAX backend is CPU-only in current envs; torch CUDA may still be true. Meaningful GPU JAX claims blocked."
+  "wsl": {
+    "distros_observed": ["docker-desktop", "Ubuntu"],
+    "ubuntu_state": "Running but first-boot OOBE blocks non-interactive shell",
+    "ubuntu_version": 2,
+    "probe_result": "TIMEOUT_NO_OUTPUT for wsl -d Ubuntu bash -lc and -u root",
+    "install_log": "experiments/logs/wsl_jax_bootstrap/install_stdout_20260806_025026.txt",
+    "install_message": "Provisioning the new WSL instance Ubuntu / This might take a while..."
+  },
+  "blocker": "Ubuntu WSL2 distro requires interactive first-user creation (UNIX username/password) which Cursor cannot complete.",
+  "exact_operator_commands": [
+    "Open Ubuntu from the Start menu (or: wsl -d Ubuntu) and complete first-user setup when prompted",
+    "Then: powershell -ExecutionPolicy Bypass -File scripts/windows/bootstrap_quantsilico_wsl_jax.ps1"
+  ],
+  "continuation_command": "powershell -ExecutionPolicy Bypass -File scripts/windows/bootstrap_quantsilico_wsl_jax.ps1",
+  "gpu_jax_verified": false,
+  "meaningful_training_authorized": false,
+  "updated_at": "2026-08-06T02:10:00+00:00"
 }

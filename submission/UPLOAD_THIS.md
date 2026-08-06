@@ -1,12 +1,14 @@
-NO_CANDIDATE_CURRENTLY_RECOMMENDED
+# UPLOAD_THIS
 
-Competition-native JAX pre-overnight programme completed without an upload-ready
-daytime package.
+Status: **NO_CANDIDATE_CURRENTLY_RECOMMENDED**
 
-Primary blocker: BLOCKED_COMPUTE (JAX GPU unavailable; prototype TPS insufficient).
+Programme: `CUDA_JAX_REPAIR_AND_DAYTIME_RESUME` (R-A…R-F)
 
-Do not upload smoke prototype weights.
-Do not re-upload V001 or Tactical V2.
-Do not recommend Hybrid.
+- No upload-ready daytime package was produced.
+- Do not upload.
+- Do not start overnight (`overnight_training_authorized = false`).
+- Do not execute Phase 10 (`phase_10_execution_authorized = false`).
 
-Overnight training remains unauthorized.
+Primary blocker: `BLOCKED_COMPUTE` / `AWAITING_OPERATOR_ACTION` (Ubuntu WSL first-user OOBE).
+
+Frozen live public package remains V001 under `submission/packages/QS-PUBLIC-V001/` (unchanged by this programme).

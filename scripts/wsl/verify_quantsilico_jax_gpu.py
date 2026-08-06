@@ -34,15 +34,19 @@ def main(repo_root: str) -> int:
     x = jax.device_put(jnp.ones((1024, 1024)))
     y = jax.device_put(jnp.ones((1024, 1024)))
     z = (x @ y).block_until_ready()
-    info["matmul_device"] = str(z.device())
-    info["input_device"] = str(x.device())
+    def _dev(arr) -> str:
+        d = getattr(arr, "device", None)
+        return str(d() if callable(d) else d)
+
+    info["matmul_device"] = _dev(z)
+    info["input_device"] = _dev(x)
 
     def loss(w):
         return jnp.sum((w @ x) ** 2)
 
     w = jax.device_put(jnp.ones((1024, 1024)))
     g = jax.grad(loss)(w).block_until_ready()
-    info["grad_device"] = str(g.device())
+    info["grad_device"] = _dev(g)
 
     report = {
         "schema_version": 1,

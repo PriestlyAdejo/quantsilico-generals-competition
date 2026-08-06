@@ -4,60 +4,46 @@
   "programme": "competition_native_jax_preovernight_v1",
   "branch": "research/phase9g-competition-native-jax-preovernight-v1",
   "closure_commit": "1eb19e620f3e357bfdca555376bb9158cc936834",
-  "current_commit": "f4fd49574f010644f7fcb395e5df91b3b0ad4ddb",
+  "starting_commit_resume": "ba0e1b665491bfe6224f167c2f32a5c9a7464739",
+  "current_commit": "44bfc53f6b8e50bcbe1d1da3c7018cdaf991e25c",
   "master_spec_path": "plans/competition_native_jax_preovernight_master.md",
-  "master_spec_sha256": "ee88301aac69a45dadafa4daeef2a863d4dcc15ddeda6e5df8f9caf098d1a56d",
-  "updated_at": "2026-08-06T00:50:52.284036+00:00",
+  "master_spec_sha256": "813be8a6f8a7098c8d0408a1fa4ed6147296912eeaa399b8ef5344ab913310f1",
+  "updated_at": "2026-08-06T02:20:00+00:00",
   "overnight_training_authorized": false,
-  "hard_stop_status": "IN_PROGRESS_RESUME",
+  "phase_10_execution_authorized": false,
+  "hard_stop_status": "AWAITING_PRE_OVERNIGHT_OPERATOR_REVIEW",
   "stages": {
-    "S0_phase9fu_closure": {
-      "status": "PASSED",
-      "commit": "1eb19e620f3e357bfdca555376bb9158cc936834"
+    "S0_phase9fu_closure": {"status": "PASSED", "commit": "1eb19e620f3e357bfdca555376bb9158cc936834"},
+    "S1_master_spec": {"status": "PASSED", "sha256": "813be8a6f8a7098c8d0408a1fa4ed6147296912eeaa399b8ef5344ab913310f1"},
+    "S1_provenance": {"status": "PARTIAL_EXTERNAL_PINS"},
+    "S2_repository_layout": {"status": "PASSED"},
+    "S3_competition_interface": {"status": "PASSED"},
+    "S4_ppo_architecture": {"status": "PARTIAL_GPU_PENDING", "detail": "JAX_CORE_IMPLEMENTED_GPU_UNVERIFIED"},
+    "R_A_working_tree_audit": {"status": "PASSED", "commit": "3b776d9"},
+    "R_B_classifications": {"status": "PASSED"},
+    "R_C_jax_core": {"status": "PASSED", "commit": "44bfc53"},
+    "R_D_wsl_cuda_jax": {
+      "status": "AWAITING_OPERATOR_ACTION",
+      "detail": "Ubuntu WSL2 present but first-user OOBE blocks non-interactive shell; not a CUDA/JAX failure",
+      "gate": "experiments/manifests/phase9g_gpu_execution_gate.json"
     },
-    "S1_master_spec": {
-      "status": "PASSED",
-      "sha256": "ee88301aac69a45dadafa4daeef2a863d4dcc15ddeda6e5df8f9caf098d1a56d"
+    "R_E_throughput_train": {
+      "status": "BLOCKED_COMPUTE",
+      "detail": "throughput_v2 + student_feasibility recorded; short/medium skipped",
+      "student_feasibility": "STUDENT_SHAPE_FEASIBLE"
     },
-    "S1_provenance": {
-      "status": "PARTIAL_EXTERNAL_PINS"
+    "R_F_package_controls_stop": {
+      "status": "PASSED_HARD_STOP",
+      "detail": "no package; controls skipped; overnight write-only; processes cleared"
     },
-    "S2_repository_layout": {
-      "status": "PASSED"
-    },
-    "S3_competition_interface": {
-      "status": "PASSED"
-    },
-    "S4_ppo_architecture": {
-      "status": "PARTIAL",
-      "detail": "NUMPY_PROTOTYPE_ONLY pending JAX core"
-    },
-    "S5_gpu_throughput": {
-      "status": "FAILED",
-      "detail": "FAILED_NO_JAX_GPU"
-    },
-    "S5_early_deployment": {
-      "status": "PASSED",
-      "detail": "DEPLOYMENT_REQUIRES_DISTILLATION"
-    },
-    "S6_daytime_training": {
-      "status": "BLOCKED",
-      "detail": "BLOCKED_COMPUTE_short_medium_skipped"
-    },
-    "S7_base_daytime_release": {
-      "status": "BLOCKED",
-      "detail": "BASE_DAYTIME_BLOCKED_PACKAGE"
-    },
-    "S8_controls_final": {
-      "status": "SKIPPED_WITH_REASON",
-      "detail": "NOT_JUSTIFIED_BY_EVIDENCE"
-    },
+    "S5_gpu_throughput": {"status": "BLOCKED", "detail": "AWAITING_OPERATOR_ACTION"},
+    "S5_early_deployment": {"status": "PASSED", "detail": "TEACHER_REQUIRES_STUDENT / STUDENT_SHAPE_FEASIBLE"},
+    "S6_daytime_training": {"status": "BLOCKED", "detail": "BLOCKED_COMPUTE_short_medium_skipped"},
+    "S7_base_daytime_release": {"status": "BLOCKED", "detail": "BASE_DAYTIME_BLOCKED_PACKAGE"},
+    "S8_controls_final": {"status": "SKIPPED_WITH_REASON", "detail": "NOT_JUSTIFIED_BY_EVIDENCE"},
     "S9_overnight_plan_hardstop": {
       "status": "PASSED",
       "overnight_parent_status": "NO_VALID_OVERNIGHT_PARENT"
-    },
-    "R_A_working_tree_audit": {
-      "status": "IN_PROGRESS"
     }
   },
   "owned_processes": [],
@@ -65,6 +51,7 @@
   "primary_blocker": "BLOCKED_COMPUTE",
   "resume_scope": "CUDA_JAX_REPAIR_AND_DAYTIME_RESUME",
   "authorized_by": "HUMAN_OPERATOR",
-  "operator_instruction": "CUDA_JAX_REPAIR_AND_DAYTIME_RESUME execute R-A..R-F; overnight/upload/Phase10 false",
-  "resume_started_at": "2026-08-06T01:42:27.049611+00:00"
+  "operator_instruction": "Complete Ubuntu WSL first-user setup, then re-run bootstrap; overnight/upload/Phase10 remain false until new authorisation.",
+  "resume_started_at": "2026-08-06T01:42:27.049611+00:00",
+  "resume_ended_at": "2026-08-06T02:20:00+00:00"
 }

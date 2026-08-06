@@ -20,7 +20,10 @@
     "gpu_at_match": false,
     "fault_budget": 50,
     "target_p99_action_s": 0.1,
-    "max_p99_for_promotion_s": 0.1
+    "max_p99_for_promotion_s": 0.1,
+    "max_cold_start_s": 10.0,
+    "max_rss_bytes": 2147483648,
+    "max_compressed_zip_bytes": 52428800
   },
   "headroom_targets": {
     "p99_inference_s": 0.1,

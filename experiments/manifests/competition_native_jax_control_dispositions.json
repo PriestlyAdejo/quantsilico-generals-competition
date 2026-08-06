@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_CONTROL_DISPOSITIONS",
+  "status": "SKIPPED_WITH_REASON",
+  "reason": "NOT_JUSTIFIED_BY_EVIDENCE: no qualified base daytime package",
+  "inference_only_initial_rule": "CONTROLLED_POLICY_PPO_RULE embedded in master spec",
+  "configs_attempted": 0,
+  "passive_telemetry_noninterference": "unit_covered",
+  "controlled_candidates": []
+}

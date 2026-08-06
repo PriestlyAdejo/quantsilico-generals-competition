@@ -63,7 +63,7 @@ def run_gpu_correctness_gate(out_dir: Path) -> dict:
         "zero_update_rho": rho,
         "device": device,
         "params_on_device": str(jax.devices()[0]),
-        "grad_device": str(leaf.device()) if hasattr(leaf, "device") else str(jax.devices()[0]),
+        "grad_device": str(leaf.device if hasattr(leaf, "device") else jax.devices()[0]),
         "note": "JAX forward+grad identity; GPU verification is separate gate.",
     }
     (out_dir / "gpu_correctness_gate.json").write_text(json.dumps(report, indent=2), encoding="utf-8")

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_GPU_CORRECTNESS_GATE",
+  "status": "PASSED",
+  "zero_update_rho": 1.0,
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "cpu",
+    "devices": [
+      "cpu:0"
+    ],
+    "jax_gpu": false,
+    "jaxlib_version": "0.11.0"
+  },
+  "params_on_device": "cpu:0",
+  "grad_device": "cpu:0",
+  "note": "JAX forward+grad identity; GPU verification is separate gate."
+}

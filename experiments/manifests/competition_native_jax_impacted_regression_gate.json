@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_IMPACTED_REGRESSION_GATE",
+  "status": "PASSED_WITH_ENVIRONMENT_EXCLUSIONS",
+  "ran_at": "2026-08-06T02:15:00+00:00",
+  "passed_suites": [
+    {
+      "cmd": "pytest tests/competition_native_jax tests/rules_conformance/test_critical_parity.py tests/unit/test_legal.py -q",
+      "result": "29 passed in 172.14s",
+      "log": "experiments/manifests/_impacted_reg2.out"
+    }
+  ],
+  "excluded_not_on_jax_path": [
+    {
+      "cmd": "pytest tests/unit/test_ppo_action_support.py",
+      "result": "4 failed DevicePolicyError CUDA required (torch CPU wheel)",
+      "reason": "Legacy Phase-9F torch PPO path; requires CUDA torch. Not exercised by competition_native_jax Optax learner. JAX PPO support covered by tests/competition_native_jax/test_ppo_zero_update.py and test_jax_core.py.",
+      "log": "experiments/manifests/_impacted_reg.out"
+    }
+  ],
+  "meaningful_gpu_smoke_training_authorized": false,
+  "blocker_for_gpu_smoke": "GPU_JAX_VERIFIED false (AWAITING_OPERATOR_ACTION)"
+}
