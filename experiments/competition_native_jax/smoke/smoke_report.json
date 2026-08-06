@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_TRAIN_RUN",
+  "config": {
+    "name": "smoke",
+    "max_transitions": 120,
+    "max_updates": 2,
+    "wall_seconds": 240,
+    "seed": 1
+  },
+  "status": "COMPLETED",
+  "transitions": 52,
+  "updates": 2,
+  "games": 2,
+  "elapsed_s": 101.49598129998776,
+  "measured_tps": 0.512335555890687,
+  "device": {
+    "numpy": true,
+    "jax_backend": "cpu",
+    "jax_devices": [
+      "cpu:0"
+    ],
+    "torch_cuda": false,
+    "jax_gpu": false
+  },
+  "checkpoint_raw": "experiments/competition_native_jax/smoke/smoke_raw.npz",
+  "checkpoint_ema": "experiments/competition_native_jax/smoke/smoke_ema.npz",
+  "jax_gpu_used": false,
+  "training_backend": "numpy_cpu_selfplay_prototype"
+}

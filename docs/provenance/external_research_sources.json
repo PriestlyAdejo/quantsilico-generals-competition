@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "kind": "EXTERNAL_RESEARCH_SOURCES",
+  "sources": [
+    {
+      "id": "official_generals_bots",
+      "url": "https://github.com/generals-bots/generals-bots",
+      "role": "official_simulator_and_competition_protocol",
+      "commit": "SUBMODULE_PIN",
+      "path_in_repo": "third_party/generals-bots",
+      "licence_hash": "SEE_SUBMODULE",
+      "vendored_into_src": false
+    },
+    {
+      "id": "external_paper_method",
+      "url": "UNPINNED_PENDING_CLONE",
+      "role": "methodological_inspiration_only",
+      "commit": "UNPINNED_PENDING_CLONE",
+      "licence_hash": "UNPINNED_PENDING_CLONE",
+      "vendored_into_src": false
+    },
+    {
+      "id": "external_public_code",
+      "url": "UNPINNED_PENDING_CLONE",
+      "role": "inspection_only_not_copied",
+      "commit": "UNPINNED_PENDING_CLONE",
+      "licence_hash": "UNPINNED_PENDING_CLONE",
+      "vendored_into_src": false
+    }
+  ]
+}

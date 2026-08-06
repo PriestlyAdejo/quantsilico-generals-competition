@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_EARLY_DEPLOYMENT_GATE",
+  "status": "DEPLOYMENT_REQUIRES_DISTILLATION",
+  "checkpoint": "experiments/competition_native_jax/smoke/smoke_raw.npz",
+  "checkpoint_sha256": "0c58a20d928b50954aa3ade045c231953b7c02048c9fecea73a3b3930fd6d213",
+  "serialized_param_bytes": 6751582,
+  "zip_estimate_bytes": 6951582,
+  "cold_load_and_first_action_s": 4.330842199997278,
+  "steady_p50_s": 3.0640353999915533,
+  "steady_p95_s": 4.155141199997161,
+  "steady_p99_s": 4.155141199997161,
+  "backend": "numpy_transformer",
+  "jaxlib_packaged": false,
+  "parity_note": "deployment uses same NumPy transformer as smoke training prototype",
+  "limits_ref": "experiments/manifests/competition_native_jax_deployment_limits.json"
+}

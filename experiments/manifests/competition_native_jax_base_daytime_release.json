@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "kind": "BASE_DAYTIME_RELEASE_CHECKPOINT",
+  "candidate_id": "QS-P9G-COMPETITION-POLICY-DAY-V1",
+  "status": "BASE_DAYTIME_BLOCKED_PACKAGE",
+  "reasons": [
+    "No competitively trained checkpoint (short/medium SKIPPED_WITH_REASON / BLOCKED_COMPUTE)",
+    "Early deployment gate DEPLOYMENT_REQUIRES_DISTILLATION (p99 ~4.16s >> 150ms)",
+    "Smoke prototype only; not evaluated under daytime protocol"
+  ],
+  "smoke_checkpoint_preserved": "experiments/competition_native_jax/smoke/smoke_raw.npz",
+  "smoke_checkpoint_sha256": "0c58a20d928b50954aa3ade045c231953b7c02048c9fecea73a3b3930fd6d213",
+  "package_zip": null,
+  "upload": false
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_THROUGHPUT_LADDER",
+  "status": "BLOCKED_COMPUTE",
+  "gpu_execution_gate": "FAILED_NO_JAX_GPU",
+  "measured_smoke_tps": 0.512335555890687,
+  "training_backend": "numpy_cpu_selfplay_prototype",
+  "declared_transition_budget_rule": "floor(0.85 * TPS * permitted_seconds)",
+  "short_day_budget_transitions": 0,
+  "medium_day_budget_transitions": 0,
+  "note": "JAX sees CPU only; NumPy prototype TPS too low for meaningful short/medium campaigns. Short and medium SKIPPED_WITH_REASON."
+}

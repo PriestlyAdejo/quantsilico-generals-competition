@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_DEPLOYMENT_LIMITS",
+  "resolved_at": "2026-08-06T00:33:17.8602162Z",
+  "sources": [
+    "https://generals.bot/docs#environment",
+    "third_party/generals-bots/README.md (links to environment docs)",
+    "src/generals_bot/rules.py FIRST_ACTION_DEADLINE_S/ACTION_DEADLINE_S/FAULT_BUDGET",
+    "src/generals_bot/submission/builder.py ZIP/unpacked/file-count checks"
+  ],
+  "limits": {
+    "cpu_cores": 1,
+    "process_memory_bytes": 2147483648,
+    "ordinary_action_deadline_s": 0.15,
+    "first_action_deadline_s": 10.0,
+    "compressed_package_bytes": 52428800,
+    "unpacked_package_bytes": 536870912,
+    "max_files": 10000,
+    "network_access": false,
+    "gpu_at_match": false,
+    "fault_budget": 50
+  },
+  "headroom_targets": {
+    "p99_inference_s": 0.1,
+    "rss_bytes": 1610612736,
+    "zip_bytes": 45088768,
+    "cold_load_s": 8.0
+  },
+  "official_docs_override_expected": true
+}

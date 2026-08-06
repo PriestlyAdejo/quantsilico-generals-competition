@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_PROMOTION_THRESHOLDS_V1",
+  "status": "FROZEN",
+  "frozen_after_smoke_before_meaningful_daytime": true,
+  "min_direct_score_rate_vs_v001": 0.55,
+  "max_suite_regression_vs_0_5": 0.05,
+  "max_draw_rate": 0.65,
+  "require_package_gates": true,
+  "require_p99_below_s": 0.1,
+  "note": "Not applied to smoke prototype; short/medium skipped."
+}

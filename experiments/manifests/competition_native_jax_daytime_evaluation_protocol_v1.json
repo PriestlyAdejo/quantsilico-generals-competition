@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_DAYTIME_EVALUATION_PROTOCOL_V1",
+  "status": "FROZEN",
+  "frozen_before_reading_competitive_results": true,
+  "screening": {"seeds": [101, 102, 103, 104], "maps": "competition_random", "pairs_per_opponent": 2},
+  "selection": {"seeds": [201, 202, 203, 204, 205, 206], "pairs_per_opponent": 4},
+  "confirmation": {"seeds": [301, 302, 303, 304, 305, 306, 307, 308], "pairs_per_opponent": 4},
+  "seat_swaps": true,
+  "opponents": [
+    "heuristic_v2f_plus_planner_terminal_fix",
+    "official_expander",
+    "official_hunter",
+    "heuristic_v2_aggressive",
+    "heuristic_v2_defensive"
+  ],
+  "max_turns": 1200,
+  "timeout_class": "INCOMPLETE_TIMEOUT_not_scored",
+  "scoring": "score_rate = (W + 0.5*D)/(W+D+L)",
+  "uncertainty": "Wilson_or_bootstrap_CI_on_paired_score",
+  "min_direct_improvement_vs_even": 0.05,
+  "max_baseline_regression": 0.05,
+  "max_draw_inflation": 0.15,
+  "tie_break": "lower_draw_rate_then_lower_package_p99",
+  "no_overlap_dev_selection_confirmation": true,
+  "note": "Protocol frozen; no competitive checkpoint results read because short/medium training skipped."
+}

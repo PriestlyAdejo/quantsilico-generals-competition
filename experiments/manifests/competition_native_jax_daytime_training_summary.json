@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_DAYTIME_TRAINING_SUMMARY",
+  "correctness": "PASSED",
+  "smoke": "COMPLETED_PROTOTYPE",
+  "smoke_transitions": 52,
+  "smoke_tps": 0.512335555890687,
+  "short_day": "SKIPPED_WITH_REASON",
+  "medium_day": "SKIPPED_WITH_REASON",
+  "skip_reason": "GATE_PROPAGATION: GPU execution FAILED_NO_JAX_GPU; measured prototype TPS insufficient for meaningful daytime budgets (BLOCKED_COMPUTE).",
+  "checkpoints": {
+    "smoke_raw": "experiments/competition_native_jax/smoke/smoke_raw.npz",
+    "smoke_ema": "experiments/competition_native_jax/smoke/smoke_ema.npz"
+  },
+  "canonical_lineage": "from_scratch_numpy_prototype",
+  "external_checkpoint_used": false
+}

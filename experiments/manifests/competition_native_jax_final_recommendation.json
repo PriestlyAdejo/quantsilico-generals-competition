@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_FINAL_RECOMMENDATION",
+  "recommendation": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
+  "considered": [
+    "QS-P9G-COMPETITION-POLICY-DAY-V1",
+    "QS-P9G-CONTROLLED-POLICY-DAY-V1",
+    "QS-P9G-COMPETITION-STUDENT-DAY-V1"
+  ],
+  "primary_blocker": "BLOCKED_COMPUTE",
+  "secondary_blockers": ["DEPLOYMENT_REQUIRES_DISTILLATION", "BLOCKED_CORRECTNESS_PATH_PARTIAL"],
+  "notes": [
+    "PPO zero-update correctness PASSED on NumPy masked support",
+    "JAX GPU unavailable; end-to-end JAX GPU training not executed",
+    "Smoke prototype TPS ~0.51; short/medium skipped",
+    "NumPy transformer p99 ~4s exceeds 150ms action deadline",
+    "Tactical/Hybrid remain rejected; never recommended"
+  ],
+  "upload": false,
+  "overnight_training_authorized": false
+}

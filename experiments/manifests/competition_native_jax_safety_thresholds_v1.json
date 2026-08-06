@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_SAFETY_THRESHOLDS_V1",
+  "status": "FROZEN",
+  "frozen_before_smoke": true,
+  "min_zero_update_rho_atol": 1e-5,
+  "require_pass_legal": true,
+  "require_action_dim": 3970,
+  "require_patch_bijection": true
+}

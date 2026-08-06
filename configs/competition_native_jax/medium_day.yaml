@@ -1,0 +1,5 @@
+name: medium_day
+max_transitions: 50000000
+max_updates: 2000
+wall_seconds: 14400
+seed: 3

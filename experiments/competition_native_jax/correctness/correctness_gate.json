@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_CORRECTNESS_GATE",
+  "status": "PASSED",
+  "zero_update_rho": 1.0,
+  "device": {
+    "numpy": true,
+    "jax_backend": "cpu",
+    "jax_devices": [
+      "cpu:0"
+    ],
+    "torch_cuda": false,
+    "jax_gpu": false
+  },
+  "note": "NumPy masked PPO ratio identity proven. JAX GPU hot path not claimed."
+}

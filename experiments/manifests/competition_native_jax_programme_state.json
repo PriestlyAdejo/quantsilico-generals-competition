@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_PROGRAMME_STATE",
+  "programme": "competition_native_jax_preovernight_v1",
+  "branch": "research/phase9g-competition-native-jax-preovernight-v1",
+  "closure_commit": "1eb19e620f3e357bfdca555376bb9158cc936834",
+  "current_commit": "1eb19e620f3e357bfdca555376bb9158cc936834",
+  "master_spec_path": "plans/competition_native_jax_preovernight_master.md",
+  "master_spec_sha256": "ee88301aac69a45dadafa4daeef2a863d4dcc15ddeda6e5df8f9caf098d1a56d",
+  "updated_at": "2026-08-06T00:50:52.284036+00:00",
+  "overnight_training_authorized": false,
+  "hard_stop_status": "AWAITING_PRE_OVERNIGHT_OPERATOR_REVIEW",
+  "stages": {
+    "S0_phase9fu_closure": {
+      "status": "PASSED",
+      "commit": "1eb19e620f3e357bfdca555376bb9158cc936834"
+    },
+    "S1_master_spec": {
+      "status": "PASSED",
+      "sha256": "ee88301aac69a45dadafa4daeef2a863d4dcc15ddeda6e5df8f9caf098d1a56d"
+    },
+    "S1_provenance": {
+      "status": "PASSED"
+    },
+    "S2_repository_layout": {
+      "status": "PASSED"
+    },
+    "S3_competition_interface": {
+      "status": "PASSED"
+    },
+    "S4_ppo_architecture": {
+      "status": "PASSED"
+    },
+    "S5_gpu_throughput": {
+      "status": "FAILED",
+      "detail": "FAILED_NO_JAX_GPU"
+    },
+    "S5_early_deployment": {
+      "status": "PASSED",
+      "detail": "DEPLOYMENT_REQUIRES_DISTILLATION"
+    },
+    "S6_daytime_training": {
+      "status": "BLOCKED",
+      "detail": "BLOCKED_COMPUTE_short_medium_skipped"
+    },
+    "S7_base_daytime_release": {
+      "status": "BLOCKED",
+      "detail": "BASE_DAYTIME_BLOCKED_PACKAGE"
+    },
+    "S8_controls_final": {
+      "status": "SKIPPED_WITH_REASON",
+      "detail": "NOT_JUSTIFIED_BY_EVIDENCE"
+    },
+    "S9_overnight_plan_hardstop": {
+      "status": "PASSED",
+      "overnight_parent_status": "NO_VALID_OVERNIGHT_PARENT"
+    }
+  },
+  "owned_processes": [],
+  "final_recommendation": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
+  "primary_blocker": "BLOCKED_COMPUTE"
+}

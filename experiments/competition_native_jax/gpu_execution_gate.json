@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9G_GPU_EXECUTION_GATE",
+  "device": {
+    "numpy": true,
+    "jax_backend": "cpu",
+    "jax_devices": [
+      "cpu:0"
+    ],
+    "torch_cuda": false,
+    "jax_gpu": false
+  },
+  "status": "FAILED_NO_JAX_GPU",
+  "torch_cuda": false,
+  "note": "JAX backend is CPU-only in current envs; torch CUDA may still be true. Meaningful GPU JAX claims blocked."
+}

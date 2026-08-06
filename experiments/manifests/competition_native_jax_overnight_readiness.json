@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_OVERNIGHT_READINESS",
+  "overnight_parent_status": "NO_VALID_OVERNIGHT_PARENT",
+  "overnight_ready": false,
+  "overnight_training_authorized": false,
+  "considered_lineages": [
+    {
+      "id": "smoke_raw",
+      "path": "experiments/competition_native_jax/smoke/smoke_raw.npz",
+      "rejected_because": "prototype_only_blocked_compute_undeployable_latency"
+    },
+    {
+      "id": "smoke_ema",
+      "path": "experiments/competition_native_jax/smoke/smoke_ema.npz",
+      "rejected_because": "prototype_only_blocked_compute_undeployable_latency"
+    }
+  ],
+  "blocker": "BLOCKED_COMPUTE",
+  "minimum_remediation": "Enable JAX GPU, remeasure TPS, train deployable (or distilled) policy under frozen protocols.",
+  "another_daytime_run_justified": true,
+  "plan_path": "plans/competition_native_jax_overnight_training_plan.md"
+}

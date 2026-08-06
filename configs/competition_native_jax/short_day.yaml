@@ -1,0 +1,5 @@
+name: short_day
+max_transitions: 5000000
+max_updates: 500
+wall_seconds: 5400
+seed: 2

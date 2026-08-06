@@ -17,10 +17,11 @@
   "phase_d_authorized": false,
   "phase_e_authorized": false,
   "current_phase": "PHASE_9FU_CLOSED_PRE_OVERNIGHT_REBUILD",
-  "status": "PRE_OVERNIGHT_REBUILD_AUTHORIZED",
+  "status": "AWAITING_PRE_OVERNIGHT_OPERATOR_REVIEW",
   "starting_commit": "ab7c9c0f541c47300406b8c1ae5932ba698b3973",
   "phase_a_terminal_report": "experiments/reports/phase9fu_stage3_terminal.md",
   "operator_instruction": "Human-authorised competition-native JAX pre-overnight rebuild; supersedes AWAITING_PHASE_B_OPERATOR_APPROVAL. Overnight/upload/portal/rental/Phase10 remain false.",
-  "next_required_operator_action": "Await programme hard-stop AWAITING_PRE_OVERNIGHT_OPERATOR_REVIEW after daytime rebuild completes.",
-  "updated_at": "2026-08-06T00:30:00+00:00"
+  "next_required_operator_action": "Review pre-overnight terminal report. Overnight remains unauthorized until explicit new approval.",
+  "updated_at": "2026-08-06T00:50:52.284036+00:00",
+  "terminal_report": "experiments/reports/competition_native_jax_preovernight_terminal.md"
 }

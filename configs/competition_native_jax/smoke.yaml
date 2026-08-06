@@ -1,0 +1,5 @@
+name: smoke
+max_transitions: 100000
+max_updates: 50
+wall_seconds: 1800
+seed: 1

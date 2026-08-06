@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_CONTROL_PROTOCOL_V1",
+  "status": "FROZEN",
+  "immutable_base_checkpoint": null,
+  "control_off": "IMPLEMENTED",
+  "max_configs": {"STATIC_RISK": 3, "PI": 3, "BARRIER": 3, "BOUNDED_MPC": 3, "COMBINED": 2},
+  "max_total_control_wall_seconds": 3600,
+  "dev_seeds": [401, 402, 403],
+  "selection_seeds": [501, 502, 503],
+  "confirmation_seeds": [601, 602, 603],
+  "no_overlap_with_base_confirmation": true,
+  "dispositions": {
+    "STATIC_RISK": "NOT_JUSTIFIED_BY_EVIDENCE",
+    "PI": "NOT_JUSTIFIED_BY_EVIDENCE",
+    "BARRIER": "NOT_JUSTIFIED_BY_EVIDENCE",
+    "BOUNDED_MPC": "NOT_JUSTIFIED_BY_EVIDENCE",
+    "COMBINED": "NOT_JUSTIFIED_BY_EVIDENCE"
+  },
+  "reason": "No upload-qualified base policy; passive telemetry noninterference unit-tested only; action-changing controls not started."
+}
