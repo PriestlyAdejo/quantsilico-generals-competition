@@ -20,7 +20,7 @@ Final status: AWAITING_PRE_OVERNIGHT_OPERATOR_REVIEW
 ## FINAL_RESPONSE_TEMPLATE (34 fields)
 
 1. starting branch/commit: `research/phase9g-competition-native-jax-preovernight-v1` / `ba0e1b665491bfe6224f167c2f32a5c9a7464739`
-2. ending branch/commit: same branch / (post-resume commit after this report is committed)
+2. ending branch/commit: same branch / `6ed651e98c0a93fb74ededf22d9eb61dfb170a86`
 3. working-tree audit: PASSED (`experiments/manifests/competition_native_jax_working_tree_audit.json`); `dist/upload_ready` deletions non-canonical
 4. frozen V001: `submission/packages/QS-PUBLIC-V001/e1237f77dee46993/package.zip` SHA `e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa`
 5. provenance: `PARTIAL_EXTERNAL_PINS` (`competition_native_jax_provenance_gate.json`)
