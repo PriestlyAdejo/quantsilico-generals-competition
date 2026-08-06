@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_EVAL_COMPLETE",
+  "created_at": "2026-08-05T18:49:39.816801+00:00",
+  "candidate_id": "QS-P9FU-HYBRID-BC-V1",
+  "protocol_version": "v1",
+  "protocol_sha256": "78edc3b31dabaeeb24906422effd7b3f98525cac6dcd92de8166b8ff1fdbdd0f",
+  "evaluation_runtime": "source_tree_policy_factory",
+  "partial_status": "COMPLETE",
+  "aggregate": {
+    "direct_vs_v001": {
+      "summary": {
+        "games": 32,
+        "pairs": 16,
+        "wins": 8,
+        "draws": 10,
+        "losses": 14,
+        "unscored_incomplete_timeout_games": 0,
+        "score_rate": 0.40625,
+        "draw_rate": 0.3125
+      },
+      "pairs_n": 16
+    },
+    "external_suite": {
+      "official_expander": {
+        "summary": {
+          "games": 16,
+          "pairs": 8,
+          "wins": 4,
+          "draws": 12,
+          "losses": 0,
+          "unscored_incomplete_timeout_games": 0,
+          "score_rate": 0.625,
+          "draw_rate": 0.75
+        },
+        "pairs_n": 8
+      },
+      "official_hunter": {
+        "summary": {
+          "games": 16,
+          "pairs": 8,
+          "wins": 0,
+          "draws": 0,
+          "losses": 16,
+          "unscored_incomplete_timeout_games": 0,
+          "score_rate": 0.0,
+          "draw_rate": 0.0
+        },
+        "pairs_n": 8
+      },
+      "heuristic_aggressive": {
+        "summary": {
+          "games": 16,
+          "pairs": 8,
+          "wins": 1,
+          "draws": 14,
+          "losses": 1,
+          "unscored_incomplete_timeout_games": 0,
+          "score_rate": 0.5,
+          "draw_rate": 0.875
+        },
+        "pairs_n": 8
+      },
+      "heuristic_defensive": {
+        "summary": {
+          "games": 16,
+          "pairs": 8,
+          "wins": 1,
+          "draws": 14,
+          "losses": 1,
+          "unscored_incomplete_timeout_games": 0,
+          "score_rate": 0.5,
+          "draw_rate": 0.875
+        },
+        "pairs_n": 8
+      }
+    },
+    "suite_score_rate_mean": 0.40625,
+    "status": "COMPLETE",
+    "evaluation_runtime": "source_tree_policy_factory",
+    "completed_pairs_n": 48
+  },
+  "partial_path": "experiments/manifests/phase9fu_eval_QS-P9FU-HYBRID-BC-V1.partial.json"
+}

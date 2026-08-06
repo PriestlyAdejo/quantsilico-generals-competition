@@ -1,0 +1,4 @@
+timestamp_utc=08/05/2026 16:56:45.ToUniversalTime().ToString('o')
+git_commit=ab7c9c0f541c47300406b8c1ae5932ba698b3973
+branch=research/phase9fs-ppo-semantics-repair-v1
+case=CASE_2

@@ -1,0 +1,15 @@
+{
+  "status": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
+  "package_path": null,
+  "reason": "Hybrid BC rejected under protocol v1: direct score_rate 0.40625 (needs >=0.55) and suite_ok false (suite_mean 0.40625 < 0.45). Tactical V2 portal-rejected / not V002-eligible.",
+  "classifications": {
+    "QS-P9FU-HYBRID-BC-V1": {
+      "label": "REJECTED",
+      "direct_improvement_vs_even": -0.09375,
+      "suite_score_rate_mean": 0.40625,
+      "pairs_ok": true,
+      "suite_ok": false,
+      "draw_ok": true
+    }
+  }
+}

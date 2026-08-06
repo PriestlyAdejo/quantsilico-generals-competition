@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "QS_P9FU_HEURISTIC_TACTICAL_V2_PACKAGE",
+  "created_at": "2026-08-05T13:32:27.787981+00:00",
+  "candidate": "heuristic_v2f_tactical_attack_v2",
+  "package_id": "QS-P9FU-HEURISTIC-TACTICAL-V2",
+  "build_hash": "22a6d05b7160d86f",
+  "sha256": "22a6d05b7160d86ff8d278da28d327d88a6236a4655d90a8bf99894473531770",
+  "package_path": "submission/packages/QS-P9FU-HEURISTIC-TACTICAL-V2/22a6d05b7160d86f/package.zip",
+  "bot_commit": "ab7c9c0f541c47300406b8c1ae5932ba698b3973",
+  "engine_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "report_status": "PACKAGED"
+}

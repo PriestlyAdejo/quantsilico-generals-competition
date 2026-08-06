@@ -1,0 +1,10 @@
+{
+  "role": "LIVE",
+  "public_version": "QS-PUBLIC-V001",
+  "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+  "stable_candidate_id": "QS-P9F-PORTAL-V0",
+  "build_hash": "e1237f77dee46993",
+  "package_path": "submission/packages/QS-PUBLIC-V001/e1237f77dee46993/package.zip",
+  "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+  "status": "LIVE"
+}

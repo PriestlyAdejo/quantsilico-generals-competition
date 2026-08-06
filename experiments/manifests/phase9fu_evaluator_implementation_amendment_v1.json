@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_EVALUATOR_IMPLEMENTATION_AMENDMENT",
+  "amendment_id": "v1",
+  "created_at": "2026-08-05T16:00:00+00:00",
+  "original_protocol_path": "experiments/manifests/phase9fu_evaluation_protocol.json",
+  "original_protocol_version": "v1",
+  "original_protocol_sha256": "78edc3b31dabaeeb24906422effd7b3f98525cac6dcd92de8166b8ff1fdbdd0f",
+  "protocol_semantics_unchanged": true,
+  "unchanged": [
+    "seeds",
+    "map_generation",
+    "seats",
+    "paired_definition",
+    "counts",
+    "critical_baselines",
+    "point_scoring",
+    "thresholds",
+    "classification_rules"
+  ],
+  "implementation_only_changes": [
+    "per-pair and per-game progress logging",
+    "atomic partial checkpoints",
+    "resume-from support",
+    "--candidate and --opponent CLI filters",
+    "game and candidate wall monitoring",
+    "heartbeat <= 60s",
+    "SIGINT flush of completed pairs only",
+    "INCOMPLETE_TIMEOUT classification without scoring timed-out games into score_rate"
+  ],
+  "timeout_protocol_rule": "Wall timeouts classify INCOMPLETE_TIMEOUT and do not convert into win/loss/draw/protocol_fault or score_rate contributions.",
+  "evaluation_runtime": "source_tree_policy_factory",
+  "evaluator_script": "scripts/phase9fu_paired_eval.py"
+}

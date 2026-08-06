@@ -1,0 +1,20 @@
+﻿
+
+ProcessId       : 20748
+ParentProcessId : 29388
+CreationDate    : 05/08/2026 14:38:38
+CommandLine     : "C:\Users\pries\Documents\Projects\quantsilico-generals-competition\.venv-training\Scripts\python.exe
+                  " -u scripts/phase9fu_paired_eval.py 
+CPU             : 0.03125
+WorkingSet64    : 573440
+
+ProcessId       : 2040
+ParentProcessId : 20748
+CreationDate    : 05/08/2026 14:38:38
+CommandLine     : "C:\Users\pries\AppData\Local\Programs\Python\Python312\python.exe" -u 
+                  scripts/phase9fu_paired_eval.py 
+CPU             : 11114.640625
+WorkingSet64    : 965406720
+
+
+

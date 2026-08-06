@@ -1,0 +1,20 @@
+{
+  "role": "RESEARCH_CANDIDATES",
+  "updated_at": "2026-08-05T13:38:56.834940+00:00",
+  "packages": [
+    {
+      "candidate_id": "QS-P9FU-HYBRID-BC-V1",
+      "build_hash": "5152a08eb774cf0e",
+      "package_path": "submission/packages/QS-P9FU-HYBRID-BC-V1/5152a08eb774cf0e/package.zip",
+      "sha256": "5152a08eb774cf0e29167e9469422834b0a6e40392a6035ccc0f830d50674b9f",
+      "status": "RESEARCH_CANDIDATE"
+    },
+    {
+      "candidate_id": "QS-P9FU-HEURISTIC-TACTICAL-V2",
+      "build_hash": "22a6d05b7160d86f",
+      "package_path": "submission/packages/QS-P9FU-HEURISTIC-TACTICAL-V2/22a6d05b7160d86f/package.zip",
+      "sha256": "22a6d05b7160d86ff8d278da28d327d88a6236a4655d90a8bf99894473531770",
+      "status": "RESEARCH_CANDIDATE"
+    }
+  ]
+}

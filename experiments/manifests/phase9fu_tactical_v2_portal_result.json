@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_TACTICAL_V2_PORTAL_RESULT",
+  "created_at": "2026-08-05T15:56:00+00:00",
+  "candidate_id": "QS-P9FU-HEURISTIC-TACTICAL-V2",
+  "runtime_policy": "heuristic_v2f_tactical_attack_v2",
+  "package_path": "submission/packages/QS-P9FU-HEURISTIC-TACTICAL-V2/22a6d05b7160d86f/package.zip",
+  "build_hash": "22a6d05b7160d86f",
+  "sha256": "22a6d05b7160d86ff8d278da28d327d88a6236a4655d90a8bf99894473531770",
+  "portal": {
+    "upload_timestamp_local": "2026-08-05T14:57:00+01:00",
+    "faults": 0,
+    "vs_expander": ["DRAW", "WIN", "DRAW"],
+    "vs_hunter": ["LOSS", "LOSS", "LOSS"],
+    "verdict": "NOT_QUALIFIED"
+  },
+  "local_diagnostic_from_aborted_opaque_run": {
+    "protocol_version": "v1",
+    "direct_vs_v001": {
+      "games": 32,
+      "pairs": 16,
+      "wins": 13,
+      "draws": 6,
+      "losses": 13,
+      "score_rate": 0.5,
+      "draw_rate": 0.1875
+    },
+    "suite_mean": 0.671875,
+    "min_direct_score_rate_improvement_vs_v001": 0.05,
+    "local_class": "NOT_V002_ELIGIBLE_UNDER_PROTOCOL_V1"
+  },
+  "combined_classification": {
+    "portal": "NOT_QUALIFIED",
+    "local": "NOT_V002_ELIGIBLE_UNDER_PROTOCOL_V1",
+    "final": [
+      "PORTAL_REJECTED",
+      "INELIGIBLE_FOR_V002",
+      "DO_NOT_REUPLOAD"
+    ]
+  }
+}

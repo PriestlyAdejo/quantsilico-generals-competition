@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_EVALUATION_PROTOCOL",
+  "protocol_version": "v1",
+  "created_at": "2026-08-05T14:30:00+00:00",
+  "frozen": true,
+  "note": "Numeric criteria locked BEFORE Stage 3 games. Changes require a new protocol_version and restart.",
+  "seeds": [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116],
+  "map_generation": {
+    "mode": "competition",
+    "note": "Official GeneralsEnv competition boards from seed"
+  },
+  "seats": "swap_within_pair",
+  "paired_definition": "One paired comparison = same map seed + opponent config, two games with seats swapped",
+  "counts": {
+    "direct_vs_v001_paired": 16,
+    "direct_vs_v001_games": 32,
+    "per_critical_baseline_paired": 8,
+    "per_critical_baseline_games": 16
+  },
+  "critical_baselines": ["official_expander", "official_hunter", "heuristic_aggressive", "heuristic_defensive"],
+  "castle_oriented_baseline": "heuristic_castle",
+  "include_castle_oriented_when_available": true,
+  "point_scoring": {"win": 1.0, "draw": 0.5, "loss": 0.0},
+  "thresholds": {
+    "min_direct_score_rate_improvement_vs_v001": 0.05,
+    "max_opponent_suite_score_rate_regression": 0.05,
+    "max_draw_rate_increase": 0.15,
+    "min_own_general_survival_improvement": 0.02,
+    "behavioural_scenario_pass_rate_min": 1.0,
+    "cpu_p95_decision_ms_max": 100.0,
+    "memory_mb_max": 2048,
+    "package_zip_mb_max": 50,
+    "tie_tolerance": {
+      "score_rate": 0.02,
+      "survival_rate": 0.02,
+      "early_hunt_rate": 0.02,
+      "castle_scenario": 0.02,
+      "timeout_rate": 0.01,
+      "cpu_p95_ms": 5.0,
+      "package_bytes": 1024
+    }
+  },
+  "crashes_timeouts_illegals": {
+    "crash": "loss_and_protocol_fault",
+    "timeout": "loss_and_protocol_fault",
+    "illegal_action": "loss_and_protocol_fault",
+    "max_protocol_faults": 0
+  },
+  "classification_rules": {
+    "V002": "BEHAVIOURAL_PASS and paired counts met and all thresholds satisfied and unique winner under MULTIPLE_PASSING_CANDIDATES_RULE",
+    "PROMISING_BUT_UNDER_SAMPLED": "improved signals but paired counts unmet OR multi-passer indistinguishability",
+    "REJECTED": "BEHAVIOURAL_FAIL or threshold regression beyond limits or protocol faults"
+  },
+  "MULTIPLE_PASSING_CANDIDATES_RULE": [
+    "higher_direct_paired_score_vs_v001",
+    "higher_aggregate_external_suite_score",
+    "higher_own_general_survival",
+    "lower_early_hunt_without_readiness",
+    "better_contextual_castle_scenario",
+    "lower_timeout_protocol_failure_rate",
+    "lower_cpu_p95_decision_latency",
+    "smaller_package_size"
+  ],
+  "scenarios": [
+    "known_eg_insufficient_army_no_commit",
+    "known_eg_sufficient_army_can_commit",
+    "emergency_defence_overrides",
+    "useful_castle_selectable",
+    "wasteful_castle_rejected",
+    "offroute_collect_suppressed_in_commit"
+  ],
+  "v001_identity": {
+    "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "candidate": "heuristic_v2f_plus_planner_terminal_fix",
+    "package": "submission/packages/QS-PUBLIC-V001/e1237f77dee46993/package.zip"
+  }
+}

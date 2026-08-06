@@ -1,0 +1,1507 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_EVAL_PARTIAL",
+  "candidate_id": "QS-P9FU-HYBRID-BC-V1",
+  "protocol_version": "v1",
+  "protocol_sha256": "78edc3b31dabaeeb24906422effd7b3f98525cac6dcd92de8166b8ff1fdbdd0f",
+  "evaluation_runtime": "source_tree_policy_factory",
+  "created_at": "2026-08-05T16:05:47.336231+00:00",
+  "updated_at": "2026-08-05T18:49:39.797799+00:00",
+  "status": "COMPLETE",
+  "planned_pairs": [
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 101
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 102
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 103
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 104
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 105
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 106
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 107
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 108
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 109
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 110
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 111
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 112
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 113
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 114
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 115
+    },
+    {
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "seed": 116
+    },
+    {
+      "opponent": "official_expander",
+      "seed": 1101
+    },
+    {
+      "opponent": "official_expander",
+      "seed": 1102
+    },
+    {
+      "opponent": "official_expander",
+      "seed": 1103
+    },
+    {
+      "opponent": "official_expander",
+      "seed": 1104
+    },
+    {
+      "opponent": "official_expander",
+      "seed": 1105
+    },
+    {
+      "opponent": "official_expander",
+      "seed": 1106
+    },
+    {
+      "opponent": "official_expander",
+      "seed": 1107
+    },
+    {
+      "opponent": "official_expander",
+      "seed": 1108
+    },
+    {
+      "opponent": "official_hunter",
+      "seed": 1101
+    },
+    {
+      "opponent": "official_hunter",
+      "seed": 1102
+    },
+    {
+      "opponent": "official_hunter",
+      "seed": 1103
+    },
+    {
+      "opponent": "official_hunter",
+      "seed": 1104
+    },
+    {
+      "opponent": "official_hunter",
+      "seed": 1105
+    },
+    {
+      "opponent": "official_hunter",
+      "seed": 1106
+    },
+    {
+      "opponent": "official_hunter",
+      "seed": 1107
+    },
+    {
+      "opponent": "official_hunter",
+      "seed": 1108
+    },
+    {
+      "opponent": "heuristic_aggressive",
+      "seed": 1101
+    },
+    {
+      "opponent": "heuristic_aggressive",
+      "seed": 1102
+    },
+    {
+      "opponent": "heuristic_aggressive",
+      "seed": 1103
+    },
+    {
+      "opponent": "heuristic_aggressive",
+      "seed": 1104
+    },
+    {
+      "opponent": "heuristic_aggressive",
+      "seed": 1105
+    },
+    {
+      "opponent": "heuristic_aggressive",
+      "seed": 1106
+    },
+    {
+      "opponent": "heuristic_aggressive",
+      "seed": 1107
+    },
+    {
+      "opponent": "heuristic_aggressive",
+      "seed": 1108
+    },
+    {
+      "opponent": "heuristic_defensive",
+      "seed": 1101
+    },
+    {
+      "opponent": "heuristic_defensive",
+      "seed": 1102
+    },
+    {
+      "opponent": "heuristic_defensive",
+      "seed": 1103
+    },
+    {
+      "opponent": "heuristic_defensive",
+      "seed": 1104
+    },
+    {
+      "opponent": "heuristic_defensive",
+      "seed": 1105
+    },
+    {
+      "opponent": "heuristic_defensive",
+      "seed": 1106
+    },
+    {
+      "opponent": "heuristic_defensive",
+      "seed": 1107
+    },
+    {
+      "opponent": "heuristic_defensive",
+      "seed": 1108
+    }
+  ],
+  "completed_pairs": {
+    "heuristic_v2f_plus_planner_terminal_fix:101": {
+      "seed": 101,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 963,
+          "scored": true,
+          "elapsed_s": 102.21987920001266,
+          "swap": false,
+          "seed": 101,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 1073,
+          "scored": true,
+          "elapsed_s": 84.89724849999766,
+          "swap": true,
+          "seed": 101,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:102": {
+      "seed": 102,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "win",
+          "winner": 0,
+          "turns": 822,
+          "scored": true,
+          "elapsed_s": 101.01872940000612,
+          "swap": false,
+          "seed": 102,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 133.46116299999994,
+          "swap": true,
+          "seed": 102,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:103": {
+      "seed": 103,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 101.78510929999175,
+          "swap": false,
+          "seed": 103,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 802,
+          "scored": true,
+          "elapsed_s": 47.32541459999629,
+          "swap": true,
+          "seed": 103,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:104": {
+      "seed": 104,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 167.60978939998313,
+          "swap": false,
+          "seed": 104,
+          "seat": 0
+        },
+        {
+          "wdl": "win",
+          "winner": 1,
+          "turns": 860,
+          "scored": true,
+          "elapsed_s": 105.638792200014,
+          "swap": true,
+          "seed": 104,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:105": {
+      "seed": 105,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 193.59884339998825,
+          "swap": false,
+          "seed": 105,
+          "seat": 0
+        },
+        {
+          "wdl": "win",
+          "winner": 1,
+          "turns": 803,
+          "scored": true,
+          "elapsed_s": 72.71629529999336,
+          "swap": true,
+          "seed": 105,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:106": {
+      "seed": 106,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 1150,
+          "scored": true,
+          "elapsed_s": 175.9432941999985,
+          "swap": false,
+          "seed": 106,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 159.37390129998676,
+          "swap": true,
+          "seed": 106,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:107": {
+      "seed": 107,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 119,
+          "scored": true,
+          "elapsed_s": 20.69318599998951,
+          "swap": false,
+          "seed": 107,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 393,
+          "scored": true,
+          "elapsed_s": 35.95734110000194,
+          "swap": true,
+          "seed": 107,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:108": {
+      "seed": 108,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "win",
+          "winner": 0,
+          "turns": 801,
+          "scored": true,
+          "elapsed_s": 85.24814150002203,
+          "swap": false,
+          "seed": 108,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 128,
+          "scored": true,
+          "elapsed_s": 6.254839500004891,
+          "swap": true,
+          "seed": 108,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:109": {
+      "seed": 109,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 329,
+          "scored": true,
+          "elapsed_s": 35.32003000000259,
+          "swap": false,
+          "seed": 109,
+          "seat": 0
+        },
+        {
+          "wdl": "win",
+          "winner": 1,
+          "turns": 806,
+          "scored": true,
+          "elapsed_s": 110.69409420000738,
+          "swap": true,
+          "seed": 109,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:110": {
+      "seed": 110,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "win",
+          "winner": 0,
+          "turns": 805,
+          "scored": true,
+          "elapsed_s": 120.50417719999678,
+          "swap": false,
+          "seed": 110,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 885,
+          "scored": true,
+          "elapsed_s": 88.59573619998991,
+          "swap": true,
+          "seed": 110,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:111": {
+      "seed": 111,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "win",
+          "winner": 0,
+          "turns": 561,
+          "scored": true,
+          "elapsed_s": 49.53457019999041,
+          "swap": false,
+          "seed": 111,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 801,
+          "scored": true,
+          "elapsed_s": 46.86441840001498,
+          "swap": true,
+          "seed": 111,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:112": {
+      "seed": 112,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 1100,
+          "scored": true,
+          "elapsed_s": 142.37269180000294,
+          "swap": false,
+          "seed": 112,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 206.30497430000105,
+          "swap": true,
+          "seed": 112,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:113": {
+      "seed": 113,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 446,
+          "scored": true,
+          "elapsed_s": 48.098435400024755,
+          "swap": false,
+          "seed": 113,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 187.01541270001326,
+          "swap": true,
+          "seed": 113,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:114": {
+      "seed": 114,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 171,
+          "scored": true,
+          "elapsed_s": 9.188016599975526,
+          "swap": false,
+          "seed": 114,
+          "seat": 0
+        },
+        {
+          "wdl": "win",
+          "winner": 1,
+          "turns": 218,
+          "scored": true,
+          "elapsed_s": 17.94083460001275,
+          "swap": true,
+          "seed": 114,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:115": {
+      "seed": 115,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 106.61422290001065,
+          "swap": false,
+          "seed": 115,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 144.28651390000596,
+          "swap": true,
+          "seed": 115,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_v2f_plus_planner_terminal_fix:116": {
+      "seed": 116,
+      "opponent": "heuristic_v2f_plus_planner_terminal_fix",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 904,
+          "scored": true,
+          "elapsed_s": 89.87810130001162,
+          "swap": false,
+          "seed": 116,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 170.98197130000335,
+          "swap": true,
+          "seed": 116,
+          "seat": 1
+        }
+      ]
+    },
+    "official_expander:1101": {
+      "seed": 1101,
+      "opponent": "official_expander",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 149.60896300000604,
+          "swap": false,
+          "seed": 1101,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 138.6172345999803,
+          "swap": true,
+          "seed": 1101,
+          "seat": 1
+        }
+      ]
+    },
+    "official_expander:1102": {
+      "seed": 1102,
+      "opponent": "official_expander",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 107.09728149999864,
+          "swap": false,
+          "seed": 1102,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 124.29375650000293,
+          "swap": true,
+          "seed": 1102,
+          "seat": 1
+        }
+      ]
+    },
+    "official_expander:1103": {
+      "seed": 1103,
+      "opponent": "official_expander",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 111.75634599998011,
+          "swap": false,
+          "seed": 1103,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 155.67154340000707,
+          "swap": true,
+          "seed": 1103,
+          "seat": 1
+        }
+      ]
+    },
+    "official_expander:1104": {
+      "seed": 1104,
+      "opponent": "official_expander",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 83.06114580002031,
+          "swap": false,
+          "seed": 1104,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 137.90964329999406,
+          "swap": true,
+          "seed": 1104,
+          "seat": 1
+        }
+      ]
+    },
+    "official_expander:1105": {
+      "seed": 1105,
+      "opponent": "official_expander",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 152.33501700000488,
+          "swap": false,
+          "seed": 1105,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 124.3053087000153,
+          "swap": true,
+          "seed": 1105,
+          "seat": 1
+        }
+      ]
+    },
+    "official_expander:1106": {
+      "seed": 1106,
+      "opponent": "official_expander",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 113.91141830000561,
+          "swap": false,
+          "seed": 1106,
+          "seat": 0
+        },
+        {
+          "wdl": "win",
+          "winner": 1,
+          "turns": 588,
+          "scored": true,
+          "elapsed_s": 60.05513160000555,
+          "swap": true,
+          "seed": 1106,
+          "seat": 1
+        }
+      ]
+    },
+    "official_expander:1107": {
+      "seed": 1107,
+      "opponent": "official_expander",
+      "games": [
+        {
+          "wdl": "win",
+          "winner": 0,
+          "turns": 508,
+          "scored": true,
+          "elapsed_s": 57.33569450001232,
+          "swap": false,
+          "seed": 1107,
+          "seat": 0
+        },
+        {
+          "wdl": "win",
+          "winner": 1,
+          "turns": 1096,
+          "scored": true,
+          "elapsed_s": 119.90208070000517,
+          "swap": true,
+          "seed": 1107,
+          "seat": 1
+        }
+      ]
+    },
+    "official_expander:1108": {
+      "seed": 1108,
+      "opponent": "official_expander",
+      "games": [
+        {
+          "wdl": "win",
+          "winner": 0,
+          "turns": 822,
+          "scored": true,
+          "elapsed_s": 93.47249049998936,
+          "swap": false,
+          "seed": 1108,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 60.20929040000192,
+          "swap": true,
+          "seed": 1108,
+          "seat": 1
+        }
+      ]
+    },
+    "official_hunter:1101": {
+      "seed": 1101,
+      "opponent": "official_hunter",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 688,
+          "scored": true,
+          "elapsed_s": 48.74926709997817,
+          "swap": false,
+          "seed": 1101,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 747,
+          "scored": true,
+          "elapsed_s": 56.05492699999013,
+          "swap": true,
+          "seed": 1101,
+          "seat": 1
+        }
+      ]
+    },
+    "official_hunter:1102": {
+      "seed": 1102,
+      "opponent": "official_hunter",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 153,
+          "scored": true,
+          "elapsed_s": 10.2964287000068,
+          "swap": false,
+          "seed": 1102,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 691,
+          "scored": true,
+          "elapsed_s": 48.59887390001677,
+          "swap": true,
+          "seed": 1102,
+          "seat": 1
+        }
+      ]
+    },
+    "official_hunter:1103": {
+      "seed": 1103,
+      "opponent": "official_hunter",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 269,
+          "scored": true,
+          "elapsed_s": 17.07733410000219,
+          "swap": false,
+          "seed": 1103,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 829,
+          "scored": true,
+          "elapsed_s": 91.22230729999137,
+          "swap": true,
+          "seed": 1103,
+          "seat": 1
+        }
+      ]
+    },
+    "official_hunter:1104": {
+      "seed": 1104,
+      "opponent": "official_hunter",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 179,
+          "scored": true,
+          "elapsed_s": 10.690988200018182,
+          "swap": false,
+          "seed": 1104,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 173,
+          "scored": true,
+          "elapsed_s": 12.063470900000539,
+          "swap": true,
+          "seed": 1104,
+          "seat": 1
+        }
+      ]
+    },
+    "official_hunter:1105": {
+      "seed": 1105,
+      "opponent": "official_hunter",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 107,
+          "scored": true,
+          "elapsed_s": 7.429891300009331,
+          "swap": false,
+          "seed": 1105,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 411,
+          "scored": true,
+          "elapsed_s": 26.235335000004852,
+          "swap": true,
+          "seed": 1105,
+          "seat": 1
+        }
+      ]
+    },
+    "official_hunter:1106": {
+      "seed": 1106,
+      "opponent": "official_hunter",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 109,
+          "scored": true,
+          "elapsed_s": 7.529523000004701,
+          "swap": false,
+          "seed": 1106,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 144,
+          "scored": true,
+          "elapsed_s": 10.380100600013975,
+          "swap": true,
+          "seed": 1106,
+          "seat": 1
+        }
+      ]
+    },
+    "official_hunter:1107": {
+      "seed": 1107,
+      "opponent": "official_hunter",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 1025,
+          "scored": true,
+          "elapsed_s": 117.34239370000432,
+          "swap": false,
+          "seed": 1107,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 192,
+          "scored": true,
+          "elapsed_s": 10.456903400016017,
+          "swap": true,
+          "seed": 1107,
+          "seat": 1
+        }
+      ]
+    },
+    "official_hunter:1108": {
+      "seed": 1108,
+      "opponent": "official_hunter",
+      "games": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 383,
+          "scored": true,
+          "elapsed_s": 21.791450899996562,
+          "swap": false,
+          "seed": 1108,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 183,
+          "scored": true,
+          "elapsed_s": 9.595506700017722,
+          "swap": true,
+          "seed": 1108,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_aggressive:1101": {
+      "seed": 1101,
+      "opponent": "heuristic_aggressive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 156.57927280000877,
+          "swap": false,
+          "seed": 1101,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 153.69986379999318,
+          "swap": true,
+          "seed": 1101,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_aggressive:1102": {
+      "seed": 1102,
+      "opponent": "heuristic_aggressive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 119.54054829999222,
+          "swap": false,
+          "seed": 1102,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 129.9764269000152,
+          "swap": true,
+          "seed": 1102,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_aggressive:1103": {
+      "seed": 1103,
+      "opponent": "heuristic_aggressive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 138.2533086000185,
+          "swap": false,
+          "seed": 1103,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 198.53922830001102,
+          "swap": true,
+          "seed": 1103,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_aggressive:1104": {
+      "seed": 1104,
+      "opponent": "heuristic_aggressive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 112.81690230002278,
+          "swap": false,
+          "seed": 1104,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 160.16821319999872,
+          "swap": true,
+          "seed": 1104,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_aggressive:1105": {
+      "seed": 1105,
+      "opponent": "heuristic_aggressive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 195.0342675000138,
+          "swap": false,
+          "seed": 1105,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 157.65238189999945,
+          "swap": true,
+          "seed": 1105,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_aggressive:1106": {
+      "seed": 1106,
+      "opponent": "heuristic_aggressive",
+      "games": [
+        {
+          "wdl": "win",
+          "winner": 0,
+          "turns": 832,
+          "scored": true,
+          "elapsed_s": 97.76335009999457,
+          "swap": false,
+          "seed": 1106,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 874,
+          "scored": true,
+          "elapsed_s": 124.62699809999322,
+          "swap": true,
+          "seed": 1106,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_aggressive:1107": {
+      "seed": 1107,
+      "opponent": "heuristic_aggressive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 165.49790210000356,
+          "swap": false,
+          "seed": 1107,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 164.63646799998241,
+          "swap": true,
+          "seed": 1107,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_aggressive:1108": {
+      "seed": 1108,
+      "opponent": "heuristic_aggressive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 126.75696320002316,
+          "swap": false,
+          "seed": 1108,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 76.55768699999317,
+          "swap": true,
+          "seed": 1108,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_defensive:1101": {
+      "seed": 1101,
+      "opponent": "heuristic_defensive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 160.17611930001294,
+          "swap": false,
+          "seed": 1101,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 161.09934999997495,
+          "swap": true,
+          "seed": 1101,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_defensive:1102": {
+      "seed": 1102,
+      "opponent": "heuristic_defensive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 126.45370230000117,
+          "swap": false,
+          "seed": 1102,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 137.23010690000956,
+          "swap": true,
+          "seed": 1102,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_defensive:1103": {
+      "seed": 1103,
+      "opponent": "heuristic_defensive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 149.87090650000027,
+          "swap": false,
+          "seed": 1103,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 210.48143580000033,
+          "swap": true,
+          "seed": 1103,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_defensive:1104": {
+      "seed": 1104,
+      "opponent": "heuristic_defensive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 121.14949650000199,
+          "swap": false,
+          "seed": 1104,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 168.6050905000011,
+          "swap": true,
+          "seed": 1104,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_defensive:1105": {
+      "seed": 1105,
+      "opponent": "heuristic_defensive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 183.9383211999957,
+          "swap": false,
+          "seed": 1105,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 108.76435230000061,
+          "swap": true,
+          "seed": 1105,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_defensive:1106": {
+      "seed": 1106,
+      "opponent": "heuristic_defensive",
+      "games": [
+        {
+          "wdl": "win",
+          "winner": 0,
+          "turns": 832,
+          "scored": true,
+          "elapsed_s": 67.63181270001223,
+          "swap": false,
+          "seed": 1106,
+          "seat": 0
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 874,
+          "scored": true,
+          "elapsed_s": 82.77913340000669,
+          "swap": true,
+          "seed": 1106,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_defensive:1107": {
+      "seed": 1107,
+      "opponent": "heuristic_defensive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 125.48819720000029,
+          "swap": false,
+          "seed": 1107,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 128.40762240000186,
+          "swap": true,
+          "seed": 1107,
+          "seat": 1
+        }
+      ]
+    },
+    "heuristic_defensive:1108": {
+      "seed": 1108,
+      "opponent": "heuristic_defensive",
+      "games": [
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 92.05422029999318,
+          "swap": false,
+          "seed": 1108,
+          "seat": 0
+        },
+        {
+          "wdl": "draw",
+          "winner": null,
+          "turns": 1200,
+          "scored": true,
+          "elapsed_s": 61.72229929998866,
+          "swap": true,
+          "seed": 1108,
+          "seat": 1
+        }
+      ]
+    }
+  },
+  "completed_pair_order": [
+    "heuristic_v2f_plus_planner_terminal_fix:101",
+    "heuristic_v2f_plus_planner_terminal_fix:102",
+    "heuristic_v2f_plus_planner_terminal_fix:103",
+    "heuristic_v2f_plus_planner_terminal_fix:104",
+    "heuristic_v2f_plus_planner_terminal_fix:105",
+    "heuristic_v2f_plus_planner_terminal_fix:106",
+    "heuristic_v2f_plus_planner_terminal_fix:107",
+    "heuristic_v2f_plus_planner_terminal_fix:108",
+    "heuristic_v2f_plus_planner_terminal_fix:109",
+    "heuristic_v2f_plus_planner_terminal_fix:110",
+    "heuristic_v2f_plus_planner_terminal_fix:111",
+    "heuristic_v2f_plus_planner_terminal_fix:112",
+    "heuristic_v2f_plus_planner_terminal_fix:113",
+    "heuristic_v2f_plus_planner_terminal_fix:114",
+    "heuristic_v2f_plus_planner_terminal_fix:115",
+    "heuristic_v2f_plus_planner_terminal_fix:116",
+    "official_expander:1101",
+    "official_expander:1102",
+    "official_expander:1103",
+    "official_expander:1104",
+    "official_expander:1105",
+    "official_expander:1106",
+    "official_expander:1107",
+    "official_expander:1108",
+    "official_hunter:1101",
+    "official_hunter:1102",
+    "official_hunter:1103",
+    "official_hunter:1104",
+    "official_hunter:1105",
+    "official_hunter:1106",
+    "official_hunter:1107",
+    "official_hunter:1108",
+    "heuristic_aggressive:1101",
+    "heuristic_aggressive:1102",
+    "heuristic_aggressive:1103",
+    "heuristic_aggressive:1104",
+    "heuristic_aggressive:1105",
+    "heuristic_aggressive:1106",
+    "heuristic_aggressive:1107",
+    "heuristic_aggressive:1108",
+    "heuristic_defensive:1101",
+    "heuristic_defensive:1102",
+    "heuristic_defensive:1103",
+    "heuristic_defensive:1104",
+    "heuristic_defensive:1105",
+    "heuristic_defensive:1106",
+    "heuristic_defensive:1107",
+    "heuristic_defensive:1108"
+  ],
+  "interrupted": false,
+  "incomplete_timeout": false
+}

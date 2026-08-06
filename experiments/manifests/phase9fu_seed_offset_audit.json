@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_SEED_OFFSET_AUDIT",
+  "audited_at": "2026-08-06T00:30:00+00:00",
+  "protocol_path": "experiments/manifests/phase9fu_evaluation_protocol.json",
+  "protocol_sha256": "78edc3b31dabaeeb24906422effd7b3f98525cac6dcd92de8166b8ff1fdbdd0f",
+  "evaluator_path": "scripts/phase9fu_paired_eval.py",
+  "convention": {
+    "direct_vs_v001": "uses protocol seeds as-is",
+    "critical_baselines": "uses seed + 1000 for each protocol seed",
+    "rationale": "Separates baseline pair RNG from direct-vs-V001 pair RNG without changing opponent identities or seat-swap protocol."
+  },
+  "material_impact_on_hybrid_rejection": false,
+  "hybrid_direct_score_rate": 0.40625,
+  "hybrid_rejection_decisive_without_rerun": true,
+  "rerun_authorized": false,
+  "conclusion": "PRESERVE_HYBRID_REJECTION; offset is intentional evaluator convention, not a result-changing defect."
+}

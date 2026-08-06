@@ -1,0 +1,14 @@
+{
+  "role": "RELATED_REPACKAGES",
+  "packages": [
+    {
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_candidate_id": "QS-P9F-PORTAL-V0",
+      "build_hash": "898b37b104545fa6",
+      "package_path": "submission/packages/QS-P9F-PORTAL-V0/898b37b104545fa6/package.zip",
+      "sha256": "898b37b104545fa6217877dd2db2af7c6e8810f41b4ba1f79cc8530b798d558e",
+      "status": "RELATED_REPACKAGE",
+      "note": "Never LIVE / RECOMMENDED / UPLOAD_READY"
+    }
+  ]
+}

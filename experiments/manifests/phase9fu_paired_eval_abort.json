@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_PAIRED_EVAL_ABORT",
+  "created_at": "2026-08-05T15:56:00+00:00",
+  "case": "CASE_2",
+  "run_status": "ABORTED_OPAQUE_NO_CHECKPOINT",
+  "reason": "No per-pair progress, no resumable checkpoint and excessive unobservable runtime.",
+  "local_candidate_result": {
+    "QS-P9FU-HEURISTIC-TACTICAL-V2": {
+      "status": "DIAGNOSTIC_LOCAL_PARTIAL_FROM_LOG",
+      "direct_vs_v001": {
+        "games": 32,
+        "pairs": 16,
+        "wins": 13,
+        "draws": 6,
+        "losses": 13,
+        "score_rate": 0.5,
+        "draw_rate": 0.1875
+      },
+      "suite_mean": 0.671875,
+      "competitive_class": "NOT_V002_ELIGIBLE_UNDER_PROTOCOL_V1"
+    },
+    "QS-P9FU-HYBRID-BC-V1": {
+      "status": "NOT_EVALUATED_TO_COMPLETION",
+      "run_status": "ABORTED_OPAQUE_NO_CHECKPOINT"
+    }
+  },
+  "preserved_under": "experiments/aborted_runs/phase9fu_paired_eval_20260805",
+  "process_ids_at_abort": [20748, 2040],
+  "git_commit": "ab7c9c0f541c47300406b8c1ae5932ba698b3973",
+  "protocol_version": "v1",
+  "evaluation_runtime": "source_tree_policy_factory"
+}

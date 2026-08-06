@@ -1,0 +1,20 @@
+{
+  "status": "HAS_REJECTED",
+  "packages": [
+    {
+      "candidate_id": "QS-P9FU-HEURISTIC-TACTICAL-V2",
+      "runtime_policy": "heuristic_v2f_tactical_attack_v2",
+      "build_hash": "22a6d05b7160d86f",
+      "sha256": "22a6d05b7160d86ff8d278da28d327d88a6236a4655d90a8bf99894473531770",
+      "package_path": "submission/packages/QS-P9FU-HEURISTIC-TACTICAL-V2/22a6d05b7160d86f/package.zip",
+      "classifications": [
+        "PORTAL_REJECTED",
+        "INELIGIBLE_FOR_V002",
+        "DO_NOT_REUPLOAD"
+      ],
+      "portal_verdict": "NOT_QUALIFIED",
+      "local_class": "NOT_V002_ELIGIBLE_UNDER_PROTOCOL_V1",
+      "recorded_at": "2026-08-05T15:56:00+00:00"
+    }
+  ]
+}

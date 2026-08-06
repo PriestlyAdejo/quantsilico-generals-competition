@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "HYBRID_PACKAGE_RUNTIME_CONFIRMATION",
+  "status": "PASS",
+  "package": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/submission/packages/QS-P9FU-HYBRID-BC-V1/5152a08eb774cf0e/package.zip",
+  "sha256": "5152a08eb774cf0e29167e9469422834b0a6e40392a6035ccc0f830d50674b9f",
+  "fixture_seeds": [
+    101,
+    102,
+    103
+  ],
+  "max_turns": 40,
+  "comparisons": [
+    {
+      "seed": 101,
+      "turns": 40,
+      "exact_action_equality": true
+    },
+    {
+      "seed": 102,
+      "turns": 40,
+      "exact_action_equality": true
+    },
+    {
+      "seed": 103,
+      "turns": 40,
+      "exact_action_equality": true
+    }
+  ],
+  "divergences": [],
+  "note": "Deployment confirmation only; does not modify Stage 3 competitive scores."
+}
