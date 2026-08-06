@@ -4,7 +4,7 @@
   "programme": "competition_native_jax_preovernight_v1",
   "branch": "research/phase9g-competition-native-jax-preovernight-v1",
   "closure_commit": "1eb19e620f3e357bfdca555376bb9158cc936834",
-  "current_commit": "1eb19e620f3e357bfdca555376bb9158cc936834",
+  "current_commit": "f4fd49574f010644f7fcb395e5df91b3b0ad4ddb",
   "master_spec_path": "plans/competition_native_jax_preovernight_master.md",
   "master_spec_sha256": "ee88301aac69a45dadafa4daeef2a863d4dcc15ddeda6e5df8f9caf098d1a56d",
   "updated_at": "2026-08-06T00:50:52.284036+00:00",
