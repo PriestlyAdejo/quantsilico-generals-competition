@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_WORKING_TREE_AUDIT",
+  "audited_at": "2026-08-06T01:45:00+00:00",
+  "branch": "research/phase9g-competition-native-jax-preovernight-v1",
+  "commit": "ba0e1b665491bfe6224f167c2f32a5c9a7464739",
+  "v001": {
+    "canonical_path": "submission/packages/QS-PUBLIC-V001/e1237f77dee46993/package.zip",
+    "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "live_role_matches": true,
+    "bytes_unchanged": true
+  },
+  "dist_upload_ready_deletions": {
+    "classification": "NON_CANONICAL_DISPOSABLE_COPIES",
+    "canonical_replacement": "submission/packages/QS-PUBLIC-V001/e1237f77dee46993/package.zip",
+    "safe_to_commit_deletion": true,
+    "note": "Frozen public V001 lives under submission/packages; dist/upload_ready held generated duplicates."
+  },
+  "unrelated_dirty_left_unstaged": [
+    "experiments/manifests/phase9f_autonomous_run_state.json",
+    "experiments/manifests/ppo_smoke.json",
+    "scripts/run_phase9f_autonomous.py",
+    "src/generals_bot/policies/heuristic_v2_ablations.py",
+    "src/generals_bot/submission/__init__.py",
+    "src/generals_bot/training/ppo.py",
+    "historical phase9f/9fr/9fs manifests and logs"
+  ],
+  "resume_scope": "CUDA_JAX_REPAIR_AND_DAYTIME_RESUME"
+}

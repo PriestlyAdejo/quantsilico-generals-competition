@@ -9,7 +9,7 @@
   "master_spec_sha256": "ee88301aac69a45dadafa4daeef2a863d4dcc15ddeda6e5df8f9caf098d1a56d",
   "updated_at": "2026-08-06T00:50:52.284036+00:00",
   "overnight_training_authorized": false,
-  "hard_stop_status": "AWAITING_PRE_OVERNIGHT_OPERATOR_REVIEW",
+  "hard_stop_status": "IN_PROGRESS_RESUME",
   "stages": {
     "S0_phase9fu_closure": {
       "status": "PASSED",
@@ -20,7 +20,7 @@
       "sha256": "ee88301aac69a45dadafa4daeef2a863d4dcc15ddeda6e5df8f9caf098d1a56d"
     },
     "S1_provenance": {
-      "status": "PASSED"
+      "status": "PARTIAL_EXTERNAL_PINS"
     },
     "S2_repository_layout": {
       "status": "PASSED"
@@ -29,7 +29,8 @@
       "status": "PASSED"
     },
     "S4_ppo_architecture": {
-      "status": "PASSED"
+      "status": "PARTIAL",
+      "detail": "NUMPY_PROTOTYPE_ONLY pending JAX core"
     },
     "S5_gpu_throughput": {
       "status": "FAILED",
@@ -54,9 +55,16 @@
     "S9_overnight_plan_hardstop": {
       "status": "PASSED",
       "overnight_parent_status": "NO_VALID_OVERNIGHT_PARENT"
+    },
+    "R_A_working_tree_audit": {
+      "status": "IN_PROGRESS"
     }
   },
   "owned_processes": [],
   "final_recommendation": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
-  "primary_blocker": "BLOCKED_COMPUTE"
+  "primary_blocker": "BLOCKED_COMPUTE",
+  "resume_scope": "CUDA_JAX_REPAIR_AND_DAYTIME_RESUME",
+  "authorized_by": "HUMAN_OPERATOR",
+  "operator_instruction": "CUDA_JAX_REPAIR_AND_DAYTIME_RESUME execute R-A..R-F; overnight/upload/Phase10 false",
+  "resume_started_at": "2026-08-06T01:42:27.049611+00:00"
 }
