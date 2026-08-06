@@ -170,3 +170,64 @@ Replay/DAgger is not on the critical path.
 Overnight execution; auto-upload; portal mutation; rented compute; Phase 10;
 recommending Tactical/Hybrid; silent PASS on policy exceptions; packaging jaxlib
 without size/latency feasibility.
+
+## Terminal response template (FINAL_RESPONSE_TEMPLATE_RULE)
+
+Required fields for CUDA JAX daytime resume hard-stop:
+
+1. starting branch/commit
+2. ending branch/commit
+3. working-tree audit result
+4. frozen V001 verification
+5. provenance correction result
+6. JAX architecture audit classification
+7. files for JAX transformer / rollout / GAE / PPO / EMA
+8. WSL distribution and version
+9. GPU model and driver
+10. JAX/jaxlib versions
+11. JAX backend and devices
+12. device-placement proof
+13. environment FPS
+14. full-rollout FPS
+15. valid learning TPS
+16. compilation time
+17. peak VRAM
+18. GPU correctness result
+19. smoke result
+20. short daytime result
+21. medium daytime result or exact skip reason
+22. raw versus EMA result
+23. selected base checkpoint or blocker
+24. deployment backend
+25. cold start and p50/p95/p99
+26. memory and package size
+27. base package classification
+28. control dispositions
+29. final candidate or no-candidate blocker
+30. exact package path and SHA when present
+31. UPLOAD_THIS status
+32. overnight-parent classification
+33. confirmation no programme process remains
+34. exact next human decision
+
+Prominent summary: UPLOAD-READY DAYTIME CANDIDATE EXISTS or NO UPLOAD-READY DAYTIME CANDIDATE
+
+## CONTROLLED_POLICY_PPO_RULE
+
+Initial control experiments are inference-only.
+
+If a controller later affects data collection, PPO must store and replay the
+exact controlled distribution:
+
+rho_t = controlled_pi_new(a_t | x_t) / controlled_pi_old(a_t | x_t)
+
+Do not train using base-policy likelihoods for controller-selected actions.
+
+## DEPLOYMENT_HEADROOM_RULE (frozen defaults pending live verify)
+
+- official hard action deadline: 150 ms
+- target_p99_action_s: 0.100
+- max_p99_for_promotion_s: 0.100
+- max_cold_start_s: 10.0
+- max_rss_bytes: 2147483648 (hard); operational headroom below
+- max_compressed_zip_bytes: 52428800

@@ -18,7 +18,9 @@
     "max_files": 10000,
     "network_access": false,
     "gpu_at_match": false,
-    "fault_budget": 50
+    "fault_budget": 50,
+    "target_p99_action_s": 0.1,
+    "max_p99_for_promotion_s": 0.1
   },
   "headroom_targets": {
     "p99_inference_s": 0.1,
@@ -26,5 +28,6 @@
     "zip_bytes": 45088768,
     "cold_load_s": 8.0
   },
-  "official_docs_override_expected": true
+  "official_docs_override_expected": true,
+  "headroom_frozen_before_candidate_latency": true
 }

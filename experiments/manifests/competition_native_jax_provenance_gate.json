@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "kind": "COMPETITION_NATIVE_JAX_PROVENANCE_GATE",
-  "status": "PASSED_WITH_UNPINNED_SOURCES",
+  "status": "PARTIAL_EXTERNAL_PINS",
   "documents": [
     "docs/provenance/external_research_sources.md",
     "docs/provenance/external_research_sources.json",
     "docs/research/competition_native_jax_methodological_basis.md",
     "docs/research/competition_native_jax_discrepancies.md"
   ],
-  "note": "External paper/code commits remain UNPINNED_PENDING_CLONE; official submodule is in-repo."
+  "official_submodule_commit": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462"
 }

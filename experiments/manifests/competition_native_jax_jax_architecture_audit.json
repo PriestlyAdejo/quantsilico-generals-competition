@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_ARCHITECTURE_AUDIT",
+  "classification": "NUMPY_PROTOTYPE_ONLY",
+  "jax_hot_path_matches": 0,
+  "model": "MISSING",
+  "rollout": "MISSING",
+  "gae": "MISSING",
+  "ppo": "MISSING",
+  "storage": "MISSING",
+  "numpy_allowed_as": "deployment_reference_only",
+  "s4_reclassification": "PARTIAL"
+}
