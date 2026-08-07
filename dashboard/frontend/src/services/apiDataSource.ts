@@ -159,9 +159,9 @@ function mapModel(row: Json): ModelRecord {
   const notes = Array.isArray(row.notes) ? row.notes.map(String).join("; ") : str(row.notes);
   const hasParams = typeof row.parameters === "number" && Number.isFinite(row.parameters);
   const hasSteps = typeof row.training_steps === "number" && Number.isFinite(row.training_steps);
-  const wins = row.wins ?? row.wdl && asObj(row.wdl as Json).wins;
-  const draws = row.draws ?? row.wdl && asObj(row.wdl as Json).draws;
-  const losses = row.losses ?? row.wdl && asObj(row.wdl as Json).losses;
+  const wins = row.wins ?? (row.wdl && asObj(row.wdl as Json).wins);
+  const draws = row.draws ?? (row.wdl && asObj(row.wdl as Json).draws);
+  const losses = row.losses ?? (row.wdl && asObj(row.wdl as Json).losses);
   const hasWdl =
     typeof wins === "number" && typeof draws === "number" && typeof losses === "number";
   return {

@@ -50,9 +50,9 @@ export default function ExperimentsPage() {
 
   const comparisonData = selectedRecords.length > 0 ? selectedRecords.map(e => ({
     name: e.candidate.length > 12 ? e.candidate.slice(0, 12) + "…" : e.candidate,
-    wins: e.wdl.wins,
-    draws: e.wdl.draws,
-    losses: e.wdl.losses,
+    wins: e.wdl?.wins ?? 0,
+    draws: e.wdl?.draws ?? 0,
+    losses: e.wdl?.losses ?? 0,
     discovery: e.discoveryRate ?? 0,
   })) : [];
 
