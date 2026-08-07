@@ -1,0 +1,47 @@
+{
+  "checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\checkpoints\\cloud_gpu_last_push_v1\\ckpt_plus_10000000",
+  "checkpoint_transitions": 11571200,
+  "checkpoint_update": 2135,
+  "elapsed_s": 69.44355369999539,
+  "ema_sha256": "6d10f203587feffe3ffa19a0f35c087aebb7c577d5455735fe30eabf31845249",
+  "kind": "CLOUD_HUNTER_CANARY",
+  "protocol": {
+    "backend": "cpu",
+    "games": 2,
+    "max_turns": 1200,
+    "opponent": "official_hunter",
+    "seat_swaps": true,
+    "seed": 1201
+  },
+  "results": [
+    {
+      "elapsed_s": 43.05594280001242,
+      "focal_seat": 0,
+      "opponent": "official_hunter",
+      "scored": true,
+      "seed": 1201,
+      "turns": 100,
+      "wdl": "loss",
+      "winner": 1
+    },
+    {
+      "elapsed_s": 26.34085919999052,
+      "focal_seat": 1,
+      "opponent": "official_hunter",
+      "scored": true,
+      "seed": 1201,
+      "turns": 79,
+      "wdl": "loss",
+      "winner": 0
+    }
+  ],
+  "schema_version": 1,
+  "selection_warning": "Two-game canary only; not sufficient for teacher selection.",
+  "status": "COMPLETE",
+  "summary": {
+    "draws": 0,
+    "losses": 2,
+    "wins": 0
+  },
+  "written_at": "2026-08-07T20:04:24.352836+00:00"
+}
