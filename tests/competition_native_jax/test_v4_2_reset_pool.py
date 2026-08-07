@@ -15,6 +15,8 @@ from generals_bot.competition_native_jax.static_geometry_jax import (
     get_static_geometry,
     index_to_engine_action_static,
 )
+from generals_bot.competition_native_jax.transformer_jax import init_params
+from train.competition_native_jax.rollout_selfplay_jax import collect_selfplay_batch
 
 
 def test_reset_pool_entry_matches_reset_one() -> None:
@@ -83,3 +85,30 @@ def test_static_geometry_shapes() -> None:
     assert g.manhattan.shape == (441, 441)
     assert g.action_source_cell.shape == (3970,)
     assert g.playable.shape == (4, 21, 21)
+
+
+def test_rollout_carry_continues_episode_across_ppo_updates() -> None:
+    """A second rollout must not silently restart every game at turn zero."""
+    pool = build_competition_reset_pool(
+        jax.random.PRNGKey(41), pool_size=2, min_grid=18, max_grid=18
+    )
+    params = init_params(jax.random.PRNGKey(42))
+    _batch1, carry1 = collect_selfplay_batch(
+        params,
+        num_envs=1,
+        rollout_len=2,
+        pool=pool,
+        seed=43,
+        return_carry=True,
+    )
+    _batch2, carry2 = collect_selfplay_batch(
+        params,
+        num_envs=1,
+        rollout_len=2,
+        pool=pool,
+        seed=44,
+        carry=carry1,
+        return_carry=True,
+    )
+    assert int(carry1.states.time[0]) == 2
+    assert int(carry2.states.time[0]) == 4

@@ -29,7 +29,7 @@ from generals_bot.competition_native_jax.transformer_jax import forward, forward
 from train.competition_native_jax.ema_jax import ema_update
 from train.competition_native_jax.gae_jax import gae_advantages_batch_jit
 from train.competition_native_jax.ppo_jax import make_optimizer, ppo_update
-from train.competition_native_jax.rollout_selfplay_jax import collect_selfplay_batch
+from train.competition_native_jax.rollout_selfplay_jax import RolloutCarry, collect_selfplay_batch
 from train.competition_native_jax.train_jax import (
     detect_jax_device,
     lineage_hashes,
@@ -58,6 +58,18 @@ MILESTONES = (
 
 def utc_now() -> str:
     return datetime.now(UTC).isoformat()
+
+
+def runtime_implementation_hash() -> str:
+    """Identity of the exact cloud loop plus its stateful rollout implementation."""
+    root = Path(__file__).resolve().parents[1]
+    digest = hashlib.sha256()
+    for relative in (
+        "scripts/cloud_gpu_last_push.py",
+        "train/competition_native_jax/rollout_selfplay_jax.py",
+    ):
+        digest.update((root / relative).read_bytes())
+    return digest.hexdigest()
 
 
 def atomic_json(path: Path, obj: Any) -> None:
@@ -184,14 +196,17 @@ def one_update(
     pool,
     seed: int,
     diagnostics: bool,
+    rollout_carry: RolloutCarry | None = None,
 ):
-    batch = collect_selfplay_batch(
+    batch, rollout_carry = collect_selfplay_batch(
         params,
         num_envs=num_envs,
         rollout_len=rollout_len,
         seed=seed,
         reset_pool_size=RESET_POOL_SIZE,
         pool=pool,
+        carry=rollout_carry,
+        return_carry=True,
     )
     flat, _advantages, returns = flatten_batch(batch)
     before = params
@@ -218,7 +233,7 @@ def one_update(
         result.update(
             {key: float(value) for key, value in post_update_diagnostics(params, flat).items()}
         )
-    return params, ema, opt_state, result, int(host_rewards.size)
+    return params, ema, opt_state, result, int(host_rewards.size), rollout_carry
 
 
 def optax_global_norm(tree) -> jax.Array:
@@ -311,7 +326,8 @@ def run_geometry(args: argparse.Namespace) -> int:
         ema = jax.device_put(loaded["ema"])
         opt_state = loaded["opt_state"]
         seed_base = 10_000 + candidate_index * 10_000
-        params, ema, opt_state, _warm, _ = one_update(
+        rollout_carry = None
+        params, ema, opt_state, _warm, _, rollout_carry = one_update(
             params,
             ema,
             opt_state,
@@ -321,6 +337,7 @@ def run_geometry(args: argparse.Namespace) -> int:
             pool=pool,
             seed=seed_base,
             diagnostics=True,
+            rollout_carry=rollout_carry,
         )
         target_updates = math.ceil(args.transitions / (num_envs * rollout_len))
         metrics: list[dict[str, Any]] = []
@@ -329,7 +346,7 @@ def run_geometry(args: argparse.Namespace) -> int:
         for update_index in range(target_updates):
             if time.perf_counter() - gate_start >= args.wall_seconds:
                 raise RuntimeError("GEOMETRY_GATE_WALL_CLOCK_CAP reached during candidate")
-            params, ema, opt_state, row, count = one_update(
+            params, ema, opt_state, row, count, rollout_carry = one_update(
                 params,
                 ema,
                 opt_state,
@@ -341,6 +358,7 @@ def run_geometry(args: argparse.Namespace) -> int:
                 diagnostics=update_index == 0
                 or update_index == target_updates - 1
                 or update_index % 5 == 4,
+                rollout_carry=rollout_carry,
             )
             transitions += count
             row.update({"update_index": update_index + 1, "transitions": transitions})
@@ -360,6 +378,7 @@ def run_geometry(args: argparse.Namespace) -> int:
             "parent_checkpoint": str(args.parent),
             "parent_checkpoint_learner": EXPECTED_PARENT_LEARNER,
             "runtime_learner": lineage_hashes()["learner_implementation_hash"],
+            "runtime_implementation_hash": runtime_implementation_hash(),
             "checkpoint_compatible_continuation": True,
             "exact_frozen_source_continuation": False,
             "geometry_pilot": True,
@@ -451,10 +470,11 @@ def run_train(args: argparse.Namespace) -> int:
     started = time.perf_counter()
     session_start = transitions
     last_metrics: dict[str, Any] = {}
+    rollout_carry = None
     exit_reason = "TRAINING_BUDGET_STOP_AT"
     while datetime.now(UTC) < stop_at and not stop_request.exists():
         updates += 1
-        params, ema, opt_state, last_metrics, count = one_update(
+        params, ema, opt_state, last_metrics, count, rollout_carry = one_update(
             params,
             ema,
             opt_state,
@@ -464,6 +484,7 @@ def run_train(args: argparse.Namespace) -> int:
             pool=pool,
             seed=seed,
             diagnostics=updates % 10 == 0,
+            rollout_carry=rollout_carry,
         )
         seed += 1
         transitions += count
@@ -510,6 +531,7 @@ def run_train(args: argparse.Namespace) -> int:
                 "reset_pool_size": RESET_POOL_SIZE,
                 "parent_checkpoint": str(args.parent),
                 "runtime_learner": lineage_hashes()["learner_implementation_hash"],
+                "runtime_implementation_hash": runtime_implementation_hash(),
                 "checkpoint_compatible_continuation": True,
                 "exact_frozen_source_continuation": False,
                 "milestone_delta": milestone,
@@ -536,6 +558,7 @@ def run_train(args: argparse.Namespace) -> int:
         "reset_pool_size": RESET_POOL_SIZE,
         "parent_checkpoint": str(args.parent),
         "runtime_learner": lineage_hashes()["learner_implementation_hash"],
+        "runtime_implementation_hash": runtime_implementation_hash(),
         "checkpoint_compatible_continuation": True,
         "exact_frozen_source_continuation": False,
         "exit_reason": exit_reason,

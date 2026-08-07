@@ -9,6 +9,7 @@ resume into this path.
 
 from __future__ import annotations
 
+from functools import partial
 from typing import Any, NamedTuple
 
 import jax
@@ -44,6 +45,35 @@ class RolloutCarry(NamedTuple):
     params: dict
     pool: Any
     pool_cursor: jax.Array
+
+
+def initialise_rollout_carry(
+    params: dict,
+    *,
+    num_envs: int,
+    seed: int,
+    reset_pool_size: int = 4096,
+    pool: Any | None = None,
+) -> RolloutCarry:
+    """Create episode state once for a continuous sequence of PPO updates."""
+    key = jax.random.PRNGKey(seed)
+    key, pk, rk = jax.random.split(key, 3)
+    if pool is None:
+        pool = build_competition_reset_pool(pk, reset_pool_size)
+    pool_size = int(jax.tree_util.tree_leaves(pool)[0].shape[0])
+    if pool_size < num_envs:
+        raise ValueError(f"reset_pool_size/actual {pool_size} < num_envs {num_envs}")
+    init_idx = jnp.arange(num_envs, dtype=jnp.int32)
+    states = jax.tree_util.tree_map(lambda x: x[init_idx], pool)
+    pool_cursor = jnp.full((num_envs,), num_envs, dtype=jnp.int32)
+    mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
+    mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
+    return RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor)
+
+
+@partial(jax.jit, static_argnames=("rollout_len",))
+def _run_rollout_scan(carry: RolloutCarry, *, rollout_len: int):
+    return jax.lax.scan(rollout_step, carry, xs=None, length=rollout_len)
 
 
 def _value_from_logits(value_logits: jax.Array) -> jax.Array:
@@ -119,38 +149,33 @@ def collect_selfplay_batch(
     seed: int = 0,
     reset_pool_size: int = 4096,
     pool: Any | None = None,
-) -> dict[str, Any]:
-    """Compiled vmap+scan collect. No Python env/time loops; no in-scan map gen."""
-    key = jax.random.PRNGKey(seed)
-    key, pk, rk = jax.random.split(key, 3)
-    if pool is None:
-        pool = build_competition_reset_pool(pk, reset_pool_size)
-    pool_size = int(jax.tree_util.tree_leaves(pool)[0].shape[0])
-    if pool_size < num_envs:
-        raise ValueError(f"reset_pool_size/actual {pool_size} < num_envs {num_envs}")
-    # Initialise envs from the first num_envs pool slots; cursor starts at num_envs
-    init_idx = jnp.arange(num_envs, dtype=jnp.int32)
-    states = jax.tree_util.tree_map(lambda x: x[init_idx], pool)
-    pool_cursor = jnp.full((num_envs,), num_envs, dtype=jnp.int32)
-    mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
-    mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
-    carry = RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor)
+    carry: RolloutCarry | None = None,
+    return_carry: bool = False,
+) -> dict[str, Any] | tuple[dict[str, Any], RolloutCarry]:
+    """Collect one rollout, optionally continuing episode state from the prior update.
 
-    def scan_fn(c, _):
-        return rollout_step(c, None)
-
-    @jax.jit
-    def run(c):
-        return jax.lax.scan(scan_fn, c, xs=None, length=rollout_len)
-
-    final_carry, traj = run(carry)
+    Callers performing multiple PPO updates must retain and pass ``carry``.  The
+    default remains a one-shot collector for benchmarks and compatibility.
+    """
+    if carry is None:
+        carry = initialise_rollout_carry(
+            params,
+            num_envs=num_envs,
+            seed=seed,
+            reset_pool_size=reset_pool_size,
+            pool=pool,
+        )
+    else:
+        carry = carry._replace(params=params)
+    pool_size = int(jax.tree_util.tree_leaves(carry.pool)[0].shape[0])
+    final_carry, traj = _run_rollout_scan(carry, rollout_len=rollout_len)
     jax.block_until_ready(traj["rewards"])
     # Bootstrap value from post-scan p0 observation (device-side; no host traj rebuild)
     sp_b, gv_b, _ = observe_batch_p0(final_carry.states, final_carry.mem0)
     out_b = forward_batch(params, sp_b, gv_b)
     bootstrap = _value_from_logits(out_b["value_logits"])
     jax.block_until_ready(bootstrap)
-    return {
+    batch = {
         **traj,
         "bootstrap_values": bootstrap,
         "backend": "official_mit_jax_primitives_plus_qs_scan",
@@ -159,10 +184,11 @@ def collect_selfplay_batch(
         "reset_pool_size": pool_size,
         "reset_path": "device_competition_reset_pool",
     }
+    return (batch, final_carry) if return_carry else batch
 
 
 # Compatibility re-exports used by older tests (wrappers, not training entrypoint)
-from generals_bot.competition_native_jax.competition_env_jax import (  # noqa: E402
+from generals_bot.competition_native_jax.competition_env_jax import (  # noqa: E402, F401, I001
     legal_mask_one_jax as legal_mask_jax,
     observe_one_jax,
 )
