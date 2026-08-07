@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_PARENT_INTEGRITY_LOCAL",
+  "status": "LOCAL_VERIFIED_PENDING_REMOTE_TRANSFER",
+  "source_path": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_final",
+  "unc_path": "\\\\wsl$\\Ubuntu\\home\\pries\\quantsilico-runtime\\emergency_rolling_v1\\training\\checkpoints\\ckpt_final",
+  "update": 1524,
+  "transitions": 1560576,
+  "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "exit_reason": "EXPERIMENTS_STOP_AT",
+  "complete_ok": true,
+  "files": {
+    "raw.npz": {"bytes": 6755490, "sha256": "A8BC3109656371FEE8BBE1F3A19721237B1429C613D2B265EC1CC86590CA5902"},
+    "ema.npz": {"bytes": 6755083, "sha256": "C2961EFA514B1CADF13ABE4CFCE12E1FBD8FC0220688005A894F03B31FEBA17E"},
+    "opt_state.npz": {"bytes": 12600237, "sha256": "8CEF2D4C8DB388638AA3AD73D67F4A0796BE62E7AB4C3078D6DE9FA4F741E8C6"},
+    "meta.json": {"bytes": 1248, "sha256": "F29BDB839810B91BF8A3558EFE8FB70E1F8EAC36C906EC7C194CE0858B1EC60D"}
+  },
+  "note": "Do not use Windows repo mirror weights; SHA mismatch vs WSL canonical.",
+  "updated_at": "2026-08-07T13:10:00+00:00"
+}

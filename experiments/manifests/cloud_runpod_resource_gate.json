@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_RUNPOD_RESOURCE_GATE",
+  "programme": "CLOUD_GPU_LAST_PUSH_V1",
+  "status": "RUNNING_RECONCILED",
+  "pod_id": "wvjrnxbpcjnr8h",
+  "pod_name_expected": "generals_competition",
+  "gpu_expected": "1x NVIDIA A100 SXM 80GB",
+  "gpu_observed": "NVIDIA A100-SXM4-80GB",
+  "gpu_uuid": "GPU-1a17cf92-ee9c-f585-e641-20183e2cd4cf",
+  "ssh_endpoints": {
+    "current": {
+      "host": "216.81.248.113",
+      "port": 13489,
+      "user": "root",
+      "identity": "~/.ssh/id_ed25519",
+      "pubkey_fingerprint_sha256": "SHA256:Qp4GcQf59FS2btbLZviKEmhSmx1i9oZUXNX7CNjEPzM",
+      "auth_result": "OK",
+      "status": "CURRENT",
+      "tested_at_local": "2026-08-07T15:48:48+01:00",
+      "hostname": "65134eff5289",
+      "nproc": 128,
+      "python": "3.11.10",
+      "workspace": "writable"
+    },
+    "superseded": [
+      {"port": 19040, "status": "SUPERSEDED", "result": "CONNECTION_REFUSED"},
+      {"port": 13126, "status": "SUPERSEDED", "result": "PORT_CHANGED_AFTER_RESTART"}
+    ]
+  },
+  "auth_fix": {
+    "root_cause": "Pod env PUBLIC_KEY was literal string 'quantsilico', not SSH pubkey",
+    "action": "update-pod PUBLIC_KEY to local id_ed25519.pub then restart-pod",
+    "pod_id": "wvjrnxbpcjnr8h"
+  },
+  "runpod_mcp": {
+    "configured": true,
+    "auth": "AUTHENTICATED"
+  },
+  "cost_usd_per_hour": 1.59,
+  "storage_reconciliation": {
+    "workspace_mount_size_gb": 50,
+    "workspace_mount_path": "/workspace",
+    "separate_network_volumes": [],
+    "earlier_create_50gb_network_volume_event_interpretation": "pod persistent workspace mount; no separate Network Volume returned by account inventory",
+    "unexpected_network_volume_safe_removal_candidate": false,
+    "network_volume_deleted": false
+  },
+  "trainer": {
+    "pid": 86110,
+    "tmux": "cloud_train",
+    "orchestrator_tmux": "cloud_orchestrator",
+    "geometry": "512x32",
+    "training_budget_stop_at": "2026-08-08T00:32:00Z"
+  },
+  "blocker": null,
+  "amendments_locked": [
+    "ENVIRONMENT_PARITY_GATE_not_win_py312_lock",
+    "CLOUD_TRAINING_GEOMETRY_GATE_same_immutable_parent_each_candidate",
+    "budget_recompute_from_current_balance_before_long_train",
+    "budget_post_training_reserve_usd_3_plus_20_30m_margin",
+    "STOP_pod_even_if_local_sync_fails",
+    "Linux_dashboard_wrappers_not_start.cmd",
+    "baseline_before_async_canary_max_3pct_tps_penalty",
+    "flowchart_order_authoritative_over_phase_letters",
+    "long_ppo_before_dashboard_polish"
+  ],
+  "local_parent_stage_integrity": "PASS",
+  "updated_at": "2026-08-07T19:17:12+00:00"
+}

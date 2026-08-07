@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_PARENT_COMPATIBILITY",
+  "status": "CLOUD_PARENT_COMPATIBILITY_PASS",
+  "parent": "/workspace/quantsilico-runtime/cloud_gpu_last_push_v1/parent_u1524",
+  "update": 1524,
+  "transitions": 1560576,
+  "parent_learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "code_learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+  "learner_hash_drift": true,
+  "learner_hash_note": "Parent checkpoint lineage is 2b10\u2026; current worktree hashes differently. Frozen 2b10 source bytes were not recoverable from git/history. Compat PASS means load\u2192update\u2192reload\u2192update succeeded on A100.",
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/root/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  },
+  "lineage_code": {
+    "env_semantics_hash": "87b07cb838959100fad4f7cfd31b96066268be52ed91edfea0c735ea01d59b34",
+    "env_implementation_hash": "742df29c39df5bde504f8ff35586b87d3375a8d6dd8824e6d5ba3e1b0dc0fc1e",
+    "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+    "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+    "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+  },
+  "smoke_update_metrics": {
+    "entropy": 2.1231284141540527,
+    "pg": -3.6458635577218956e-07,
+    "ratio": 1.0000042915344238,
+    "vloss": 2.3512206077575684,
+    "loss": 1.1543787717819214
+  },
+  "reload_update_metrics": {
+    "entropy": 2.09133243560791,
+    "pg": -6.230540066098911e-07,
+    "ratio": 1.0000009536743164,
+    "vloss": 2.351215362548828,
+    "loss": 1.154693603515625
+  },
+  "jax_version": "0.11.0",
+  "backend": "gpu",
+  "xla_mem_fraction": "0.80",
+  "written_at": "2026-08-07T15:40:26.390211+00:00"
+}

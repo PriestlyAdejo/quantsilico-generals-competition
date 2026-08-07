@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_SOURCE_SNAPSHOT",
+  "status": "REMOTE_FROZEN_AND_HASH_VERIFIED",
+  "repo_root": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition",
+  "branch": "research/phase9g-competition-native-jax-preovernight-v1",
+  "head": "2df3c6a33db3a9d9f31b55a93ee6685985f85b97",
+  "remote": "git@github.com:PriestlyAdejo/quantsilico-generals-competition.git",
+  "dirty": true,
+  "diff_sha256": "a522634da3c1dfbdbf52f7d6121d59c0db81937b62bf2a73b46ffa0ffef0288d",
+  "diff_bytes": 147382,
+  "transfer_policy": "The remote launch archive is the immutable source of truth for the authoritative PPO process.",
+  "remote_archive": "/workspace/quantsilico-runtime/cloud_gpu_last_push_v1/source_freeze/launch_source.tar.zst",
+  "remote_archive_sha256_verified": true,
+  "frozen_core_sha256": {
+    "scripts/cloud_gpu_last_push.py": "daa1ff56e9b2a6029b8e83ba63f317983d0513b6ce159f21efd973b5e24f7df1",
+    "train/competition_native_jax/ppo_jax.py": "492a3b83a727b01977692cdf36008c67046c030194e83be7524c409ba7fd35dd",
+    "train/competition_native_jax/rollout_selfplay_jax.py": "8115829aff5e2bd0e53aab5738c9ba287837221803428a4df0b9705c0e344752",
+    "src/generals_bot/competition_native_jax/competition_env_jax.py": "87b07cb838959100fad4f7cfd31b96066268be52ed91edfea0c735ea01d59b34",
+    "src/generals_bot/competition_native_jax/transformer_jax.py": "b0ab4ca8eae0a3d2caa3abacb78cff167c164ab07ba453e7faa6f99266ba6886"
+  },
+  "trainer_pid": 86110,
+  "tmux_session": "cloud_train",
+  "exclude_from_archive": [
+    ".git/objects bulk optional",
+    ".venv",
+    ".venv-training",
+    "node_modules",
+    "__pycache__",
+    "experiments/competition_native_jax/throughput*",
+    "experiments/competition_native_jax/v4_*",
+    "experiments/logs",
+    "experiments/manifests/_*.log",
+    "submission/packages large historical zips not required for train",
+    "priestlyadejo-portfolio"
+  ],
+  "must_include": [
+    "src/",
+    "train/competition_native_jax/",
+    "scripts/emergency_*.py",
+    "scripts/dashboard/",
+    "dashboard/",
+    "third_party/generals-bots/competition/requirements.txt",
+    "pyproject.toml",
+    "experiments/manifests/daytime_runtime_selected.json",
+    "experiments/manifests/cloud_*.json"
+  ],
+  "remote_dest": "/workspace/quantsilico-generals/",
+  "updated_at": "2026-08-07T19:17:12+00:00"
+}

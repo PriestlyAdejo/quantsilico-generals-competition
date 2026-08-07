@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_BUDGET_GUARD",
+  "programme": "CLOUD_GPU_LAST_PUSH_V1",
+  "status": "ACTIVE_OPERATOR_BALANCE_ANCHOR",
+  "displayed_hourly_usd": 1.59,
+  "operator_balance_anchor_usd": 13.92,
+  "operator_balance_anchor_at": "2026-08-07T19:10:00+01:00",
+  "operator_balance_anchor_note": "Operator supplied from live RunPod console; deduct elapsed pod billing conservatively.",
+  "post_training_reserve_usd": 3.0,
+  "post_training_reserve_purpose": [
+    "final_checkpoint_verification",
+    "teacher_selection",
+    "distillation",
+    "latency_optimisation",
+    "package_qualification",
+    "critical_sync"
+  ],
+  "absolute_pod_stop_margin_usd": 0.795,
+  "absolute_pod_stop_margin_note": "Untouchable emergency margin: max(cost_of_30_minutes at $1.59/hr, 0.75).",
+  "training_budget_stop_policy": "stop trainer when projected balance reaches post_training_reserve_usd plus absolute_pod_stop_margin_usd",
+  "absolute_pod_stop_policy": "STOP (not TERMINATE) Pod before consuming absolute margin; do not keep GPU running for failed SCP",
+  "shutdown_order": [
+    "stop_trainer_cleanly",
+    "verify_final_COMPLETE_on_workspace",
+    "attempt_local_sync",
+    "if_sync_ok_or_absolute_stop_approaching_then_STOP_pod",
+    "never_TERMINATE_automatically"
+  ],
+  "provisional_training_hours": 6.3679245283,
+  "provisional_note": "(13.92-3.00-0.795)/1.59 = 6.37h from the 19:10 BST operator balance anchor.",
+  "live_balance_usd": 13.92,
+  "live_hourly_usd": 1.59,
+  "training_budget_stop_at": "2026-08-08T00:32:00+00:00",
+  "training_budget_stop_ceiling_bst": "2026-08-08T01:32:00+01:00",
+  "absolute_pod_stop_at": null,
+  "updated_at": "2026-08-07T19:12:20+00:00",
+  "ssh_port": 13489,
+  "pod_id": "wvjrnxbpcjnr8h",
+  "geometry_winner": "512x32",
+  "geometry_winner_tps": 1989.9771678612422,
+  "long_training_started_at": "2026-08-07T19:12:20+00:00"
+}

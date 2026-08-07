@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_A100_BASELINE_32X32",
+  "status": "RECORDED",
+  "num_envs": 32,
+  "rollout_len": 32,
+  "reset_pool_size": 4096,
+  "updates": 20,
+  "transitions": 20480,
+  "elapsed_s": 205.82839981513098,
+  "valid_learning_tps": 99.50036058383846,
+  "measured_tps": 99.50036058383846,
+  "gpu": {
+    "gpu_util_pct": 23.0,
+    "mem_util_pct": 3.0,
+    "vram_used_mib": 65375.0,
+    "vram_total_mib": 81920.0
+  },
+  "cpu_util_pct": 5.1,
+  "peak_vram_mib_train_api": 65375.0,
+  "host_rss_bytes": 6278103040,
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/root/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  },
+  "jax_version": "0.11.0",
+  "backend": "gpu",
+  "parent": "/workspace/quantsilico-runtime/cloud_gpu_last_push_v1/parent_u1524",
+  "last_metrics": {
+    "entropy": 2.1883115768432617,
+    "pg": -2.270967343065422e-07,
+    "ratio": 0.9999948143959045,
+    "vloss": 2.351226329803467,
+    "loss": 1.1537299156188965
+  },
+  "written_at": "2026-08-07T15:45:19.476205+00:00",
+  "contamination_note": "canary/dashboard must not run during this measurement"
+}

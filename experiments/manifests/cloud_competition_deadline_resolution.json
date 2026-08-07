@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_COMPETITION_DEADLINE_RESOLUTION",
+  "resolved": false,
+  "deadline_utc": null,
+  "deadline_bst": null,
+  "evidence_sources_checked": [
+    "experiments/manifests/emergency_deadline_resolution_gate.json",
+    "experiments/manifests/emergency_deadlines.json",
+    "docs/ (no exact August-8 portal deadline found in prior scan)"
+  ],
+  "prior_emergency_gate": "DEADLINE_UNRESOLVED_KEEP_ORIGINAL_HARD_END",
+  "safety_buffers_if_resolved": {
+    "stop_new_experiments_hours_before": 2,
+    "qualification_only_hours_before": 1,
+    "package_only_minutes_before": 30
+  },
+  "policy_while_unresolved": "Continue under budget_guard only; no auto-submit; do not assume overnight portal availability",
+  "updated_at": "2026-08-07T13:10:00+00:00"
+}

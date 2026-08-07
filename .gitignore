@@ -46,6 +46,15 @@ var/**
 !var/training/.gitkeep
 
 # Experiment artefacts (keep directory placeholders)
+experiments/competition_native_jax/**
+experiments/logs/**
+experiments/phase9f_cnn_ranker_v1/**
+experiments/phase9f_overnight_ppo/**
+experiments/manifests/_*/**
+experiments/manifests/_*.log
+experiments/manifests/_*.err
+experiments/manifests/_*.out
+experiments/manifests/_*.pid
 experiments/raw/**
 !experiments/raw/.gitkeep
 experiments/checkpoints/**
@@ -73,6 +82,7 @@ replays/private/**
 
 # Submission archives
 submission/**/*.zip
+submission/staging/**
 submission/packages/**
 !submission/packages/.gitkeep
 !submission/packages/*.report.json
@@ -88,6 +98,15 @@ models/rejected/**
 *.pt
 *.pth
 *.ckpt
+*.npz
+*.npy
+*.tar.zst
+
+# Runtime logs and process markers
+*.log
+*.err
+*.out
+*.pid
 
 # SQLite dashboard index
 *.sqlite
