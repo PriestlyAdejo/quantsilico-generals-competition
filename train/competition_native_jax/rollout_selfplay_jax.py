@@ -1,97 +1,127 @@
-"""JAX-native self-play rollout helpers using GeneralsEnv + scanned policy."""
+"""Canonical fused self-play rollout: official MIT JAX transitions + lax.scan.
+
+Architecture: END_TO_END_COMPETITION_JAX_ROLLOUT
+
+The Python timestep collector previously in this module is superseded and must
+not be used as the training entrypoint. Host-bound optimiser lineage must not
+resume into this path.
+"""
 
 from __future__ import annotations
 
-from typing import Any
+from functools import partial
+from typing import Any, NamedTuple
 
 import jax
 import jax.numpy as jnp
-from generals import GeneralsEnv
-from generals.core import game
-from generals.core.action import compute_valid_move_mask
 
-from generals_bot.competition_native_jax.constants import ACTION_DIM, MAX_HW, PASS_INDEX
-from generals_bot.competition_native_jax.inference_jax import masked_log_softmax, sample_action
-from generals_bot.competition_native_jax.transformer_jax import forward
+from generals_bot.competition_native_jax.competition_env_jax import (
+    ObsMemoryJax,
+    auto_reset_from_pool,
+    build_competition_reset_pool,
+    empty_memory,
+    index_to_engine_action_batch,
+    legal_mask_batch_p0,
+    legal_mask_batch_p1,
+    observe_batch_p0,
+    observe_batch_p1,
+    step_batch_jax,
+)
+from generals_bot.competition_native_jax.inference_jax import sample_action
+from generals_bot.competition_native_jax.transformer_jax import forward_batch
+
+sample_action_batch = jax.jit(jax.vmap(sample_action, in_axes=(0, 0, 0)))
+
+ROLLOUT_ARCHITECTURE = "END_TO_END_COMPETITION_JAX_ROLLOUT"
+# Explicit demotion of prior host/Python-timestep path
+SUPERSEDED_COLLECTOR = "HOST_BOUND_PYTHON_TIMESTEP_COLLECTOR"
 
 
-def engine_obs_to_spatial_global(obs, player: int = 0) -> tuple[jax.Array, jax.Array]:
-    """Convert engine observation to padded spatial/global tensors (JAX)."""
-    # obs fields: armies, owned_cells, mountains, etc. as JAX arrays [H,W] padded
-    armies = obs.armies.astype(jnp.float32)
-    owned = obs.owned_cells.astype(jnp.float32)
-    mountains = obs.mountains.astype(jnp.float32)
-    h, w = armies.shape
-    spatial = jnp.zeros((8, MAX_HW, MAX_HW), dtype=jnp.float32)
-    playable = jnp.zeros((MAX_HW, MAX_HW), dtype=jnp.float32)
-    playable = playable.at[:h, :w].set(1.0)
-    spatial = spatial.at[0].set(playable)
-    spatial = spatial.at[1, :h, :w].set((owned == 1).astype(jnp.float32))
-    spatial = spatial.at[2, :h, :w].set((owned == 2).astype(jnp.float32))
-    spatial = spatial.at[3, :h, :w].set(armies / 100.0)
-    spatial = spatial.at[4, :h, :w].set(mountains)
-    turn = jnp.array(getattr(obs, "turn", 0), dtype=jnp.float32)
-    if hasattr(obs, "timestep"):
-        turn = obs.timestep.astype(jnp.float32)
-    global_vec = jnp.array(
-        [
-            turn / 1200.0,
-            (turn % 50) / 50.0,
-            jnp.clip((800.0 - turn) / 800.0, -1.0, 1.0),
-            (turn >= 800).astype(jnp.float32),
-            jnp.maximum(0.0, turn - 800.0) / 1200.0,
-            jnp.clip((1200.0 - turn) / 1200.0, 0.0, 1.0),
-            h / float(MAX_HW),
-            w / float(MAX_HW),
-        ],
-        dtype=jnp.float32,
+class RolloutCarry(NamedTuple):
+    states: Any
+    mem0: ObsMemoryJax
+    mem1: ObsMemoryJax
+    key: jax.Array
+    params: dict
+    pool: Any
+    pool_cursor: jax.Array
+
+
+def _value_from_logits(value_logits: jax.Array) -> jax.Array:
+    centers = jnp.linspace(-1.0, 1.0, value_logits.shape[-1])
+    return jnp.sum(jax.nn.softmax(value_logits, axis=-1) * centers, axis=-1)
+
+
+def rollout_step(carry: RolloutCarry, _):
+    """One fused self-play step (both seats); scanned over time."""
+    states, mem0, mem1, key, params, pool, pool_cursor = carry
+    key, k0, _k1 = jax.random.split(key, 3)
+
+    sp0, gv0, mem0 = observe_batch_p0(states, mem0)
+    sp1, gv1, mem1 = observe_batch_p1(states, mem1)
+    m0 = legal_mask_batch_p0(states)
+    m1 = legal_mask_batch_p1(states)
+
+    # Concatenate both seats into one native batch forward [2N, ...]
+    n = sp0.shape[0]
+    spatial = jnp.concatenate([sp0, sp1], axis=0)
+    global_vec = jnp.concatenate([gv0, gv1], axis=0)
+    masks = jnp.concatenate([m0, m1], axis=0)
+    out = forward_batch(params, spatial, global_vec)
+    keys = jax.random.split(k0, 2 * n)
+    actions, logps = sample_action_batch(keys, out["flat_logits"], masks)
+    values = _value_from_logits(out["value_logits"])
+
+    a0, a1 = actions[:n], actions[n:]
+    lp0 = logps[:n]
+    v0 = values[:n]
+    eng0 = index_to_engine_action_batch(a0)
+    eng1 = index_to_engine_action_batch(a1)
+    joint = jnp.stack([eng0, eng1], axis=1)
+
+    next_states, rewards, terminated, truncated, _info = step_batch_jax(states, joint)
+    done = terminated | truncated
+    rewards0 = rewards[:, 0]
+
+    next_states, pool_cursor = auto_reset_from_pool(
+        next_states, terminated, truncated, pool, pool_cursor
     )
-    return spatial, global_vec
 
-
-def legal_mask_from_engine_obs(obs) -> jax.Array:
-    """Approximate full-support mask: PASS + engine move mask + build on owned plain."""
-    mask = jnp.zeros((ACTION_DIM,), dtype=bool)
-    mask = mask.at[PASS_INDEX].set(True)
-    move_mask = compute_valid_move_mask(obs.armies, obs.owned_cells, obs.mountains)
-    # move_mask shape typically [H,W,4] or similar — adapt to flat layout
-    # Official mask: (H, W, 4) directions; we also have splits → duplicate
-    if move_mask.ndim == 3:
-        h, w, nd = move_mask.shape
-        for r in range(h):
-            for c in range(w):
-                cell = r * MAX_HW + c
-                base = 1 + cell * 9
-                for d in range(min(nd, 4)):
-                    for s in range(2):
-                        mask = mask.at[base + d * 2 + s].set(move_mask[r, c, d])
-                # build: owned and army >= 35 and not mountain
-                can_build = (obs.owned_cells[r, c] == 1) & (obs.armies[r, c] >= 35) & (~obs.mountains[r, c].astype(bool))
-                mask = mask.at[base + 8].set(can_build)
-    return mask
-
-
-def index_to_engine_action(idx: jax.Array) -> jax.Array:
-    """Map flat policy index to [kind,row,col,dir,split]."""
-    is_pass = idx == 0
-    flat = idx - 1
-    cell = flat // 9
-    local = flat % 9
-    row = cell // MAX_HW
-    col = cell % MAX_HW
-    is_build = local == 8
-    direction = local // 2
-    split = local % 2
-    kind = jnp.where(is_pass, 1, jnp.where(is_build, 2, 0))
-    return jnp.stack(
-        [
-            kind.astype(jnp.int32),
-            jnp.where(is_pass, 0, row).astype(jnp.int32),
-            jnp.where(is_pass, 0, col).astype(jnp.int32),
-            jnp.where(is_pass | is_build, 0, direction).astype(jnp.int32),
-            jnp.where(is_pass | is_build, 0, split).astype(jnp.int32),
-        ]
+    # Clear memory on episode boundary
+    z = jnp.zeros_like(mem0.seen_own)
+    done_m = done.reshape((-1,) + (1,) * (mem0.seen_own.ndim - 1))
+    mem0 = ObsMemoryJax(
+        seen_own=jnp.where(done_m, z, mem0.seen_own),
+        last_army=jnp.where(done_m, z, mem0.last_army),
     )
+    mem1 = ObsMemoryJax(
+        seen_own=jnp.where(done_m, z, mem1.seen_own),
+        last_army=jnp.where(done_m, z, mem1.last_army),
+    )
+
+    traj = {
+        "spatial": sp0,
+        "global": gv0,
+        "mask": m0,
+        "actions": a0,
+        "old_logp": lp0,
+        "values": v0,
+        "rewards": rewards0,
+        "dones": done.astype(jnp.float32),
+    }
+    return RolloutCarry(next_states, mem0, mem1, key, params, pool, pool_cursor), traj
+
+
+@partial(jax.jit, static_argnames=("rollout_len",))
+def _run_rollout_scan(carry: RolloutCarry, *, rollout_len: int):
+    """Run the reusable compiled rollout executable for one static horizon.
+
+    Keeping this transform at module scope is important: constructing a fresh
+    ``jax.jit`` wrapper inside every collector call gives each update a new
+    Python function identity and can defeat top-level executable-cache reuse.
+    Geometry and array shapes still form part of JAX's normal cache key.
+    """
+    return jax.lax.scan(rollout_step, carry, xs=None, length=rollout_len)
 
 
 def collect_selfplay_batch(
@@ -100,90 +130,47 @@ def collect_selfplay_batch(
     num_envs: int = 4,
     rollout_len: int = 32,
     seed: int = 0,
+    reset_pool_size: int = 4096,
+    pool: Any | None = None,
 ) -> dict[str, Any]:
-    """Collect symmetric self-play transitions (JAX policy; env via GeneralsEnv).
-
-    Uses device-resident arrays for stored trajectories. Env reset/step use the
-    official competition simulator. Policy forward and sampling are JAX.
-    """
-    env = GeneralsEnv(mode="competition")
+    """Compiled vmap+scan collect. No Python env/time loops; no in-scan map gen."""
     key = jax.random.PRNGKey(seed)
-    spatials = []
-    globals_ = []
-    masks = []
-    actions = []
-    old_logps = []
-    values = []
-    rewards = []
-    dones = []
+    key, pk, rk = jax.random.split(key, 3)
+    if pool is None:
+        pool = build_competition_reset_pool(pk, reset_pool_size)
+    pool_size = int(jax.tree_util.tree_leaves(pool)[0].shape[0])
+    if pool_size < num_envs:
+        raise ValueError(f"reset_pool_size/actual {pool_size} < num_envs {num_envs}")
+    # Initialise envs from the first num_envs pool slots; cursor starts at num_envs
+    init_idx = jnp.arange(num_envs, dtype=jnp.int32)
+    states = jax.tree_util.tree_map(lambda x: x[init_idx], pool)
+    pool_cursor = jnp.full((num_envs,), num_envs, dtype=jnp.int32)
+    mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
+    mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
+    carry = RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor)
 
-    # Initialize envs sequentially then stack — first version; later vmap pool
-    pools_states = []
-    for i in range(num_envs):
-        key, k = jax.random.split(key)
-        pool, state = env.reset(k)
-        pools_states.append((pool, state))
-
-    for t in range(rollout_len):
-        batch_sp0 = []
-        batch_gv0 = []
-        batch_m0 = []
-        batch_a0 = []
-        batch_lp0 = []
-        batch_v0 = []
-        batch_sp1 = []
-        batch_a1 = []
-        step_rewards = []
-        step_dones = []
-        new_pools_states = []
-        for i, (pool, state) in enumerate(pools_states):
-            key, k0, k1 = jax.random.split(key, 3)
-            obs0 = game.get_observation(state, 0)
-            obs1 = game.get_observation(state, 1)
-            sp0, gv0 = engine_obs_to_spatial_global(obs0)
-            sp1, gv1 = engine_obs_to_spatial_global(obs1)
-            m0 = legal_mask_from_engine_obs(obs0)
-            m1 = legal_mask_from_engine_obs(obs1)
-            out0 = forward(params, sp0, gv0)
-            out1 = forward(params, sp1, gv1)
-            a0, lp0 = sample_action(k0, out0["flat_logits"], m0)
-            a1, lp1 = sample_action(k1, out1["flat_logits"], m1)
-            v0 = jnp.sum(jax.nn.softmax(out0["value_logits"]) * jnp.linspace(-1, 1, out0["value_logits"].shape[0]))
-            eng0 = index_to_engine_action(a0)
-            eng1 = index_to_engine_action(a1)
-            actions_pair = jnp.stack([eng0, eng1])
-            ts, new_state = env.step(state, actions_pair, pool)
-            # reward from perspective of both; store player0 trajectory primarily
-            r = ts.reward[0]
-            done = jnp.logical_or(ts.terminated, ts.truncated).astype(jnp.float32)
-            batch_sp0.append(sp0)
-            batch_gv0.append(gv0)
-            batch_m0.append(m0)
-            batch_a0.append(a0)
-            batch_lp0.append(lp0)
-            batch_v0.append(v0)
-            step_rewards.append(r)
-            step_dones.append(done)
-            new_pools_states.append((pool, new_state))
-        pools_states = new_pools_states
-        spatials.append(jnp.stack(batch_sp0))
-        globals_.append(jnp.stack(batch_gv0))
-        masks.append(jnp.stack(batch_m0))
-        actions.append(jnp.stack(batch_a0))
-        old_logps.append(jnp.stack(batch_lp0))
-        values.append(jnp.stack(batch_v0))
-        rewards.append(jnp.stack(step_rewards))
-        dones.append(jnp.stack(step_dones))
-
-    # shapes [T, N, ...]
+    final_carry, traj = _run_rollout_scan(carry, rollout_len=rollout_len)
+    jax.block_until_ready(traj["rewards"])
+    # Bootstrap value from post-scan p0 observation (device-side; no host traj rebuild)
+    sp_b, gv_b, _ = observe_batch_p0(final_carry.states, final_carry.mem0)
+    out_b = forward_batch(params, sp_b, gv_b)
+    bootstrap = _value_from_logits(out_b["value_logits"])
+    jax.block_until_ready(bootstrap)
     return {
-        "spatial": jnp.stack(spatials),
-        "global": jnp.stack(globals_),
-        "mask": jnp.stack(masks),
-        "actions": jnp.stack(actions),
-        "old_logp": jnp.stack(old_logps),
-        "values": jnp.stack(values),
-        "rewards": jnp.stack(rewards),
-        "dones": jnp.stack(dones),
-        "backend": "jax_policy_generalsenv_selfplay",
+        **traj,
+        "bootstrap_values": bootstrap,
+        "backend": "official_mit_jax_primitives_plus_qs_scan",
+        "rollout_architecture": ROLLOUT_ARCHITECTURE,
+        "superseded_collector": SUPERSEDED_COLLECTOR,
+        "reset_pool_size": pool_size,
+        "reset_path": "device_competition_reset_pool",
     }
+
+
+# Compatibility re-exports used by older tests (wrappers, not training entrypoint)
+from generals_bot.competition_native_jax.competition_env_jax import (  # noqa: E402, F401, I001
+    legal_mask_one_jax as legal_mask_jax,
+    observe_one_jax,
+)
+
+forward_batch_export = forward_batch

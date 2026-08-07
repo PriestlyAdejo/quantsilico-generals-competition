@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_A100_FORENSIC_PERFORMANCE_CANDIDATE",
+  "status": "EQUIVALENCE_PASS_A100_BENCHMARK_PENDING",
+  "written_at": "2026-08-07T20:36:04+01:00",
+  "branch": "perf/cloud-a100-forensic-v1",
+  "candidate": {
+    "name": "PERF_V1_REUSABLE_ROLLOUT_SCAN",
+    "change": "move the top-level jax.jit rollout scan from per-call local construction to one module-level static-horizon executable",
+    "baseline_rollout_source_sha256": "8115829aff5e2bd0e53aab5738c9ba287837221803428a4df0b9705c0e344752",
+    "candidate_rollout_source_sha256": "becf4bba3252762cd78837a3a82c8f55d3e7ac13a9b7d26da7330eb233ea88ce",
+    "runtime_implementation_hash": "d66eb6f1c4f9809c27cdefaaa333083324f079e8e7ededb815e6e822470e3371",
+    "runtime_hash_algorithm": "sha256 over NUL-delimited path and raw bytes for rollout, PPO, GAE, environment, and transformer sources",
+    "diff_lines_added": 15,
+    "diff_lines_removed": 9
+  },
+  "performance_equivalence_gate": {
+    "status": "PASS",
+    "backend": "cpu",
+    "jax_version": "0.11.0",
+    "fixture_seed": 20260807,
+    "rtol": 1e-6,
+    "atol": 1e-6,
+    "covered": [
+      "final environment state",
+      "observation memory",
+      "RNG carry",
+      "reset-pool cursor and pool",
+      "observations",
+      "legal masks",
+      "actions",
+      "action log-probabilities",
+      "policy values",
+      "rewards",
+      "done semantics",
+      "GAE advantages",
+      "returns",
+      "PPO loss and metrics",
+      "PPO gradients",
+      "updated parameters",
+      "optimizer state",
+      "checkpoint save/load round trip"
+    ],
+    "cache_assertion": "one candidate executable cache entry after two identical calls at the same static horizon",
+    "command": ".venv/Scripts/python.exe -m pytest tests/competition_native_jax/test_performance_equivalence_gate.py -q",
+    "result": "1 passed in 169.44s"
+  },
+  "regression_tests": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/competition_native_jax/test_jax_core.py tests/competition_native_jax/test_ppo_zero_update.py tests/competition_native_jax/test_legal_mask_pass.py -q",
+    "result": "4 passed in 34.16s"
+  },
+  "a100_benchmark": {
+    "status": "NOT_RUN",
+    "reason": "production PPO was active; a competing A100 workload was prohibited"
+  },
+  "geometry_feasibility": {
+    "768x32": "UNPROVEN_REQUIRES_CONTROLLED_A100_MEMORY_PROBE",
+    "1024x32": "UNPROVEN_DO_NOT_ATTEMPT_BEFORE_768x32_HEADROOM_IS_ESTABLISHED"
+  },
+  "promotion": {
+    "recommendation": "DO_NOT_INTERRUPT_PRODUCTION_YET",
+    "reason": "equivalence passed, but no sustained A100 TPS gain has been measured",
+    "next_gate": "identical baseline/candidate A100 benchmark at a COMPLETE milestone within the approved interruption cap"
+  },
+  "no_a100_benchmark_was_run": true
+}
