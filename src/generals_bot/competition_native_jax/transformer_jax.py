@@ -75,47 +75,42 @@ def _mha(x: jax.Array, attn_w: jax.Array, attn_out: jax.Array) -> jax.Array:
 
 
 def unpatchify_move(patch_move: jax.Array) -> jax.Array:
-    """[49,3,3,8] -> [21,21,8]."""
-    out = jnp.zeros((MAX_HW, MAX_HW, 8), dtype=patch_move.dtype)
-    for p in range(NUM_PATCHES):
-        pr, pc = divmod(p, PATCH_GRID)
-        r0, c0 = pr * PATCH, pc * PATCH
-        out = out.at[r0 : r0 + PATCH, c0 : c0 + PATCH, :].set(patch_move[p])
-    return out
+    """[49,3,3,8] -> [21,21,8] via reshape (exact patch-grid layout)."""
+    x = patch_move.reshape(PATCH_GRID, PATCH_GRID, PATCH, PATCH, 8)
+    return x.transpose(0, 2, 1, 3, 4).reshape(MAX_HW, MAX_HW, 8)
 
 
 def unpatchify_build(patch_build: jax.Array) -> jax.Array:
-    out = jnp.zeros((MAX_HW, MAX_HW), dtype=patch_build.dtype)
-    for p in range(NUM_PATCHES):
-        pr, pc = divmod(p, PATCH_GRID)
-        r0, c0 = pr * PATCH, pc * PATCH
-        out = out.at[r0 : r0 + PATCH, c0 : c0 + PATCH].set(patch_build[p])
-    return out
+    """[49,3,3] -> [21,21] via reshape (exact patch-grid layout)."""
+    x = patch_build.reshape(PATCH_GRID, PATCH_GRID, PATCH, PATCH)
+    return x.transpose(0, 2, 1, 3).reshape(MAX_HW, MAX_HW)
 
 
 def pack_flat_logits(move: jax.Array, build: jax.Array, pass_logit: jax.Array) -> jax.Array:
-    """Pack to ACTION_DIM using PASS + 9*cell layout."""
+    """Pack to ACTION_DIM using PASS + 9*cell layout (vectorised scatter)."""
     logits = jnp.full((ACTION_DIM,), -1e9, dtype=jnp.float32)
     logits = logits.at[PASS_INDEX].set(pass_logit.astype(jnp.float32))
-    # Vectorised pack: for each cell i, locals 0..7 moves, 8 build
     flat_move = move.reshape(MAX_HW * MAX_HW, 8)
     flat_build = build.reshape(MAX_HW * MAX_HW)
-    base = 1 + jnp.arange(MAX_HW * MAX_HW) * 9
-    for local in range(8):
-        logits = logits.at[base + local].set(flat_move[:, local])
+    cells = jnp.arange(MAX_HW * MAX_HW)
+    base = 1 + cells * 9
+    move_idx = (base[:, None] + jnp.arange(8)[None, :]).reshape(-1)
+    logits = logits.at[move_idx].set(flat_move.reshape(-1))
     logits = logits.at[base + 8].set(flat_build)
     return logits
 
 
+def _extract_patch_tokens(spatial: jax.Array, patch_proj: jax.Array) -> jax.Array:
+    """spatial [C,21,21] -> tokens [NUM_PATCHES, EMB_DIM] without Python patch loop."""
+    c = spatial.shape[0]
+    patches = spatial.reshape(c, PATCH_GRID, PATCH, PATCH_GRID, PATCH)
+    patches = patches.transpose(1, 3, 0, 2, 4).reshape(NUM_PATCHES, c * PATCH * PATCH)
+    return patches @ patch_proj
+
+
 def forward(params: dict, spatial: jax.Array, global_vec: jax.Array) -> dict[str, jax.Array]:
     """spatial [C,21,21], global [G] -> flat_logits + value_logits."""
-    tokens = []
-    for p in range(NUM_PATCHES):
-        pr, pc = divmod(p, PATCH_GRID)
-        r0, c0 = pr * PATCH, pc * PATCH
-        patch = spatial[:, r0 : r0 + PATCH, c0 : c0 + PATCH].reshape(-1)
-        tokens.append(patch @ params["patch_proj"])
-    tokens_arr = jnp.stack(tokens, axis=0)
+    tokens_arr = _extract_patch_tokens(spatial, params["patch_proj"])
     cls = params["cls"] + (global_vec @ params["global_proj"])
     x = jnp.concatenate([cls[None, :], tokens_arr], axis=0) + params["pos"]
     for layer in params["layers"]:
@@ -135,3 +130,20 @@ def forward(params: dict, spatial: jax.Array, global_vec: jax.Array) -> dict[str
 
 
 forward_jit = jax.jit(forward)
+
+
+def forward_batch(params: dict, spatial: jax.Array, global_vec: jax.Array) -> dict[str, jax.Array]:
+    """Native compiled batched forward.
+
+    Inputs:
+      spatial: [B, C, 21, 21]
+      global_vec: [B, G]
+    Outputs: flat_logits [B, 3970], value_logits [B, bins], ...
+
+    Implemented via vmap over the single-sample kernel; callers must not
+    invoke ``forward`` once per environment from Python.
+    """
+    return _forward_batch(params, spatial, global_vec)
+
+
+_forward_batch = jax.jit(jax.vmap(forward, in_axes=(None, 0, 0)))

@@ -30,3 +30,18 @@ def test_gae_scan_shapes() -> None:
     adv, ret = gae_advantages(rewards, values, dones)
     assert adv.shape == (5,)
     assert ret.shape == (5,)
+
+
+def test_gae_batch_matches_per_env() -> None:
+    from train.competition_native_jax.gae_jax import gae_advantages_batch
+
+    key = jax.random.PRNGKey(0)
+    t, b = 8, 4
+    rewards = jax.random.normal(key, (t, b))
+    values = jax.random.normal(jax.random.fold_in(key, 1), (t + 1, b))
+    dones = (jax.random.uniform(jax.random.fold_in(key, 2), (t, b)) > 0.9).astype(jnp.float32)
+    adv_b, ret_b = gae_advantages_batch(rewards, values, dones)
+    for i in range(b):
+        adv_i, ret_i = gae_advantages(rewards[:, i], values[:, i], dones[:, i])
+        assert jnp.allclose(adv_b[:, i], adv_i, atol=1e-5)
+        assert jnp.allclose(ret_b[:, i], ret_i, atol=1e-5)

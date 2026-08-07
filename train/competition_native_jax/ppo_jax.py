@@ -75,25 +75,77 @@ def ppo_update(
     opt_state: Any,
     optimizer: optax.GradientTransformation,
     batch: dict[str, jax.Array],
+    *,
+    accumulate_minibatches: int | None = None,
 ) -> tuple[dict, Any, dict]:
-    def loss_fn(p):
-        loss, metrics = ppo_loss_on_batch(
-            p,
-            batch["spatial"],
-            batch["global"],
-            batch["mask"],
-            batch["actions"],
-            batch["old_logp"],
-            batch["advantages"],
-            batch["returns"],
-        )
-        return loss, metrics
+    """One logical full-batch Optax update (canonical systems semantics).
 
-    (loss, metrics), grads = jax.value_and_grad(loss_fn, has_aux=True)(params)
+    When ``accumulate_minibatches`` is set, split the batch into that many
+    static shards, accumulate mean gradients with lax.scan, then apply exactly
+    one optimiser step. Parameters are not updated between shards.
+    """
+    n = int(batch["actions"].shape[0])
+    if accumulate_minibatches is None or accumulate_minibatches <= 1 or n % accumulate_minibatches != 0:
+        def loss_fn(p):
+            loss, metrics = ppo_loss_on_batch(
+                p,
+                batch["spatial"],
+                batch["global"],
+                batch["mask"],
+                batch["actions"],
+                batch["old_logp"],
+                batch["advantages"],
+                batch["returns"],
+            )
+            return loss, metrics
+
+        (loss, metrics), grads = jax.value_and_grad(loss_fn, has_aux=True)(params)
+        updates, opt_state = optimizer.update(grads, opt_state, params)
+        params = optax.apply_updates(params, updates)
+        metrics = {**metrics, "loss": loss}
+        return params, opt_state, metrics
+
+    mb = accumulate_minibatches
+    shard = n // mb
+
+    def reshape(x):
+        return x.reshape((mb, shard) + x.shape[1:])
+
+    shards = {k: reshape(v) for k, v in batch.items()}
+
+    def body(carry, i):
+        grad_acc, loss_acc, metrics_acc = carry
+
+        def loss_fn(p):
+            loss, metrics = ppo_loss_on_batch(
+                p,
+                shards["spatial"][i],
+                shards["global"][i],
+                shards["mask"][i],
+                shards["actions"][i],
+                shards["old_logp"][i],
+                shards["advantages"][i],
+                shards["returns"][i],
+            )
+            return loss, metrics
+
+        (loss, metrics), grads = jax.value_and_grad(loss_fn, has_aux=True)(params)
+        grad_acc = jax.tree_util.tree_map(lambda a, b: a + b, grad_acc, grads)
+        loss_acc = loss_acc + loss
+        metrics_acc = {k: metrics_acc[k] + metrics[k] for k in metrics}
+        return (grad_acc, loss_acc, metrics_acc), None
+
+    zero_grads = jax.tree_util.tree_map(jnp.zeros_like, params)
+    zero_metrics = {"pg": 0.0, "vloss": 0.0, "entropy": 0.0, "ratio": 0.0}
+    init = (zero_grads, jnp.array(0.0, dtype=jnp.float32), {k: jnp.array(0.0) for k in zero_metrics})
+    (grad_sum, loss_sum, metrics_sum), _ = jax.lax.scan(body, init, jnp.arange(mb))
+    grads = jax.tree_util.tree_map(lambda g: g / float(mb), grad_sum)
+    loss = loss_sum / float(mb)
+    metrics = {k: v / float(mb) for k, v in metrics_sum.items()}
     updates, opt_state = optimizer.update(grads, opt_state, params)
     params = optax.apply_updates(params, updates)
-    metrics = {**metrics, "loss": loss}
+    metrics = {**metrics, "loss": loss, "accumulate_minibatches": jnp.array(float(mb))}
     return params, opt_state, metrics
 
 
-ppo_update_jit = jax.jit(ppo_update, static_argnames=("optimizer",))
+ppo_update_jit = jax.jit(ppo_update, static_argnames=("optimizer", "accumulate_minibatches"))
