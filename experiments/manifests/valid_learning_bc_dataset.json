@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "kind": "VALID_LEARNING_BC_DATASET",
+  "status": "PASS",
+  "dataset_id": "BC_VALID_LEARNING_c318e0270330b25b",
+  "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_c7015c94b8b62950\\teacher_states.npz",
+  "dataset_sha256": "c318e0270330b25b562821479c115a18b88ebc0d956fed055a9915425979e975",
+  "unique_recurrent_states": 12816,
+  "target_states": 20000,
+  "minimum_states": 12000,
+  "teacher": {
+    "BC_TEACHER_ID": "heuristic_v2f_plus_planner_terminal_form",
+    "BC_TEACHER_SOURCE_HASH": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c",
+    "BC_TEACHER_EQUALS_FALLBACK": true
+  },
+  "coverage": {
+    "opponents": [
+      "legal_random",
+      "official_expander",
+      "official_hunter",
+      "pass"
+    ],
+    "seats": [
+      0,
+      1
+    ],
+    "splits": {
+      "train": 7626,
+      "validation": 5190
+    }
+  },
+  "game_reports": [
+    {
+      "game_id": "pass:seat0:seed30000",
+      "opponent": "pass",
+      "learner_seat": 0,
+      "seed": 30000,
+      "split": "train",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "pass:seat1:seed30001",
+      "opponent": "pass",
+      "learner_seat": 1,
+      "seed": 30001,
+      "split": "train",
+      "turns": 688,
+      "winner": 1,
+      "unique_samples": 688
+    },
+    {
+      "game_id": "legal_random:seat0:seed30002",
+      "opponent": "legal_random",
+      "learner_seat": 0,
+      "seed": 30002,
+      "split": "train",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "legal_random:seat1:seed30003",
+      "opponent": "legal_random",
+      "learner_seat": 1,
+      "seed": 30003,
+      "split": "train",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "official_expander:seat0:seed30004",
+      "opponent": "official_expander",
+      "learner_seat": 0,
+      "seed": 30004,
+      "split": "train",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "official_expander:seat1:seed30005",
+      "opponent": "official_expander",
+      "learner_seat": 1,
+      "seed": 30005,
+      "split": "train",
+      "turns": 659,
+      "winner": 1,
+      "unique_samples": 659
+    },
+    {
+      "game_id": "official_hunter:seat0:seed30006",
+      "opponent": "official_hunter",
+      "learner_seat": 0,
+      "seed": 30006,
+      "split": "train",
+      "turns": 1083,
+      "winner": 1,
+      "unique_samples": 1083
+    },
+    {
+      "game_id": "official_hunter:seat1:seed30007",
+      "opponent": "official_hunter",
+      "learner_seat": 1,
+      "seed": 30007,
+      "split": "train",
+      "turns": 396,
+      "winner": 1,
+      "unique_samples": 396
+    },
+    {
+      "game_id": "pass:seat0:seed30008",
+      "opponent": "pass",
+      "learner_seat": 0,
+      "seed": 30008,
+      "split": "validation",
+      "turns": 211,
+      "winner": 0,
+      "unique_samples": 211
+    },
+    {
+      "game_id": "pass:seat1:seed30009",
+      "opponent": "pass",
+      "learner_seat": 1,
+      "seed": 30009,
+      "split": "validation",
+      "turns": 548,
+      "winner": 1,
+      "unique_samples": 548
+    },
+    {
+      "game_id": "legal_random:seat0:seed30010",
+      "opponent": "legal_random",
+      "learner_seat": 0,
+      "seed": 30010,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "legal_random:seat1:seed30011",
+      "opponent": "legal_random",
+      "learner_seat": 1,
+      "seed": 30011,
+      "split": "validation",
+      "turns": 679,
+      "winner": 1,
+      "unique_samples": 679
+    },
+    {
+      "game_id": "official_expander:seat0:seed30012",
+      "opponent": "official_expander",
+      "learner_seat": 0,
+      "seed": 30012,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "official_expander:seat1:seed30013",
+      "opponent": "official_expander",
+      "learner_seat": 1,
+      "seed": 30013,
+      "split": "validation",
+      "turns": 857,
+      "winner": 1,
+      "unique_samples": 857
+    },
+    {
+      "game_id": "official_hunter:seat0:seed30014",
+      "opponent": "official_hunter",
+      "learner_seat": 0,
+      "seed": 30014,
+      "split": "validation",
+      "turns": 129,
+      "winner": 1,
+      "unique_samples": 129
+    },
+    {
+      "game_id": "official_hunter:seat1:seed30015",
+      "opponent": "official_hunter",
+      "learner_seat": 1,
+      "seed": 30015,
+      "split": "validation",
+      "turns": 366,
+      "winner": 0,
+      "unique_samples": 366
+    }
+  ],
+  "config": {
+    "teacher": "heuristic_v2f_plus_planner_terminal_form",
+    "teacher_canonical": "heuristic_v2f_plus_planner_terminal_fix",
+    "opponents": [
+      "pass",
+      "legal_random",
+      "official_expander",
+      "official_hunter"
+    ],
+    "rounds": 2,
+    "seed_base": 30000,
+    "target_states": 20000,
+    "minimum_states": 12000,
+    "max_turns": 1200,
+    "board": [
+      21,
+      21
+    ],
+    "split": "complete_game_and_seed_round0_train_round1_validation",
+    "teacher_source_hash": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c"
+  },
+  "config_hash": "c7015c94b8b62950075c7d211524b9940e33c63ca10fa61420dda1fc2c863b1c",
+  "elapsed_s": 1837.797169300029,
+  "written_at": "2026-08-08T01:07:22.406852+00:00",
+  "source_hashes": {
+    "BC_RUNTIME_SOURCE_HASH": "9239649add4c55d645c55becbbbf1bddecf998816993777c8b74ce43d257db94",
+    "BC_OPPONENT_SOURCE_HASH": "db6f0b657b21edcbdacbd1bfd629ea0651a79ab9311203f2acd7e34bcef2d10a"
+  },
+  "provenance_finalized": true,
+  "independent_validation": {
+    "dataset_sha256_match": true,
+    "unique_sample_ids": 12816,
+    "train_validation_game_overlap": 0,
+    "legal_teacher_target_fraction": 1.0,
+    "finite_spatial_fraction": 1.0,
+    "finite_global_fraction": 1.0
+  }
+}
