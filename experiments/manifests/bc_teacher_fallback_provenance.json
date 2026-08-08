@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "kind": "HEURISTIC_BASELINE_PROVENANCE",
+  "status": "PASS",
+  "written_at": "2026-08-08T00:20:04.602189+00:00",
+  "BC_TEACHER_ID": "heuristic_v2f_plus_planner_terminal_form",
+  "BC_TEACHER_CANONICAL_ID": "heuristic_v2f_plus_planner_terminal_fix",
+  "BC_TEACHER_SOURCE_HASH": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c",
+  "FALLBACK_PACKAGE_ID": "QS-PUBLIC-V001",
+  "FALLBACK_PACKAGE_SHA": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+  "FALLBACK_PACKAGE_EXPECTED_SHA": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+  "BC_TEACHER_EQUALS_FALLBACK": true,
+  "evidence": {
+    "package_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\submission\\packages\\QS-PUBLIC-V001\\e1237f77dee46993\\package.zip",
+    "package_runtime_source_hash": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c",
+    "runtime_source_file_count": 35,
+    "runtime_source_mismatches": [],
+    "main_selects_canonical_teacher": true,
+    "behaviour_probe_equal": true,
+    "source_behaviour": [
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "SCOUT_TASK",
+        "turn": 10
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "SCOUT_TASK",
+        "turn": 100
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "SCOUT_TASK",
+        "turn": 400
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "GENERAL_HUNT",
+        "turn": 800
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "GENERAL_HUNT",
+        "turn": 1050
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "GENERAL_HUNT",
+        "turn": 1150
+      }
+    ],
+    "package_behaviour": [
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "SCOUT_TASK",
+        "turn": 10
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "SCOUT_TASK",
+        "turn": 100
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "SCOUT_TASK",
+        "turn": 400
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "GENERAL_HUNT",
+        "turn": 800
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "GENERAL_HUNT",
+        "turn": 1050
+      },
+      {
+        "action": [
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "option": "GENERAL_HUNT",
+        "turn": 1150
+      }
+    ],
+    "fallback_immutability": "READ_ONLY_HASHED_NOT_MODIFIED"
+  }
+}

@@ -65,7 +65,10 @@ def initialise_rollout_carry(
         raise ValueError(f"reset_pool_size/actual {pool_size} < num_envs {num_envs}")
     init_idx = jnp.arange(num_envs, dtype=jnp.int32)
     states = jax.tree_util.tree_map(lambda x: x[init_idx], pool)
-    pool_cursor = jnp.full((num_envs,), num_envs, dtype=jnp.int32)
+    # Each environment must consume a distinct reset stream.  A scalar-filled
+    # cursor made every environment that terminated together restart from the
+    # same map, reducing environment diversity and correlating trajectories.
+    pool_cursor = jnp.arange(num_envs, 2 * num_envs, dtype=jnp.int32)
     mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
     mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
     return RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor)

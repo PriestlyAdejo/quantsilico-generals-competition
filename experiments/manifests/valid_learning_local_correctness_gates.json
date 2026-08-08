@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "VALID_LEARNING_LOCAL_CORRECTNESS_GATES",
+  "status": "PASS",
+  "PASS_OPPONENT_JAX_EQUIVALENCE_PASS": true,
+  "RANDOM_OPPONENT_JAX_EQUIVALENCE_PASS": true,
+  "EXPANDER_OPPONENT_JAX_EQUIVALENCE_PASS": true,
+  "HUNTER_OPPONENT_JAX_EQUIVALENCE_PASS": true,
+  "ALL_FOUR_OPPONENTS_JAX_GATE_PASS": true,
+  "LEARNER_CONTROLLED_MASK_GATE_PASS": true,
+  "TERMINAL_REWARD_PROPAGATION_PASS": true,
+  "CHUNK_CREDIT_CONTINUITY_GATE_PASS": true,
+  "RESET_POOL_CURSOR_DIVERSITY_PASS": true,
+  "FULL_CARRY_CHECKPOINT_ROUNDTRIP_PASS": true,
+  "command": "python -m pytest -q tests/competition_native_jax/test_valid_learning_recovery.py",
+  "result": "5 passed in 361.04s",
+  "expanded_all_four_opponent_result": "1 passed in 87.81s; 8 fixed-key states per opponent across both seats",
+  "broader_regression_command": "python -m pytest -q tests/competition_native_jax/test_action_codec.py tests/competition_native_jax/test_jax_core.py tests/competition_native_jax/test_e2e_parity_3a.py tests/competition_native_jax/test_v4_2_reset_pool.py",
+  "broader_regression_result": "22 passed in 181.15s",
+  "CLOUD_ONE_UPDATE_SMOKE_PASS": true,
+  "cloud_one_update_smoke": {
+    "samples": 32,
+    "loss": 2.582324743270874,
+    "parameter_update_norm": 0.37813863158226013,
+    "final_turns": [4, 4, 4, 4, 4, 4, 4, 4],
+    "legality_faults": 0,
+    "support_faults": 0,
+    "nonfinite_output_faults": 0
+  },
+  "environment": "local Python 3.12 / JAX 0.11.0 CPU",
+  "written_at": "2026-08-08T01:55:46.1084486+01:00"
+}
