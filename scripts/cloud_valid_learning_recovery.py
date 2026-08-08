@@ -24,6 +24,7 @@ import numpy as np
 from generals_bot.competition_native_jax.competition_env_jax import build_competition_reset_pool
 from generals_bot.competition_native_jax.inference_jax import masked_log_softmax
 from generals_bot.competition_native_jax.transformer_jax import forward_batch, init_params
+from train.competition_native_jax.bc_warmstart_jax import sha256_file
 from train.competition_native_jax.checkpoint_recovery import (
     persisted_carry,
     restore_carry,
@@ -32,7 +33,7 @@ from train.competition_native_jax.checkpoint_recovery import (
 from train.competition_native_jax.ema_jax import ema_update
 from train.competition_native_jax.gae_jax import gae_advantages_batch_jit
 from train.competition_native_jax.opponents_jax import build_static_schedule
-from train.competition_native_jax.ppo_jax import make_optimizer, ppo_update_jit
+from train.competition_native_jax.ppo_jax import make_optimizer, ppo_update_with_anchor_jit
 from train.competition_native_jax.rollout_curriculum_jax import (
     CurriculumCarry,
     collect_curriculum_batch,
@@ -181,6 +182,37 @@ def verify_device() -> dict[str, Any]:
     }
 
 
+def load_anchor_dataset(path: Path) -> tuple[dict[str, jax.Array], str]:
+    manifest = json.loads(path.with_name("dataset_manifest.json").read_text(encoding="utf-8"))
+    actual_sha = sha256_file(path)
+    if actual_sha != manifest.get("dataset_sha256"):
+        raise RuntimeError("supervised anchor dataset SHA mismatch")
+    raw = np.load(path, allow_pickle=False)
+    split = np.asarray(raw["split"]).astype(str)
+    train_indices = np.flatnonzero(split == "train")
+    if not len(train_indices):
+        raise RuntimeError("supervised anchor training split is empty")
+    anchor = {
+        "spatial": jax.device_put(jnp.asarray(raw["spatial"], dtype=jnp.float32)),
+        "global": jax.device_put(jnp.asarray(raw["global_vec"], dtype=jnp.float32)),
+        "mask": jax.device_put(jnp.asarray(raw["legal_mask"], dtype=bool)),
+        "actions": jax.device_put(jnp.asarray(raw["teacher_action"], dtype=jnp.int32)),
+        "train_indices": jax.device_put(jnp.asarray(train_indices, dtype=jnp.int32)),
+    }
+    return anchor, actual_sha
+
+
+def anchor_batch(anchor: dict[str, jax.Array], seed: int) -> dict[str, jax.Array]:
+    positions = jax.random.randint(
+        jax.random.PRNGKey(seed),
+        (256,),
+        0,
+        anchor["train_indices"].shape[0],
+    )
+    selected = anchor["train_indices"][positions]
+    return {key: value[selected] for key, value in anchor.items() if key != "train_indices"}
+
+
 def flatten_batch(batch: dict[str, Any]) -> tuple[dict[str, jax.Array], jax.Array, jax.Array]:
     if not bool(jnp.all(batch["learner_controlled_mask"])):
         raise RuntimeError("LEARNER_CONTROLLED_MASK_GATE failed")
@@ -227,7 +259,9 @@ def one_update(
     optimizer: Any,
     carry: CurriculumCarry,
     schedule: tuple[int, ...],
+    anchor: dict[str, jax.Array],
     *,
+    anchor_seed: int,
     rollout_len: int,
     shaping_lambda: float,
 ) -> tuple[dict, dict, Any, CurriculumCarry, dict[str, Any]]:
@@ -244,11 +278,12 @@ def one_update(
     rollout_s = time.perf_counter() - rollout_started
     flat, advantages, returns = flatten_batch(batch)
     learner_started = time.perf_counter()
-    params, opt_state, loss_metrics = ppo_update_jit(
+    params, opt_state, loss_metrics = ppo_update_with_anchor_jit(
         params,
         opt_state,
         optimizer,
         flat,
+        anchor_batch(anchor, anchor_seed),
         accumulate_minibatches=8,
     )
     ema = ema_update(ema, params)
@@ -310,6 +345,7 @@ def compile_without_mutating(
     opt_state: Any,
     carry: CurriculumCarry,
     schedule: tuple[int, ...],
+    anchor: dict[str, jax.Array],
     rollout_len: int,
 ) -> None:
     one_update(
@@ -319,6 +355,8 @@ def compile_without_mutating(
         optimizer,
         carry,
         schedule,
+        anchor,
+        anchor_seed=0,
         rollout_len=rollout_len,
         shaping_lambda=0.0,
     )
@@ -336,6 +374,11 @@ def pathology_reasons(metrics: dict[str, Any]) -> list[str]:
         "advantage_std",
         "explained_variance",
         "parameter_update_norm",
+        "PPO_ACTOR_GRAD_NORM",
+        "ANCHOR_RAW_GRAD_NORM",
+        "ANCHOR_SCALE",
+        "ANCHOR_EFFECTIVE_GRAD_NORM",
+        "ANCHOR_TO_PPO_RATIO",
     )
     for field in finite_fields:
         if not np.isfinite(float(metrics.get(field, np.nan))):
@@ -347,6 +390,8 @@ def pathology_reasons(metrics: dict[str, Any]) -> list[str]:
     for field in ("legality_faults", "support_faults", "nonfinite_output_faults"):
         if int(metrics.get(field, 0)) != 0:
             reasons.append(field)
+    if float(metrics.get("NO_TASK_POLICY_GRADIENT", 1.0)) != 0.0:
+        reasons.append("NO_TASK_POLICY_GRADIENT")
     return reasons
 
 
@@ -358,11 +403,13 @@ def run_pilot_once(
     pool: Any,
     pool_seed: int,
     pool_materialized_hash: str,
+    anchor: dict[str, jax.Array],
+    anchor_sha256: str,
 ) -> tuple[dict[str, Any], Path | None]:
     optimizer = make_optimizer(LR)
     opt_state = optimizer.init(params)
     ema = params
-    geometries = ((256, 32, 500_000), (512, 32, 250_000))
+    geometries = ((256, 32, 300_000),)
     rows: list[dict[str, Any]] = []
     total_completed = total_nonzero = total_reward_nonzero = total_samples = 0
     total_wins = total_losses = 0
@@ -377,7 +424,9 @@ def run_pilot_once(
             pool=pool,
             frozen_opponent_params=params,
         )
-        compile_without_mutating(params, optimizer, opt_state, carry, schedule, rollout_len)
+        compile_without_mutating(
+            params, optimizer, opt_state, carry, schedule, anchor, rollout_len
+        )
         geometry_started = time.perf_counter()
         transitions = 0
         while transitions < target:
@@ -388,6 +437,8 @@ def run_pilot_once(
                 optimizer,
                 carry,
                 schedule,
+                anchor,
+                anchor_seed=10_000 + len(rows),
                 rollout_len=rollout_len,
                 shaping_lambda=shaping_lambda,
             )
@@ -429,6 +480,8 @@ def run_pilot_once(
         and float(last["return_std"]) > 1e-4
         and float(last["advantage_std"]) > 1e-4
         and float(last["parameter_update_norm"]) > 1e-8
+        and float(last["PPO_ACTOR_GRAD_NORM"]) >= 1e-8
+        and float(last["NO_TASK_POLICY_GRADIENT"]) == 0.0
         and total_reward_nonzero > 0
     )
     report = {
@@ -443,6 +496,7 @@ def run_pilot_once(
         "terminal_wins": total_wins,
         "terminal_losses": total_losses,
         "reward_nonzero_fraction": total_reward_nonzero / max(total_samples, 1),
+        "anchor_dataset_sha256": anchor_sha256,
         "rows": rows,
         "hashes": runtime_hashes(),
         "device": verify_device(),
@@ -467,6 +521,7 @@ def run_pilot_once(
                 f"{pool_seed}:{RESET_POOL_SIZE}:18:21".encode()
             ).hexdigest(),
             "pool_materialized_hash": pool_materialized_hash,
+            "anchor_dataset_sha256": anchor_sha256,
             **runtime_hashes(),
         }
         final_checkpoint = save_checkpoint(
@@ -487,6 +542,7 @@ def run_pilot(args: argparse.Namespace) -> int:
     device = verify_device()
     params = load_tree(args.calibrated, init_params(jax.random.PRNGKey(0)))
     params = jax.device_put(params)
+    anchor, anchor_sha256 = load_anchor_dataset(args.anchor_dataset)
     pool_seed = 131
     pool_started = time.perf_counter()
     pool = build_competition_reset_pool(jax.random.PRNGKey(pool_seed), RESET_POOL_SIZE)
@@ -500,6 +556,8 @@ def run_pilot(args: argparse.Namespace) -> int:
         pool=pool,
         pool_seed=pool_seed,
         pool_materialized_hash=pool_materialized_hash,
+        anchor=anchor,
+        anchor_sha256=anchor_sha256,
     )
     if report["status"] != "CLOUD_VALID_LEARNING_MICRO_PILOT_PASS" and args.allow_shaping_repair:
         report, checkpoint = run_pilot_once(
@@ -509,6 +567,8 @@ def run_pilot(args: argparse.Namespace) -> int:
             pool=pool,
             pool_seed=pool_seed,
             pool_materialized_hash=pool_materialized_hash,
+            anchor=anchor,
+            anchor_sha256=anchor_sha256,
         )
     report["pool_build_s"] = pool_build_s
     report["device"] = device
@@ -557,6 +617,9 @@ def run_long(args: argparse.Namespace) -> int:
             f"expected={expected_pool_hash} actual={actual_pool_hash}"
         )
     params, ema, opt_state, carry, meta0 = load_checkpoint_for_long(args.parent, pool)
+    anchor, anchor_sha256 = load_anchor_dataset(args.anchor_dataset)
+    if meta0.get("anchor_dataset_sha256") != anchor_sha256:
+        raise RuntimeError("long-run anchor dataset differs from pilot")
     identities = runtime_hashes()
     optimizer = make_optimizer(LR)
     stage = int(meta0.get("curriculum_stage", 0))
@@ -570,7 +633,9 @@ def run_long(args: argparse.Namespace) -> int:
             pool=pool,
             frozen_opponent_params=params,
         )
-    compile_without_mutating(params, optimizer, opt_state, carry, schedule, args.rollout_len)
+    compile_without_mutating(
+        params, optimizer, opt_state, carry, schedule, anchor, args.rollout_len
+    )
     started = time.perf_counter()
     programme_start = int(meta0["programme_transitions"])
     transitions = int(meta0["transitions"])
@@ -596,6 +661,8 @@ def run_long(args: argparse.Namespace) -> int:
             optimizer,
             carry,
             schedule,
+            anchor,
+            anchor_seed=20_000 + update,
             rollout_len=args.rollout_len,
             shaping_lambda=float(meta0.get("shaping_lambda", 0.0)),
         )
@@ -773,9 +840,11 @@ def parse_args() -> argparse.Namespace:
     commands = parser.add_subparsers(dest="command", required=True)
     pilot = commands.add_parser("pilot")
     pilot.add_argument("--calibrated", type=Path, required=True)
+    pilot.add_argument("--anchor-dataset", type=Path, required=True)
     pilot.add_argument("--allow-shaping-repair", action="store_true")
     train = commands.add_parser("train")
     train.add_argument("--parent", type=Path, required=True)
+    train.add_argument("--anchor-dataset", type=Path, required=True)
     train.add_argument("--num-envs", type=int, default=512)
     train.add_argument("--rollout-len", type=int, default=32)
     train.add_argument("--stop-at", required=True)
