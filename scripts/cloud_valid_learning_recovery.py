@@ -282,6 +282,7 @@ def one_update(
         "rollout_s": rollout_s,
         "learner_s": learner_s,
         "valid_learning_tps": samples / max(rollout_s + learner_s, 1e-9),
+        "raw_tps": samples / max(rollout_s + learner_s, 1e-9),
         "completed_episodes": completed,
         "wins": wins,
         "losses": losses,
@@ -295,6 +296,7 @@ def one_update(
         "advantage_std": float(jnp.std(advantages)),
         "explained_variance": explained_variance,
         "pass_fraction": float(np.mean(host["learner_pass"])),
+        "shaping_lambda": shaping_lambda,
         "parameter_update_norm": float(update_norm),
         **{key: float(value) for key, value in loss_metrics.items()},
         **{key: float(value) for key, value in diagnostics.items()},
@@ -555,6 +557,7 @@ def run_long(args: argparse.Namespace) -> int:
             f"expected={expected_pool_hash} actual={actual_pool_hash}"
         )
     params, ema, opt_state, carry, meta0 = load_checkpoint_for_long(args.parent, pool)
+    identities = runtime_hashes()
     optimizer = make_optimizer(LR)
     stage = int(meta0.get("curriculum_stage", 0))
     schedule = build_static_schedule(args.num_envs, STAGES[stage])
@@ -684,6 +687,7 @@ def run_long(args: argparse.Namespace) -> int:
             / max(elapsed, 1e-9),
             "curriculum_stage": stage,
             "opponent_counts": [schedule.count(kind) for kind in range(len(STAGES[stage]))],
+            "hashes": identities,
             "metrics": metrics,
             "gpu": gpu_snapshot() if update % 10 == 0 else None,
             "training_stop_at": args.stop_at,
@@ -718,7 +722,7 @@ def run_long(args: argparse.Namespace) -> int:
                     "curriculum_stage": stage,
                     "num_envs": args.num_envs,
                     "rollout_len": args.rollout_len,
-                    **runtime_hashes(),
+                    **identities,
                 },
             )
             print(f"MILESTONE_COMPLETE={checkpoint}", flush=True)
@@ -740,7 +744,7 @@ def run_long(args: argparse.Namespace) -> int:
             "num_envs": args.num_envs,
             "rollout_len": args.rollout_len,
             "exit_reason": exit_reason,
-            **runtime_hashes(),
+            **identities,
         },
     )
     state = {

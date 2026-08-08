@@ -44,6 +44,7 @@ export default function TrainingPage() {
   const [activeRun, setActiveRun] = useState<TrainingRun | null>(null);
   const [metrics, setMetrics] = useState<TrainingMetric[]>([]);
   const [liveCampaign, setLiveCampaign] = useState<Record<string, unknown> | null>(null);
+  const [cloudValid, setCloudValid] = useState<Record<string, unknown> | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const stepRef = useRef(0);
 
@@ -67,6 +68,7 @@ export default function TrainingPage() {
         const data = await ds.getJson<{
           campaigns?: Record<string, unknown>[];
           active?: Record<string, unknown> | null;
+          cloud_valid_learning?: Record<string, unknown> | null;
         }>("/api/training");
         if (cancelled) return;
         const active = data.active ?? null;
@@ -79,8 +81,12 @@ export default function TrainingPage() {
             ? liveList.find((c) => c.state === "RUNNING") ?? liveList[0] ?? null
             : null);
         setLiveCampaign(preferred);
+        setCloudValid(data.cloud_valid_learning ?? null);
       } catch {
-        if (!cancelled) setLiveCampaign(null);
+        if (!cancelled) {
+          setLiveCampaign(null);
+          setCloudValid(null);
+        }
       }
     };
     void poll();
@@ -144,6 +150,29 @@ export default function TrainingPage() {
   const latestMetric = metrics[metrics.length - 1];
   const policyData = metrics.map((m) => ({ step: m.step, loss: +m.policyLoss.toFixed(4) }));
   const winRateData = metrics.map((m) => ({ step: m.step, rate: +m.winRate.toFixed(4) }));
+  const cloudMetrics =
+    cloudValid?.metrics && typeof cloudValid.metrics === "object"
+      ? (cloudValid.metrics as Record<string, unknown>)
+      : {};
+  const cloudMetricRows: Array<[string, unknown]> = [
+    ["Raw TPS", cloudMetrics.raw_tps],
+    ["Valid-learning TPS", cloudMetrics.valid_learning_tps],
+    ["Completed episodes", cloudMetrics.completed_episodes],
+    ["Terminal wins", cloudMetrics.wins],
+    ["Terminal losses", cloudMetrics.losses],
+    ["1200-turn draws", cloudMetrics.draws],
+    ["Reward nonzero fraction", cloudMetrics.reward_nonzero_fraction],
+    ["Terminal reward", cloudMetrics.terminal_reward_mean],
+    ["Shaping reward", cloudMetrics.shaped_reward_mean],
+    ["Return std", cloudMetrics.return_std],
+    ["Advantage std", cloudMetrics.advantage_std],
+    ["KL", cloudMetrics.approx_kl],
+    ["Clip fraction", cloudMetrics.clip_fraction],
+    ["Entropy", cloudMetrics.entropy],
+    ["Explained variance", cloudMetrics.explained_variance],
+    ["Update norm", cloudMetrics.parameter_update_norm],
+    ["PASS fraction", cloudMetrics.pass_fraction],
+  ];
 
   return (
     <div>
@@ -204,6 +233,33 @@ export default function TrainingPage() {
       )}
 
       {!activeRun && import.meta.env.VITE_DASHBOARD_DATA_MODE !== "demo" && (
+        <>
+        {cloudValid && (
+          <Panel title="Cloud valid-learning recovery" eyebrow="a100/" className="mb-6">
+            {cloudValid.no_task_learning_signal === true && (
+              <div className="mb-4 border-2 border-[#F85149] bg-[#2B1114] p-4 text-[#FF7B72] font-mono font-bold text-lg">
+                NO_TASK_LEARNING_SIGNAL
+              </div>
+            )}
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2">
+              {cloudMetricRows.map(([label, value]) => (
+                <div key={label} className="border border-[#1E2630] bg-[#0C1116] p-2">
+                  <div className="text-[#6F7C89] font-mono text-[9px] uppercase">{label}</div>
+                  <div className="text-[#EAF0F6] font-mono text-xs break-all">
+                    {value === undefined || value === null ? "NOT RECORDED" : String(value)}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 space-y-1 text-[#8593A1] font-mono text-[10px] break-all">
+              <div>Stage: {String(cloudValid.curriculum_stage ?? "NOT RECORDED")}</div>
+              <div>Opponent mixture: {JSON.stringify(cloudValid.opponent_counts ?? "NOT RECORDED")}</div>
+              <div>Shaping coefficient: {String(cloudMetrics.shaping_lambda ?? "NOT RECORDED")}</div>
+              <div>Hashes: {JSON.stringify(cloudValid.hashes ?? "NOT RECORDED")}</div>
+              <div>Stop at: {String(cloudValid.training_stop_at ?? "NOT RECORDED")}</div>
+            </div>
+          </Panel>
+        )}
         <Panel title="Live campaign observer" eyebrow="telemetry/" className="mb-6">
           {liveCampaign ? (
             <div className="space-y-2 font-mono text-xs text-[#CDD6DF]">
@@ -230,6 +286,7 @@ export default function TrainingPage() {
             </>
           )}
         </Panel>
+        </>
       )}
 
       {/* Active run metrics */}

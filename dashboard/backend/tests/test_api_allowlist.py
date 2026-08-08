@@ -154,6 +154,7 @@ def test_training_exposes_charts_schema() -> None:
     assert res.status_code == 200
     body = res.json()
     assert "charts" in body
+    assert "cloud_valid_learning" in body
     assert body["labels"]["charts"]
     latency = body["smoke"].get("competition_size_latency_gate")
     if latency:

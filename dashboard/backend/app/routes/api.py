@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from pathlib import Path
 from typing import Any, Literal
@@ -10,7 +11,6 @@ from typing import Any, Literal
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from generals_bot.candidate_identity import candidate_identity_record
 from dashboard.backend.app.capabilities import build_capabilities
 from dashboard.backend.app.gates import gate_status_dto, legacy_gate_board_from_current
 from dashboard.backend.app.paths import REPO_ROOT, assert_allowlisted_path, rel, safe_replay_id
@@ -29,10 +29,51 @@ from dashboard.backend.app.services.jobs import (
     get_job_service,
     resolve_candidate_allowlist,
 )
+from generals_bot.candidate_identity import candidate_identity_record
 
 router = APIRouter()
 
 ALLOWED_JOBS = {"MATCH", "SUBMISSION_VALIDATE"}
+
+
+def _cloud_valid_learning_state() -> dict[str, Any] | None:
+    configured = os.environ.get("QS_CLOUD_VALID_LEARNING_RUNTIME")
+    candidates = [
+        Path(configured) if configured else None,
+        Path.home() / "quantsilico-runtime" / "cloud_valid_learning_recovery_v1",
+    ]
+    for root in candidates:
+        if root is None:
+            continue
+        latest = root / "metrics" / "cloud_training_latest.json"
+        pilot = root / "cloud_valid_learning_micro_pilot.json"
+        programme = root / "programme_state.json"
+        source = latest if latest.is_file() else programme if programme.is_file() else pilot
+        if not source.is_file():
+            continue
+        try:
+            data = json.loads(source.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        metrics = data.get("metrics") if isinstance(data.get("metrics"), dict) else {}
+        programme_transitions = int(data.get("programme_transitions") or 0)
+        nonzero = float(metrics.get("reward_nonzero_fraction") or 0.0)
+        explicit_abort = str(data.get("exit_reason") or "") == "NO_TASK_LEARNING_SIGNAL"
+        no_signal = explicit_abort or (programme_transitions >= 500_000 and nonzero == 0.0)
+        return {
+            "source": str(source),
+            "state": data.get("status"),
+            "no_task_learning_signal": no_signal,
+            "programme_transitions": programme_transitions,
+            "curriculum_stage": data.get("curriculum_stage"),
+            "opponent_counts": data.get("opponent_counts"),
+            "training_stop_at": data.get("training_stop_at"),
+            "hashes": data.get("hashes"),
+            "gpu": data.get("gpu"),
+            "metrics": metrics,
+            "raw": data,
+        }
+    return None
 
 
 class MatchRequest(BaseModel):
@@ -503,6 +544,7 @@ def training() -> dict[str, Any]:
         "campaigns": campaigns,
         "live_campaigns": live_campaigns,
         "active": active,
+        "cloud_valid_learning": _cloud_valid_learning_state(),
         "charts": charts,
         "smoke": {
             "learning_readiness": readiness,
