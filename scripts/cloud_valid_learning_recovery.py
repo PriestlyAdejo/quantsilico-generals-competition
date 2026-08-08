@@ -45,7 +45,7 @@ PROGRAMME = "CLOUD_VALID_LEARNING_RECOVERY_V1"
 EXPECTED_PARENT_LEARNER = "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
 GAMMA = 1.0
 LAMBDA = 0.9
-LR = 3e-4
+LR = 3e-5
 RESET_POOL_SIZE = 4096
 MILESTONES = (250_000, 1_000_000, 2_500_000, 5_000_000, 10_000_000, 25_000_000)
 STAGES = (
@@ -332,6 +332,7 @@ def one_update(
         "explained_variance": explained_variance,
         "pass_fraction": float(np.mean(host["learner_pass"])),
         "shaping_lambda": shaping_lambda,
+        "learning_rate": LR,
         "parameter_update_norm": float(update_norm),
         **{key: float(value) for key, value in loss_metrics.items()},
         **{key: float(value) for key, value in diagnostics.items()},
@@ -559,7 +560,12 @@ def run_pilot(args: argparse.Namespace) -> int:
         anchor=anchor,
         anchor_sha256=anchor_sha256,
     )
-    if report["status"] != "CLOUD_VALID_LEARNING_MICRO_PILOT_PASS" and args.allow_shaping_repair:
+    pathology = any(row["pathology_reasons"] for row in report["rows"])
+    if (
+        report["status"] != "CLOUD_VALID_LEARNING_MICRO_PILOT_PASS"
+        and args.allow_shaping_repair
+        and not pathology
+    ):
         report, checkpoint = run_pilot_once(
             params=params,
             runtime=args.runtime / "shaping_repair",
