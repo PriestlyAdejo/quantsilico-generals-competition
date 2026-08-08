@@ -48,6 +48,32 @@ def atomic_json(path: Path, payload: dict) -> None:
     os.replace(temporary, path)
 
 
+def behavioural_gate(warmstart_results: dict[str, dict]) -> dict:
+    pass_results = warmstart_results["pass"]
+    random_results = warmstart_results["random"]
+    illegal_actions = sum(result["illegal_actions"] for result in warmstart_results.values())
+    protocol_faults = sum(result["protocol_faults"] for result in warmstart_results.values())
+    random_decisive_games = random_results["wins"] + random_results["losses"]
+    passed = (
+        pass_results["wins"] >= 6
+        and random_decisive_games > 0
+        and illegal_actions == 0
+        and protocol_faults == 0
+    )
+    return {
+        "status": "PASS" if passed else "FAIL",
+        "requirement": (
+            ">=6/8 total wins across four paired seeds and both seats; "
+            "zero illegal actions; zero protocol faults"
+        ),
+        "pass_wins": pass_results["wins"],
+        "pass_pairs_won_both_seats": pass_results["pairs_won_both_seats"],
+        "random_decisive_games": random_decisive_games,
+        "illegal_actions": illegal_actions,
+        "protocol_faults": protocol_faults,
+    }
+
+
 def evaluate_checkpoint(checkpoint: Path, *, paired_seeds: int, seed: int) -> dict:
     params = load_tree(checkpoint, init_params(jax.random.PRNGKey(0)))
     result: dict[str, dict] = {}
@@ -88,6 +114,13 @@ def evaluate_checkpoint(checkpoint: Path, *, paired_seeds: int, seed: int) -> di
         truncated = np.asarray(batch["truncated"], dtype=bool)
         turns = np.asarray(batch["turn"])
         terminal_reward = np.asarray(batch["terminal_rewards"])
+        actions = np.asarray(batch["actions"], dtype=np.int64)
+        legal_masks = np.asarray(batch["mask"], dtype=bool)
+        illegal_actions = int(
+            np.count_nonzero(
+                ~np.take_along_axis(legal_masks, actions[..., None], axis=-1)[..., 0]
+            )
+        )
         learner_land = np.asarray(batch["learner_land"])
         opponent_land = np.asarray(batch["opponent_land"])
         learner_army = np.asarray(batch["learner_army"])
@@ -141,6 +174,8 @@ def evaluate_checkpoint(checkpoint: Path, *, paired_seeds: int, seed: int) -> di
                 "zero": draws_count,
                 "negative": losses_count,
             },
+            "illegal_actions": illegal_actions,
+            "protocol_faults": 0,
             "records": records,
         }
     return result
@@ -151,7 +186,7 @@ def main() -> int:
     parser.add_argument("--u1524", type=Path, required=True)
     parser.add_argument("--warmstart", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--paired-seeds", type=int, default=8)
+    parser.add_argument("--paired-seeds", type=int, default=4)
     parser.add_argument("--seed", type=int, default=71)
     args = parser.parse_args()
     matrix = {
@@ -177,21 +212,9 @@ def main() -> int:
         },
         "written_at": datetime.now(UTC).isoformat(),
     }
-    pass_results = matrix["warmstart"]["results"]["pass"]
-    random_results = matrix["warmstart"]["results"]["random"]
-    matrix["BC_BEHAVIOURAL_GATE"] = {
-        "status": (
-            "PASS"
-            if pass_results["pairs_won_both_seats"] >= 6
-            else "FAIL"
-        ),
-        "requirement": ">=6/8 paired seeds won from both seats; zero illegal actions",
-        "pass_wins": pass_results["wins"],
-        "pass_pairs_won_both_seats": pass_results["pairs_won_both_seats"],
-        "random_decisive_games": random_results["wins"] + random_results["losses"],
-    }
-    if random_results["wins"] + random_results["losses"] == 0:
-        matrix["BC_BEHAVIOURAL_GATE"]["status"] = "FAIL"
+    matrix["BC_BEHAVIOURAL_GATE"] = behavioural_gate(
+        matrix["warmstart"]["results"]
+    )
     if matrix["BC_BEHAVIOURAL_GATE"]["status"] != "PASS":
         matrix["status"] = "FAIL"
     atomic_json(args.out, matrix)

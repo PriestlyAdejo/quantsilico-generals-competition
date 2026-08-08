@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "CONDITIONAL_BC_BEHAVIOURAL_GATE",
+  "status": "CONDITIONAL_BC_BEHAVIOUR_FAIL",
+  "candidate_id": "warmstart_05d38af946e013fd",
+  "candidate_step": 450,
+  "candidate_sha256": "289dbe5b6ed8475db4050b71e05f1e05e800be71a56abf3bab22123c400e7bdf",
+  "protocol": {
+    "paired_seeds": 4,
+    "games_per_opponent": 8,
+    "both_learner_seats": true,
+    "minimum_pass_wins": 6,
+    "random_requires_decisive_outcome": true
+  },
+  "warmstart_results": {
+    "pass": {"wins": 0, "draws": 8, "losses": 0, "mean_turns": 1200.0},
+    "random": {"wins": 0, "draws": 8, "losses": 0, "mean_turns": 1200.0},
+    "expander": {"wins": 0, "draws": 5, "losses": 3, "mean_turns": 1095.0},
+    "hunter": {"wins": 0, "draws": 0, "losses": 8, "mean_turns": 231.5},
+    "illegal_actions": 0,
+    "protocol_faults": 0
+  },
+  "comparison_summary": "The conditional warm-start did not improve the required decisive behaviour: it recorded no wins against any opponent, universal draws against Pass and Random, and universal losses against Hunter.",
+  "full_matrix": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\opponent_difficulty_matrix_conditional_bc.json",
+  "disposition": {
+    "POST_BC_VALUE_CALIBRATION_RUN": false,
+    "RUNPOD_STARTED": false,
+    "CLOUD_PILOT_RUN": false,
+    "LONG_PPO_RUN": false,
+    "action": "ABANDON_LEARNED_PROMOTION_FOR_NOON_DEADLINE_AND_PRESERVE_FALLBACK"
+  },
+  "written_at": "2026-08-08T07:49:00+01:00"
+}

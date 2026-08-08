@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "kind": "DOCUMENTED_CONDITIONAL_BC_ACCEPTANCE",
+  "status": "OPERATOR_CONDITIONAL_BC_ACCEPTANCE",
+  "BC_WARMSTART_GATE_PASS": false,
+  "OPERATOR_CONDITIONAL_BC_ACCEPTANCE": true,
+  "candidate": {
+    "id": "warmstart_05d38af946e013fd",
+    "selected_step": 450,
+    "checkpoint": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\warmstart_05d38af946e013fd\\warmstart_raw.npz",
+    "checkpoint_sha256": "289dbe5b6ed8475db4050b71e05f1e05e800be71a56abf3bab22123c400e7bdf",
+    "dataset_sha256": "5741a0364bf16d206030525d76c02fb5fab2b15c82c53833f3c4a4d4b140c8c6",
+    "validation_ce_relative_improvement": 0.19831099517466982,
+    "validation_top1_absolute_gain": 0.11433074661647083,
+    "legal_target_fraction": 1.0,
+    "finite_fraction": 1.0
+  },
+  "fallback": {
+    "package_id": "QS-PUBLIC-V001",
+    "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "immutable": true
+  },
+  "waiver_scope": "Numeric BC warm-start gate only; every downstream behavioural, value, PPO-integrity, cloud-task-signal, qualification and fallback-promotion gate remains mandatory.",
+  "pass_gate": {
+    "paired_seeds": 4,
+    "games": 8,
+    "both_learner_seats": true,
+    "minimum_total_wins": 6,
+    "illegal_actions": 0,
+    "protocol_faults": 0
+  },
+  "time_reclamation": "All schedule boundaries before teacher selection are upper bounds; advance immediately and donate reclaimed time to authoritative PPO.",
+  "written_at": "2026-08-08T07:36:00+01:00"
+}

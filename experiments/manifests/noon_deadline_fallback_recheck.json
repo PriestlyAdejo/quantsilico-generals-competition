@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "NOON_DEADLINE_FALLBACK_RECHECK",
+  "status": "FALLBACK_MANUAL_UPLOAD_READY",
+  "package_id": "QS-PUBLIC-V001",
+  "package": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\submission\\packages\\QS-PUBLIC-V001\\e1237f77dee46993\\package.zip",
+  "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+  "expected_sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+  "bytes": 214205,
+  "immutable": true,
+  "historical_portal_verdict": "QUALIFIED",
+  "fresh_linux_wsl_parity": {
+    "passed": true,
+    "run_sh_present": true,
+    "lf_ok": true,
+    "executable_ok": true,
+    "protocol_faults": 0,
+    "board_sizes_tested": ["3x3", "5x8", "10x10", "15x12", "21x21"],
+    "latency_p99_ms": 164.17346699745394,
+    "report": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\fallback_linux_parity_recheck_wsl.json",
+    "qualification_note": "Fresh WSL approximation; historical portal-qualified ZIP bytes and SHA are unchanged."
+  },
+  "manual_upload_only": true,
+  "automatic_upload_attempted": false,
+  "written_at": "2026-08-08T07:51:10+01:00"
+}
