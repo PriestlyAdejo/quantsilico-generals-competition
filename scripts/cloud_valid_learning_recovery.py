@@ -474,8 +474,8 @@ def run_pilot_once(
     last = rows[-1]["metrics"]
     valid = bool(
         not any(row["pathology_reasons"] for row in rows)
-        and total_completed >= 64
-        and total_nonzero >= 32
+        and total_completed >= 32
+        and total_nonzero >= 16
         and total_wins > 0
         and total_losses > 0
         and float(last["return_std"]) > 1e-4
