@@ -248,7 +248,12 @@ def post_update_diagnostics(params: dict, batch: dict[str, jax.Array]) -> dict[s
         "ratio_mean": jnp.mean(ratio),
         "legality_faults": jnp.sum(~legal),
         "support_faults": jnp.sum(jnp.sum(batch["mask"], axis=1) == 0),
-        "nonfinite_output_faults": jnp.sum(~jnp.isfinite(selected)),
+        # Selected masked log-probability alone is insufficient: if raw legal
+        # logits are nonfinite, a bad sampled index can be replaced by the
+        # finite mask sentinel and conceal the actual model fault.
+        "nonfinite_output_faults": jnp.sum(
+            batch["mask"] & ~jnp.isfinite(output["flat_logits"])
+        ),
     }
 
 

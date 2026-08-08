@@ -15,11 +15,15 @@ def masked_log_softmax(logits: jax.Array, mask: jax.Array) -> jax.Array:
     return jnp.where(mask, x, neg_inf)
 
 
-def sample_action(key: jax.Array, logits: jax.Array, mask: jax.Array) -> tuple[jax.Array, jax.Array]:
+def sample_action(
+    key: jax.Array, logits: jax.Array, mask: jax.Array
+) -> tuple[jax.Array, jax.Array]:
     logp = masked_log_softmax(logits, mask)
-    probs = jnp.where(mask, jnp.exp(logp), 0.0)
-    probs = probs / jnp.maximum(probs.sum(), 1e-12)
-    idx = jax.random.choice(key, logits.shape[0], p=probs)
+    # Sample from the masked log distribution directly.  Constructing a
+    # float32 CDF via random.choice is unnecessary and, over very large
+    # rollout counts, can select outside zero-probability support at a
+    # rounding boundary.  Categorical preserves the exact masked support.
+    idx = jax.random.categorical(key, logp).astype(jnp.int32)
     return idx, logp[idx]
 
 
@@ -28,7 +32,13 @@ def greedy_action(logits: jax.Array, mask: jax.Array) -> jax.Array:
     return jnp.argmax(jnp.where(mask, logp, jnp.finfo(jnp.float32).min))
 
 
-def infer(params: dict, spatial: jax.Array, global_vec: jax.Array, mask: jax.Array, key: jax.Array | None = None):
+def infer(
+    params: dict,
+    spatial: jax.Array,
+    global_vec: jax.Array,
+    mask: jax.Array,
+    key: jax.Array | None = None,
+):
     out = forward(params, spatial, global_vec)
     if key is None:
         idx = greedy_action(out["flat_logits"], mask)
