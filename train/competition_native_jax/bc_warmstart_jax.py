@@ -93,6 +93,8 @@ def train_warmstart(
     learning_rate: float,
     wall_minutes: float,
     seed: int,
+    evaluation_interval: int = 50,
+    trainable_scope: str = "full_policy",
 ) -> dict[str, Any]:
     manifest_path = dataset_path.with_name("dataset_manifest.json")
     dataset_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -124,6 +126,19 @@ def train_warmstart(
         # The u1524 critic is intentionally frozen throughout BC.  It is
         # recalibrated in a separate, mandatory post-BC phase.
         gradients = {**gradients, "value_head": jnp.zeros_like(gradients["value_head"])}
+        if trainable_scope in {"policy_heads", "last_layer_heads"}:
+            trainable = {"move_head", "build_head", "pass_head"}
+            gradients = {
+                key: value
+                if key in trainable or (key == "layers" and trainable_scope == "last_layer_heads")
+                else jax.tree_util.tree_map(jnp.zeros_like, value)
+                for key, value in gradients.items()
+            }
+            if trainable_scope == "last_layer_heads":
+                gradients["layers"] = [
+                    jax.tree_util.tree_map(jnp.zeros_like, layer)
+                    for layer in gradients["layers"][:-1]
+                ] + [gradients["layers"][-1]]
         updates, state = optimizer.update(gradients, state, current)
         current = optax.apply_updates(current, updates)
         return current, state, loss, metrics
@@ -131,6 +146,11 @@ def train_warmstart(
     rng = np.random.default_rng(seed)
     started = time.perf_counter()
     history: list[dict[str, float]] = []
+    validation_history: list[dict[str, float]] = []
+    best_params = params
+    best_validation = baseline
+    best_score = 0.0
+    selected_step = 0
     steps_ran = 0
     for step in range(steps):
         if time.perf_counter() - started >= wall_minutes * 60:
@@ -156,7 +176,54 @@ def train_warmstart(
                 }
             )
 
-    final = evaluate(params, data, validation_indices, batch_size=batch_size)
+        if (step + 1) % evaluation_interval == 0:
+            candidate = evaluate(
+                params, data, validation_indices, batch_size=batch_size
+            )
+            candidate_ce = (baseline["loss"] - candidate["loss"]) / max(
+                baseline["loss"], 1e-9
+            )
+            candidate_top1 = candidate["top1"] - baseline["top1"]
+            score = candidate_ce + candidate_top1
+            validation_history.append(
+                {
+                    "step": step + 1,
+                    **candidate,
+                    "ce_relative_improvement": candidate_ce,
+                    "top1_absolute_gain": candidate_top1,
+                    "selection_score": score,
+                }
+            )
+            if score > best_score:
+                best_score = score
+                best_params = params
+                best_validation = candidate
+                selected_step = step + 1
+            if candidate_ce >= 0.20 and candidate_top1 >= 0.15:
+                break
+
+    if steps_ran % evaluation_interval:
+        candidate = evaluate(params, data, validation_indices, batch_size=batch_size)
+        candidate_ce = (baseline["loss"] - candidate["loss"]) / max(
+            baseline["loss"], 1e-9
+        )
+        candidate_top1 = candidate["top1"] - baseline["top1"]
+        score = candidate_ce + candidate_top1
+        validation_history.append(
+            {
+                "step": steps_ran,
+                **candidate,
+                "ce_relative_improvement": candidate_ce,
+                "top1_absolute_gain": candidate_top1,
+                "selection_score": score,
+            }
+        )
+        if score > best_score:
+            best_params = params
+            best_validation = candidate
+            selected_step = steps_ran
+    params = best_params
+    final = best_validation
     ce_improvement = (baseline["loss"] - final["loss"]) / max(baseline["loss"], 1e-9)
     top1_gain = final["top1"] - baseline["top1"]
     numeric_pass = bool(
@@ -181,8 +248,11 @@ def train_warmstart(
         "checkpoint": str(checkpoint),
         "checkpoint_sha256": checkpoint_sha,
         "value_head_frozen": True,
+        "trainable_scope": trainable_scope,
         "optimizer_reused_from_u1524": False,
         "steps_ran": steps_ran,
+        "selected_step": selected_step,
+        "selection": "best whole-game validation checkpoint; stop at first full numeric gate",
         "batch_size": batch_size,
         "learning_rate": learning_rate,
         "baseline_validation": baseline,
@@ -196,6 +266,7 @@ def train_warmstart(
             "finite_fraction": 1.0,
         },
         "history": history,
+        "validation_history": validation_history,
         "device": [str(device) for device in jax.devices()],
         "elapsed_s": time.perf_counter() - started,
         "written_at": datetime.now(UTC).isoformat(),

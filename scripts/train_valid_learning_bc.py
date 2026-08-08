@@ -21,6 +21,12 @@ def main() -> int:
     parser.add_argument("--learning-rate", type=float, default=3e-4)
     parser.add_argument("--wall-minutes", type=float, default=30.0)
     parser.add_argument("--seed", type=int, default=41)
+    parser.add_argument("--evaluation-interval", type=int, default=50)
+    parser.add_argument(
+        "--trainable-scope",
+        choices=("full_policy", "policy_heads", "last_layer_heads"),
+        default="full_policy",
+    )
     args = parser.parse_args()
     identity = hashlib.sha256(
         json.dumps(
@@ -31,6 +37,8 @@ def main() -> int:
                 "batch_size": args.batch_size,
                 "learning_rate": args.learning_rate,
                 "seed": args.seed,
+                "evaluation_interval": args.evaluation_interval,
+                "trainable_scope": args.trainable_scope,
             },
             sort_keys=True,
         ).encode("utf-8")
@@ -45,6 +53,8 @@ def main() -> int:
         learning_rate=args.learning_rate,
         wall_minutes=args.wall_minutes,
         seed=args.seed,
+        evaluation_interval=args.evaluation_interval,
+        trainable_scope=args.trainable_scope,
     )
     print(json.dumps(report, indent=2))
     return 0 if report["status"] == "BC_NUMERIC_GATE_PASS" else 1

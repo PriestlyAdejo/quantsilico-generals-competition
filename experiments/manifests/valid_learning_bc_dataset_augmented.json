@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "kind": "VALID_LEARNING_BC_DATASET_AUGMENTED",
+  "status": "PASS",
+  "dataset_id": "BC_VALID_LEARNING_e8e31686734937ae",
+  "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_aug_77b9073bc8d9cb32\\teacher_states.npz",
+  "dataset_sha256": "e8e31686734937ae8c41b385f6ecabf24d998a83c4a375535aef385fc701cdaa",
+  "unique_recurrent_states": 21064,
+  "base_dataset_sha256": "c318e0270330b25b562821479c115a18b88ebc0d956fed055a9915425979e975",
+  "teacher": {
+    "BC_TEACHER_ID": "heuristic_v2f_plus_planner_terminal_form",
+    "BC_TEACHER_SOURCE_HASH": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c",
+    "BC_TEACHER_EQUALS_FALLBACK": true
+  },
+  "source_hashes": {
+    "BC_RUNTIME_SOURCE_HASH": "9239649add4c55d645c55becbbbf1bddecf998816993777c8b74ce43d257db94",
+    "BC_OPPONENT_SOURCE_HASH": "db6f0b657b21edcbdacbd1bfd629ea0651a79ab9311203f2acd7e34bcef2d10a"
+  },
+  "coverage": {
+    "opponents": [
+      "legal_random",
+      "official_expander",
+      "official_hunter",
+      "pass"
+    ],
+    "seats": [
+      0,
+      1
+    ],
+    "splits": {
+      "train": 12816,
+      "validation": 8248
+    },
+    "train_games": 16,
+    "validation_games": 8
+  },
+  "validation_game_reports": [
+    {
+      "game_id": "pass:seat0:seed50000",
+      "opponent": "pass",
+      "learner_seat": 0,
+      "seed": 50000,
+      "split": "validation",
+      "turns": 310,
+      "winner": 0,
+      "unique_samples": 310
+    },
+    {
+      "game_id": "pass:seat1:seed50001",
+      "opponent": "pass",
+      "learner_seat": 1,
+      "seed": 50001,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "legal_random:seat0:seed50002",
+      "opponent": "legal_random",
+      "learner_seat": 0,
+      "seed": 50002,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "legal_random:seat1:seed50003",
+      "opponent": "legal_random",
+      "learner_seat": 1,
+      "seed": 50003,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "official_expander:seat0:seed50004",
+      "opponent": "official_expander",
+      "learner_seat": 0,
+      "seed": 50004,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "official_expander:seat1:seed50005",
+      "opponent": "official_expander",
+      "learner_seat": 1,
+      "seed": 50005,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "official_hunter:seat0:seed50006",
+      "opponent": "official_hunter",
+      "learner_seat": 0,
+      "seed": 50006,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "official_hunter:seat1:seed50007",
+      "opponent": "official_hunter",
+      "learner_seat": 1,
+      "seed": 50007,
+      "split": "validation",
+      "turns": 738,
+      "winner": 0,
+      "unique_samples": 738
+    }
+  ],
+  "split": "16 complete base games train; 8 new complete games validation",
+  "independent_validation": {
+    "dataset_sha256_match": true,
+    "unique_sample_ids": 21064,
+    "train_validation_game_overlap": 0,
+    "legal_teacher_target_fraction": 1.0,
+    "finite_tensor_fraction": 1.0
+  },
+  "elapsed_s": 633.6467222000356,
+  "written_at": "2026-08-08T01:57:05.032555+00:00"
+}

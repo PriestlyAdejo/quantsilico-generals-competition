@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "kind": "VALID_LEARNING_BC_ATTEMPT_LEDGER",
+  "status": "MORE_INDEPENDENT_GAMES_REQUIRED",
+  "gate": {
+    "validation_ce_relative_improvement": 0.20,
+    "validation_top1_absolute_gain": 0.15,
+    "legal_target_fraction": 1.0,
+    "finite_fraction": 1.0
+  },
+  "attempts": [
+    {
+      "id": "warmstart_327684b8edb81d13",
+      "dataset_sha256": "c318e0270330b25b562821479c115a18b88ebc0d956fed055a9915425979e975",
+      "scope": "full_policy",
+      "learning_rate": 0.0003,
+      "steps": 1000,
+      "ce_relative_improvement": -0.213970719848871,
+      "top1_absolute_gain": 0.08863198457425729,
+      "status": "FAIL"
+    },
+    {
+      "id": "warmstart_12a40ad95aa892d5",
+      "dataset_sha256": "c318e0270330b25b562821479c115a18b88ebc0d956fed055a9915425979e975",
+      "scope": "full_policy",
+      "learning_rate": 0.0003,
+      "steps": 150,
+      "ce_relative_improvement": 0.06002628820405698,
+      "top1_absolute_gain": 0.06859344889935616,
+      "status": "FAIL"
+    },
+    {
+      "id": "warmstart_8632e38673424d8a",
+      "dataset_sha256": "c318e0270330b25b562821479c115a18b88ebc0d956fed055a9915425979e975",
+      "scope": "full_policy",
+      "learning_rate": 0.0001,
+      "selected_step": 200,
+      "ce_relative_improvement": 0.0889700445006768,
+      "top1_absolute_gain": 0.07919075144508671,
+      "status": "FAIL"
+    },
+    {
+      "id": "warmstart_944b5de3d61c5b06",
+      "dataset_sha256": "e8e31686734937ae8c41b385f6ecabf24d998a83c4a375535aef385fc701cdaa",
+      "scope": "full_policy",
+      "learning_rate": 0.0003,
+      "selected_step": 150,
+      "ce_relative_improvement": 0.12790267003311734,
+      "top1_absolute_gain": 0.08317167775129139,
+      "status": "FAIL"
+    },
+    {
+      "id": "warmstart_8d2a4f511da00484",
+      "dataset_sha256": "e8e31686734937ae8c41b385f6ecabf24d998a83c4a375535aef385fc701cdaa",
+      "scope": "policy_heads",
+      "learning_rate": 0.001,
+      "selected_step": 650,
+      "ce_relative_improvement": 0.09908260885155099,
+      "top1_absolute_gain": 0.037099902920070836,
+      "status": "FAIL"
+    },
+    {
+      "id": "warmstart_f20037ffdd717a3a",
+      "dataset_sha256": "e8e31686734937ae8c41b385f6ecabf24d998a83c4a375535aef385fc701cdaa",
+      "scope": "last_layer_heads",
+      "learning_rate": 0.0003,
+      "selected_step": 600,
+      "ce_relative_improvement": 0.13454000957371942,
+      "top1_absolute_gain": 0.06547041701299258,
+      "status": "FAIL"
+    }
+  ],
+  "decision": "Do not weaken gates or start RunPod; collect more disjoint complete games.",
+  "written_at": "2026-08-08T03:39:00+01:00"
+}
