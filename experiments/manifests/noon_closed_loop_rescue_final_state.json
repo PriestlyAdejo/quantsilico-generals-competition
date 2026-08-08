@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "kind": "NOON_CLOSED_LOOP_RESCUE_FINAL_STATE",
+  "status": "DEADLINE_SUPERVISED_RESCUE_FAIL",
+  "written_at": "2026-08-08T09:22:19+01:00",
+  "source_parent_commit": "c0b5353f2e3815f884c61472ae3dcc341475c2dc",
+  "rescue_source_commit": "c44c9ae554ab585d282e3ea9bcce9818fd7ce773",
+  "branch": "research/noon-closed-loop-hybrid-salvage-v3",
+  "learner_state_contract": "stateless_policy_with_deterministic_observation_history",
+  "implementation": {
+    "closed_loop_takeover_collector": "IMPLEMENTED_NOT_COMPLETED",
+    "teacher_shadow_clone_fixture": "IMPLEMENTED_AND_PASSED",
+    "hybrid_bc_loss": "IMPLEMENTED_UNIT_TESTED",
+    "frozen_validation_reporting": "IMPLEMENTED_NOT_RUN_WITH_DAGGER_DATA",
+    "ppo_supervised_anchor": "IMPLEMENTED_UNIT_TESTED"
+  },
+  "deadline_gate": {
+    "diagnostic_latest_finish_bst": "08:30",
+    "bounded_local_cutoff_bst": "09:00",
+    "cutoff_enforced": true,
+    "reason": "The full 8-environment x 1200-turn state-capturing Windows CPU scan did not complete before the bounded local rescue cutoff.",
+    "partial_dataset_published": false,
+    "invented_or_partial_metrics_published": false
+  },
+  "gates": {
+    "TEACHER_SHADOW_CLONE_GATE_PASS": true,
+    "TARGETED_DAGGER_DATASET_PASS": false,
+    "HYBRID_BC_GAMEPLAY_GATE_PASS": false,
+    "POST_BC_VALUE_CALIBRATION_PASS": false,
+    "CLOUD_VALID_LEARNING_MICRO_PILOT_PASS": false
+  },
+  "runpod": {
+    "pod_id": "wvjrnxbpcjnr8h",
+    "observed_status": "EXITED",
+    "gpu_hourly_rate_usd": 1.59,
+    "gpu_started_by_rescue": false,
+    "terminate_invoked": false,
+    "separate_network_volumes": 0,
+    "persistent_workspace_gb": 50
+  },
+  "fallback": {
+    "package_id": "QS-PUBLIC-V001",
+    "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "immutable": true,
+    "decision": "PRESERVE_EXISTING_QUALIFIED_FALLBACK"
+  },
+  "validation": {
+    "tests_passed": 18,
+    "tests_failed": 0,
+    "teacher_shadow_clone_and_transition": "PASS_PASS_AND_RANDOM",
+    "snapshot_rng_matches_batched_rollout_schedule": "PASS",
+    "hybrid_bc_and_anchor_unit_tests": "PASS_7",
+    "jax_core_tests": "PASS_3",
+    "all_four_opponent_equivalence_and_legality": "PASS",
+    "curriculum_schedule": "PASS",
+    "persistent_fragment_carry_and_reset_cursors": "PASS",
+    "terminal_reward_gae_and_ppo_gradient": "PASS",
+    "full_rollout_carry_checkpoint_roundtrip": "PASS"
+  },
+  "cloud_and_delivery_disposition": {
+    "runpod_start_authorized": false,
+    "cloud_ppo_run": false,
+    "distillation_run": false,
+    "learned_package_created": false,
+    "automatic_upload_attempted": false
+  }
+}
