@@ -276,7 +276,7 @@ def batch_arrays(
 def train_rescue(
     *,
     original_dataset: Path,
-    dagger_dataset: Path,
+    dagger_dataset: Path | None,
     parent_checkpoint: Path,
     output: Path,
     steps: int = 300,
@@ -286,16 +286,24 @@ def train_rescue(
     evaluation_interval: int = 50,
 ) -> dict[str, Any]:
     original_manifest, original = load_verified(original_dataset)
-    dagger_manifest, dagger = load_verified(dagger_dataset)
     original_train = np.flatnonzero(original["split"] == "train")
     original_validation = np.flatnonzero(original["split"] == "validation")
-    dagger_train = np.flatnonzero(dagger["split"] == "train")
-    dagger_holdout = np.flatnonzero(dagger["split"] == "dagger_holdout")
-    sources = dagger["sample_source"].astype(str)
-    disagreement = dagger_train[sources[dagger_train] != "takeover_recovery"]
-    recovery = dagger_train[sources[dagger_train] == "takeover_recovery"]
-    if not len(original_train) or not len(original_validation) or not len(dagger_holdout):
-        raise RuntimeError("immutable original validation / DAgger split gate failed")
+    if not len(original_train) or not len(original_validation):
+        raise RuntimeError("immutable original validation split gate failed")
+    dagger_manifest: dict[str, Any] | None = None
+    dagger: dict[str, np.ndarray] | None = None
+    dagger_holdout = np.empty((0,), dtype=np.int64)
+    disagreement = np.empty((0,), dtype=np.int64)
+    recovery = np.empty((0,), dtype=np.int64)
+    if dagger_dataset is not None:
+        dagger_manifest, dagger = load_verified(dagger_dataset)
+        dagger_train = np.flatnonzero(dagger["split"] == "train")
+        dagger_holdout = np.flatnonzero(dagger["split"] == "dagger_holdout")
+        sources = dagger["sample_source"].astype(str)
+        disagreement = dagger_train[sources[dagger_train] != "takeover_recovery"]
+        recovery = dagger_train[sources[dagger_train] == "takeover_recovery"]
+        if not len(dagger_train) or not len(dagger_holdout):
+            raise RuntimeError("immutable DAgger train/holdout split gate failed")
     validation_hash_before = validation_identity(original, original_validation)
 
     params = load_tree(parent_checkpoint, init_params(jax.random.PRNGKey(0)))
@@ -304,7 +312,11 @@ def train_rescue(
     baseline_original = evaluate(
         params, original, original_validation, batch_size=batch_size
     )
-    baseline_dagger = evaluate(params, dagger, dagger_holdout, batch_size=batch_size)
+    baseline_dagger = (
+        evaluate(params, dagger, dagger_holdout, batch_size=batch_size)
+        if dagger is not None
+        else None
+    )
     optimizer = optax.chain(optax.clip_by_global_norm(1.0), optax.adam(learning_rate))
     opt_state = optimizer.init(params)
 
@@ -328,16 +340,28 @@ def train_rescue(
     best_score = 0.0
     selected_step = 0
     for step in range(steps):
-        combined_indices, source = stratified_batch_indices(
-            rng,
-            original_train,
-            disagreement,
-            recovery,
-            batch_size=batch_size,
-        )
-        spatial, global_vec, legal_mask, actions, weights = batch_arrays(
-            original, dagger, combined_indices, source
-        )
+        if dagger is None:
+            selected = rng.choice(
+                original_train,
+                batch_size,
+                replace=len(original_train) < batch_size,
+            )
+            spatial = original["spatial"][selected].astype(np.float32, copy=False)
+            global_vec = original["global_vec"][selected].astype(np.float32, copy=False)
+            legal_mask = original["legal_mask"][selected].astype(bool, copy=False)
+            actions = original["teacher_action"][selected].astype(np.int32, copy=False)
+            weights = np.ones((batch_size,), dtype=np.float32)
+        else:
+            combined_indices, source = stratified_batch_indices(
+                rng,
+                original_train,
+                disagreement,
+                recovery,
+                batch_size=batch_size,
+            )
+            spatial, global_vec, legal_mask, actions, weights = batch_arrays(
+                original, dagger, combined_indices, source
+            )
         params, opt_state, loss, metrics = train_step(
             params,
             opt_state,
@@ -360,7 +384,11 @@ def train_rescue(
             original_metrics = evaluate(
                 params, original, original_validation, batch_size=batch_size
             )
-            dagger_metrics = evaluate(params, dagger, dagger_holdout, batch_size=batch_size)
+            dagger_metrics = (
+                evaluate(params, dagger, dagger_holdout, batch_size=batch_size)
+                if dagger is not None
+                else None
+            )
             ce_gain = (baseline_original["exact_ce"] - original_metrics["exact_ce"]) / max(
                 baseline_original["exact_ce"], 1e-9
             )
@@ -380,7 +408,11 @@ def train_rescue(
                 selected_step = step + 1
     params = best_params
     final_original = evaluate(params, original, original_validation, batch_size=batch_size)
-    final_dagger = evaluate(params, dagger, dagger_holdout, batch_size=batch_size)
+    final_dagger = (
+        evaluate(params, dagger, dagger_holdout, batch_size=batch_size)
+        if dagger is not None
+        else None
+    )
     validation_hash_after = validation_identity(original, original_validation)
     if validation_hash_after != validation_hash_before:
         raise RuntimeError("ORIGINAL_FIXED_VALIDATION mutation detected")
@@ -396,8 +428,11 @@ def train_rescue(
         "gameplay_gate_required_next": True,
         "original_dataset": str(original_dataset),
         "original_dataset_sha256": original_manifest["dataset_sha256"],
-        "dagger_dataset": str(dagger_dataset),
-        "dagger_dataset_sha256": dagger_manifest["dataset_sha256"],
+        "dagger_dataset": str(dagger_dataset) if dagger_dataset is not None else None,
+        "dagger_dataset_sha256": (
+            dagger_manifest["dataset_sha256"] if dagger_manifest is not None else None
+        ),
+        "GPU_DAGGER_BYPASS": dagger_dataset is None,
         "parent_checkpoint": str(parent_checkpoint),
         "parent_checkpoint_sha256": sha256_file(parent_checkpoint),
         "checkpoint": str(checkpoint),
@@ -411,9 +446,9 @@ def train_rescue(
             "ranking_margin": RANK_MARGIN,
         },
         "sampling": {
-            "original": 0.50,
-            "dagger_disagreement": 0.30,
-            "takeover_recovery": 0.20,
+            "original": 1.0 if dagger_dataset is None else 0.50,
+            "dagger_disagreement": 0.0 if dagger_dataset is None else 0.30,
+            "takeover_recovery": 0.0 if dagger_dataset is None else 0.20,
         },
         "steps": steps,
         "selected_step": selected_step,

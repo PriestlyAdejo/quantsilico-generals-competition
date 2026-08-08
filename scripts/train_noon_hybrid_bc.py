@@ -14,7 +14,7 @@ from train.competition_native_jax.deadline_rescue_bc_jax import train_rescue
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--original-dataset", type=Path, required=True)
-    parser.add_argument("--dagger-dataset", type=Path, required=True)
+    parser.add_argument("--dagger-dataset", type=Path)
     parser.add_argument("--parent", type=Path, required=True)
     parser.add_argument("--runtime", type=Path, required=True)
     parser.add_argument("--steps", type=int, default=300)
