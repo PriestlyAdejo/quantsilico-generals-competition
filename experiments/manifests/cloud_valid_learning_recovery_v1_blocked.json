@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "kind": "CLOUD_VALID_LEARNING_RECOVERY_PROGRAMME_STATE",
+  "status": "BLOCKED_BEFORE_PAID_RESTART",
+  "blocked_gate": "BC_WARMSTART_GATE_PASS",
+  "pod": {
+    "id": "wvjrnxbpcjnr8h",
+    "status": "EXITED",
+    "automatic_terminate_invoked": false,
+    "network_volume_deleted": false
+  },
+  "fallback": {
+    "FALLBACK_PACKAGE_ID": "QS-PUBLIC-V001",
+    "FALLBACK_PACKAGE_SHA": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "immutable": true,
+    "upload_attempted": false
+  },
+  "teacher": {
+    "BC_TEACHER_ID": "heuristic_v2f_plus_planner_terminal_form",
+    "BC_TEACHER_SOURCE_HASH": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c",
+    "BC_TEACHER_EQUALS_FALLBACK": true
+  },
+  "final_dataset": {
+    "dataset_id": "BC_VALID_LEARNING_5741a0364bf16d20",
+    "dataset_sha256": "5741a0364bf16d206030525d76c02fb5fab2b15c82c53833f3c4a4d4b140c8c6",
+    "unique_recurrent_states": 50985,
+    "training_states": 42737,
+    "validation_states": 8248,
+    "training_games": 48,
+    "validation_games": 8,
+    "train_validation_game_overlap": 0,
+    "opponents": [
+      "pass",
+      "legal_random",
+      "official_expander",
+      "official_hunter"
+    ],
+    "learner_seats": [0, 1],
+    "legal_teacher_target_fraction": 1.0,
+    "finite_tensor_fraction": 1.0
+  },
+  "final_bc_attempt": {
+    "id": "warmstart_05d38af946e013fd",
+    "checkpoint_sha256": "289dbe5b6ed8475db4050b71e05f1e05e800be71a56abf3bab22123c400e7bdf",
+    "status": "BC_NUMERIC_GATE_FAIL",
+    "value_head_frozen": true,
+    "optimizer_reused_from_u1524": false,
+    "steps_ran": 950,
+    "selected_step": 450,
+    "baseline_validation_loss": 5.318283226048334,
+    "final_validation_loss": 4.263609186869935,
+    "validation_ce_relative_improvement": 0.19831099517466982,
+    "required_ce_relative_improvement": 0.2,
+    "baseline_validation_top1": 0.04170708073561453,
+    "final_validation_top1": 0.15603782735208535,
+    "validation_top1_absolute_gain": 0.11433074661647083,
+    "required_top1_absolute_gain": 0.15,
+    "legal_target_fraction": 1.0,
+    "finite_fraction": 1.0
+  },
+  "downstream": {
+    "POST_BC_VALUE_CALIBRATION_PASS": false,
+    "OPPONENT_DIFFICULTY_MATRIX": false,
+    "VALID_LEARNING_GATE_PASS": false,
+    "CLOUD_VALID_LEARNING_MICRO_PILOT_PASS": false,
+    "CLOUD_VALID_LONG_PPO_RUNNING": false,
+    "reason": "Downstream gates were not run because the mandatory BC warm-start gate failed."
+  },
+  "operator_decision_required": "Choose a materially different supervised-learning approach, teacher target representation, or explicitly revise the BC acceptance criteria. Repeating terminal-only PPO or restarting the paid A100 is not authorized by this state.",
+  "written_at": "2026-08-08T05:02:00+01:00"
+}

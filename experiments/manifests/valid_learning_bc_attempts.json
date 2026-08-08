@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "VALID_LEARNING_BC_ATTEMPT_LEDGER",
-  "status": "MORE_INDEPENDENT_GAMES_REQUIRED",
+  "status": "BLOCKED_BC_NUMERIC_GATE",
   "gate": {
     "validation_ce_relative_improvement": 0.20,
     "validation_top1_absolute_gain": 0.15,
@@ -68,8 +68,30 @@
       "ce_relative_improvement": 0.13454000957371942,
       "top1_absolute_gain": 0.06547041701299258,
       "status": "FAIL"
+    },
+    {
+      "id": "warmstart_f1f4bd81b6af4dab",
+      "dataset_sha256": "fc1482428f54e15622f82698baa667f3666c103f8028cdf7f2bffa4a9ee2029c",
+      "scope": "full_policy",
+      "learning_rate": 0.0003,
+      "steps_ran": 827,
+      "selected_step": 300,
+      "ce_relative_improvement": 0.16889360449954466,
+      "top1_absolute_gain": 0.11469447115575307,
+      "status": "FAIL"
+    },
+    {
+      "id": "warmstart_05d38af946e013fd",
+      "dataset_sha256": "5741a0364bf16d206030525d76c02fb5fab2b15c82c53833f3c4a4d4b140c8c6",
+      "scope": "full_policy",
+      "learning_rate": 0.0003,
+      "steps_ran": 950,
+      "selected_step": 450,
+      "ce_relative_improvement": 0.19831099517466982,
+      "top1_absolute_gain": 0.11433074661647083,
+      "status": "FAIL"
     }
   ],
-  "decision": "Do not weaken gates or start RunPod; collect more disjoint complete games.",
-  "written_at": "2026-08-08T03:39:00+01:00"
+  "decision": "Hard BC warm-start gate remains unsatisfied after the final justified leakage-free corpus expansion. Do not run value calibration, opponent matrix, or start RunPod without an explicit algorithm or gate decision from the operator.",
+  "written_at": "2026-08-08T05:02:00+01:00"
 }

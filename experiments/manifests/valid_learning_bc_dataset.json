@@ -2,16 +2,20 @@
   "schema_version": 1,
   "kind": "VALID_LEARNING_BC_DATASET",
   "status": "PASS",
-  "dataset_id": "BC_VALID_LEARNING_c318e0270330b25b",
-  "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_c7015c94b8b62950\\teacher_states.npz",
-  "dataset_sha256": "c318e0270330b25b562821479c115a18b88ebc0d956fed055a9915425979e975",
-  "unique_recurrent_states": 12816,
+  "dataset_id": "BC_VALID_LEARNING_ebdd50a94902df78",
+  "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_46a6d4d46fab0e77\\teacher_states.npz",
+  "dataset_sha256": "ebdd50a94902df780afe4fcacdcc24cde1ab328fb4b2a25f8cb5fad98e3793b7",
+  "unique_recurrent_states": 15588,
   "target_states": 20000,
   "minimum_states": 12000,
   "teacher": {
     "BC_TEACHER_ID": "heuristic_v2f_plus_planner_terminal_form",
     "BC_TEACHER_SOURCE_HASH": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c",
     "BC_TEACHER_EQUALS_FALLBACK": true
+  },
+  "source_hashes": {
+    "BC_RUNTIME_SOURCE_HASH": "9239649add4c55d645c55becbbbf1bddecf998816993777c8b74ce43d257db94",
+    "BC_OPPONENT_SOURCE_HASH": "db6f0b657b21edcbdacbd1bfd629ea0651a79ab9311203f2acd7e34bcef2d10a"
   },
   "coverage": {
     "opponents": [
@@ -25,170 +29,170 @@
       1
     ],
     "splits": {
-      "train": 7626,
-      "validation": 5190
+      "train": 7360,
+      "validation": 8228
     }
   },
   "game_reports": [
     {
-      "game_id": "pass:seat0:seed30000",
+      "game_id": "pass:seat0:seed90000",
       "opponent": "pass",
       "learner_seat": 0,
-      "seed": 30000,
+      "seed": 90000,
       "split": "train",
       "turns": 1200,
       "winner": -1,
       "unique_samples": 1200
     },
     {
-      "game_id": "pass:seat1:seed30001",
+      "game_id": "pass:seat1:seed90001",
       "opponent": "pass",
       "learner_seat": 1,
-      "seed": 30001,
+      "seed": 90001,
       "split": "train",
-      "turns": 688,
+      "turns": 698,
       "winner": 1,
-      "unique_samples": 688
+      "unique_samples": 698
     },
     {
-      "game_id": "legal_random:seat0:seed30002",
+      "game_id": "legal_random:seat0:seed90002",
       "opponent": "legal_random",
       "learner_seat": 0,
-      "seed": 30002,
+      "seed": 90002,
       "split": "train",
       "turns": 1200,
       "winner": -1,
       "unique_samples": 1200
     },
     {
-      "game_id": "legal_random:seat1:seed30003",
+      "game_id": "legal_random:seat1:seed90003",
       "opponent": "legal_random",
       "learner_seat": 1,
-      "seed": 30003,
+      "seed": 90003,
       "split": "train",
       "turns": 1200,
       "winner": -1,
       "unique_samples": 1200
     },
     {
-      "game_id": "official_expander:seat0:seed30004",
+      "game_id": "official_expander:seat0:seed90004",
       "opponent": "official_expander",
       "learner_seat": 0,
-      "seed": 30004,
+      "seed": 90004,
       "split": "train",
       "turns": 1200,
       "winner": -1,
       "unique_samples": 1200
     },
     {
-      "game_id": "official_expander:seat1:seed30005",
+      "game_id": "official_expander:seat1:seed90005",
       "opponent": "official_expander",
       "learner_seat": 1,
-      "seed": 30005,
+      "seed": 90005,
       "split": "train",
-      "turns": 659,
-      "winner": 1,
-      "unique_samples": 659
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
     },
     {
-      "game_id": "official_hunter:seat0:seed30006",
+      "game_id": "official_hunter:seat0:seed90006",
       "opponent": "official_hunter",
       "learner_seat": 0,
-      "seed": 30006,
+      "seed": 90006,
       "split": "train",
-      "turns": 1083,
+      "turns": 318,
       "winner": 1,
-      "unique_samples": 1083
+      "unique_samples": 318
     },
     {
-      "game_id": "official_hunter:seat1:seed30007",
+      "game_id": "official_hunter:seat1:seed90007",
       "opponent": "official_hunter",
       "learner_seat": 1,
-      "seed": 30007,
+      "seed": 90007,
       "split": "train",
-      "turns": 396,
-      "winner": 1,
-      "unique_samples": 396
-    },
-    {
-      "game_id": "pass:seat0:seed30008",
-      "opponent": "pass",
-      "learner_seat": 0,
-      "seed": 30008,
-      "split": "validation",
-      "turns": 211,
+      "turns": 344,
       "winner": 0,
-      "unique_samples": 211
+      "unique_samples": 344
     },
     {
-      "game_id": "pass:seat1:seed30009",
+      "game_id": "pass:seat0:seed90008",
+      "opponent": "pass",
+      "learner_seat": 0,
+      "seed": 90008,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "pass:seat1:seed90009",
       "opponent": "pass",
       "learner_seat": 1,
-      "seed": 30009,
-      "split": "validation",
-      "turns": 548,
-      "winner": 1,
-      "unique_samples": 548
-    },
-    {
-      "game_id": "legal_random:seat0:seed30010",
-      "opponent": "legal_random",
-      "learner_seat": 0,
-      "seed": 30010,
+      "seed": 90009,
       "split": "validation",
       "turns": 1200,
       "winner": -1,
       "unique_samples": 1200
     },
     {
-      "game_id": "legal_random:seat1:seed30011",
+      "game_id": "legal_random:seat0:seed90010",
       "opponent": "legal_random",
-      "learner_seat": 1,
-      "seed": 30011,
-      "split": "validation",
-      "turns": 679,
-      "winner": 1,
-      "unique_samples": 679
-    },
-    {
-      "game_id": "official_expander:seat0:seed30012",
-      "opponent": "official_expander",
       "learner_seat": 0,
-      "seed": 30012,
+      "seed": 90010,
       "split": "validation",
       "turns": 1200,
       "winner": -1,
       "unique_samples": 1200
     },
     {
-      "game_id": "official_expander:seat1:seed30013",
+      "game_id": "legal_random:seat1:seed90011",
+      "opponent": "legal_random",
+      "learner_seat": 1,
+      "seed": 90011,
+      "split": "validation",
+      "turns": 1200,
+      "winner": -1,
+      "unique_samples": 1200
+    },
+    {
+      "game_id": "official_expander:seat0:seed90012",
       "opponent": "official_expander",
-      "learner_seat": 1,
-      "seed": 30013,
-      "split": "validation",
-      "turns": 857,
-      "winner": 1,
-      "unique_samples": 857
-    },
-    {
-      "game_id": "official_hunter:seat0:seed30014",
-      "opponent": "official_hunter",
       "learner_seat": 0,
-      "seed": 30014,
+      "seed": 90012,
       "split": "validation",
-      "turns": 129,
-      "winner": 1,
-      "unique_samples": 129
-    },
-    {
-      "game_id": "official_hunter:seat1:seed30015",
-      "opponent": "official_hunter",
-      "learner_seat": 1,
-      "seed": 30015,
-      "split": "validation",
-      "turns": 366,
+      "turns": 1192,
       "winner": 0,
-      "unique_samples": 366
+      "unique_samples": 1192
+    },
+    {
+      "game_id": "official_expander:seat1:seed90013",
+      "opponent": "official_expander",
+      "learner_seat": 1,
+      "seed": 90013,
+      "split": "validation",
+      "turns": 836,
+      "winner": 1,
+      "unique_samples": 836
+    },
+    {
+      "game_id": "official_hunter:seat0:seed90014",
+      "opponent": "official_hunter",
+      "learner_seat": 0,
+      "seed": 90014,
+      "split": "validation",
+      "turns": 572,
+      "winner": 1,
+      "unique_samples": 572
+    },
+    {
+      "game_id": "official_hunter:seat1:seed90015",
+      "opponent": "official_hunter",
+      "learner_seat": 1,
+      "seed": 90015,
+      "split": "validation",
+      "turns": 828,
+      "winner": 0,
+      "unique_samples": 828
     }
   ],
   "config": {
@@ -201,7 +205,7 @@
       "official_hunter"
     ],
     "rounds": 2,
-    "seed_base": 30000,
+    "seed_base": 90000,
     "target_states": 20000,
     "minimum_states": 12000,
     "max_turns": 1200,
@@ -210,22 +214,11 @@
       21
     ],
     "split": "complete_game_and_seed_round0_train_round1_validation",
-    "teacher_source_hash": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c"
-  },
-  "config_hash": "c7015c94b8b62950075c7d211524b9940e33c63ca10fa61420dda1fc2c863b1c",
-  "elapsed_s": 1837.797169300029,
-  "written_at": "2026-08-08T01:07:22.406852+00:00",
-  "source_hashes": {
+    "teacher_source_hash": "632f1bb41bad26427ab520d0407ac5feaa4c4af8ea13af6a9d49c8617107045c",
     "BC_RUNTIME_SOURCE_HASH": "9239649add4c55d645c55becbbbf1bddecf998816993777c8b74ce43d257db94",
     "BC_OPPONENT_SOURCE_HASH": "db6f0b657b21edcbdacbd1bfd629ea0651a79ab9311203f2acd7e34bcef2d10a"
   },
-  "provenance_finalized": true,
-  "independent_validation": {
-    "dataset_sha256_match": true,
-    "unique_sample_ids": 12816,
-    "train_validation_game_overlap": 0,
-    "legal_teacher_target_fraction": 1.0,
-    "finite_spatial_fraction": 1.0,
-    "finite_global_fraction": 1.0
-  }
+  "config_hash": "46a6d4d46fab0e77cab806c550b7f158857e314001e19d5003ef039b59940134",
+  "elapsed_s": 1143.8286816999898,
+  "written_at": "2026-08-08T03:38:28.456748+00:00"
 }

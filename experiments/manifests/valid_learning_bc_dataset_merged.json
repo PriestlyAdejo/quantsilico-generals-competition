@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "VALID_LEARNING_BC_DATASET_MERGED",
+  "status": "PASS",
+  "dataset_id": "BC_VALID_LEARNING_5741a0364bf16d20",
+  "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_merged_6b4c9702076f5fd2\\teacher_states.npz",
+  "dataset_sha256": "5741a0364bf16d206030525d76c02fb5fab2b15c82c53833f3c4a4d4b140c8c6",
+  "unique_recurrent_states": 50985,
+  "duplicates_removed": 0,
+  "sources": [
+    {
+      "role": "train",
+      "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_c7015c94b8b62950\\teacher_states.npz",
+      "dataset_sha256": "c318e0270330b25b562821479c115a18b88ebc0d956fed055a9915425979e975",
+      "samples": 12816,
+      "source_split_filter": null
+    },
+    {
+      "role": "train",
+      "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_14534c2e09751d89\\teacher_states.npz",
+      "dataset_sha256": "df8f04b98a2d5bbc556ac4740a3af4494c20e4188870626bc17e0b62f40aec44",
+      "samples": 14333,
+      "source_split_filter": null
+    },
+    {
+      "role": "train",
+      "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_46a6d4d46fab0e77\\teacher_states.npz",
+      "dataset_sha256": "ebdd50a94902df780afe4fcacdcc24cde1ab328fb4b2a25f8cb5fad98e3793b7",
+      "samples": 15588,
+      "source_split_filter": null
+    },
+    {
+      "role": "validation",
+      "dataset": "C:\\Users\\pries\\quantsilico-runtime\\cloud_valid_learning_recovery_v1\\bc\\dataset_aug_77b9073bc8d9cb32\\teacher_states.npz",
+      "dataset_sha256": "e8e31686734937ae8c41b385f6ecabf24d998a83c4a375535aef385fc701cdaa",
+      "samples": 8248,
+      "source_split_filter": "validation"
+    }
+  ],
+  "coverage": {
+    "opponents": [
+      "legal_random",
+      "official_expander",
+      "official_hunter",
+      "pass"
+    ],
+    "seats": [
+      0,
+      1
+    ],
+    "train_samples": 42737,
+    "validation_samples": 8248,
+    "train_games": 48,
+    "validation_games": 8,
+    "train_validation_game_overlap": 0,
+    "legal_teacher_target_fraction": 1.0,
+    "finite_tensor_fraction": 1.0
+  },
+  "written_at": "2026-08-08T03:39:10.082166+00:00"
+}
