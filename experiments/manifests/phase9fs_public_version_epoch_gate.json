@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "kind": "PUBLIC_VERSION_EPOCH_GATE",
+  "created_at": "2026-08-05T12:26:02.951622+00:00",
+  "gate_status": "BLOCKED_UNTIL_UPLOAD_FREEZE",
+  "note": "Upload freeze must PASS before public epoch recording."
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "kind": "PHASE9F_GENERATED_PLAN",
+  "created_at": "2026-08-05T00:32:41.439830+00:00",
+  "plan_md": "plans/phase9f-generated-execution-plan-v2.md",
+  "plan_sha256": "cafe3f473e2d81727f6b89fcf0c3df7a4cf90db21dcf4faccc786173462e6d3c",
+  "supersedes_plan_sha256": "b84671cb813e758b9fd1d6ead435cc83b396932acde0b1ccdc96ef937d67e1f6",
+  "supersedes_plan_md": "plans/phase9f-generated-execution-plan.md",
+  "near_term_architecture": "heuristic_candidates_plus_cnn_recurrent_ranker",
+  "long_term_architecture": "heuristic_candidates_plus_cnn_recurrent_ranker",
+  "primary_learned_id": "QS-P9F-CNN-RANKER-V1",
+  "secondary_learned_id": "QS-P9F-GRAPH-RANKER-V1",
+  "canonical_portal_id": "heuristic_v2f_plus_planner_terminal_fix",
+  "stable_portal_id": "QS-P9F-PORTAL-V0",
+  "ppo_tonight": true,
+  "mandatory_overnight_rl": true,
+  "synchronous_ppo": true,
+  "deadline": "2026-08-05T08:00:00+01:00",
+  "amendments_locked": [
+    "checkpoint_resume_fallback",
+    "potential_shaping_invariance",
+    "package_correction_time_limit_15m",
+    "cnn_primary_encoder",
+    "shield_as_policy",
+    "sync_policy_freshness",
+    "candidate_replay_mismatch_gate",
+    "provisional_tournament_label"
+  ]
+}

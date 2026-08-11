@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "PER_CANDIDATE_BEHAVIOURAL_GATE",
+  "created_at": "2026-08-05T13:36:26.334349+00:00",
+  "candidates": {
+    "QS-P9FU-HYBRID-BC-V1": {
+      "status": "BEHAVIOURAL_PASS",
+      "checks": {
+        "package_present": true,
+        "first_action_legal_kind": true,
+        "load_ok": true,
+        "generate_proposals_nonempty_or_pass": true,
+        "legal_rate_proxy": true
+      }
+    },
+    "QS-P9FU-HEURISTIC-TACTICAL-V2": {
+      "status": "BEHAVIOURAL_PASS",
+      "checks": {
+        "known_eg_low_army_no_immediate_commit": true,
+        "commitment_after_low_army": "NONE",
+        "state_machine_prepare": true,
+        "emergency_overrides_commit": true,
+        "offroute_collect_suppressed_in_commit": true,
+        "known_eg_enters_prepare_or_commit": true,
+        "commitment_after_warmup": "PREPARE"
+      }
+    }
+  },
+  "stage3_eligible": [
+    "QS-P9FU-HYBRID-BC-V1",
+    "QS-P9FU-HEURISTIC-TACTICAL-V2"
+  ]
+}

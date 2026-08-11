@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_TEACHER_SELECTION",
+  "rule": "newest_COMPLETE_EMA_else_best_screened_else_ckpt_final_420",
+  "selected": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1280",
+  "which": "ema",
+  "update": 1280,
+  "hunter_requirement": "not_required_for_first_attempt",
+  "selected_at": "2026-08-07T05:31:48+00:00",
+  "note": "Stage-1 canary on u1024 was 0-0-2; u1280 newer COMPLETE used for distill teacher"
+}

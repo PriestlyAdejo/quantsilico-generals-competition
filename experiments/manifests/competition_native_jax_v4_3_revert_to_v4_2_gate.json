@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "V4_3_REVERT_TO_V4_2_GATE",
+  "status": "PASS",
+  "reason": "shape_only_keep_v4_2",
+  "control_operational_tps": 196.98210846925636,
+  "restore_threshold_tps": 122.35762640814015,
+  "lineage_hashes_match_frozen": true,
+  "legal_rate": 1.0,
+  "support_mismatches": 0,
+  "restored_snapshot": "experiments/manifests/competition_native_jax_v4_3_source_snapshot.json",
+  "updated_at": "2026-08-06T20:27:02.349378+00:00"
+}

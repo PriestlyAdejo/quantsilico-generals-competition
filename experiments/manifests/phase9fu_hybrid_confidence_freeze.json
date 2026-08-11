@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "HYBRID_CONFIDENCE_FREEZE",
+  "config": {
+    "min_top2_margin": 0.05,
+    "max_normalised_entropy": 0.98,
+    "min_support_size": 1,
+    "source": "declared_defaults_frozen_for_stage3_measurement",
+    "calibration_data": "NOT_FROM_STAGE3; defaults frozen after code review + unit fixtures"
+  },
+  "config_sha256": "2e4157574af2ed7e8fab61e8a057ee3b57eea58e5242d0543ad9e8dff484a857"
+}

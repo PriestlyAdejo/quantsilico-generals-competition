@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_THROUGHPUT_LADDER_V4",
+  "status": "FROZEN",
+  "baseline_valid_tps": [
+    0.1513,
+    0.185
+  ],
+  "candidates": [
+    {
+      "num_envs": 32,
+      "rollout_len": 8,
+      "valid_learning_tps": 3.8313031381349334,
+      "peak_vram_mib": 3373.0,
+      "host_rss_bytes": 2232397824,
+      "elapsed_s": 133.63599317000012,
+      "compilation_s": 17.94784340299998,
+      "recompile_count": 1,
+      "status": "OK",
+      "improvement_vs_baseline_low": 25.322558745108616,
+      "improvement_vs_baseline_high": 20.709746692621263,
+      "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+      "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+      "stable": true
+    },
+    {
+      "num_envs": 48,
+      "rollout_len": 8,
+      "valid_learning_tps": 1.8975609326063654,
+      "peak_vram_mib": 3379.0,
+      "host_rss_bytes": 3355201536,
+      "elapsed_s": 404.7300862930001,
+      "compilation_s": 1.8857255559998976,
+      "recompile_count": 1,
+      "status": "OK",
+      "improvement_vs_baseline_low": 12.541711385369236,
+      "improvement_vs_baseline_high": 10.25708612219657,
+      "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+      "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+      "stable": true
+    },
+    {
+      "num_envs": 64,
+      "rollout_len": 8,
+      "valid_learning_tps": 2.33320019063612,
+      "peak_vram_mib": 5435.0,
+      "host_rss_bytes": 4387041280,
+      "elapsed_s": 438.88218598200024,
+      "compilation_s": 1.8778081630000543,
+      "recompile_count": 1,
+      "status": "OK",
+      "improvement_vs_baseline_low": 15.421019105327959,
+      "improvement_vs_baseline_high": 12.611892922357406,
+      "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+      "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+      "stable": true
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 16,
+      "valid_learning_tps": 9.510967309770074,
+      "peak_vram_mib": 5435.0,
+      "host_rss_bytes": 4722585600,
+      "elapsed_s": 107.66517922399998,
+      "compilation_s": 1.662658151999949,
+      "recompile_count": 1,
+      "status": "OK",
+      "improvement_vs_baseline_low": 62.86164778433625,
+      "improvement_vs_baseline_high": 51.41063410686526,
+      "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+      "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+      "stable": true
+    }
+  ],
+  "frozen_config": {
+    "num_envs": 32,
+    "rollout_len": 16,
+    "valid_learning_tps": 9.510967309770074,
+    "peak_vram_mib": 5435.0,
+    "host_rss_bytes": 4722585600,
+    "elapsed_s": 107.66517922399998,
+    "compilation_s": 1.662658151999949,
+    "recompile_count": 1,
+    "status": "OK",
+    "improvement_vs_baseline_low": 62.86164778433625,
+    "improvement_vs_baseline_high": 51.41063410686526,
+    "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+    "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+    "stable": true
+  },
+  "valid_learning_tps": 9.510967309770074,
+  "improvement_vs_baseline_low": 62.86164778433625,
+  "supported_90m_transitions": 51359,
+  "supported_90m_updates_at_rollout": 100,
+  "supported_90m_games_estimate": "unknown_without_episode_stats",
+  "min_promotion_tps": 20.0,
+  "meaningful_short_eligible": false,
+  "disposition": "END_TO_END_JAX_CORRECT_BUT_TOO_SLOW",
+  "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+  "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/home/pries/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  },
+  "distinct_from_v4_dev": true
+}

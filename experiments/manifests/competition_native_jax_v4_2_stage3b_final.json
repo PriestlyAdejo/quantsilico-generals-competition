@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_2_STAGE3B_FINAL",
+  "status": "PASSED",
+  "gate": "STAGE_3B_EXACT_HASH_PASS",
+  "pass_transitions": 100000,
+  "pass_mismatches": 0,
+  "legal_transitions": 5000,
+  "legal_mismatches": 0,
+  "games_started": 1000,
+  "boards_checked": [
+    {
+      "h": 18,
+      "w": 18,
+      "armies": [
+        21,
+        21
+      ]
+    },
+    {
+      "h": 18,
+      "w": 21,
+      "armies": [
+        21,
+        21
+      ]
+    },
+    {
+      "h": 19,
+      "w": 20,
+      "armies": [
+        21,
+        21
+      ]
+    },
+    {
+      "h": 20,
+      "w": 20,
+      "armies": [
+        21,
+        21
+      ]
+    },
+    {
+      "h": 21,
+      "w": 21,
+      "armies": [
+        21,
+        21
+      ]
+    }
+  ],
+  "boards_ok": true,
+  "castles_path_exercised": true,
+  "deathtouch_turn_reached": true,
+  "turn_cap_reached_or_done": true,
+  "reset_pool_uses_reset_one_jax": true,
+  "reset_pool_entry_mismatches": 0,
+  "tracer_leak_multi_shape_ok": true,
+  "tracer_leak_error": null,
+  "seats_legal_support_ok": true,
+  "lineage": {
+    "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+    "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+    "learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+    "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+    "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+  },
+  "selected_env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "updated_at": "2026-08-06T18:51:37.976273+00:00",
+  "minima": {
+    "transitions": 100000,
+    "games": 1000,
+    "required_mismatches": 0
+  }
+}

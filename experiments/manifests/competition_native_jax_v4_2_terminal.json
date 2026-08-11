@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_2_TERMINAL",
+  "final_status": "AWAITING_PRE_OVERNIGHT_OPERATOR_REVIEW",
+  "systems_disposition": "END_TO_END_JAX_SYSTEMS_PROMOTION_READY",
+  "learning_efficiency": "DEFERRED_SYSTEMS_QUALIFIED",
+  "overnight_training_authorized": false,
+  "automatic_upload_authorized": false,
+  "phase_10_execution_authorized": false,
+  "final_recommendation": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
+  "overnight_lineage": "NO_VALID_OVERNIGHT_PARENT",
+  "next_human_action": "Review R-E.5 smoke; authorise R-E.6 short / R-E.7 medium / R-F if smoke healthy; do not upload or overnight yet."
+}

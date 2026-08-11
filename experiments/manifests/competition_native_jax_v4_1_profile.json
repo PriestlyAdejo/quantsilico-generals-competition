@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_1_PROFILE",
+  "parent_v4_tps": 9.510967309770074,
+  "clean_baseline_valid_learning_tps_after_batched_gae": 55.011857209232886,
+  "num_envs": 32,
+  "rollout_len": 16,
+  "times_s": {
+    "reset_batch_s": 0.3196323250000006,
+    "observe_both_seats_s": 6.304112630999995,
+    "legal_mask_both_seats_s": 13.589053596000014,
+    "transformer_forward_batch_5_s": 0.16408508999998617,
+    "env_step_batch_10_s": 0.046148396999996066,
+    "gae_python_env_loop_s": 13.981917661000011,
+    "python_gae_loop_confirmed": true,
+    "gae_batched_scan_s": 1.1511465320000127,
+    "gae_batch_speedup": 12.146079818967701,
+    "ppo_update_s": 95.163414577,
+    "ema_update_s": 0.07555859999996528,
+    "full_rollout_collect_s": 6.494393967999997,
+    "rollout_tps": 78.83722523191409
+  },
+  "approximate_shares_pct": {
+    "rollout_collect_pct": 6.312314395914602,
+    "gae_batched_pct": 1.1188725016613978,
+    "gae_python_loop_pct_of_attr": 13.589914712427412,
+    "ppo_update_pct": 92.49537289524454,
+    "ema_pct": 0.07344020717945673,
+    "observe_share_of_stepish_pct": 31.630323406297745,
+    "legal_mask_share_of_stepish_pct": 68.18186558300944,
+    "transformer_share_of_stepish_pct": 0.16465646369734216,
+    "env_step_share_of_stepish_pct": 0.02315454699546749
+  },
+  "ranked_bottlenecks": [
+    [
+      "ppo_update",
+      92.49537289524454
+    ],
+    [
+      "legal_mask_stepish",
+      68.18186558300944
+    ],
+    [
+      "observe_stepish",
+      31.630323406297745
+    ],
+    [
+      "gae_python_loop_pre_fix",
+      13.589914712427412
+    ],
+    [
+      "rollout_collect",
+      6.312314395914602
+    ],
+    [
+      "gae_batched",
+      1.1188725016613978
+    ],
+    [
+      "transformer_stepish",
+      0.16465646369734216
+    ],
+    [
+      "env_step_stepish",
+      0.02315454699546749
+    ]
+  ],
+  "python_gae_loop_was_present": true,
+  "batched_gae_implemented": true,
+  "lineage": {
+    "env_semantics_hash": "7beaed7574214b5275766992c1fe17f967c67adf541bbf55a56a926bf53ae8e3",
+    "env_implementation_hash": "6f016312100f0e214a37311f071fed20bbe7eb44615e8bd0e651987d16e5e270",
+    "learner_implementation_hash": "e867632e4966d106adab559956622fdc951500ab68b8d522bb568607af4161d4",
+    "performance_programme_hash": "5c31f52874acfd55567a2308b7ba4ad41dc8cd04216c06c070a72a54826d0687",
+    "performance_programme": "END_TO_END_JAX_V4_1"
+  },
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/home/pries/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  },
+  "note": "Attribution timings are instrumented; clean_baseline_valid_learning_tps is profiler-off"
+}

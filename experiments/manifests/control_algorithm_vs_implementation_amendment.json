@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "kind": "CONTROL_ALGORITHM_VS_IMPLEMENTATION_AMENDMENT",
+  "created_at": "2026-08-06T18:40:00Z",
+  "status": "READY_FOR_STAGE_12_HANDOFF",
+  "parent_plan_id": "v4.3_daytime_to_package_5333a24e",
+  "parent_plan_path": "plans/v4_3_daytime_to_package_5333a24e.plan.md",
+  "parent_plan_source_path": "C:\\Users\\pries\\.cursor\\plans\\v4.3_daytime_to_package_5333a24e.plan.md",
+  "parent_plan_sha256": "7d277bfd61853cfad827443ced1db925e9dd6cfc5d300f91b99ec34c67e62feb",
+  "amendment_plan_id": "v4_3_control_two_verdict_c7e2f91a",
+  "amendment_plan_path": "plans/v4_3_control_two_verdict_c7e2f91a.plan.md",
+  "amendment_plan_cursor_path": "C:\\Users\\pries\\.cursor\\plans\\v4.3_control_two_verdict_c7e2f91a.plan.md",
+  "amendment_plan_sha256": "01c42ecc7779d009641bda3dd1097e1b1758b086ed25ca2f11773ed99cdbcf89",
+  "audit_report_path": "experiments/reports/control_algorithm_vs_implementation_audit.md",
+  "supersedes_stages": ["13", "14", "15", "16"],
+  "preserves_stages": ["0-12", "17-19"],
+  "blocks_daytime_stages_0_12": false,
+  "required_before_control_execution": true,
+  "fallback_if_missing": "SKIP_ACTION_CHANGING_CONTROLS_KEEP_BASE",
+  "vulnerability_to_false_controller_rejection": true,
+  "controller_code_changes_in_this_task": false,
+  "auto_adopts_into_running_v4_3": false,
+  "handoff_gate": "CONTROL_STAGE_PLAN_RESOLUTION_GATE",
+  "handoff_outcomes": [
+    "CONTROL_AMENDMENT_VALID",
+    "CONTROL_AMENDMENT_NOT_PRESENT",
+    "CONTROL_AMENDMENT_PARENT_MISMATCH",
+    "CONTROL_AMENDMENT_INVALID"
+  ],
+  "audited_source_commit": "2df3c6a33db3a9d9f31b55a93ee6685985f85b97",
+  "audited_source_manifest_sha": "7977e753e2efad1257d58d0a1fa2f58006c418f74696d96d54863acdb9e276ff",
+  "audited_env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "evidence_option": "A_FROZEN_COMMITTED_BASELINE",
+  "current_controller_backends": {
+    "control_off": "numpy_stub",
+    "static_risk": "numpy_stub",
+    "passive_telemetry": "numpy_stub",
+    "pi": "not_implemented",
+    "barrier": "not_implemented",
+    "bounded_mpc": "not_implemented",
+    "package_inference": "numpy_no_jax_default"
+  },
+  "recommended_research_backend_c2": "vectorised_numpy_default_batched_jax_allowed_offline_or_precomputed_replay",
+  "recommended_deployment_backend_c3": "vectorised_numpy_or_bounded_python_lut_topk_no_jax_in_zip_default",
+  "vendor_jax_in_zip_default": false,
+  "latency_evidence_refs": [
+    "experiments/manifests/competition_native_jax_early_deployment_gate.json",
+    "experiments/manifests/competition_native_jax_early_student_feasibility.json",
+    "experiments/manifests/competition_native_jax_deployment_limits.json"
+  ],
+  "controller_latency_decomposition_present": false,
+  "promotion_requires": [
+    "CONTROL_POLICY_BENEFIT_PASS",
+    "CONTROL_IMPLEMENTATION_FEASIBILITY_PASS",
+    "PACKAGE_QUALIFICATION_PASS"
+  ],
+  "locked_statuses": [
+    "CONTROL_POLICY_BENEFIT_PASS",
+    "CONTROL_POLICY_BENEFIT_FAIL",
+    "CONTROL_POLICY_BENEFIT_INCONCLUSIVE",
+    "CONTROL_IMPLEMENTATION_FEASIBILITY_PASS",
+    "CONTROL_IMPLEMENTATION_FEASIBILITY_FAIL",
+    "CONTROL_IMPLEMENTATION_NOT_YET_OPTIMISED",
+    "CONTROL_PROMOTION_PASS",
+    "CONTROL_ALGORITHM_PROMISING_IMPLEMENTATION_BLOCKED",
+    "CONTROL_IMPLEMENTATION_FAST_BUT_NO_POLICY_BENEFIT",
+    "CONTROL_REJECTED"
+  ],
+  "decision_matrix": [
+    {
+      "policy_benefit": "PASS",
+      "implementation": "PASS",
+      "result": "Controlled package may enter confirmation"
+    },
+    {
+      "policy_benefit": "PASS",
+      "implementation": "FAIL",
+      "result": "CONTROL_ALGORITHM_PROMISING_IMPLEMENTATION_BLOCKED; keep base"
+    },
+    {
+      "policy_benefit": "PASS",
+      "implementation": "NOT_YET_OPTIMISED",
+      "result": "Optimise within frozen budget; keep base"
+    },
+    {
+      "policy_benefit": "FAIL",
+      "implementation": "PASS",
+      "result": "CONTROL_IMPLEMENTATION_FAST_BUT_NO_POLICY_BENEFIT; reject controller"
+    },
+    {
+      "policy_benefit": "FAIL",
+      "implementation": "FAIL",
+      "result": "CONTROL_REJECTED"
+    },
+    {
+      "policy_benefit": "INCONCLUSIVE",
+      "implementation": "ANY",
+      "result": "Do not promote; keep base"
+    }
+  ],
+  "internal_p99_budget_s": 0.1,
+  "official_ordinary_deadline_s": 0.15,
+  "concurrency_recommendation": "separate_git_worktree_while_daytime_training_active",
+  "do_not_run_parent_thin_control_stages_if_amendment_absent": true,
+  "notes": [
+    "Does not automatically alter a running agent executing the parent plan.",
+    "Install and hash-record before Stage 13; then require CONTROL_AMENDMENT_VALID.",
+    "No controller implementation in this amendment task."
+  ]
+}

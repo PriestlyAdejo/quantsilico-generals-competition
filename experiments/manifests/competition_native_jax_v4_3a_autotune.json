@@ -1,0 +1,463 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_3A_AUTOTUNE",
+  "disposition": "V4_3_NO_MATERIAL_GAIN_USE_V4_2",
+  "operational_baseline_tps": 135.95291823126684,
+  "promote_threshold_tps": 156.34585596595684,
+  "control_operational_tps_measured": 196.98210846925636,
+  "best_operational_tps": 181.82580158449795,
+  "gain_vs_operational_baseline": 0.33741742325234725,
+  "vram_win": false,
+  "selected": {
+    "num_envs": 32,
+    "rollout_len": 32,
+    "reset_pool_size": 4096
+  },
+  "accepted_change_classes": [],
+  "change_class_cap": 3,
+  "candidate_cap": 16,
+  "finalist_cap": 4,
+  "candidates_completed": 7,
+  "round1": [
+    {
+      "num_envs": 32,
+      "rollout_len": 32,
+      "reset_pool_size": 4096,
+      "is_control": true,
+      "status": "OK",
+      "tag": "r1_0_e32_r32_p4096",
+      "valid_learning_tps": 196.98210846925636,
+      "measured_tps": 196.98210846925636,
+      "peak_vram_mib": 7056.0,
+      "host_rss_bytes": 2117636096,
+      "elapsed_s": 41.587533323,
+      "compilation_s": 11.792085222999997,
+      "updates": 8,
+      "transitions": 8192,
+      "last_metrics": {
+        "entropy": 1.9772878885269165,
+        "pg": 0.00020445702830329537,
+        "ratio": 1.0000041723251343,
+        "vloss": 2.5124664306640625,
+        "loss": 1.2366647720336914
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 40,
+      "rollout_len": 32,
+      "reset_pool_size": 4096,
+      "status": "OK",
+      "tag": "r1_1_e40_r32_p4096",
+      "valid_learning_tps": 524.7501905912159,
+      "measured_tps": 524.7501905912159,
+      "peak_vram_mib": 7064.0,
+      "host_rss_bytes": 2421948416,
+      "elapsed_s": 19.514047224000024,
+      "compilation_s": 9.860568716000017,
+      "updates": 8,
+      "transitions": 10240,
+      "last_metrics": {
+        "entropy": 1.9671967029571533,
+        "pg": 0.00019514559244271368,
+        "ratio": 0.9999942779541016,
+        "vloss": 2.511910915374756,
+        "loss": 1.2364786863327026
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 48,
+      "rollout_len": 32,
+      "reset_pool_size": 4096,
+      "status": "ERROR",
+      "tag": "r1_2_e48_r32_p4096",
+      "error": "RESOURCE_EXHAUSTED: Out of memory while trying to allocate 241.00MiB. [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 40,
+      "reset_pool_size": 4096,
+      "status": "OK",
+      "tag": "r1_3_e32_r40_p4096",
+      "valid_learning_tps": 430.5695160181714,
+      "measured_tps": 430.5695160181714,
+      "peak_vram_mib": 7084.0,
+      "host_rss_bytes": 2226286592,
+      "elapsed_s": 23.782454677000032,
+      "compilation_s": 6.660862978999944,
+      "updates": 8,
+      "transitions": 10240,
+      "last_metrics": {
+        "entropy": 2.14241099357605,
+        "pg": 0.00025681289844214916,
+        "ratio": 0.9999958276748657,
+        "vloss": 2.5158348083496094,
+        "loss": 1.2367501258850098
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 48,
+      "reset_pool_size": 4096,
+      "status": "ERROR",
+      "tag": "r1_4_e32_r48_p4096",
+      "error": "RESOURCE_EXHAUSTED: Out of memory while trying to allocate 241.00MiB. [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    },
+    {
+      "num_envs": 40,
+      "rollout_len": 40,
+      "reset_pool_size": 4096,
+      "status": "ERROR",
+      "tag": "r1_5_e40_r40_p4096",
+      "error": "RESOURCE_EXHAUSTED: Out of memory while trying to allocate 37.53MiB. [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    },
+    {
+      "num_envs": 56,
+      "rollout_len": 32,
+      "reset_pool_size": 8192,
+      "status": "ERROR",
+      "tag": "r1_6_e56_r32_p8192",
+      "error": "RESOURCE_EXHAUSTED: Out of memory while trying to allocate 278.50MiB. [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    },
+    {
+      "num_envs": 64,
+      "rollout_len": 32,
+      "reset_pool_size": 8192,
+      "status": "ERROR",
+      "tag": "r1_7_e64_r32_p8192",
+      "error": "RESOURCE_EXHAUSTED: Out of memory while trying to allocate 89.50MiB. [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 32,
+      "reset_pool_size": 8192,
+      "status": "OK",
+      "tag": "r1_8_e32_r32_p8192",
+      "valid_learning_tps": 264.6603601391071,
+      "measured_tps": 264.6603601391071,
+      "peak_vram_mib": 7086.0,
+      "host_rss_bytes": 2228736000,
+      "elapsed_s": 30.95287860899998,
+      "compilation_s": 7.525434464999989,
+      "updates": 8,
+      "transitions": 8192,
+      "last_metrics": {
+        "entropy": 1.9850971698760986,
+        "pg": 0.0001993761834455654,
+        "ratio": 1.0000081062316895,
+        "vloss": 2.511760711669922,
+        "loss": 1.2362287044525146
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 32,
+      "reset_pool_size": 2048,
+      "status": "OK",
+      "tag": "r1_9_e32_r32_p2048",
+      "valid_learning_tps": 284.5615890739667,
+      "measured_tps": 284.5615890739667,
+      "peak_vram_mib": 7086.0,
+      "host_rss_bytes": 2228285440,
+      "elapsed_s": 28.78814398899999,
+      "compilation_s": 7.57401621300005,
+      "updates": 8,
+      "transitions": 8192,
+      "last_metrics": {
+        "entropy": 1.9317182302474976,
+        "pg": 0.0002249701356049627,
+        "ratio": 0.9999984502792358,
+        "vloss": 2.509673595428467,
+        "loss": 1.2357444763183594
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 48,
+      "rollout_len": 16,
+      "reset_pool_size": 4096,
+      "status": "OK",
+      "tag": "r1_10_e48_r16_p4096",
+      "valid_learning_tps": 178.12539185602125,
+      "measured_tps": 178.12539185602125,
+      "peak_vram_mib": 5452.0,
+      "host_rss_bytes": 2233081856,
+      "elapsed_s": 34.49255569899992,
+      "compilation_s": 5.707459802999892,
+      "updates": 8,
+      "transitions": 6144,
+      "last_metrics": {
+        "entropy": 1.4505929946899414,
+        "pg": 0.0001348449004581198,
+        "ratio": 0.9999686479568481,
+        "vloss": 2.5117697715759277,
+        "loss": 1.241513729095459
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 36,
+      "rollout_len": 36,
+      "reset_pool_size": 4096,
+      "status": "OK",
+      "tag": "r1_11_e36_r36_p4096",
+      "valid_learning_tps": 414.6789795738398,
+      "measured_tps": 414.6789795738398,
+      "peak_vram_mib": 7073.0,
+      "host_rss_bytes": 2396487680,
+      "elapsed_s": 25.002473022999766,
+      "compilation_s": 7.291933602999961,
+      "updates": 8,
+      "transitions": 10368,
+      "last_metrics": {
+        "entropy": 2.0484328269958496,
+        "pg": 0.00022530702699441463,
+        "ratio": 0.999999463558197,
+        "vloss": 2.508111000061035,
+        "loss": 1.2337963581085205
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 44,
+      "rollout_len": 32,
+      "reset_pool_size": 4096,
+      "status": "ERROR",
+      "tag": "r1_12_e44_r32_p4096",
+      "error": "RESOURCE_EXHAUSTED: Out of memory while trying to allocate 206.25MiB. [executable_name='jit_add'] [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 64,
+      "reset_pool_size": 4096,
+      "status": "ERROR",
+      "tag": "r1_13_e32_r64_p4096",
+      "error": "RESOURCE_EXHAUSTED: Out of memory while trying to allocate 89.50MiB. [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    },
+    {
+      "num_envs": 40,
+      "rollout_len": 48,
+      "reset_pool_size": 8192,
+      "status": "ERROR",
+      "tag": "r1_14_e40_r48_p8192",
+      "error": "NOT_FOUND: All configs failed during profiling.\nFailures (2):\nEXECUTION FAILED: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 25.84MiB. [tf-allocator-allocation-error='']\nEXECUTION FAILED: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 25.84MiB. [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    },
+    {
+      "num_envs": 48,
+      "rollout_len": 48,
+      "reset_pool_size": 8192,
+      "status": "ERROR",
+      "tag": "r1_15_e48_r48_p8192",
+      "error": "RESOURCE_EXHAUSTED: Out of memory while trying to allocate 353.50MiB. [tf-allocator-allocation-error='']",
+      "valid_learning_tps": 0.0
+    }
+  ],
+  "finalists_round2": [
+    {
+      "num_envs": 40,
+      "rollout_len": 32,
+      "reset_pool_size": 4096,
+      "status": "OK",
+      "tag": "r2_0_e40_r32_p4096",
+      "valid_learning_tps": 157.03881615076014,
+      "measured_tps": 157.03881615076014,
+      "peak_vram_mib": 7225.0,
+      "host_rss_bytes": 2059014144,
+      "elapsed_s": 163.0170210619999,
+      "compilation_s": 8.483893534000345,
+      "updates": 20,
+      "transitions": 25600,
+      "last_metrics": {
+        "entropy": 2.118129014968872,
+        "pg": 5.532015347853303e-05,
+        "ratio": 1.0000075101852417,
+        "vloss": 2.4130585193634033,
+        "loss": 1.1854032278060913
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 40,
+      "reset_pool_size": 4096,
+      "status": "OK",
+      "tag": "r2_1_e32_r40_p4096",
+      "valid_learning_tps": 145.5405937116737,
+      "measured_tps": 145.5405937116737,
+      "peak_vram_mib": 7230.0,
+      "host_rss_bytes": 2134818816,
+      "elapsed_s": 175.89594316700004,
+      "compilation_s": 12.972651908999978,
+      "updates": 20,
+      "transitions": 25600,
+      "last_metrics": {
+        "entropy": 2.2603025436401367,
+        "pg": 6.958884478081018e-05,
+        "ratio": 1.0000056028366089,
+        "vloss": 2.4120142459869385,
+        "loss": 1.183473825454712
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 36,
+      "rollout_len": 36,
+      "reset_pool_size": 4096,
+      "status": "OK",
+      "tag": "r2_2_e36_r36_p4096",
+      "valid_learning_tps": 181.82580158449795,
+      "measured_tps": 181.82580158449795,
+      "peak_vram_mib": 7230.0,
+      "host_rss_bytes": 2138226688,
+      "elapsed_s": 142.55402574400023,
+      "compilation_s": 15.24916012299991,
+      "updates": 20,
+      "transitions": 25920,
+      "last_metrics": {
+        "entropy": 2.189241647720337,
+        "pg": 6.658870552200824e-05,
+        "ratio": 0.9999952912330627,
+        "vloss": 2.411654472351074,
+        "loss": 1.1840014457702637
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 32,
+      "reset_pool_size": 2048,
+      "status": "OK",
+      "tag": "r2_3_e32_r32_p2048",
+      "valid_learning_tps": 148.28122410667655,
+      "measured_tps": 148.28122410667655,
+      "peak_vram_mib": 7230.0,
+      "host_rss_bytes": 2127106048,
+      "elapsed_s": 138.1159356039998,
+      "compilation_s": 11.460126205000051,
+      "updates": 20,
+      "transitions": 20480,
+      "last_metrics": {
+        "entropy": 2.0785391330718994,
+        "pg": 6.273313920246437e-05,
+        "ratio": 1.0000113248825073,
+        "vloss": 2.414011001586914,
+        "loss": 1.1862828731536865
+      },
+      "lineage": {
+        "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+        "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+        "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+        "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+        "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+      },
+      "legal_rate": 1.0,
+      "support_mismatches": 0
+    }
+  ],
+  "deferred_v4_3b": [
+    "legal_support_redesign",
+    "structural_seat_dedup",
+    "custom_masked_categorical",
+    "rng_kernel_restructure",
+    "pool_double_buffer",
+    "traj_schema_redesign",
+    "bf16_bakeoff_not_wired"
+  ],
+  "updated_at": "2026-08-06T20:14:22.088196+00:00",
+  "same_regime_promote_threshold": 226.5294247396448,
+  "adjudication": {
+    "rule": "best_non_control >= 1.15*control_same_regime AND >= 1.15*frozen_operational_smoke",
+    "updated_at": "2026-08-06T20:27:02.343369+00:00"
+  }
+}

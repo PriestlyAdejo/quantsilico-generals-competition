@@ -497,6 +497,44 @@ def training() -> dict[str, Any]:
         # Prefer most recently updated completed/interrupted record for observer reconnect
         active = max(live_campaigns, key=lambda r: float(r.get("heartbeat_unix") or 0.0))
 
+    # Emergency rolling package observer: latest.json + bounded chart only (no JSONL scan).
+    emergency_latest = None
+    emergency_chart = None
+    for cand in (
+        REPO_ROOT / "experiments" / "competition_native_jax" / "emergency_rolling_v1" / "metrics" / "emergency_training_latest.json",
+        Path.home() / "quantsilico-runtime" / "emergency_rolling_v1" / "training" / "metrics" / "emergency_training_latest.json",
+    ):
+        if cand.is_file():
+            try:
+                emergency_latest = json.loads(cand.read_text(encoding="utf-8"))
+                break
+            except Exception:
+                pass
+    for cand in (
+        REPO_ROOT / "experiments" / "competition_native_jax" / "emergency_rolling_v1" / "metrics" / "emergency_training_chart.json",
+        Path.home() / "quantsilico-runtime" / "emergency_rolling_v1" / "training" / "metrics" / "emergency_training_chart.json",
+    ):
+        if cand.is_file():
+            try:
+                emergency_chart = json.loads(cand.read_text(encoding="utf-8"))
+                break
+            except Exception:
+                pass
+    if emergency_chart and isinstance(emergency_chart.get("points"), list):
+        charts.insert(
+            0,
+            {
+                "id": "emergency_rolling_v1",
+                "title": "Emergency exact-resume PPO",
+                "producer": "emergency_exact_resume_ppo",
+                "schema_version": 1,
+                "series_keys": ["tps", "entropy", "loss"],
+                "points": emergency_chart["points"][-1000:],
+                "missing": [],
+                "note": "Bounded ring chart; not a competitive strength claim",
+            },
+        )
+
     return {
         "schema_version": 1,
         "kind": "TRAINING_SMOKE_DASHBOARD",
@@ -504,6 +542,13 @@ def training() -> dict[str, Any]:
         "live_campaigns": live_campaigns,
         "active": active,
         "charts": charts,
+        "emergency": {
+            "latest": emergency_latest,
+            "chart_points": len((emergency_chart or {}).get("points") or []),
+            "programme": "experiments/manifests/emergency_rolling_programme_state.json",
+            "read_only": True,
+            "launch_enabled": False,
+        },
         "smoke": {
             "learning_readiness": readiness,
             "bridge": {

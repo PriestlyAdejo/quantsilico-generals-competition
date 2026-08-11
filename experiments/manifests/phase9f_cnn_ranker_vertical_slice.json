@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_CNN_RANKER_VERTICAL_SLICE",
+  "created_at": "2026-08-05T00:44:50.151808+00:00",
+  "candidate_id": "QS-P9F-CNN-RANKER-V1",
+  "teachers": [
+    "heuristic_v2f_plus_planner_terminal_fix",
+    "heuristic_aggressive",
+    "heuristic_defensive",
+    "heuristic_castle",
+    "heuristic_deathtouch"
+  ],
+  "train_n": 9340,
+  "val_n": 2334,
+  "bc_report": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_cnn_ranker_v1\\bc_report.json",
+  "bc_ok": true,
+  "ppo_pilot": {
+    "updates": 16,
+    "final_policy_version": 16,
+    "persistent_actor": true,
+    "synchronous_ppo": true
+  },
+  "PARTIAL_OBSERVABILITY_MEMORY_GATE": "PASS",
+  "decision": "PASS"
+}

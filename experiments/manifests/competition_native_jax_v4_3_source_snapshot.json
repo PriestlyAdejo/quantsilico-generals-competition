@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "kind": "DAYTIME_SOURCE_SNAPSHOT_MANIFEST",
+  "selection": "CONTENT_ADDRESSED_WORKTREE_MATCHING_R_E5_SMOKE",
+  "r_e5_source_status": "R_E5_SOURCE_RECONSTRUCTED",
+  "git_commit": "2df3c6a33db3a9d9f31b55a93ee6685985f85b97",
+  "git_branch": "research/phase9g-competition-native-jax-preovernight-v1",
+  "dirty_worktree": true,
+  "source_manifest_sha": "7977e753e2efad1257d58d0a1fa2f58006c418f74696d96d54863acdb9e276ff",
+  "files": {
+    "src/generals_bot/competition_native_jax/competition_env_jax.py": {
+      "exists": true,
+      "sha256": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "bytes": 11160
+    },
+    "src/generals_bot/competition_native_jax/transformer_jax.py": {
+      "exists": true,
+      "sha256": "b0ab4ca8eae0a3d2caa3abacb78cff167c164ab07ba453e7faa6f99266ba6886",
+      "bytes": 5904
+    },
+    "src/generals_bot/competition_native_jax/obs_memory.py": {
+      "exists": true,
+      "sha256": "df6715b1c257060e4d9052383d0d8c67f62e818418043e9cfdedbc9802ae9c65",
+      "bytes": 3085
+    },
+    "src/generals_bot/competition_native_jax/static_geometry_jax.py": {
+      "exists": true,
+      "sha256": "22129014135ecc3ab05c358a52aeb9436bc0bd49a14ebe5699c7f34bf8f8d6b2",
+      "bytes": 4712
+    },
+    "train/competition_native_jax/rollout_selfplay_jax.py": {
+      "exists": true,
+      "sha256": "8115829aff5e2bd0e53aab5738c9ba287837221803428a4df0b9705c0e344752",
+      "bytes": 6083
+    },
+    "train/competition_native_jax/gae_jax.py": {
+      "exists": true,
+      "sha256": "2397c01c34eb5ffab0635de4ef3e1195bcff9f5ee31ce7fb38d88e0c9c3befa3",
+      "bytes": 2312
+    },
+    "train/competition_native_jax/ppo_jax.py": {
+      "exists": true,
+      "sha256": "914a2bce88826d207af2bb70964463c090799558638a0f4c40333655fc00808a",
+      "bytes": 5790
+    },
+    "train/competition_native_jax/ema_jax.py": {
+      "exists": true,
+      "sha256": "0cabab5eb7a2a355d7a4c8412a27aeff50558b7d8b34cbd23bfa81b6053b1ec8",
+      "bytes": 315
+    },
+    "train/competition_native_jax/train_jax.py": {
+      "exists": true,
+      "sha256": "e389d9b81d3cb5b2aa79682b43dc4d907678880557b2584677e1a0c18d0752f8",
+      "bytes": 25013
+    }
+  },
+  "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+  "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+  "training_config_sha": "c9752cb6f013a91b4f030b39fb1c94514af14d4a734e45b2107ab126e2b73137",
+  "selected_runtime": {
+    "num_envs": 32,
+    "rollout_len": 32,
+    "reset_pool_size": 4096,
+    "selected_from": "v4_2_systems_promotion_gate"
+  }
+}

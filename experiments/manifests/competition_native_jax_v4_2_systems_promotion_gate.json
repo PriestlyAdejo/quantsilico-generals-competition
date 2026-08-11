@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_2_SYSTEMS_PROMOTION_GATE",
+  "ready": true,
+  "disposition": "END_TO_END_JAX_SYSTEMS_PROMOTION_READY",
+  "blocker": null,
+  "selected": {
+    "num_envs": 32,
+    "rollout_len": 32,
+    "reset_pool_size": 4096
+  },
+  "valid_learning_tps": 189.70620799032835,
+  "promotion": {
+    "valid_learning_tps": 189.70620799032835,
+    "min_tps": 20.0,
+    "tps_gate": true,
+    "transitions_90m": 1024413.5231477731,
+    "updates_90m": 1000.4038311989972,
+    "transitions_gate": true,
+    "updates_gate": true,
+    "games_gate": true,
+    "gae_device_resident": true,
+    "architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT"
+  }
+}

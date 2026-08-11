@@ -1,58 +1,28 @@
 {
   "schema_version": 1,
   "kind": "COMPETITION_NATIVE_JAX_PROGRAMME_STATE",
-  "programme": "competition_native_jax_preovernight_v1",
+  "programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+  "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
   "branch": "research/phase9g-competition-native-jax-preovernight-v1",
-  "closure_commit": "1eb19e620f3e357bfdca555376bb9158cc936834",
-  "starting_commit_resume": "ba0e1b665491bfe6224f167c2f32a5c9a7464739",
-  "current_commit": "7ccccb5af4fe21b1e8afd3ba2de5c75b22c44497",
-  "ending_commit_resume": "7ccccb5af4fe21b1e8afd3ba2de5c75b22c44497",
-  "master_spec_path": "plans/competition_native_jax_preovernight_master.md",
-  "master_spec_sha256": "813be8a6f8a7098c8d0408a1fa4ed6147296912eeaa399b8ef5344ab913310f1",
-  "updated_at": "2026-08-06T02:20:00+00:00",
+  "source_commit": "2df3c6a33db3a9d9f31b55a93ee6685985f85b97",
+  "updated_at": "2026-08-06T15:10:00+00:00",
+  "hard_stop_status": "IN_PROGRESS_V4_2_MAX_UTILISATION",
+  "parent_throughput_manifest": "experiments/manifests/competition_native_jax_throughput_ladder_v4.json",
+  "parent_valid_learning_tps": 9.510967309770074,
+  "parent_frozen_config": {"num_envs": 32, "rollout_len": 16},
+  "v4_2_programme_state": "experiments/manifests/competition_native_jax_v4_2_programme_state.json",
+  "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+  "env_semantics_hash": "7beaed7574214b5275766992c1fe17f967c67adf541bbf55a56a926bf53ae8e3",
+  "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+  "V4_2_MAX_UTILISATION_SYSTEMS_OPTIMISATION_AUTHORIZED": true,
+  "CONTROLLED_AVERAGEJOE_LEARNING_EFFICIENCY_EXPERIMENTS_AUTHORIZED": true,
+  "CONDITIONAL_POST_OOBE_DAYTIME_RESUME_AUTHORIZED": true,
+  "END_TO_END_JAX_V4_1_PERFORMANCE_REMEDIATION_AUTHORIZED": false,
   "overnight_training_authorized": false,
   "phase_10_execution_authorized": false,
-  "hard_stop_status": "AWAITING_PRE_OVERNIGHT_OPERATOR_REVIEW",
-  "stages": {
-    "S0_phase9fu_closure": {"status": "PASSED", "commit": "1eb19e620f3e357bfdca555376bb9158cc936834"},
-    "S1_master_spec": {"status": "PASSED", "sha256": "813be8a6f8a7098c8d0408a1fa4ed6147296912eeaa399b8ef5344ab913310f1"},
-    "S1_provenance": {"status": "PARTIAL_EXTERNAL_PINS"},
-    "S2_repository_layout": {"status": "PASSED"},
-    "S3_competition_interface": {"status": "PASSED"},
-    "S4_ppo_architecture": {"status": "PARTIAL_GPU_PENDING", "detail": "JAX_CORE_IMPLEMENTED_GPU_UNVERIFIED"},
-    "R_A_working_tree_audit": {"status": "PASSED", "commit": "3b776d9"},
-    "R_B_classifications": {"status": "PASSED"},
-    "R_C_jax_core": {"status": "PASSED", "commit": "44bfc53"},
-    "R_D_wsl_cuda_jax": {
-      "status": "AWAITING_OPERATOR_ACTION",
-      "detail": "Ubuntu WSL2 present but first-user OOBE blocks non-interactive shell; not a CUDA/JAX failure",
-      "gate": "experiments/manifests/phase9g_gpu_execution_gate.json"
-    },
-    "R_E_throughput_train": {
-      "status": "BLOCKED_COMPUTE",
-      "detail": "throughput_v2 + student_feasibility recorded; short/medium skipped",
-      "student_feasibility": "STUDENT_SHAPE_FEASIBLE"
-    },
-    "R_F_package_controls_stop": {
-      "status": "PASSED_HARD_STOP",
-      "detail": "no package; controls skipped; overnight write-only; processes cleared"
-    },
-    "S5_gpu_throughput": {"status": "BLOCKED", "detail": "AWAITING_OPERATOR_ACTION"},
-    "S5_early_deployment": {"status": "PASSED", "detail": "TEACHER_REQUIRES_STUDENT / STUDENT_SHAPE_FEASIBLE"},
-    "S6_daytime_training": {"status": "BLOCKED", "detail": "BLOCKED_COMPUTE_short_medium_skipped"},
-    "S7_base_daytime_release": {"status": "BLOCKED", "detail": "BASE_DAYTIME_BLOCKED_PACKAGE"},
-    "S8_controls_final": {"status": "SKIPPED_WITH_REASON", "detail": "NOT_JUSTIFIED_BY_EVIDENCE"},
-    "S9_overnight_plan_hardstop": {
-      "status": "PASSED",
-      "overnight_parent_status": "NO_VALID_OVERNIGHT_PARENT"
-    }
-  },
-  "owned_processes": [],
+  "automatic_upload_authorized": false,
   "final_recommendation": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
-  "primary_blocker": "BLOCKED_COMPUTE",
-  "resume_scope": "CUDA_JAX_REPAIR_AND_DAYTIME_RESUME",
-  "authorized_by": "HUMAN_OPERATOR",
-  "operator_instruction": "Complete Ubuntu WSL first-user setup, then re-run bootstrap; overnight/upload/Phase10 remain false until new authorisation.",
-  "resume_started_at": "2026-08-06T01:42:27.049611+00:00",
-  "resume_ended_at": "2026-08-06T02:20:00+00:00"
+  "overnight_lineage": "NO_VALID_OVERNIGHT_PARENT",
+  "owned_processes": [],
+  "operator_instruction": "V4.1 superseded. V4.2 max-utilisation systems programme in progress."
 }

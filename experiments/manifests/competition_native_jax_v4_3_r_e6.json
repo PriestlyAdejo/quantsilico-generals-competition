@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_R_E6_TRAIN",
+  "status": "COMPLETED",
+  "exit_reason": "BUDGET_OR_TIME",
+  "transitions": 430080,
+  "updates": 420,
+  "elapsed_s": 5400.7225769060005,
+  "compilation_s": 9.355019611999978,
+  "measured_tps": 79.63378860433652,
+  "valid_learning_tps": 79.63378860433652,
+  "peak_vram_mib": 7227.0,
+  "host_rss_bytes": 2163945472,
+  "num_envs": 32,
+  "rollout_len": 32,
+  "reset_pool_size": 4096,
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/home/pries/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  },
+  "final_checkpoint": "experiments/competition_native_jax/v4_3_r_e6/ckpt_final",
+  "checkpoints": [
+    "experiments/competition_native_jax/v4_3_r_e6/ckpt_u1",
+    "experiments/competition_native_jax/v4_3_r_e6/ckpt_u152",
+    "experiments/competition_native_jax/v4_3_r_e6/ckpt_u304",
+    "experiments/competition_native_jax/v4_3_r_e6/ckpt_final"
+  ],
+  "evaluation_protocol_id": "competition_native_jax_daytime_evaluation_protocol_v2",
+  "evaluation_protocol_sha256": "213556383f0795362665f42abe649066f14b6f35d028fa0e5766bc6a0582c722",
+  "parent_class": "R_E6_PARENT_COMPATIBLE_COLD_RESTART",
+  "last_metrics": {
+    "entropy": 2.1587328910827637,
+    "pg": 2.4597618448751746e-06,
+    "ratio": 0.9999886155128479,
+    "vloss": 2.3518381118774414,
+    "loss": 1.154334306716919
+  },
+  "limits": {
+    "max_transitions": 623616,
+    "max_updates": 609,
+    "max_seconds": 5400.0
+  },
+  "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+  "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+  "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+  "updated_at": "2026-08-06T22:11:01.785545+00:00"
+}

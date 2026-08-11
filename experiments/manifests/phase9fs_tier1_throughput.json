@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "TIER1_THROUGHPUT_FORMULA",
+  "created_at": "2026-08-05T12:26:03.831017+00:00",
+  "named_metrics": [
+    "environment_SPS",
+    "policy_decisions_per_second",
+    "two_player_agent_transitions_per_second",
+    "completed_games_per_second",
+    "valid_ppo_learning_transitions_per_second"
+  ],
+  "requirements": {
+    "valid_ppo_learning_transitions_per_second_min": 100,
+    "valid_ppo_learning_transitions_per_second_vs_baseline_multiplier": 25
+  },
+  "phase9f_baseline_label": "phase9f_collection_transitions_per_second",
+  "phase9f_baseline_value": null,
+  "phase9f_baseline_note": "Historical overnight PPO updates were TRAINER_SEMANTICS_INVALID; do not label invalid samples as valid PPO learning transitions. Use collection TPS as historical speed reference when valid learning TPS is unavailable.",
+  "candidate_c_smoke_ceilings": {
+    "updates": 16,
+    "transitions": 4096,
+    "wall_minutes": 30
+  },
+  "status": "FORMULA_RECORDED_SMOKE_PENDING",
+  "first_package_gate": "PASS"
+}

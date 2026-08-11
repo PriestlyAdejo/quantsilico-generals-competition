@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_LEARNED_PACKAGE",
+  "package_id": "QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1",
+  "status_class": "EMERGENCY_LEARNED_PROVISIONAL_PACKAGE_EXISTS",
+  "technical": "NOT_TECHNICALLY_QUALIFIED",
+  "competitive": "COMPETITIVELY_UNCONFIRMED",
+  "upload": "MANUAL_UPLOAD_ONLY",
+  "package_path": "/mnt/c/Users/pries/Documents/Projects/quantsilico-generals-competition/submission/packages/QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1/8650e57623978a4e/package.zip",
+  "sha256": "8650e57623978a4ed437cc80495f9b370c82c895d28481bfef3c2355b630b618",
+  "weights_source": "/home/pries/quantsilico-runtime/emergency_rolling_v1/distill/student_v1/student_emb96_v1.npz",
+  "structural": "PACKAGED",
+  "immutable": true,
+  "updated_at": "2026-08-07T05:54:01.547972+00:00",
+  "qualification": {
+    "schema_version": 1,
+    "kind": "EMERGENCY_LEARNED_QUALIFICATION",
+    "package_id": "QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1",
+    "EMERGENCY_LEARNED_PROVISIONAL_PACKAGE_EXISTS": true,
+    "TECHNICALLY_QUALIFIED": false,
+    "COMPETITIVELY_UNCONFIRMED": true,
+    "MANUAL_UPLOAD_ONLY": true,
+    "checks": [
+      {
+        "name": "zip_exists",
+        "ok": true,
+        "detail": "/mnt/c/Users/pries/Documents/Projects/quantsilico-generals-competition/submission/packages/QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1/8650e57623978a4e/package.zip"
+      },
+      {
+        "name": "sha_match",
+        "ok": true,
+        "detail": "8650e57623978a4ed437cc80495f9b370c82c895d28481bfef3c2355b630b618"
+      },
+      {
+        "name": "run_sh",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "main_py",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "weights",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "no_jax_modules",
+        "ok": true,
+        "detail": "[]"
+      },
+      {
+        "name": "finite_15x15",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "action_ok_15x15",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "reset_15x15",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "finite_18x21",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "action_ok_18x21",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "reset_18x21",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "finite_21x18",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "action_ok_21x18",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "reset_21x18",
+        "ok": true,
+        "detail": ""
+      },
+      {
+        "name": "cpu_p99_le_100ms",
+        "ok": false,
+        "detail": "p99=399.32ms n=60 local_tmp"
+      },
+      {
+        "name": "rss_zip_limits",
+        "ok": true,
+        "detail": "bytes=984589"
+      },
+      {
+        "name": "windows_clean",
+        "ok": true,
+        "detail": "{'package': '/mnt/c/Users/pries/Documents/Projects/quantsilico-generals-competition/submission/packages/QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1/8650e57623978a4e/package.zip', 'sha256': '8650e5762397"
+      }
+    ],
+    "p99_ms": 399.32045641071375,
+    "updated_at": "2026-08-07T05:59:03.244850+00:00"
+  }
+}

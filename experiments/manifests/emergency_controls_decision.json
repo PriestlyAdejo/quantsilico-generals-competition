@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_CONTROLS_DECISION",
+  "status": "SKIP_CONTROLS",
+  "reason": "At experiments_stop_at remaining package reserve is 2h; controls require >3h remaining.",
+  "updated_at": "2026-08-07T08:21:16.143780+00:00"
+}

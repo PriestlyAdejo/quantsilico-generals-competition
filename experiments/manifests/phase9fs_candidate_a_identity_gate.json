@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "kind": "CANDIDATE_A_IDENTITY_GATE",
+  "created_at": "2026-08-05T12:10:23.977996+00:00",
+  "expected_historical_portal_id": "QS-P9F-PORTAL-V0",
+  "stable_candidate_id": "QS-P9F-PORTAL-V0",
+  "canonical_implementation_string": "heuristic_v2f_plus_planner_terminal_fix",
+  "gate_status": "PASS",
+  "evidence": {
+    "source_V2F_PLANNER_TERMINAL": "heuristic_v2f_plus_planner_terminal_fix",
+    "source_in_FLAGS": true,
+    "builder_POLICY_IMPORTS_has_source": true,
+    "package_registry_canonical": "heuristic_v2f_plus_planner_terminal_fix",
+    "role_registry_portal": "heuristic_v2f_plus_planner_terminal_fix",
+    "spelling_file_counts": {
+      "heuristic_v2f_plus_planner_terminal_fix": 61,
+      "heuristic_v2f_plus_planner_terminal_force": 10,
+      "heuristic_v2f_plus_planner_terminal_form": 8,
+      "heuristic_v2f_plus_planner_terminal_fix_s0_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s1_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s1_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s4_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s4_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s5_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s6_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s7_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s8_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s8_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s9_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s11_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s12_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s13_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s14_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s14_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s15_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s15_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s16_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s16_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s18_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s19_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s20_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s21_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s22_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s23_p0": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_s23_p1": 2,
+      "heuristic_v2f_plus_planner_terminal_fix_vs_expander": 1,
+      "heuristic_v2f_planner_plus_corridor_v2_terminal_fix": 1
+    },
+    "fix_hits": 61,
+    "form_hits": 8,
+    "force_hits": 10
+  },
+  "spelling_paths": {
+    "heuristic_v2f_plus_planner_terminal_fix": [
+      "experiments/manifests/arena_browser_smoke.json",
+      "experiments/manifests/conversion_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/corrected_stage2_broader_validation.json",
+      "experiments/manifests/dev_development_a_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/dev_development_b_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/dev_development_c_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/heuristic_trace_smoke.json",
+      "experiments/manifests/official_portal_observation_heuristic_v2_preppo_2026-08-04.json",
+      "experiments/manifests/overnight_readiness_gate_corrected.json",
+      "experiments/manifests/package_registry_audit.json",
+      "experiments/manifests/payoff_pfsp_development.json",
+      "experiments/manifests/phase9d_run_state.json",
+      "experiments/manifests/phase9e_diagnostic_capture.json",
+      "experiments/manifests/phase9e_diagnostic_capture_budget.json",
+      "experiments/manifests/phase9f_autonomous_run_state.json",
+      "experiments/manifests/phase9f_cnn_ranker_vertical_slice.json",
+      "experiments/manifests/phase9f_generated_plan_v2.json",
+      "experiments/manifests/phase9f_package_registry.json",
+      "experiments/manifests/phase9f_package_registry_v2.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_vs_expander": [
+      "experiments/manifests/arena_browser_smoke.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s0_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s1_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s1_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s4_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s4_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s5_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s6_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s7_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s8_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s8_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s9_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s11_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s12_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s13_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s14_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s14_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s15_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s15_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s16_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s16_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s18_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s19_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s20_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s21_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s22_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s23_p0": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_fix_s23_p1": [
+      "experiments/manifests/discovery_micro_heuristic_v2f_plus_planner_terminal_fix.json",
+      "experiments/manifests/phase_9q_no_discovery_corpus.json"
+    ],
+    "heuristic_v2f_plus_planner_terminal_form": [
+      "experiments/manifests/phase9f_resume_baseline.json",
+      "experiments/manifests/portal_attribution_gate.json",
+      "experiments/reports/phase9f_package_semantics_correction.md",
+      "src/generals_bot/candidate_identity.py",
+      "scripts/phase9fs_candidate_a_identity_gate.py",
+      "docs/research/phase-7-continuation.md",
+      "dashboard/backend/tests/test_api_allowlist.py",
+      "dashboard/backend/app/services/jobs.py"
+    ],
+    "heuristic_v2f_plus_planner_terminal_force": [
+      "experiments/manifests/phase9f_resume_baseline.json",
+      "experiments/manifests/portal_attribution_gate.json",
+      "experiments/manifests/POST_SUBMISSION_LEARNING_CONTINUATION.md",
+      "experiments/reports/phase9e_partial_terminal_report.md",
+      "experiments/reports/phase9f_package_semantics_correction.md",
+      "src/generals_bot/candidate_identity.py",
+      "scripts/package_phase9f_required_zips.py",
+      "scripts/phase9fs_candidate_a_identity_gate.py",
+      "dashboard/backend/tests/test_api_allowlist.py",
+      "dashboard/backend/app/services/jobs.py"
+    ],
+    "heuristic_v2f_planner_plus_corridor_v2_terminal_fix": [
+      "src/generals_bot/policies/heuristic_v2_ablations.py"
+    ]
+  },
+  "existing_package_hashes": [
+    {
+      "path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/windows_smoke_passed/quantsilico_portal_current_verified_packaged.zip",
+      "sha256": "5176c838c9a3d88db06746ad67c2f69886cf9bf900da684b2baa86fa3bfe38ea",
+      "size": 216085
+    },
+    {
+      "path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/legacy_mislabelled_upload_ready/quantsilico_portal_current_verified_packaged.zip",
+      "sha256": "5176c838c9a3d88db06746ad67c2f69886cf9bf900da684b2baa86fa3bfe38ea",
+      "size": 216085
+    }
+  ],
+  "notes": [
+    "Search terms force/form/force are not preferred a priori; hashes and registries decide.",
+    "Do not rename or rebuild from a guessed string."
+  ]
+}

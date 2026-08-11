@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kind": "SUBMISSION_PACKAGE_REGISTRY",
+  "created_at": "2026-08-05T13:23:35.514855+00:00",
+  "packages": [
+    {
+      "public_or_candidate_id": "QS-PUBLIC-V001",
+      "build_hash": "e1237f77dee46993",
+      "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+      "path": "submission/packages/QS-PUBLIC-V001/e1237f77dee46993/package.zip",
+      "roles": [
+        "LIVE"
+      ]
+    },
+    {
+      "public_or_candidate_id": "QS-P9F-PORTAL-V0",
+      "build_hash": "898b37b104545fa6",
+      "sha256": "898b37b104545fa6217877dd2db2af7c6e8810f41b4ba1f79cc8530b798d558e",
+      "path": "submission/packages/QS-P9F-PORTAL-V0/898b37b104545fa6/package.zip",
+      "roles": [
+        "RELATED_REPACKAGE"
+      ]
+    },
+    {
+      "public_or_candidate_id": "QS-P9FU-HEURISTIC-TACTICAL-V2",
+      "build_hash": "22a6d05b7160d86f",
+      "sha256": "22a6d05b7160d86ff8d278da28d327d88a6236a4655d90a8bf99894473531770",
+      "path": "submission/packages/QS-P9FU-HEURISTIC-TACTICAL-V2/22a6d05b7160d86f/package.zip",
+      "roles": []
+    },
+    {
+      "public_or_candidate_id": "QS-P9FU-HYBRID-BC-V1",
+      "build_hash": "5152a08eb774cf0e",
+      "sha256": "5152a08eb774cf0e29167e9469422834b0a6e40392a6035ccc0f830d50674b9f",
+      "path": "submission/packages/QS-P9FU-HYBRID-BC-V1/5152a08eb774cf0e/package.zip",
+      "roles": []
+    },
+    {
+      "public_or_candidate_id": "QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1",
+      "build_hash": "8650e57623978a4e",
+      "sha256": "8650e57623978a4ed437cc80495f9b370c82c895d28481bfef3c2355b630b618",
+      "path": "submission/packages/QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1/8650e57623978a4e/package.zip",
+      "roles": []
+    }
+  ],
+  "hybrid_packages": "PRESENT"
+}

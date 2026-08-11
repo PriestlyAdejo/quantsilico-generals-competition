@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_2_MATCHED_BENCHMARKS",
+  "config": {
+    "num_envs": 32,
+    "rollout_len": 16,
+    "reset_pool_size": 4096,
+    "observation_dtype": "float32",
+    "transformer_dtype": "float32",
+    "legal_support": "dense_bool_3970",
+    "ppo_epochs": 1,
+    "advantage_fraction": 1.0,
+    "ppo_semantics": "FULL_BATCH_ONE_OPTAX_UPDATE"
+  },
+  "lineage": {
+    "env_semantics_hash": "9e3f9eb94b7b64a6863307bbe66d5403f6d493aaa7c28ed59655ed73a3062253",
+    "env_implementation_hash": "2385672e3b9f51cc049353397821bda28def7141b6d124b92377290d3a9c306c",
+    "learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+    "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+    "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+  },
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/home/pries/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  },
+  "benchmarks": {
+    "A": {
+      "name": "A_env_transition",
+      "num_envs": 32,
+      "steps": 64,
+      "transitions": 2048,
+      "elapsed_s": 0.030259206999971866,
+      "tps": 67681.87943596486,
+      "gpu": {
+        "gpu_util_pct": 63.0,
+        "gpu_mem_util_pct": 35.0,
+        "vram_mib": 1383.0,
+        "power_w": 23.93,
+        "sm_clock_mhz": 600.0,
+        "temp_c": 84.0,
+        "thermal_slowdown": "Not Active",
+        "power_cap": "Not Active"
+      },
+      "peak_vram_mib": 1383.0,
+      "host_rss_bytes": 935477248
+    },
+    "B": {
+      "name": "B_env_obs_legal",
+      "num_envs": 32,
+      "steps": 64,
+      "transitions": 2048,
+      "elapsed_s": 0.03134670100001813,
+      "tps": 65333.82890910324,
+      "gpu": {
+        "gpu_util_pct": 12.0,
+        "gpu_mem_util_pct": 2.0,
+        "vram_mib": 1504.0,
+        "power_w": 34.82,
+        "sm_clock_mhz": 780.0,
+        "temp_c": 85.0,
+        "thermal_slowdown": "Not Active",
+        "power_cap": "Not Active"
+      },
+      "peak_vram_mib": 1511.0,
+      "host_rss_bytes": 956710912
+    },
+    "C": {
+      "name": "C_complete_rollout",
+      "num_envs": 32,
+      "rollout_len": 16,
+      "reset_pool_size": 4096,
+      "transitions": 512,
+      "elapsed_s": 2.9663611189999983,
+      "tps": 172.60204656828915,
+      "gpu": {
+        "gpu_util_pct": 92.0,
+        "gpu_mem_util_pct": 54.0,
+        "vram_mib": 1499.0,
+        "power_w": 28.67,
+        "sm_clock_mhz": 780.0,
+        "temp_c": 83.0,
+        "thermal_slowdown": "Not Active",
+        "power_cap": "Not Active"
+      },
+      "peak_vram_mib": 1499.0,
+      "host_rss_bytes": 1098432512,
+      "pool_reused": true
+    },
+    "D": {
+      "name": "D_ppo_update",
+      "num_envs": 32,
+      "rollout_len": 16,
+      "samples": 512,
+      "gae_elapsed_s": 0.39601253399999337,
+      "gae_samples_per_s": 1292.888371053449,
+      "ppo_elapsed_s": 1.4727617949999967,
+      "ppo_samples_per_s": 347.6461717965743,
+      "joint_gae_ppo_samples_per_s": 273.9763662496258,
+      "gpu": {
+        "gpu_util_pct": 22.0,
+        "gpu_mem_util_pct": 3.0,
+        "vram_mib": 5467.0,
+        "power_w": 38.68,
+        "sm_clock_mhz": 780.0,
+        "temp_c": 84.0,
+        "thermal_slowdown": "Not Active",
+        "power_cap": "Not Active"
+      },
+      "peak_vram_mib": 5467.0,
+      "host_rss_bytes": 1904893952,
+      "metrics": {
+        "entropy": 1.251707911491394,
+        "pg": 0.0016356126870959997,
+        "ratio": 0.9723609685897827,
+        "vloss": 3.525020122528076,
+        "loss": 1.7516286373138428
+      }
+    },
+    "E": {
+      "name": "E_valid_learning",
+      "num_envs": 32,
+      "rollout_len": 16,
+      "reset_pool_size": 4096,
+      "valid_learning_tps": 107.87338605964717,
+      "transitions": 1536,
+      "updates": 3,
+      "elapsed_s": 14.238915233,
+      "compilation_s": 7.3019211620000135,
+      "peak_vram_mib": 5467.0,
+      "host_rss_bytes": 2065195008,
+      "gpu": {
+        "gpu_util_pct": 29.0,
+        "gpu_mem_util_pct": 15.0,
+        "vram_mib": 5467.0,
+        "power_w": 24.76,
+        "sm_clock_mhz": 360.0,
+        "temp_c": 84.0,
+        "thermal_slowdown": "Not Active",
+        "power_cap": "Not Active"
+      },
+      "status": "COMPLETED"
+    }
+  },
+  "ceiling_ladder": [
+    {
+      "name": "A_env_transition",
+      "num_envs": 32,
+      "steps": 64,
+      "transitions": 2048,
+      "elapsed_s": 0.03349309999998695,
+      "tps": 61146.922799048094,
+      "gpu": {
+        "gpu_util_pct": 49.0,
+        "gpu_mem_util_pct": 17.0,
+        "vram_mib": 5454.0,
+        "power_w": 24.19,
+        "sm_clock_mhz": 600.0,
+        "temp_c": 84.0,
+        "thermal_slowdown": "Not Active",
+        "power_cap": "Not Active"
+      },
+      "peak_vram_mib": 5454.0,
+      "host_rss_bytes": 2243584000
+    },
+    {
+      "name": "B_env_obs_legal",
+      "num_envs": 32,
+      "steps": 64,
+      "transitions": 2048,
+      "elapsed_s": 0.027202699999975266,
+      "tps": 75286.64434051995,
+      "gpu": {
+        "gpu_util_pct": 42.0,
+        "gpu_mem_util_pct": 3.0,
+        "vram_mib": 5454.0,
+        "power_w": 31.89,
+        "sm_clock_mhz": 765.0,
+        "temp_c": 84.0,
+        "thermal_slowdown": "Not Active",
+        "power_cap": "Not Active"
+      },
+      "peak_vram_mib": 5454.0,
+      "host_rss_bytes": 2243584000
+    },
+    {
+      "name": "C_complete_rollout",
+      "num_envs": 32,
+      "rollout_len": 16,
+      "reset_pool_size": 2048,
+      "transitions": 512,
+      "elapsed_s": 27.649973775000035,
+      "tps": 18.517196586382635,
+      "gpu": {
+        "gpu_util_pct": 52.0,
+        "gpu_mem_util_pct": 14.0,
+        "vram_mib": 5456.0,
+        "power_w": 30.23,
+        "sm_clock_mhz": 1095.0,
+        "temp_c": 84.0,
+        "thermal_slowdown": "Not Active",
+        "power_cap": "Not Active"
+      },
+      "peak_vram_mib": 5456.0,
+      "host_rss_bytes": 2438692864
+    },
+    {
+      "name": "ceiling_5_rollout_plus_gae",
+      "tps_note": "gae_samples_per_s is advantage path only; rollout separate in C",
+      "gae_samples_per_s": 41275.34362528938,
+      "ppo_samples_per_s": 244.99669800915999
+    }
+  ],
+  "first_collapse_stage": "C_rollout",
+  "tps_sequence": {
+    "A_transition": 67681.87943596486,
+    "B_obs_legal": 65333.82890910324,
+    "C_rollout": 172.60204656828915,
+    "D_ppo": 347.6461717965743,
+    "E_valid_learning": 107.87338605964717
+  },
+  "pool_reuse_remeasure": true
+}

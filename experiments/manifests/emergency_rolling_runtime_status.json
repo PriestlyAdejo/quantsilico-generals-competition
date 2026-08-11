@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_ROLLING_PACKAGE_RUNTIME_STATUS",
+  "status": "RUNNING_EMERGENCY_PPO",
+  "ppo_pid": 554,
+  "watchdog": "scripts/wsl/_emergency_sprint_watchdog.sh",
+  "package_status": "EMERGENCY_BASELINE_FALLBACK_PACKAGE_EXISTS",
+  "upload_pointer_class": "PROVISIONAL_BASELINE_INSURANCE",
+  "deadline_extension": "DENIED_UNRESOLVED_PORTAL_DEADLINE",
+  "sprint_end_at": "2026-08-07T10:21:06.079517+00:00",
+  "experiments_stop_at": "2026-08-07T08:21:06.079517+00:00",
+  "live": {
+    "schema_version": 1,
+    "kind": "EMERGENCY_TRAINING_LATEST",
+    "updates": 1170,
+    "transitions": 1198080,
+    "session_transitions": 768000,
+    "tps": 103.28854387547088,
+    "elapsed_s": 7435.480946715,
+    "entropy": 2.1915555000305176,
+    "loss": 1.1537126302719116,
+    "pg": -6.337435252135037e-07,
+    "ratio": 1.0000102519989014,
+    "vloss": 2.351257801055908,
+    "peak_vram_mib": 7308.0,
+    "gpu_owner": "PPO_TRAINER",
+    "ts": "2026-08-07T04:27:27.462880+00:00"
+  },
+  "complete_checkpoints": [
+    "COMPLETE",
+    "COMPLETE",
+    "COMPLETE",
+    "COMPLETE"
+  ],
+  "updated_at": "2026-08-07T04:28:26.453094+00:00"
+}

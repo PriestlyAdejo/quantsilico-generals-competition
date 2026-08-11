@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "kind": "CANDIDATE_C_SMOKE_STATUS",
+  "created_at": "2026-08-05T12:29:07.526035+00:00",
+  "status": "SMOKE_PASS",
+  "valid_ppo_learning_transitions_per_second": 4.007856940122751,
+  "compare_to_frozen_v001": "AFTER_UPLOAD_FREEZE",
+  "optional_v002": "ONLY_IF_STRONGER_THAN_FROZEN_V001"
+}

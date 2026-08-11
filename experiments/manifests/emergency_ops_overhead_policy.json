@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_OPS_OVERHEAD_POLICY",
+  "delta_tps_dashboard_max": 0.03,
+  "delta_tps_all_concurrent_ops_max": 0.05,
+  "pause_order": [
+    "checkpoint_canary_evaluator",
+    "chart_history_generation",
+    "package_audit",
+    "dashboard_enhancements"
+  ],
+  "keep_when_paused": ["heartbeat", "latest_metrics"],
+  "cpu_isolation_env": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "JAX_PLATFORMS": "cpu"
+  },
+  "measurement_note": "CPU canary and packaging run with CUDA_VISIBLE_DEVICES='' so they cannot reserve GPU; combined ops cap enforced by pausing canary first if trainer TPS drops >5% vs recent session baseline.",
+  "status": "ACTIVE"
+}

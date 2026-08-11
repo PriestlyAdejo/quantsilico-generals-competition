@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_FINALIST_TOURNAMENT",
+  "created_at": "2026-08-05T06:17:33.240934+00:00",
+  "decision": "PROVISIONAL_UNDER_SAMPLED",
+  "label": "PROVISIONAL_BEST_OVERALL_AMONG_TESTED_CANDIDATES",
+  "paired_map_seat_comparisons": 0,
+  "predeclared_replication_sample": 16,
+  "reason": "Deadline window reserved for packaging honesty; neural learned policies not wrapped into deployable package path for full paired tournament before 08:00. Portal retained as provisional packaged best. RL mandatory attempt PASS with overnight evidence.",
+  "overnight_summaries": {
+    "RL_CONTROL": {
+      "updates": 144,
+      "transitions_approx": 36864,
+      "elapsed_s": 9391.788223199997,
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_control\\final.json",
+      "loss_first": 7.47836971282959,
+      "loss_last": 0.0006271361489780247,
+      "entropy_first": 0.05588504672050476,
+      "entropy_last": 0.0,
+      "persistent_actor": true,
+      "synchronous_ppo": true,
+      "continuation_nonzero_frac": 1.0
+    },
+    "RL_CURRICULUM": {
+      "updates": 127,
+      "transitions_approx": 32512,
+      "elapsed_s": 9341.282613999996,
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_curriculum\\final.json",
+      "loss_first": 7.435519695281982,
+      "loss_last": 0.0007900861673988402,
+      "entropy_first": 0.05872730538249016,
+      "entropy_last": 0.0,
+      "persistent_actor": true,
+      "synchronous_ppo": true,
+      "continuation_nonzero_frac": 1.0
+    }
+  },
+  "claims_forbidden": [
+    "CONFIRMED_BEST",
+    "PROMOTABLE",
+    "statistically_established_superiority"
+  ]
+}

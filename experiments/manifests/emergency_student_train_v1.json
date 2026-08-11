@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_STUDENT_TRAIN_V1",
+  "export": "/home/pries/quantsilico-runtime/emergency_rolling_v1/distill/student_v1/student_emb96_v1.npz",
+  "steps_ran": 36,
+  "history_tail": [
+    {
+      "step": 310,
+      "loss": 0.7020279765129089,
+      "kl": 0.6913053393363953,
+      "ce": 0.3555784821510315,
+      "elapsed_s": 186.1557805730008
+    },
+    {
+      "step": 320,
+      "loss": 0.782179594039917,
+      "kl": 0.785743236541748,
+      "ce": 0.3884708881378174,
+      "elapsed_s": 191.75474199400014
+    },
+    {
+      "step": 330,
+      "loss": 0.8139045238494873,
+      "kl": 0.7538347244262695,
+      "ce": 0.4363079071044922,
+      "elapsed_s": 197.1668902220008
+    },
+    {
+      "step": 340,
+      "loss": 0.8803610801696777,
+      "kl": 0.8400843143463135,
+      "ce": 0.4594450891017914,
+      "elapsed_s": 202.59121545500057
+    },
+    {
+      "step": 349,
+      "loss": 0.8729633092880249,
+      "kl": 0.8399490714073181,
+      "ce": 0.45254072546958923,
+      "elapsed_s": 207.81133198499992
+    }
+  ],
+  "data": "/home/pries/quantsilico-runtime/emergency_rolling_v1/distill/dataset_stage_b/sequences.npz",
+  "n_sequences": 15,
+  "device": "cpu:0",
+  "elapsed_s": 208.03935329100022,
+  "updated_at": "2026-08-07T05:45:53.083818+00:00",
+  "note": "Trained on real teacher-annotated sequences (not Stage A synthetic)."
+}

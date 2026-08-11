@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_BASELINE_FALLBACK_PACKAGE",
+  "status": "EMERGENCY_BASELINE_FALLBACK_PACKAGE_EXISTS",
+  "classification": [
+    "EMERGENCY_BASELINE_FALLBACK_PACKAGE",
+    "TECHNICALLY_QUALIFIED",
+    "NOT_A_V4_3_LEARNED_CANDIDATE",
+    "MANUAL_UPLOAD_ONLY"
+  ],
+  "policy_source": "heuristic_v2f_plus_planner_terminal_form",
+  "heuristic_version": "heuristic_v2_preppo_8f7405fe9834161c",
+  "already_submitted": true,
+  "package_sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+  "package_zip_repo": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+  "package_zip_runtime": "/home/pries/quantsilico-runtime/emergency_rolling_v1/packages/baseline_fallback/e1237f77dee46993/package.zip",
+  "linux_parity": "PASS",
+  "portal_verdict": "QUALIFIED",
+  "technical_qualification": "VERIFIED_EXISTING_LINUX_PASS_AND_PORTAL_QUALIFIED",
+  "requalification_mode": "VERIFY_NOT_REBUILD",
+  "checks": [
+    {
+      "id": "QS-PUBLIC-V001_heuristic_v2_preppo",
+      "zip_path": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+      "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+      "expected_sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+      "sha_match": true,
+      "linux_parity": "PASS",
+      "portal_verdict": "QUALIFIED",
+      "already_submitted": true,
+      "status": "VERIFIED"
+    }
+  ],
+  "updated_at": "2026-08-07T02:23:09.281397+00:00"
+}

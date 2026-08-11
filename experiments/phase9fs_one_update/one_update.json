@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "architecture": "recurrent_cnn_v2",
+  "config": {
+    "channels": 48,
+    "blocks": 3,
+    "recurrent": 96,
+    "global_dim": 9,
+    "architecture": "recurrent_cnn_v2",
+    "action_head": "factorised_spatial_v2",
+    "schema_version": 2
+  },
+  "weights": "one_update.safetensors",
+  "parameter_count": 225265
+}

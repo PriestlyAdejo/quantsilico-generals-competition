@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_SMOKE_R_E5_TRAIN",
+  "status": "COMPLETED",
+  "exit_reason": "BUDGET_OR_TIME",
+  "transitions": 100352,
+  "updates": 98,
+  "elapsed_s": 738.13788851,
+  "compilation_s": 6.875687260999996,
+  "recompile_count": 1,
+  "measured_tps": 135.95291823126684,
+  "valid_learning_tps": 135.95291823126684,
+  "peak_vram_mib": 7240.0,
+  "host_rss_bytes": 2241482752,
+  "num_envs": 32,
+  "rollout_len": 32,
+  "reset_pool_size": 4096,
+  "reset_pool_build_s": 22.203743986999996,
+  "reset_pool_refresh_every_updates": 10,
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/home/pries/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  },
+  "checkpoint_raw": "experiments/competition_native_jax/v4_2_smoke_r_e5/smoke_r_e5_raw.npz",
+  "checkpoint_ema": "experiments/competition_native_jax/v4_2_smoke_r_e5/smoke_r_e5_ema.npz",
+  "runtime_dir": "/home/pries/quantsilico-runtime/competition_native_jax/smoke_r_e5",
+  "jax_gpu_used": true,
+  "last_metrics": {
+    "entropy": 2.1446547508239746,
+    "pg": 7.34446939532063e-06,
+    "ratio": 1.000014305114746,
+    "vloss": 2.3568692207336426,
+    "loss": 1.156995415687561
+  },
+  "limits": {
+    "max_transitions": 100000,
+    "max_updates": 10000,
+    "max_seconds": 1800
+  },
+  "rollout_backend": "official_mit_jax_primitives_plus_qs_scan",
+  "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+  "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+  "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+  "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+  "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+  "gae_device_resident_batched": true,
+  "host_bound_optimiser_lineage": false,
+  "lineage_at_smoke": {
+    "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+    "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+    "learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+    "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+    "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+  },
+  "parent_gate": {
+    "schema_version": 1,
+    "kind": "COMPETITION_NATIVE_JAX_V4_2_SYSTEMS_PROMOTION_GATE",
+    "ready": true,
+    "disposition": "END_TO_END_JAX_SYSTEMS_PROMOTION_READY",
+    "blocker": null,
+    "selected": {
+      "num_envs": 32,
+      "rollout_len": 32,
+      "reset_pool_size": 4096
+    },
+    "valid_learning_tps": 189.70620799032835,
+    "promotion": {
+      "valid_learning_tps": 189.70620799032835,
+      "min_tps": 20.0,
+      "tps_gate": true,
+      "transitions_90m": 1024413.5231477731,
+      "updates_90m": 1000.4038311989972,
+      "transitions_gate": true,
+      "updates_gate": true,
+      "games_gate": true,
+      "gae_device_resident": true,
+      "architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT"
+    }
+  }
+}

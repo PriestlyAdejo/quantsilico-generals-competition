@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_PACKAGE_MIGRATION_PLAN",
+  "status": "METADATA_CORRECTED_PHYSICAL_DEFERRED",
+  "created_at": "2026-08-05T00:32:10.034524+00:00",
+  "packages": [
+    {
+      "path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/upload_ready/quantsilico_portal_current_verified_packaged.zip",
+      "sha256": "5176c838c9a3d88db06746ad67c2f69886cf9bf900da684b2baa86fa3bfe38ea",
+      "legacy_status": "LEGACY_MISLABELLED"
+    },
+    {
+      "path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/upload_ready/quantsilico_phase9f_best_overall_packaged.zip",
+      "sha256": "f6cc278527456d865485d7c69c237efeb5d6136a7bcdd0f30ca46c576b12cd56",
+      "legacy_status": "LEGACY_MISLABELLED"
+    },
+    {
+      "path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/upload_ready/quantsilico_phase9f_safe_fallback_packaged.zip",
+      "sha256": "593de5958ed41b6c2c62e165341d1b72c0aa6d63f9e7cede987bf3bef97f77fe",
+      "legacy_status": "LEGACY_MISLABELLED"
+    },
+    {
+      "path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/upload_ready/quantsilico_phase9f_best_deterministic_packaged.zip",
+      "sha256": "131f4abaeee76dead56a3f1795370f36fd44c963abedba6e4f792900fd471c38",
+      "legacy_status": "LEGACY_MISLABELLED"
+    }
+  ]
+}

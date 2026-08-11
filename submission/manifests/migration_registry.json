@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "kind": "SUBMISSION_MIGRATION_REGISTRY",
+  "created_at": "2026-08-05T13:23:35.514855+00:00",
+  "stage": "0B_FAST",
+  "entries": [
+    {
+      "original_path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+      "canonical_archive_path": "submission/packages/QS-PUBLIC-V001/e1237f77dee46993/package.zip",
+      "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+      "migration_timestamp": "2026-08-05T13:23:35.514855+00:00",
+      "note": "Live V001; historical path retained for portal attribution"
+    },
+    {
+      "original_path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/submission_recommended/qs_p9fu_heuristic_v1_packaged.zip",
+      "canonical_archive_path": "submission/packages/QS-P9F-PORTAL-V0/898b37b104545fa6/package.zip",
+      "sha256": "898b37b104545fa6217877dd2db2af7c6e8810f41b4ba1f79cc8530b798d558e",
+      "migration_timestamp": "2026-08-05T13:23:35.514855+00:00",
+      "note": "Related repackage; dist copy removed after verification",
+      "dist_copy_removed": true
+    }
+  ]
+}

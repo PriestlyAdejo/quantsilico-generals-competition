@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FR_MATCHED_INTEGRITY",
+  "created_at": "2026-08-05T09:48:41.402285+00:00",
+  "expected_init_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_cnn_ranker_v1\\checkpoints\\bc\\model.json",
+  "reported_init_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_cnn_ranker_v1\\checkpoints\\bc\\model.json",
+  "hashes": {
+    "bc_model.json_sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e",
+    "bc_model.safetensors_sha256": "4ba41f77a041f6f990f8f11ac5d02dab09e5cc79710c7edf52fd41c80d10f4bf"
+  },
+  "arm_init_equality_expected": true,
+  "arm_init_equality_basis": "Both arms use the same --init-checkpoint argument in scripts/run_phase9f_overnight_ppo.py",
+  "reward_cfg_differs": {
+    "RL_CONTROL": "CONTROL_V1",
+    "RL_CURRICULUM": "CURRICULUM_DISCOVERY_V1"
+  },
+  "gate_results": {
+    "MATCHED_SOURCE_GATE": "PASS",
+    "MATCHED_CONFIG_GATE": "PASS",
+    "TREATMENT_ISOLATION_GATE": "PASS"
+  }
+}

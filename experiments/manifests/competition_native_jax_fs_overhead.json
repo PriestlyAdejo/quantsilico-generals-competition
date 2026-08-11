@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_FS_OVERHEAD",
+  "writes": 40,
+  "bytes_per_write": 262144,
+  "linux_native_s": 0.040284506000006104,
+  "mnt_c_s": 0.9899931050000035,
+  "mnt_c_slowdown": 24.575034009349736
+}

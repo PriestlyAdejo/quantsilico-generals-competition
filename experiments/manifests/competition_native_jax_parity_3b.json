@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_PARITY_3B",
+  "status": "PASSED",
+  "pass_transitions": 100000,
+  "pass_mismatches": 0,
+  "legal_transitions": 5000,
+  "legal_mismatches": 0,
+  "games_started": 1000,
+  "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "source": "competition_native_jax_v4_2_stage3b_final.json"
+}

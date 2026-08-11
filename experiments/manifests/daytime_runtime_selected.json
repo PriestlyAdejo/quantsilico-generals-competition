@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "kind": "DAYTIME_RUNTIME_SELECTED",
+  "status": "FROZEN",
+  "profile": "V4_2",
+  "selected": {
+    "num_envs": 32,
+    "rollout_len": 32,
+    "reset_pool_size": 4096
+  },
+  "operational_tps_for_budgets": 135.95291823126684,
+  "clean_benchmark_tps": 189.70620799032835,
+  "restore_threshold_tps": 122.35762640814015,
+  "source_snapshot": "experiments/manifests/competition_native_jax_v4_3_source_snapshot.json",
+  "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+  "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+  "parent_class": "R_E6_PARENT_COMPATIBLE_COLD_RESTART",
+  "v4_3a_disposition": "V4_3_NO_MATERIAL_GAIN_USE_V4_2",
+  "budgets": {
+    "samples_per_update": 1024,
+    "r_e6": {
+      "max_seconds": 5400,
+      "max_complete_updates": 609,
+      "transition_budget": 623616,
+      "usable_fraction": 0.85
+    },
+    "r_e7": {
+      "max_seconds": 14400,
+      "max_complete_updates": 1625,
+      "transition_budget": 1664000,
+      "usable_fraction": 0.85
+    }
+  },
+  "frozen_at": "2026-08-06T20:27:52.757497+00:00"
+}

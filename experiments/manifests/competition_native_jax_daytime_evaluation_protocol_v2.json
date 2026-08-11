@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "kind": "COMPETITION_NATIVE_JAX_DAYTIME_EVALUATION_PROTOCOL_V2",
+  "status": "FROZEN",
+  "protocol_id": "competition_native_jax_daytime_evaluation_protocol_v2",
+  "screening": {
+    "seeds": [
+      1101,
+      1102,
+      1103,
+      1104
+    ],
+    "maps": "competition_random",
+    "pairs_per_opponent": 2
+  },
+  "selection": {
+    "seeds": [
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206
+    ],
+    "maps": "competition_random",
+    "pairs_per_opponent": 4
+  },
+  "confirmation": {
+    "seeds": [
+      1301,
+      1302,
+      1303,
+      1304,
+      1305,
+      1306,
+      1307,
+      1308
+    ],
+    "maps": "competition_random",
+    "pairs_per_opponent": 4
+  },
+  "no_overlap_screening_selection_confirmation": true,
+  "seat_swaps": true,
+  "opponents": [
+    "official_expander",
+    "official_hunter",
+    "heuristic_v2_aggressive",
+    "heuristic_v2_defensive",
+    "heuristic_v2f_plus_planner_terminal_fix"
+  ],
+  "max_turns": 1200,
+  "timeout_class": "INCOMPLETE_TIMEOUT_not_scored",
+  "scoring": "score_rate = (W + 0.5*D)/(W+D+L)",
+  "uncertainty": "Wilson_or_bootstrap_CI_on_paired_score",
+  "gates": {
+    "VALID_DAYTIME_TEACHER_min_score_rate_vs_expander": 0.55,
+    "VALID_DAYTIME_TEACHER_min_score_rate_vs_hunter": 0.52,
+    "min_direct_improvement_vs_even": 0.05,
+    "max_baseline_regression": 0.05,
+    "max_draw_inflation": 0.15,
+    "promote_to_medium_min_score_rate": 0.58,
+    "promote_to_medium_requires_nondecreasing_entropy_band": true
+  },
+  "tie_break": "lower_draw_rate_then_lower_package_p99",
+  "faults": {
+    "illegal_action": "forfeit_pair",
+    "crash": "forfeit_pair",
+    "timeout": "INCOMPLETE_TIMEOUT_not_scored"
+  },
+  "role_assumptions": "CNJ_ONLY_no_Tactical_Hybrid_V002_semantics",
+  "note": "Freeze SHA before R-E.6 launch; never edit after R-E.6 process begins.",
+  "frozen_before_r_e6_launch": true,
+  "frozen_at": "2026-08-06T20:27:52.760627+00:00",
+  "sha256": "d64c5ab403577a10ebbe5cefee44073e361f9ab044083f5b246fb07752a5d458"
+}

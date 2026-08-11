@@ -1,27 +1,79 @@
 {
   "schema_version": 1,
   "kind": "COMPETITION_NATIVE_JAX_THROUGHPUT_LADDER_V2",
-  "status": "BLOCKED_COMPUTE",
-  "gpu_execution_gate": "AWAITING_OPERATOR_ACTION",
-  "gpu_jax_verified": false,
-  "synchronised_ladder": {
-    "num_envs_candidates": [8, 16, 32, 64],
-    "rollout_len_candidates": [16, 32, 64],
-    "minibatch_candidates": [256, 512, 1024],
-    "frozen_from_measured_vram": false,
-    "skip_reason": "GPU_JAX_VERIFIED required before VRAM-synchronised freeze"
+  "status": "FROZEN",
+  "gpu_jax_verified": true,
+  "candidates": [
+    {
+      "num_envs": 2,
+      "rollout_len": 8,
+      "minibatch": 128,
+      "valid_learning_tps": 0.031156286632198788,
+      "compilation_s": 46.638124195000046,
+      "peak_vram_mib": 1596.0,
+      "host_rss_bytes": 2710790144,
+      "elapsed_s": 513.5400180670001,
+      "status": "OK",
+      "vram_delta_mib": 298.0,
+      "stable": true
+    },
+    {
+      "num_envs": 2,
+      "rollout_len": 16,
+      "minibatch": 256,
+      "valid_learning_tps": 0.05878937954086873,
+      "compilation_s": 1.91897999899993,
+      "peak_vram_mib": 1610.0,
+      "host_rss_bytes": 3576442880,
+      "elapsed_s": 544.31600146,
+      "status": "OK",
+      "vram_delta_mib": 14.0,
+      "stable": true
+    },
+    {
+      "num_envs": 4,
+      "rollout_len": 16,
+      "minibatch": 512,
+      "valid_learning_tps": 0.09504241700890839,
+      "compilation_s": 1.8764157909999994,
+      "peak_vram_mib": 1873.0,
+      "host_rss_bytes": 4421562368,
+      "elapsed_s": 673.3835482529998,
+      "status": "OK",
+      "vram_delta_mib": 263.0,
+      "stable": true
+    },
+    {
+      "num_envs": 8,
+      "rollout_len": 16,
+      "minibatch": 512,
+      "valid_learning_tps": 0.15132178841859523,
+      "compilation_s": 1.966441403999852,
+      "peak_vram_mib": 2392.0,
+      "host_rss_bytes": 5292818432,
+      "elapsed_s": 845.8795084150001,
+      "status": "OK",
+      "vram_delta_mib": 519.0,
+      "stable": true
+    }
+  ],
+  "frozen_config": {
+    "num_envs": 8,
+    "rollout_len": 16,
+    "minibatch": 512,
+    "valid_learning_tps": 0.15132178841859523,
+    "compilation_s": 1.966441403999852,
+    "peak_vram_mib": 2392.0,
+    "host_rss_bytes": 5292818432,
+    "elapsed_s": 845.8795084150001,
+    "status": "OK",
+    "vram_delta_mib": 519.0,
+    "stable": true
   },
-  "cpu_jax_correctness": {
-    "status": "PASSED",
-    "path": "experiments/competition_native_jax/gpu_correctness/gpu_correctness_gate.json",
-    "backend": "cpu",
-    "note": "Identity/rho gate only; not GPU throughput"
-  },
-  "prior_numpy_smoke_tps": 0.512335555890687,
+  "frozen_from_measured_vram": true,
   "declared_transition_budget_rule": "floor(0.85 * TPS * permitted_seconds)",
-  "short_day_budget_transitions": 0,
-  "medium_day_budget_transitions": 0,
-  "short_day": "SKIPPED_WITH_REASON",
-  "medium_day": "SKIPPED_WITH_REASON",
-  "skip_reason": "BLOCKED_COMPUTE: Ubuntu WSL CUDA JAX not verified (AWAITING_OPERATOR_ACTION on first-user OOBE)"
+  "short_day_budget_transitions": 694,
+  "medium_day_budget_transitions": 1852,
+  "full_rollout_fps": 0.15132178841859523,
+  "valid_learning_tps": 0.15132178841859523
 }

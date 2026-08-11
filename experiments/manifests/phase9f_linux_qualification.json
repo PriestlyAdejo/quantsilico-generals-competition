@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_LINUX_QUALIFICATION",
+  "created_at": "2026-08-05T06:17:33.240934+00:00",
+  "OFFICIAL_LINUX_PARITY_PASS": false,
+  "MATCHED_DOCKER_LINUX_PASS": false,
+  "MATCHED_DOCKER_CANDIDATE_PASS": false,
+  "GENERIC_LINUX_SMOKE_PASS": false,
+  "LINUX_BUILD_GATE": "BLOCKED_EXTERNAL",
+  "LINUX_PROTOCOL_GATE": "BLOCKED_EXTERNAL",
+  "note": "No official competition image / matched Docker / WSL parity run executed in final window.",
+  "official_upload_ready": false
+}

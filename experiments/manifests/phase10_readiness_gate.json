@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE10_READINESS_GATE",
+  "created_at": "2026-08-05T12:26:01.866236+00:00",
+  "gate_status": "NOT_READY",
+  "proposal_path": "plans/phase10_readiness_proposal.md",
+  "phase10_transitions_authorised": 0,
+  "execute_phase10": false,
+  "overnight_forbidden": true,
+  "rental_forbidden": true,
+  "auto_upload_forbidden": true,
+  "hard_stop": true
+}

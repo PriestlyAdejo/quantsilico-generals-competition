@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FS_PREFLIGHT",
+  "created_at": "2026-08-05T12:04:45.048706+00:00",
+  "branch": "research/phase9fs-ppo-semantics-repair-v1",
+  "head_sha": "ab7c9c0",
+  "start_tag": "phase9fs-start-ab7c9c0",
+  "live_python_trainers": false,
+  "dirty_tree": true,
+  "evidence_preserved": true,
+  "role_registry_restored": true,
+  "checkpoint_registry_v2": "experiments/manifests/phase9fr_checkpoint_registry_v2.json",
+  "status": "PASS"
+}

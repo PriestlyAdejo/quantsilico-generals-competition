@@ -1,33 +1,6 @@
 {
   "schema_version": 1,
   "kind": "COMPETITION_NATIVE_JAX_OVERNIGHT_READINESS",
-  "overnight_parent_status": "NO_VALID_OVERNIGHT_PARENT",
-  "overnight_ready": false,
-  "overnight_training_authorized": false,
-  "write_only": true,
-  "overnight_not_started": true,
-  "considered_lineages": [
-    {
-      "id": "smoke_raw_numpy_prototype",
-      "path": "experiments/competition_native_jax/smoke/smoke_raw.npz",
-      "rejected_because": "NUMPY_PROTOTYPE_ONLY / not JAX-trained / undeployable teacher latency"
-    },
-    {
-      "id": "jax_core_cpu_correctness",
-      "path": "experiments/competition_native_jax/gpu_correctness/gpu_correctness_gate.json",
-      "rejected_because": "correctness-only; no trained checkpoint; GPU unverified"
-    },
-    {
-      "id": "student_shape_feasibility_random",
-      "path": "experiments/manifests/competition_native_jax_early_student_feasibility.json",
-      "rejected_because": "shape feasibility only; random weights; distillation unauthorized"
-    }
-  ],
-  "blocker": "BLOCKED_COMPUTE",
-  "secondary_blocker": "AWAITING_OPERATOR_ACTION_WSL_UBUNTU_OOBE",
-  "minimum_remediation": "Complete Ubuntu WSL first-user setup, run scripts/windows/bootstrap_quantsilico_wsl_jax.ps1 to reach GPU_JAX_VERIFIED, then authorise daytime train/package before any overnight.",
-  "another_daytime_run_justified": true,
-  "plan_path": "plans/competition_native_jax_overnight_training_plan.md",
-  "future_phase_d_authorized": false,
-  "phase_10_execution_authorized": false
+  "status": "NO_VALID_OVERNIGHT_PARENT",
+  "updated_at": "2026-08-06T11:08:12.389206+00:00"
 }

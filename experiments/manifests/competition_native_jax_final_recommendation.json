@@ -2,30 +2,7 @@
   "schema_version": 1,
   "kind": "COMPETITION_NATIVE_JAX_FINAL_RECOMMENDATION",
   "recommendation": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
-  "upload_this_status": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
-  "considered": [
-    "QS-P9G-COMPETITION-POLICY-DAY-V1",
-    "QS-P9G-CONTROLLED-POLICY-DAY-V1",
-    "QS-P9G-COMPETITION-STUDENT-DAY-V1",
-    "QS-PUBLIC-V001 (frozen live; not a daytime product of this resume)"
-  ],
-  "primary_blocker": "BLOCKED_COMPUTE",
-  "secondary_blockers": [
-    "AWAITING_OPERATOR_ACTION_WSL_UBUNTU_OOBE",
-    "TEACHER_REQUIRES_STUDENT",
-    "BASE_DAYTIME_BLOCKED_PACKAGE"
-  ],
-  "notes": [
-    "Genuine JAX+Optax core committed; CPU correctness rho=1 PASSED",
-    "Windows JAX remains CPU-only; Ubuntu WSL installed but OOBE blocks non-interactive CUDA JAX bootstrap",
-    "Early student shape feasibility PASSED (emb96/d2 etc); NOT distillation",
-    "Short/medium daytime SKIPPED_WITH_REASON",
-    "Tactical/Hybrid remain rejected; never recommended",
-    "NumPy smoke prototype is not a trained JAX policy"
-  ],
-  "exact_package_path": null,
-  "exact_package_sha256": null,
-  "upload": false,
-  "overnight_training_authorized": false,
-  "phase_10_execution_authorized": false
+  "overnight_parent": "NO_VALID_OVERNIGHT_PARENT",
+  "disposition": "END_TO_END_JAX_CORRECT_BUT_TOO_SLOW",
+  "updated_at": "2026-08-06T11:08:12.389206+00:00"
 }
