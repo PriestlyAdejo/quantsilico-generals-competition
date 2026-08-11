@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "kind": "MIXTURE_BEHAVIOUR_COMPATIBILITY_GATE",
+  "created_at": "2026-08-05T12:26:01.866236+00:00",
+  "design": "A",
+  "deterministic_default": true,
+  "gate_status": "PASS_PROVISIONAL",
+  "rationale": "Design A (mixture deterministic=True / argmax) is provisionally adopted so collection and update share identical option indices without multinomial RNG coupling. Hierarchical Design B remains available if a future ablation shows Design A harms BC retention.",
+  "code_paths": [
+    "src/generals_bot/training/actors.py::collect_fragment(mixture_deterministic=True)",
+    "src/generals_bot/training/rollout.py::ppo_update_from_fragment(mixture_deterministic=True)",
+    "src/generals_bot/training/ppo.py (deterministic=True on collect/update)"
+  ]
+}

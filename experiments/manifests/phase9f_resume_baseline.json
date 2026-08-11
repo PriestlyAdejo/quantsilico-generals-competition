@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_RESUME_BASELINE",
+  "created_at": "2026-08-05T00:32:10.034524+00:00",
+  "working_branch": "research/phase9f-autonomous-rebuild-v1",
+  "head_commit": "ab7c9c0f541c47300406b8c1ae5932ba698b3973",
+  "short_sha": "ab7c9c0",
+  "recovery_tag": "phase9f-mandatory-rl-resume-ab7c9c0",
+  "prior_recovery_tag": "phase9f-autonomous-rebuild-v1-start-3ee4815",
+  "phase9e_terminal_commit": "3ee4815329f9d092a8cae8f46ad64e60722a0b3b",
+  "prior_stage": "PACKAGING_COMPLETE_FOUNDATIONS_PARTIAL",
+  "deadline": "2026-08-05T08:00:00+01:00",
+  "canonical_portal_id": "heuristic_v2f_plus_planner_terminal_fix",
+  "stable_portal_id": "QS-P9F-PORTAL-V0",
+  "typos_not_distinct": [
+    "heuristic_v2f_plus_planner_terminal_force",
+    "heuristic_v2f_plus_planner_terminal_form"
+  ],
+  "conflicting_training_pids": [],
+  "open_critical": [
+    "persistent_env_across_chunks",
+    "structured_memory_learned_path",
+    "cnn_ranker_bc_dagger",
+    "mandatory_sync_ppo"
+  ],
+  "package_correction_mode": "METADATA_ONLY_PHYSICAL_MIGRATION_DEFERRED"
+}

@@ -1,29 +1,42 @@
 {
   "schema_version": 1,
   "kind": "PHASE9G_GPU_EXECUTION_GATE",
-  "status": "AWAITING_OPERATOR_ACTION",
-  "not_a_cuda_or_jax_failure": true,
-  "classification_rule": "ELEVATION_VS_REBOOT_RULE",
-  "windows_gpu": {
-    "name": "NVIDIA GeForce RTX 3070 Laptop GPU",
-    "driver_version": "581.42",
-    "memory_mib": 8192
+  "status": "GPU_JAX_VERIFIED",
+  "checks": {
+    "backend_is_gpu": true,
+    "has_cuda_device": true,
+    "matmul_on_gpu": true,
+    "params_on_gpu": true,
+    "forward_on_gpu": true,
+    "rollout_on_gpu": true,
+    "grads_on_gpu": true,
+    "optax_on_gpu": true,
+    "observable_vram_utilisation": true
   },
-  "wsl": {
-    "distros_observed": ["docker-desktop", "Ubuntu"],
-    "ubuntu_state": "Running but first-boot OOBE blocks non-interactive shell",
-    "ubuntu_version": 2,
-    "probe_result": "TIMEOUT_NO_OUTPUT for wsl -d Ubuntu bash -lc and -u root",
-    "install_log": "experiments/logs/wsl_jax_bootstrap/install_stdout_20260806_025026.txt",
-    "install_message": "Provisioning the new WSL instance Ubuntu / This might take a while..."
+  "device_info": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "platforms": [
+      "gpu"
+    ],
+    "vram_used_mib_before": 1151.0,
+    "jaxlib_version": "0.11.0",
+    "optax_version": "0.2.8",
+    "matmul_device": "cuda:0",
+    "input_device": "cuda:0",
+    "params_device": "cuda:0",
+    "forward_logits_device": "cuda:0",
+    "rollout_spatial_device": "cuda:0",
+    "grad_device": "cuda:0",
+    "optax_update_device": "cuda:0",
+    "optax_params_device": "cuda:0",
+    "vram_used_mib_after": 5339.0,
+    "vram_delta_mib": 4188.0
   },
-  "blocker": "Ubuntu WSL2 distro requires interactive first-user creation (UNIX username/password) which Cursor cannot complete.",
-  "exact_operator_commands": [
-    "Open Ubuntu from the Start menu (or: wsl -d Ubuntu) and complete first-user setup when prompted",
-    "Then: powershell -ExecutionPolicy Bypass -File scripts/windows/bootstrap_quantsilico_wsl_jax.ps1"
-  ],
-  "continuation_command": "powershell -ExecutionPolicy Bypass -File scripts/windows/bootstrap_quantsilico_wsl_jax.ps1",
-  "gpu_jax_verified": false,
-  "meaningful_training_authorized": false,
-  "updated_at": "2026-08-06T02:10:00+00:00"
+  "cuda_devices": [
+    "cuda:0"
+  ]
 }

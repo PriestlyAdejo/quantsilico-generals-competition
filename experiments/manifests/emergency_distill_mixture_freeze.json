@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "DISTILLATION_MIXTURE_FREEZE",
+  "mixture": {
+    "self_play": 1.0,
+    "note": "ultra_fast_deadline_path; proportions follow availability"
+  },
+  "teacher_checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1280",
+  "teacher_update": 1280,
+  "teacher_which": "ema",
+  "frozen_at": "2026-08-07T05:27:36.729467+00:00"
+}

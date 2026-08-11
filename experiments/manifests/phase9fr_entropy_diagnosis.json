@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FR_ENTROPY_DIAGNOSIS",
+  "created_at": "2026-08-05T10:18:56.244356+00:00",
+  "notes": [
+    "behaviour_entropy_full_legal_mean: entropy of Categorical over FULL legal mask at collection time (old_logp distribution).",
+    "update_mask_entropy_same_logits_mean: entropy of Categorical when restricting support to {chosen action, PASS} on the same logits as collection time.",
+    "update_impl_entropy_mean: entropy of Categorical under ppo_update_from_fragment semantics (hidden/cell_mem reset per-transition + {chosen action, PASS} mask).",
+    "High-level interpretation: if both behaviour entropy and update-time entropy are ~0, collapse is in the actual behaviour policy, not only telemetry."
+  ],
+  "rows": {
+    "BC_init": {
+      "evidence_sha256": "074c261e35d2384baea459be016c5792ebcf1288954d6850237c819058b55505",
+      "checkpoint_json": "experiments\\phase9f_cnn_ranker_v1\\checkpoints\\bc\\model.json",
+      "step_zero_ratio_passed": 3,
+      "step_zero_ratio_total": 32,
+      "step_zero_ratio_pass_rate": 0.09375,
+      "behaviour_entropy_full_legal_mean": 0.6797722216579132,
+      "update_mask_entropy_same_logits_mean": 0.033280658011108244,
+      "update_impl_entropy_mean": 0.10322075337171555,
+      "pass_probability_full_legal_mean": 0.18588456981936474,
+      "update_support_sizes_unique": [
+        1,
+        2
+      ]
+    },
+    "CONTROL_update10": {
+      "evidence_sha256": "22478dd29e252dae5ed3645f952e4642fee30628a079820460913ddb0781792d",
+      "checkpoint_json": "experiments\\phase9f_overnight_ppo\\rl_control\\update_10.json",
+      "step_zero_ratio_passed": 2,
+      "step_zero_ratio_total": 32,
+      "step_zero_ratio_pass_rate": 0.0625,
+      "behaviour_entropy_full_legal_mean": 0.9739006440504454,
+      "update_mask_entropy_same_logits_mean": 0.15679779479978606,
+      "update_impl_entropy_mean": 0.13244669139385223,
+      "pass_probability_full_legal_mean": 0.32485332129363087,
+      "update_support_sizes_unique": [
+        1,
+        2
+      ]
+    },
+    "CONTROL_update50": {
+      "evidence_sha256": "ec6e91423de13f18fbf1bb97112ef8061411b223983ff65ca71e92432e7eb7e6",
+      "checkpoint_json": "experiments\\phase9f_overnight_ppo\\rl_control\\update_50.json",
+      "step_zero_ratio_passed": 32,
+      "step_zero_ratio_total": 32,
+      "step_zero_ratio_pass_rate": 1.0,
+      "behaviour_entropy_full_legal_mean": 0.0001485369349250032,
+      "update_mask_entropy_same_logits_mean": 0.0,
+      "update_impl_entropy_mean": 0.0,
+      "pass_probability_full_legal_mean": 0.9999884366989136,
+      "update_support_sizes_unique": [
+        1
+      ]
+    },
+    "CONTROL_final": {
+      "evidence_sha256": "66f6f019443d69ae971bbbb4b61c51a5cdfe499b988a1c3c8d481a30c48d6941",
+      "checkpoint_json": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_control\\final.json",
+      "step_zero_ratio_passed": 32,
+      "step_zero_ratio_total": 32,
+      "step_zero_ratio_pass_rate": 1.0,
+      "behaviour_entropy_full_legal_mean": 2.1414200562633323e-05,
+      "update_mask_entropy_same_logits_mean": 0.0,
+      "update_impl_entropy_mean": 0.0,
+      "pass_probability_full_legal_mean": null,
+      "update_support_sizes_unique": [
+        1
+      ]
+    },
+    "CURRICULUM_update10": {
+      "evidence_sha256": "9d3788f1de36a527f43c01065cb8ca8f2a4fca294c691e7b547ea55539f437f5",
+      "checkpoint_json": "experiments\\phase9f_overnight_ppo\\rl_curriculum\\update_10.json",
+      "step_zero_ratio_passed": 2,
+      "step_zero_ratio_total": 32,
+      "step_zero_ratio_pass_rate": 0.0625,
+      "behaviour_entropy_full_legal_mean": 1.0022383886462194,
+      "update_mask_entropy_same_logits_mean": 0.190099176048534,
+      "update_impl_entropy_mean": 0.15878717601299286,
+      "pass_probability_full_legal_mean": 0.31119008433961426,
+      "update_support_sizes_unique": [
+        1,
+        2
+      ]
+    },
+    "CURRICULUM_final": {
+      "evidence_sha256": "f5f26cc767ae90983940ffd0a0ff8eb8c43afc046436a27be3970c3dfbdbdded",
+      "checkpoint_json": "experiments\\phase9f_overnight_ppo\\rl_curriculum\\final.json",
+      "step_zero_ratio_passed": 32,
+      "step_zero_ratio_total": 32,
+      "step_zero_ratio_pass_rate": 1.0,
+      "behaviour_entropy_full_legal_mean": 1.005217286016498e-09,
+      "update_mask_entropy_same_logits_mean": 0.0,
+      "update_impl_entropy_mean": 0.0,
+      "pass_probability_full_legal_mean": 1.0,
+      "update_support_sizes_unique": [
+        1
+      ]
+    }
+  }
+}

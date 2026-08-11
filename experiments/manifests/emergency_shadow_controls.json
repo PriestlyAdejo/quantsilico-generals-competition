@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_SHADOW_CONTROLS",
+  "status": "CONTROL_REPLAY_NOT_PROMISING",
+  "eligible_modes": [
+    "CONTROL_OFF",
+    "STATIC_RISK_A",
+    "STATIC_RISK_B"
+  ],
+  "policy_benefit": {
+    "status": "NOT_EVALUATED",
+    "requires": "CONTROL_ON vs CONTROL_OFF under paired seeds/seats/opponents",
+    "note": "Frozen replay must not be interpreted as CONTROL_POLICY_BENEFIT_PASS"
+  },
+  "mpc": "MPC_DEFERRED_DEADLINE_PROTECTION",
+  "barrier": "research_only_after_hunter_draw_win; non_blocking",
+  "top_k_replay": [
+    {
+      "features": {
+        "turn": 173,
+        "wdl": "loss",
+        "my_army": 0,
+        "opp_army": 0,
+        "near_general_threat": false,
+        "checkpoint": "ckpt_u1024",
+        "update": 1024
+      },
+      "control_mode": "CONTROL_OFF",
+      "label": "loss",
+      "note": "replay_only"
+    },
+    {
+      "features": {
+        "turn": 192,
+        "wdl": "loss",
+        "my_army": 0,
+        "opp_army": 0,
+        "near_general_threat": false,
+        "checkpoint": "ckpt_u1024",
+        "update": 1024
+      },
+      "control_mode": "CONTROL_OFF",
+      "label": "loss",
+      "note": "replay_only"
+    }
+  ],
+  "intervention_rate": 0.0,
+  "updated_at": "2026-08-07T06:04:17.572910+00:00"
+}

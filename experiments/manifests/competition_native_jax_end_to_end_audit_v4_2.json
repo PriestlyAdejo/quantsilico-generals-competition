@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_END_TO_END_AUDIT_V4_2",
+  "architecture_classification": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+  "reset_path": "device_competition_reset_pool_reused",
+  "gae_device_resident_batched": true,
+  "ppo_semantics": "FULL_BATCH_ONE_OPTAX_UPDATE_CANONICAL",
+  "in_scan_map_generation": false,
+  "host_bound_collector": false,
+  "disposition": "END_TO_END_JAX_SYSTEMS_PROMOTION_READY",
+  "blocker": null,
+  "selected_config": {
+    "num_envs": 32,
+    "rollout_len": 32,
+    "reset_pool_size": 4096
+  },
+  "valid_learning_tps": 189.70620799032835,
+  "lineage": {
+    "env_semantics_hash": "9e3f9eb94b7b64a6863307bbe66d5403f6d493aaa7c28ed59655ed73a3062253",
+    "env_implementation_hash": "2385672e3b9f51cc049353397821bda28def7141b6d124b92377290d3a9c306c",
+    "learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+    "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+    "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "PERSISTENT_ACTOR_GATE",
+  "decision": "PASS",
+  "created_at": "2026-08-05T00:42:45.029784+00:00",
+  "report_summary": {
+    "updates": 4,
+    "final_policy_version": 4,
+    "synchronous_ppo": true,
+    "actor_meta": {
+      "actor_id": "actor0",
+      "episode_id": "actor0-ep0-seed42",
+      "episode_index": 0,
+      "turn": 128,
+      "map_seed": 42,
+      "h": 18,
+      "w": 19,
+      "learner_seat": 0,
+      "opponent_id": "pass",
+      "policy_version": 4,
+      "completed_games": 0,
+      "action_history_len": 128,
+      "state_hash": "ef5340d02b26719f",
+      "checkpoint_resume_mode": "LIVE_ONLY",
+      "belief_present": true,
+      "opp_state_present": false
+    },
+    "elapsed_s": 32.885551600003964
+  },
+  "CHUNK_CREDIT_CONTINUITY_GATE": "PASS",
+  "EPISODE_RESUME_GATE": "PARTIAL_WITH_EPISODE_BOUNDARY_FALLBACK",
+  "POLICY_FRESHNESS_GATE": "PASS"
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_MEANINGFUL_TRAINING_PROMOTION_GATE",
+  "disposition": "END_TO_END_JAX_CORRECT_BUT_TOO_SLOW",
+  "measured_tps": 9.510967309770074,
+  "min_tps": 20.0,
+  "eligible_for_new_short_proposal": false,
+  "overnight_training_authorized": false,
+  "automatic_upload_authorized": false,
+  "phase_10_execution_authorized": false
+}

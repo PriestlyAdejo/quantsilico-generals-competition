@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_END_TO_END_AUDIT",
+  "classification": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+  "checks": {
+    "uses_lax_scan": true,
+    "no_python_timestep_for_in_collect": true,
+    "uses_forward_batch": true,
+    "uses_official_mit_primitives": true,
+    "no_numpy_in_env_step": true,
+    "no_pure_callback": true,
+    "architecture_constant": true,
+    "superseded_marked": true,
+    "forward_batch_jaxpr_eqns": 1
+  },
+  "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+  "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT"
+}

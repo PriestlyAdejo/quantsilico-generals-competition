@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_THROUGHPUT_LANE",
+  "created_at": "2026-08-05T13:40:00+00:00",
+  "status": "NON_BLOCKING_ACTIVE_DOCS_ONLY",
+  "gates_competition_track": false,
+  "PARALLEL_WORK_ISOLATION_GATE": {
+    "pause_during_competitive_measurements": true,
+    "pause_targets": [
+      "CPU qualification",
+      "memory qualification",
+      "package latency tests",
+      "behavioural timing tests",
+      "Stage 3 paired evaluation"
+    ],
+    "note": "Throughput/PPO processes must be paused while Stage 3 runs"
+  },
+  "target": {
+    "valid_ppo_learning_transitions_per_second_min": 100
+  },
+  "current_evidence": {
+    "candidate_c_smoke_tps": 4.007856940122751,
+    "label": "valid_ppo_learning_transitions_per_second_after_semantics_repair",
+    "competitive_claim": false
+  },
+  "next_work": [
+    "vectorised environment",
+    "batched policy inference",
+    "reduced JAX/PyTorch synchronisation"
+  ],
+  "forbidden": [
+    "meaningful PPO campaign before Tier-1",
+    "presenting Candidate C smoke as competitively trained"
+  ]
+}

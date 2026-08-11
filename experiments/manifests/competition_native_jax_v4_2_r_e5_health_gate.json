@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_2_R_E5_HEALTH_GATE",
+  "disposition": "R_E5_LEARNING_SIGNAL_INCONCLUSIVE_BUT_SYSTEM_HEALTHY",
+  "gate": "R_E5_HEALTH_PASS",
+  "proceed": true,
+  "learning_signal": "INCONCLUSIVE_SHORT_SMOKE",
+  "checks": {
+    "status_completed": true,
+    "transitions_ge_100k": true,
+    "updates_positive": true,
+    "operational_tps_positive": true,
+    "lineage_matches_selected": true,
+    "jax_gpu_used": true,
+    "metrics_finite": true,
+    "ratio_near_one": true,
+    "entropy_positive": true,
+    "checkpoints_recorded": true,
+    "no_optimiser_state_expected": true
+  },
+  "smoke_manifest": "experiments/manifests/competition_native_jax_v4_2_smoke_r_e5.json",
+  "operational_smoke_tps": 135.95291823126684,
+  "selected_env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "updated_at": "2026-08-06T19:00:59.771124+00:00"
+}

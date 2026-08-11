@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "kind": "ACTION_CHANGING_CONTROL_EVIDENCE_GATE",
+  "created_at": "2026-08-05T12:26:03.462267+00:00",
+  "gate_status": "NOT_SATISFIED",
+  "required": [
+    "frozen_baseline_identity",
+    "failure_reproduced_local_or_public",
+    "affected_metric_defined",
+    "baseline_failure_rate_measured",
+    "controller_targets_that_failure",
+    "paired_evaluation_seeds_frozen"
+  ],
+  "satisfied": {
+    "frozen_baseline_identity": false,
+    "failure_reproduced_local_or_public": false,
+    "affected_metric_defined": false,
+    "baseline_failure_rate_measured": false,
+    "controller_targets_that_failure": false,
+    "paired_evaluation_seeds_frozen": false
+  },
+  "allowed_action_changing_modes": [],
+  "note": "Do not implement STATIC_RISK / PI / BARRIER / MPC that change actions until this gate PASSes."
+}

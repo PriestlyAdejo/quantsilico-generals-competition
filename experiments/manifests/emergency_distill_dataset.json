@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_DISTILL_DATASET",
+  "path": "/home/pries/quantsilico-runtime/emergency_rolling_v1/distill/dataset_stage_b/sequences.npz",
+  "n_sequences": 15,
+  "n_states_approx": 420,
+  "bytes": 79042,
+  "updated_at": "2026-08-07T05:39:19.915201+00:00",
+  "teacher_checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1280",
+  "teacher_update": 1280,
+  "partial": false,
+  "elapsed_s": 702.7665942219992,
+  "note": "ultra_fast self-play NumPy-annotated Stage B"
+}

@@ -1,0 +1,13 @@
+{
+  "candidate": "heuristic_v0",
+  "package_path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\submission\\packages\\heuristic_v0_packaged.zip",
+  "sha256": "8c2594561b9f3a5968b86d75c95a399f71f18f137f39cf7ba20228c0abc029dd",
+  "zip_size": 66957,
+  "unpacked_size": 62695,
+  "file_count": 32,
+  "run_sh_present": true,
+  "status": "PACKAGED",
+  "notes": [
+    "UPLOAD_READY requires Linux parity gate"
+  ]
+}

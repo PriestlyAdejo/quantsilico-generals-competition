@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_READONLY_DASHBOARD",
+  "programme": "RUNNING_EMERGENCY_PPO",
+  "ppo": {
+    "pid": 554,
+    "updates": null,
+    "transitions": null,
+    "session_tps": null,
+    "learning_signal": "WEAK_CONTINUE"
+  },
+  "deadline_gate": "DEADLINE_UNRESOLVED_KEEP_ORIGINAL_HARD_END",
+  "sprint_end_at": "2026-08-07T10:21:06.079517+00:00",
+  "experiments_stop_at": "2026-08-07T08:21:06.079517+00:00",
+  "gpu_owner": "PPO_TRAINER",
+  "distill": {
+    "route": "DISTILLATION_MINIMAL_ROUTE_READY",
+    "sequence_contract": true,
+    "teacher": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1280"
+  },
+  "canary": {
+    "n_evaluated": 1,
+    "pending": [],
+    "latest": "ckpt_u1024",
+    "latest_WDL": {
+      "W": 0,
+      "D": 0,
+      "L": 2
+    }
+  },
+  "learned_package": {
+    "exists": true,
+    "path": "/mnt/c/Users/pries/Documents/Projects/quantsilico-generals-competition/submission/packages/QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1/8650e57623978a4e/package.zip",
+    "sha256": "8650e57623978a4ed437cc80495f9b370c82c895d28481bfef3c2355b630b618",
+    "technical": "NOT_TECHNICALLY_QUALIFIED",
+    "class": "EMERGENCY_LEARNED_PROVISIONAL_PACKAGE_EXISTS"
+  },
+  "shadow_controls": {
+    "status": "CONTROL_REPLAY_NOT_PROMISING",
+    "mpc": "MPC_DEFERRED_DEADLINE_PROTECTION",
+    "policy_benefit": "NOT_EVALUATED"
+  },
+  "upload_pointer": "submission/EMERGENCY_UPLOAD_THIS.md",
+  "updated_at": "2026-08-07T06:05:02.091022+00:00"
+}

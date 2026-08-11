@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_FIRST_LEARNED_HANDOFF",
+  "status": "HANDOFF_COMPLETE_RESUME_RUNNING",
+  "resume_pid": 18947,
+  "resume_log": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/resume_after_distill.log",
+  "package_path": "submission/packages/QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1/8650e57623978a4e/package.zip",
+  "package_sha256": "8650e57623978a4ed437cc80495f9b370c82c895d28481bfef3c2355b630b618",
+  "qualification": "NOT_TECHNICALLY_QUALIFIED_p99",
+  "started_at": "2026-08-07T05:31:48+00:00",
+  "ready_deadline_local": "2026-08-07T06:30:00+01:00",
+  "within_grace": true,
+  "stop_request_at": "2026-08-07T06:31:48+01:00",
+  "cooperative_stop_ckpt": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_final",
+  "cooperative_stop_update": 1350,
+  "exit_reason": "STOP_REQUEST_FILE",
+  "teacher": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1280",
+  "dataset_states_approx": 420,
+  "train": {
+    "device": "cpu:0",
+    "note": "GPU OOM on first attempt after PPO exit; CPU train completed with real teacher-annotated sequences",
+    "steps": 350,
+    "export": "/home/pries/quantsilico-runtime/emergency_rolling_v1/distill/student_v1/student_emb96_v1.npz"
+  },
+  "annotation": "pre_pause_numpy_cpu_teacher_logits",
+  "updated_at": "2026-08-07T05:53:35+00:00"
+}

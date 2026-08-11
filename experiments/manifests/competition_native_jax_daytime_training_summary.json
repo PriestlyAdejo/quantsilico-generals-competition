@@ -1,24 +1,36 @@
 {
   "schema_version": 1,
   "kind": "COMPETITION_NATIVE_JAX_DAYTIME_TRAINING_SUMMARY",
-  "status": "BLOCKED_COMPUTE",
-  "gpu_correctness_cpu_jax": "PASSED",
-  "gpu_correctness_path": "experiments/competition_native_jax/gpu_correctness/gpu_correctness_gate.json",
-  "tiny_training": "NOT_RUN_NO_GPU_JAX_VERIFIED",
-  "smoke_training_jax": "NOT_RUN_NO_GPU_JAX_VERIFIED",
-  "short_day": {
-    "status": "SKIPPED_WITH_REASON",
-    "reason": "BLOCKED_COMPUTE: AWAITING_OPERATOR_ACTION on Ubuntu WSL first-user OOBE; GPU_JAX_VERIFIED=false"
+  "status": "END_TO_END_JAX_CORRECT_BUT_TOO_SLOW",
+  "classifications": [
+    "END_TO_END_COMPETITION_JAX_ROLLOUT",
+    "END_TO_END_JAX_CORRECT_BUT_TOO_SLOW",
+    "SHORT_COMPLETED_RESEARCH_ONLY_HOST_BOUND_LEGACY",
+    "MEDIUM_ABORTED_BY_OPERATOR_ARCHITECTURE_GATE",
+    "NO_MEANINGFUL_TRAINED_CHECKPOINT"
+  ],
+  "legacy_host_bound_tps": [
+    0.1513,
+    0.185
+  ],
+  "e2e_valid_learning_tps": 9.510967309770074,
+  "improvement_vs_baseline_low": 62.86164778433625,
+  "frozen_config_v4": {
+    "num_envs": 32,
+    "rollout_len": 16,
+    "valid_learning_tps": 9.510967309770074,
+    "peak_vram_mib": 5435.0,
+    "host_rss_bytes": 4722585600,
+    "elapsed_s": 107.66517922399998,
+    "compilation_s": 1.662658151999949,
+    "recompile_count": 1,
+    "status": "OK",
+    "improvement_vs_baseline_low": 62.86164778433625,
+    "improvement_vs_baseline_high": 51.41063410686526,
+    "rollout_architecture": "END_TO_END_COMPETITION_JAX_ROLLOUT",
+    "env_implementation_hash": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+    "stable": true
   },
-  "medium_day": {
-    "status": "SKIPPED_WITH_REASON",
-    "reason": "BLOCKED_COMPUTE: short-day gate did not pass"
-  },
-  "raw_vs_ema": "N/A_NO_TRAINED_CHECKPOINT",
-  "selected_base_checkpoint": null,
-  "blocker": "BLOCKED_COMPUTE",
-  "student_feasibility": "STUDENT_SHAPE_FEASIBLE (random weights; not distillation)",
-  "student_feasibility_path": "experiments/manifests/competition_native_jax_early_student_feasibility.json",
-  "deployment_classification": "TEACHER_REQUIRES_STUDENT",
-  "note": "Genuine JAX+Optax core exists on CPU; meaningful daytime train deferred until GPU_JAX_VERIFIED."
+  "resume_r_e_5": false,
+  "updated_at": "2026-08-06T11:08:12.389206+00:00"
 }

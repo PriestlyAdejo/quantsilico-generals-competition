@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_SECOND_DISTILL_DECISION",
+  "status": "SKIPPED_NO_HUNTER_IMPROVEMENT",
+  "requires": "later COMPLETE with first Hunter draw/win or material paired score gain + Stage2 no major regression",
+  "canary_evidence": "ckpt_u1024 EMA Hunter 0-0-2; u1280 canary pending/incomplete at decision time",
+  "package_id_if_run": "QS-P9G-COMPETITION-EMERGENCY-DAY-V2",
+  "cutoff_local": "2026-08-07T08:15:00+01:00",
+  "absolute_latest_local": "2026-08-07T08:45:00+01:00",
+  "updated_at": "2026-08-07T06:05:30+00:00"
+}

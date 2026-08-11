@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_1_SUPERSESSION",
+  "exit_reason": "SUPERSEDED_BY_V4_2_OPERATOR_PROGRAMME",
+  "superseded_by": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+  "resolved_at": "2026-08-06T15:10:00+00:00",
+  "worker_classification": "RUNNING_SCALING",
+  "stop_protocol": {
+    "stop_request_written": true,
+    "stop_request_wait_s": 180,
+    "stop_request_effective": false,
+    "signal": "SIGINT",
+    "sigint_wait_s": 45,
+    "sigterm_used": false,
+    "sigkill_used": false,
+    "linux_bash_pid": 385,
+    "linux_python_pid": 916,
+    "windows_supervisor_pids_alive": false
+  },
+  "post_stop_confirmation": {
+    "v41_trainer_remaining": false,
+    "gpu_util_pct": 11,
+    "gpu_mem_mib": 1270
+  },
+  "owned_jobs_disposition": [
+    {
+      "job_id": "v41_verify",
+      "prior_status": "FAILED",
+      "classification": "ALREADY_COMPLETED",
+      "action": "PRESERVE_NO_TERMINATION"
+    },
+    {
+      "job_id": "v41_verify2",
+      "prior_status": "FAILED",
+      "classification": "ALREADY_COMPLETED",
+      "action": "PRESERVE_NO_TERMINATION"
+    },
+    {
+      "job_id": "v41_pipeline",
+      "prior_status": "FAILED",
+      "classification": "ALREADY_COMPLETED",
+      "action": "PRESERVE_NO_TERMINATION"
+    },
+    {
+      "job_id": "v41_continue",
+      "prior_status": "FAILED",
+      "classification": "RUNNING_SCALING_ORPHAN_WSL",
+      "note": "Windows supervisor marked FAILED but Linux bash/python still running scaling probes; stopped via STOP_REQUEST then SIGINT",
+      "action": "GRACEFUL_STOP_SUPERSEDED"
+    }
+  ],
+  "preserved_artefacts": [
+    "experiments/manifests/competition_native_jax_throughput_ladder_v4.json",
+    "experiments/reports/competition_native_jax_throughput_v4.md",
+    "experiments/manifests/competition_native_jax_end_to_end_audit.json",
+    "experiments/reports/competition_native_jax_end_to_end_audit.md",
+    "experiments/manifests/competition_native_jax_v4_1_profile.json",
+    "experiments/reports/competition_native_jax_v4_1_profile.md",
+    "experiments/manifests/competition_native_jax_v4_1_accepted_changes.json",
+    "experiments/competition_native_jax/v4_1_profile_baseline/",
+    "experiments/competition_native_jax/v4_1_scaling/e32_r16/",
+    "experiments/competition_native_jax/v4_1_scaling/e40_r16/",
+    "experiments/competition_native_jax/v4_1_scaling/e48_r16/"
+  ],
+  "partial_scaling_probes_not_promoted": [
+    {"num_envs": 32, "rollout_len": 16, "valid_learning_tps": 60.342052182682664},
+    {"num_envs": 40, "rollout_len": 16, "valid_learning_tps": 93.77956305480437},
+    {"num_envs": 48, "rollout_len": 16, "valid_learning_tps": 63.79826712892403}
+  ],
+  "promotion_of_partials": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "FIRST_RECOMMENDATION_GATE",
+  "created_at": "2026-08-05T12:28:53.267714+00:00",
+  "gate_status": "PASS",
+  "recommended_public_version": "QS-PUBLIC-V001",
+  "baseline_type": "HEURISTIC",
+  "candidate_a": {
+    "package_id": "QS-P9FU-HEURISTIC-V1",
+    "stable_candidate_id": "QS-P9F-PORTAL-V0",
+    "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+    "zip_path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/submission_recommended/qs_p9fu_heuristic_v1_packaged.zip",
+    "zip_sha256": "898b37b104545fa6217877dd2db2af7c6e8810f41b4ba1f79cc8530b798d558e",
+    "source_commit": "ab7c9c0f541c47300406b8c1ae5932ba698b3973",
+    "linux_status": "RECOMMENDED_FOR_MANUAL_UPLOAD_WITH_EXTERNAL_LINUX_BLOCKER"
+  },
+  "candidate_b": {
+    "classification": "CANDIDATE_B_BLOCKED_RUNTIME",
+    "defect": "hybrid_packages=NONE_YET; BC inference semantics OK but no hybrid package builder wired for upload",
+    "included_in_v001": false
+  },
+  "candidate_c": {
+    "status": "NOT_REQUIRED_FOR_V001",
+    "note": "Do not hold QS-PUBLIC-V001 for Candidate C / PPO repair / throughput."
+  },
+  "upload_policy": {
+    "agent_uploads": false,
+    "user_manual_upload_required": true,
+    "directory": "dist/submission_recommended/"
+  },
+  "next_gate_after_user_upload": "SUBMISSION_UPLOAD_FREEZE_GATE"
+}

@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-05T09:44:14.943899+00:00",
+  "items": [
+    {
+      "path": "plans/phase9f-generated-execution-plan-v2.md",
+      "size": 16282,
+      "sha256": "920bc8e874c2d2c2977c7bedf91eff3aa2851f1bcb2acc97655116a6aba479d5"
+    },
+    {
+      "path": "experiments/manifests/phase9f_generated_plan_v2.json",
+      "size": 1241,
+      "sha256": "adf9cdc9968c85a6f6eb9725162d640435fd25f9588a5b9468f3cf4b445963c1"
+    },
+    {
+      "path": "experiments/manifests/phase9f_autonomous_run_state.json",
+      "size": 3879,
+      "sha256": "6a0466b7e8fee18635df12ffd32e419875375375c7e800e4aac5d21740a0dd44"
+    },
+    {
+      "path": "experiments/manifests/phase9f_overnight_matched_ppo.json",
+      "size": 1093,
+      "sha256": "c3bbbe23b85c0a511f34e3a77d1f4cd502083bd2b8d42bd426dcecf2414b491f"
+    },
+    {
+      "path": "experiments/reports/phase9f_terminal_report.md",
+      "size": 1825,
+      "sha256": "73cd12bc4c29d2454cfc92f9595053d0ebcca81e4c3f97acf8a2b408e722f894"
+    },
+    {
+      "path": "src/generals_bot/training/rollout.py",
+      "size": 8793,
+      "sha256": "6d60b7ff31f10e4d2250e5f0ab37a77e225c817b57ba783eeb80c47d7dff3e4c"
+    },
+    {
+      "path": "src/generals_bot/training/ppo.py",
+      "size": 19739,
+      "sha256": "48eecfc0d2f1f248bc1b9c712584f8c94e076cacbab2073701267bd6f648e482"
+    },
+    {
+      "path": "src/generals_bot/training/actors.py",
+      "size": 14748,
+      "sha256": "e6db534aa21a09b0bb54e71ba999a69ba953612b95da149ef4267eeeb9d67664"
+    },
+    {
+      "path": "scripts/run_phase9f_overnight_ppo.py",
+      "size": 4785,
+      "sha256": "691a52a3df32280d79c810167f78b80ce84f13ef11a639b10e3deb5a5d5338f2"
+    },
+    {
+      "path": "experiments/phase9f_cnn_ranker_v1/checkpoints/bc/model.json",
+      "size": 348,
+      "sha256": "ee70e00bf3883568865615ee6a73e638549f1b71d79439df7030704b103b000e"
+    },
+    {
+      "path": "experiments/phase9f_cnn_ranker_v1/checkpoints/bc/model.safetensors",
+      "size": 905508,
+      "sha256": "4ba41f77a041f6f990f8f11ac5d02dab09e5cc79710c7edf52fd41c80d10f4bf"
+    },
+    {
+      "path": "experiments/phase9f_cnn_ranker_v1/bc_report.json",
+      "size": 3588,
+      "sha256": "4dfdb3f5178947fc05782fa83a43a25473cdaae7206f4e4e1719c3819f5a587d"
+    },
+    {
+      "path": "experiments/phase9f_overnight_ppo/rl_control/overnight_report.json",
+      "size": 54665,
+      "sha256": "dc4fb53b33acb39068807c8faedce21b6378a790b27a8a057ab90d93cc5a5e8d"
+    },
+    {
+      "path": "experiments/phase9f_overnight_ppo/rl_curriculum/overnight_report.json",
+      "size": 47890,
+      "sha256": "4558cd3d3b6678eb351a259aaba8d089d7afdf180dbf2fc2b9cc666a0d7724a2"
+    },
+    {
+      "path": "experiments/phase9f_overnight_ppo/rl_control/final.json",
+      "size": 348,
+      "sha256": "714c391c1797a2cb58cfd767a85e0b13fb9732f7c19a9467dbd8cea24e42c28e"
+    },
+    {
+      "path": "experiments/phase9f_overnight_ppo/rl_curriculum/final.json",
+      "size": 348,
+      "sha256": "714c391c1797a2cb58cfd767a85e0b13fb9732f7c19a9467dbd8cea24e42c28e"
+    },
+    {
+      "path": "experiments/manifests/_phase9f_overnight_ppo.log",
+      "size": 5760,
+      "sha256": "169b8cdcedee6ab27fdc01dcf78cac7ab83f0218b637896bd40aec02a5371ed9"
+    },
+    {
+      "path": "experiments/reports/phase9f_overnight_status.md",
+      "size": 2026,
+      "sha256": "5cf96d4acfca770f7097062458610f9b7959b74846f021a360e447f4d3c88cfa"
+    },
+    {
+      "path": "experiments/manifests/phase9f_cnn_ranker_vertical_slice.json",
+      "size": 761,
+      "sha256": "fe2433a2e1bf58f93cdaf028c88acbea1774ac8484962326c1765b25d4cd1471"
+    }
+  ]
+}

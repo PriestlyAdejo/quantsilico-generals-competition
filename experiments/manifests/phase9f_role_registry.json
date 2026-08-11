@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_ROLE_REGISTRY",
+  "created_at": "2026-08-05T06:17:33.240934+00:00",
+  "restored_at": "2026-08-05T12:08:50.025699+00:00",
+  "restoration_note": "Restored historical Phase 9F portal roles with canonical 'heuristic_v2f_plus_planner_terminal_fix'; neural research role kept as best_learned_research; 9F-R migration in phase9fr_role_registry.json",
+  "roles": {
+    "portal_current_verified": {
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_id": "QS-P9F-PORTAL-V0",
+      "qualification_level": "WINDOWS_PROTOCOL_SMOKE_PASS",
+      "official_upload_ready": false
+    },
+    "best_overall": {
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_id": "QS-P9F-PORTAL-V0",
+      "alias_of": "QS-P9F-PORTAL-V0",
+      "label": "PROVISIONAL_BEST_OVERALL_AMONG_TESTED_CANDIDATES",
+      "qualification_level": "WINDOWS_PROTOCOL_SMOKE_PASS",
+      "official_upload_ready": false,
+      "note": "No neural package completed Linux/CPU/tournament qualification before deadline; portal remains provisional best among packaged candidates. RL evidence exists as research checkpoints only."
+    },
+    "safe_fallback": {
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_id": "QS-P9F-PORTAL-V0",
+      "alias_of": "QS-P9F-PORTAL-V0",
+      "qualification_level": "WINDOWS_PROTOCOL_SMOKE_PASS",
+      "official_upload_ready": false
+    },
+    "best_deterministic": {
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_id": "QS-P9F-PORTAL-V0",
+      "alias_of": "QS-P9F-PORTAL-V0",
+      "qualification_level": "WINDOWS_PROTOCOL_SMOKE_PASS",
+      "official_upload_ready": false
+    },
+    "best_learned_research": {
+      "candidate_id": "QS-P9F-CNN-PPO-CONTROL-V1",
+      "path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_control\\final.json",
+      "qualification_level": "RESEARCH_ONLY",
+      "official_upload_ready": false,
+      "label": "PROVISIONAL_BEST_LEARNED_RESEARCH_ONLY",
+      "trainer_status": "TRAINER_SEMANTICS_INVALID",
+      "note": "Historical Phase 9F key name. Observational overnight PPO only; never continue training."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_EXACT_RESUME_LAUNCH",
+  "parent": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_final",
+  "parent_update": 1350,
+  "parent_transitions": 1382400,
+  "selected": {
+    "num_envs": 32,
+    "rollout_len": 32,
+    "reset_pool_size": 4096
+  },
+  "max_additional_transitions": 6000000,
+  "experiments_stop_at": "2026-08-07T08:21:06.079517+00:00",
+  "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "launched_at": "2026-08-07T06:09:13.801753+00:00",
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/home/pries/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  }
+}

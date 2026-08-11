@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "kind": "RESOURCE_ISOLATION_GATE",
+  "created_at": "2026-08-05T12:26:03.831017+00:00",
+  "dashboard_polling_stopped": "OPERATOR_CONFIRM_REQUIRED",
+  "replay_collectors_stopped": "OPERATOR_CONFIRM_REQUIRED",
+  "no_concurrent_trainer": true,
+  "no_concurrent_evaluator": true,
+  "active_processes_sample": [
+    {
+      "pid": 2800,
+      "name": "node.exe",
+      "cpu_percent": 0.0
+    },
+    {
+      "pid": 15156,
+      "name": "python.exe",
+      "cpu_percent": 0.0
+    },
+    {
+      "pid": 17472,
+      "name": "node.exe",
+      "cpu_percent": 0.0
+    },
+    {
+      "pid": 20056,
+      "name": "python.exe",
+      "cpu_percent": 0.0
+    },
+    {
+      "pid": 25352,
+      "name": "python.exe",
+      "cpu_percent": 0.0
+    },
+    {
+      "pid": 29344,
+      "name": "python.exe",
+      "cpu_percent": 0.0
+    }
+  ],
+  "gate_status": "PASS_WITH_OPERATOR_CONFIRMATION",
+  "note": "Stop dashboard polling and replay collectors before latency/SPS benches."
+}

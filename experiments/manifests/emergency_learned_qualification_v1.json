@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_LEARNED_QUALIFICATION",
+  "package_id": "QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1",
+  "EMERGENCY_LEARNED_PROVISIONAL_PACKAGE_EXISTS": true,
+  "TECHNICALLY_QUALIFIED": false,
+  "COMPETITIVELY_UNCONFIRMED": true,
+  "MANUAL_UPLOAD_ONLY": true,
+  "failed_gate": "cpu_p99_le_100ms",
+  "latency_bench_linux_local": {
+    "p50_ms": 75.61,
+    "p99_ms": 314.01,
+    "max_ms": 560.6,
+    "n": 100,
+    "note": "Measured under concurrent PPO resume compile contention; p50 under 100ms but p99 spikes fail hard gate"
+  },
+  "structural_functional": "PASS",
+  "package_path": "submission/packages/QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1/8650e57623978a4e/package.zip",
+  "sha256": "8650e57623978a4ed437cc80495f9b370c82c895d28481bfef3c2355b630b618",
+  "updated_at": "2026-08-07T06:03:30+00:00"
+}

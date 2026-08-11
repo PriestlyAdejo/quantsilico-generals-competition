@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_2_FROZEN_BASELINE",
+  "classification": "SYSTEMS_PROMOTION_READY_STAGE_3B_PASS",
+  "selected": {
+    "num_envs": 32,
+    "rollout_len": 32,
+    "reset_pool_size": 4096
+  },
+  "clean_benchmark_tps": 189.70620799032835,
+  "operational_smoke_tps": 135.95291823126684,
+  "restore_threshold_tps": 122.35762640814015,
+  "ladder_env_implementation_hash": "2385672e3b9f51cc049353397821bda28def7141b6d124b92377290d3a9c306c",
+  "smoke_env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "selected_env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "selected_env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+  "selected_learner_implementation_hash": "ada67e1bc156accf0780f1613f900a4f82c8fedbfe31d5fade98db0d954b7554",
+  "note": "Rollback and budgets use operational_smoke_tps / restore_threshold_tps, never clean_benchmark_tps",
+  "smoke_manifest": "experiments/manifests/competition_native_jax_v4_2_smoke_r_e5.json",
+  "ladder_manifest": "experiments/manifests/competition_native_jax_throughput_ladder_v4_2.json",
+  "systems_gate": "experiments/manifests/competition_native_jax_v4_2_systems_promotion_gate.json",
+  "source_snapshot": "experiments/manifests/competition_native_jax_v4_3_source_snapshot.json",
+  "stage3b": "experiments/manifests/competition_native_jax_v4_2_stage3b_final.json"
+}

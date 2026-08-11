@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_1_SCALING_LADDER_PARTIAL",
+  "status": "PARTIAL_SUPERSEDED_NOT_PROMOTED",
+  "exit_reason": "SUPERSEDED_BY_V4_2_OPERATOR_PROGRAMME",
+  "parent_v4_tps": 9.510967309770074,
+  "gae_batched": true,
+  "post_warmup_timing": true,
+  "candidates": [
+    {
+      "num_envs": 32,
+      "rollout_len": 16,
+      "valid_learning_tps": 60.342052182682664,
+      "peak_vram_mib": 5488.0,
+      "elapsed_s": 25.45488501699998,
+      "compilation_s": 13.240144176000001,
+      "status": "OK",
+      "stable": true,
+      "source": "experiments/competition_native_jax/v4_1_scaling/e32_r16/probe_v41_scale_report.json"
+    },
+    {
+      "num_envs": 40,
+      "rollout_len": 16,
+      "valid_learning_tps": 93.77956305480437,
+      "peak_vram_mib": 5461.0,
+      "elapsed_s": 20.473543887999995,
+      "compilation_s": 0.2902787099999955,
+      "status": "OK",
+      "stable": true,
+      "source": "experiments/competition_native_jax/v4_1_scaling/e40_r16/probe_v41_scale_report.json"
+    },
+    {
+      "num_envs": 48,
+      "rollout_len": 16,
+      "valid_learning_tps": 63.79826712892403,
+      "peak_vram_mib": 5464.0,
+      "elapsed_s": 36.113833552000074,
+      "compilation_s": 0.28504735500001743,
+      "status": "OK",
+      "stable": true,
+      "source": "experiments/competition_native_jax/v4_1_scaling/e48_r16/probe_v41_scale_report.json"
+    },
+    {
+      "num_envs": 32,
+      "rollout_len": 32,
+      "status": "ABORTED_SUPERSEDED",
+      "stable": false,
+      "source": "experiments/competition_native_jax/v4_1_scaling/e32_r32/"
+    }
+  ],
+  "best_partial": {
+    "num_envs": 40,
+    "rollout_len": 16,
+    "valid_learning_tps": 93.77956305480437
+  },
+  "note": "Partial V4.1 scaling preserved as parent evidence only; not a clean promotion ladder."
+}

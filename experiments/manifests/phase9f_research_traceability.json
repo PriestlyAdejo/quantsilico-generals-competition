@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_RESEARCH_TRACEABILITY",
+  "created_at": "2026-08-05T00:32:41.439830+00:00",
+  "doc": "docs/research/phase9f_research_traceability.md",
+  "families": [
+    "ALPHASTAR_SCC",
+    "R2D2",
+    "IMPALA",
+    "OPTION_CRITIC",
+    "DAGGER",
+    "REVERSE_CURRICULUM",
+    "POTENTIAL_BASED_SHAPING",
+    "INVALID_ACTION_MASKING",
+    "ALPHAGO_BOUNDED_SEARCH",
+    "OPENAI_FIVE_PPO",
+    "EXPLORATION_BOUND",
+    "IMPERFECT_INFO_BOUND"
+  ]
+}

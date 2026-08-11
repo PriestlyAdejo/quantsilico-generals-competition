@@ -1,0 +1,9 @@
+# Phase 9F-R preflight
+
+{
+  "schema_version": 1,
+  "created_at": "2026-08-05T09:44:14.943899+00:00",
+  "git_dirty": true,
+  "live_trainer_processes_found": false,
+  "plan_v2_sha256_expected": "cafe3f47"
+}

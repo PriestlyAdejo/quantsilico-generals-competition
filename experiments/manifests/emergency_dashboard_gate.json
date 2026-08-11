@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "DASHBOARD_EMERGENCY_MONITORING",
+  "status": "DASHBOARD_EMERGENCY_MONITORING_PASS",
+  "api_training_emergency_fields": true,
+  "latest_metrics_present": true,
+  "read_only": true,
+  "launch_enabled": false,
+  "combined_ops_delta_tps_cap": 0.05,
+  "dashboard_delta_tps_cap": 0.03,
+  "note": "Observer serves latest+bounded chart only; CPU ops use CUDA_VISIBLE_DEVICES=''.",
+  "updated_at": "2026-08-07T02:52:54.842571+00:00"
+}

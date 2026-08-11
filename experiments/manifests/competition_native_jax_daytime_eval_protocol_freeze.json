@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "kind": "DAYTIME_EVAL_PROTOCOL_FREEZE",
+  "evaluation_protocol_id": "competition_native_jax_daytime_evaluation_protocol_v2",
+  "evaluation_protocol_path": "experiments/manifests/competition_native_jax_daytime_evaluation_protocol_v2.json",
+  "evaluation_protocol_sha256": "213556383f0795362665f42abe649066f14b6f35d028fa0e5766bc6a0582c722",
+  "immutable_after_r_e6_start": true,
+  "frozen_at": "2026-08-06T20:27:52.852299+00:00"
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-05T10:11:24.723094+00:00",
+  "kind": "PHASE9FR_CHECKPOINT_REGISTRY",
+  "checkpoints": {
+    "QS-P9F-CNN-PPO-CONTROL-V1__final": {
+      "candidate_id": "QS-P9F-CNN-PPO-CONTROL-V1",
+      "kind": "checkpoint",
+      "paths": {
+        "config_json": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_control\\final.json",
+        "weights_safetensors": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_control\\final.safetensors"
+      },
+      "hashes": {
+        "config_json_sha256": "714c391c1797a2cb58cfd767a85e0b13fb9732f7c19a9467dbd8cea24e42c28e",
+        "weights_sha256": "c29083d08531fe4ddf7f425d1ebbdd14f60d244dcb62a315f75c488aa149ffc3"
+      }
+    },
+    "QS-P9F-CNN-PPO-CURRICULUM-V1__final": {
+      "candidate_id": "QS-P9F-CNN-PPO-CURRICULUM-V1",
+      "kind": "checkpoint",
+      "paths": {
+        "config_json": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_curriculum\\final.json",
+        "weights_safetensors": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_curriculum\\final.safetensors"
+      },
+      "hashes": {
+        "config_json_sha256": "714c391c1797a2cb58cfd767a85e0b13fb9732f7c19a9467dbd8cea24e42c28e",
+        "weights_sha256": "0542168fb0c8b7eb3ad010a5634809477b6f7574800854c76efb9c18116fd1ac"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FU_FIRST_RECOMMENDATION_CORRECTION",
+  "created_at": "2026-08-05T13:23:35.514855+00:00",
+  "original_artefact_path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/manifests/phase9fs_first_recommendation_gate.json",
+  "original_sha256": "9deda6c25b49148af909a5e89155ca1d65ecb8841709c486b7e3f25d5d152cdb",
+  "original_gate": "PASS",
+  "original_meaning": "technically packageable and manually uploadable",
+  "incorrect_inference": "competitively credible",
+  "corrected_interpretation": "technical packaging PASS did not establish strategic strength",
+  "superseding_status": "TECHNICALLY_QUALIFIED_STRATEGICALLY_WEAK_BASELINE",
+  "superseding_artefacts": [
+    "experiments/manifests/phase9fu_v001_reclassification.json",
+    "experiments/reports/phase9fu_v001_strategic_failure.md",
+    "experiments/manifests/phase9fu_first_recommendation_correction.json"
+  ],
+  "correction_reason": "Live portal package is the preppo ZIP (e1237f77\u2026), not the later 898b\u2026 Windows repackage; policy hierarchy causes premature GENERAL_HUNT.",
+  "historical_gate_preserved": true,
+  "note": "Do not overwrite phase9fs_first_recommendation_gate.json"
+}

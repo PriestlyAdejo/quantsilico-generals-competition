@@ -1,0 +1,23 @@
+{
+  "authorised_at": "2026-08-07T02:21:06.079517+00:00",
+  "authorised_at_local": "2026-08-07T03:21:06.079548+01:00",
+  "sprint_end_at": "2026-08-07T10:21:06.079517+00:00",
+  "last_second_distillation_start_at": "2026-08-07T07:21:06.079517+00:00",
+  "late_second_distillation_latest_start_at": "2026-08-07T07:36:06.079517+00:00",
+  "experiments_stop_at": "2026-08-07T08:21:06.079517+00:00",
+  "qualification_only_at": "2026-08-07T09:21:06.079517+00:00",
+  "manual_upload_deadline": "2026-08-07T10:21:06.079517+00:00",
+  "monotonic_authorised_s": 76.431009229,
+  "sprint_seconds": 28800,
+  "experiments_stop_monotonic_deadline_s": 21676.431009229,
+  "qualification_only_monotonic_deadline_s": 25276.431009229,
+  "schedule_amendment": {
+    "attempted_noon_extension": false,
+    "gate": "EMERGENCY_DEADLINE_RESOLUTION_GATE",
+    "gate_status": "DEADLINE_UNRESOLVED_KEEP_ORIGINAL_HARD_END",
+    "note": "Original 8h sprint deadlines retained"
+  },
+  "first_learned_distillation_ready_deadline_local": "2026-08-07T06:30:00+01:00",
+  "first_learned_handoff_grace_minutes": 10,
+  "mpc": "MPC_DEFERRED_DEADLINE_PROTECTION"
+}

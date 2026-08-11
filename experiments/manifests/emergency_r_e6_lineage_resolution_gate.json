@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_R_E6_LINEAGE_RESOLUTION_GATE",
+  "status": "PASSED",
+  "expected_parent_learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "ckpt_final_learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "r_e6_report_learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "current_worktree_learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "current_lineage": {
+    "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+    "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+    "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+    "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+    "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION"
+  },
+  "ckpt_update": 420,
+  "ckpt_transitions": 430080,
+  "checkpoint_roundtrip_status": "CHECKPOINT_EXACT_CONTINUATION_PASS",
+  "parent_identity_selected": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "ada67_note": "Stage-0 daytime_runtime_selected may still list ada67\u2026; R-E.6 artefacts and current train_jax hash must match 2b10\u2026",
+  "updated_at": "2026-08-07T02:21:06.079517+00:00"
+}

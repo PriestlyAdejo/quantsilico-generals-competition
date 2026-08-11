@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "SUBMISSION_CANDIDATE_REGISTRY",
+  "created_at": "2026-08-05T13:23:35.514855+00:00",
+  "candidates": {
+    "heuristic_v2f_plus_planner_terminal_fix": {
+      "stable_candidate_id": "QS-P9F-PORTAL-V0",
+      "live_public_version": "QS-PUBLIC-V001",
+      "competitive_status": "TECHNICALLY_QUALIFIED_STRATEGICALLY_WEAK_BASELINE"
+    }
+  }
+}

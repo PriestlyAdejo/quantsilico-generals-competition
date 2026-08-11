@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "FINAL_EMERGENCY_PACKAGE_SELECTION_GATE",
+  "status": "PASSED",
+  "final_status": "EMERGENCY_BASELINE_FALLBACK_PACKAGE_EXISTS",
+  "selected": {
+    "class": "EMERGENCY_BASELINE_FALLBACK",
+    "package_zip": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+    "package_sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "cpu_p99": null,
+    "canary_score": null,
+    "faults": [],
+    "established": true,
+    "already_submitted": true,
+    "NOT_A_V4_3_LEARNED_CANDIDATE": true,
+    "selection_reason": "No stronger learned/controlled evidence; retain established fault-free fallback (not preferred merely for being older \u2014 learned was not demonstrably better)."
+  },
+  "rejected": [],
+  "all_candidates": [
+    {
+      "class": "EMERGENCY_BASELINE_FALLBACK",
+      "package_zip": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+      "package_sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+      "cpu_p99": null,
+      "canary_score": null,
+      "faults": [],
+      "established": true,
+      "already_submitted": true,
+      "NOT_A_V4_3_LEARNED_CANDIDATE": true
+    }
+  ],
+  "updated_at": "2026-08-07T09:21:16.988626+00:00"
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_HOT_PATH_PROFILE",
+  "num_envs": 8,
+  "times_s": {
+    "env_step_batch_compile_s": 14.645397480999975,
+    "env_step_batch_20_s": 0.10024470100000826,
+    "env_transition_per_env_ms": 0.6265293812500516,
+    "obs_mask_batch_10_s": 2.885524027000031,
+    "obs_mask_per_env_ms": 36.069050337500386,
+    "policy_forward_single_compile_s": 50.468532337,
+    "policy_forward_single_20_s": 35.58912264999998,
+    "policy_forward_batch_compile_s": 50.60160466100001,
+    "policy_forward_batch_20_s": 0.17138049800007593,
+    "policy_batch_speedup_vs_naive": 1661.291596899629,
+    "full_rollout_2steps_s": 264.553866362,
+    "full_rollout_8steps_s": 40.963971636,
+    "full_rollout_tps_estimate": 1.5623485087992655
+  },
+  "approximate_shares_pct": {
+    "env_step_share_pct": 0.09788572445149446,
+    "obs_mask_share_pct": 5.635242700859937,
+    "policy_batch_share_pct": 0.16734754092980883
+  },
+  "rollout_architecture": "END_TO_END_OFFICIAL_JAX_ROLLOUT",
+  "baseline_valid_tps": [
+    0.1513,
+    0.185
+  ],
+  "notes": [
+    "Shares extrapolated from microbenchmarks onto full_rollout_8steps wall time",
+    "Obs/mask still host Python loop over envs calling official get_observation",
+    "Env step and policy forward are jax.vmap+jit batched"
+  ]
+}

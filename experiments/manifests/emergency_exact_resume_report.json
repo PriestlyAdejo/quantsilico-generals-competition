@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_EXACT_RESUME_TRAIN",
+  "status": "COMPLETED",
+  "exit_reason": "EXPERIMENTS_STOP_AT",
+  "start_updates": 1350,
+  "start_transitions": 1382400,
+  "updates": 1524,
+  "transitions": 1560576,
+  "session_transitions": 178176,
+  "elapsed_s": 7924.376385774001,
+  "measured_tps": 22.48454532269127,
+  "peak_vram_mib": 7496.0,
+  "host_rss_bytes": 2597027840,
+  "final_checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_final",
+  "checkpoints": [
+    "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1351",
+    "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_final"
+  ],
+  "last_metrics": {
+    "entropy": 2.1350903511047363,
+    "pg": -5.28843713709648e-07,
+    "ratio": 0.9999948740005493,
+    "vloss": 2.351217269897461,
+    "loss": 1.1542572975158691
+  },
+  "device": {
+    "jax_version": "0.11.0",
+    "backend": "gpu",
+    "devices": [
+      "cuda:0"
+    ],
+    "jax_gpu": true,
+    "jax_compilation_cache_dir": "/home/pries/quantsilico-runtime/jax_cache",
+    "jaxlib_version": "0.11.0"
+  },
+  "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+  "env_implementation_hash": "4d8660fde2da633629b3bf6f40cb3d313a96bd3c30054571236ace5e6d985353",
+  "learner_implementation_hash": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2",
+  "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe",
+  "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+  "updated_at": "2026-08-07T08:21:18.268122+00:00"
+}

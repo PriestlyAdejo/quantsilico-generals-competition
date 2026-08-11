@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "R_E6_LAUNCH_MANIFEST",
+  "parent_class": "R_E6_PARENT_COMPATIBLE_COLD_RESTART",
+  "selected": {
+    "num_envs": 32,
+    "rollout_len": 32,
+    "reset_pool_size": 4096
+  },
+  "max_complete_updates": 609,
+  "transition_budget": 623616,
+  "max_seconds": 5400.0,
+  "evaluation_protocol_id": "competition_native_jax_daytime_evaluation_protocol_v2",
+  "evaluation_protocol_sha256": "213556383f0795362665f42abe649066f14b6f35d028fa0e5766bc6a0582c722",
+  "seed": 0,
+  "launched_at": "2026-08-06T20:39:05.047706+00:00",
+  "overnight_execution_authorized": false,
+  "portal_upload_authorized": false
+}

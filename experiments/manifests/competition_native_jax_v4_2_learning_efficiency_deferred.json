@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_2_LEARNING_EFFICIENCY_STATUS",
+  "performance_programme": "AVERAGEJOE_STYLE_LEARNING_EFFICIENCY_V4_2",
+  "status": "DEFERRED_PENDING_SYSTEMS_OUTCOME",
+  "rule": "Run only if systems-only candidate misses throughput gate, or operator separately authorises. Do not delay R-E.5 when SYSTEMS_PROMOTION_READY.",
+  "experiments_preregistered": [
+    {"id": "ppo_epochs_one", "status": "NOT_STARTED"},
+    {"id": "adv_retention_top_50", "status": "NOT_STARTED"},
+    {"id": "adv_retention_top_25", "status": "NOT_STARTED"}
+  ]
+}

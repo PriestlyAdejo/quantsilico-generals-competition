@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_PPO_LEARNING_SIGNAL",
+  "latest_class": "WEAK_CONTINUE",
+  "policy": "never_stop_for_WEAK_CONTINUE_or_POSSIBLE_STAGNATION; only NUMERICAL_FAILURE stops",
+  "classifications": [
+    {
+      "update": 1350,
+      "class": "WEAK_CONTINUE",
+      "n_rows": 1
+    }
+  ],
+  "n_metric_rows": 3,
+  "note": "Attached on next cooperative resume; does not restart PID for telemetry alone.",
+  "updated_at": "2026-08-07T06:04:19.325099+00:00"
+}

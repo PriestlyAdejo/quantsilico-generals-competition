@@ -10,9 +10,22 @@
       "path_in_repo": "third_party/generals-bots",
       "licence_path": "third_party/generals-bots/LICENSE",
       "licence_hash": "c616dbd4408af7175ffd6d0a395ec8336bb4472b3c53624fe8f39d3abd9f69e3",
-      "retrieval_note": "submodule pin at audit time",
+      "retrieval_note": "submodule pin; MIT JAX primitives reused in E2E hot path when functional",
       "vendored_into_src": false,
-      "implementation_independent": true
+      "hot_path_reuse_authorized": true,
+      "implementation_independent": false,
+      "files_reused": [
+        "generals/core/game.py",
+        "generals/core/action.py",
+        "generals/core/observation.py",
+        "generals/core/env.py",
+        "generals/core/grid.py",
+        "generals/modifiers/build_castles.py",
+        "generals/modifiers/deathtouch.py"
+      ],
+      "files_reference_only": [
+        "competition/matchup.py"
+      ]
     },
     {
       "id": "external_paper_method",
@@ -34,5 +47,6 @@
       "source_code_incorporated": false
     }
   ],
-  "provenance_gate_status": "PARTIAL_EXTERNAL_PINS"
+  "provenance_gate_status": "PARTIAL_EXTERNAL_PINS_OFFICIAL_OK",
+  "e2e_rebuild_basis": "docs/research/competition_native_jax_e2e_rebuild_basis.md"
 }

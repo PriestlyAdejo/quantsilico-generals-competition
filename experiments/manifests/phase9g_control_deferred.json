@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9G_CONTROL_DEFERRED",
+  "created_at": "2026-08-05T12:26:03.462267+00:00",
+  "baseline_type": "HEURISTIC",
+  "upload_freeze_status": "WAITING_FOR_USER_UPLOAD_CONFIRMATION",
+  "passive_instrumentation": {
+    "allowed": false,
+    "status": "DEFERRED_UNTIL_UPLOAD_FREEZE",
+    "control_mode": "OFF",
+    "noninterference": "REQUIRED"
+  },
+  "action_changing_control": {
+    "schema_version": 1,
+    "kind": "ACTION_CHANGING_CONTROL_EVIDENCE_GATE",
+    "created_at": "2026-08-05T12:26:03.462267+00:00",
+    "gate_status": "NOT_SATISFIED",
+    "required": [
+      "frozen_baseline_identity",
+      "failure_reproduced_local_or_public",
+      "affected_metric_defined",
+      "baseline_failure_rate_measured",
+      "controller_targets_that_failure",
+      "paired_evaluation_seeds_frozen"
+    ],
+    "satisfied": {
+      "frozen_baseline_identity": false,
+      "failure_reproduced_local_or_public": false,
+      "affected_metric_defined": false,
+      "baseline_failure_rate_measured": false,
+      "controller_targets_that_failure": false,
+      "paired_evaluation_seeds_frozen": false
+    },
+    "allowed_action_changing_modes": [],
+    "note": "Do not implement STATIC_RISK / PI / BARRIER / MPC that change actions until this gate PASSes."
+  },
+  "baseline_allowlist": {
+    "HEURISTIC": [
+      "passive",
+      "heuristic_risk_ablations"
+    ],
+    "BC_HYBRID": [
+      "passive",
+      "neural_score_control_after_gates"
+    ],
+    "REPAIRED_PPO": [
+      "passive",
+      "neural_score_control_after_gates"
+    ],
+    "GRAPH_HYBRID": [
+      "passive",
+      "neural_score_control_after_gates"
+    ]
+  },
+  "failure_motivated_order": [
+    "OFF",
+    "STATIC_RISK",
+    "PI",
+    "BARRIER",
+    "MPC"
+  ],
+  "combined_only_if_ge_2_favourable": true,
+  "eval_tiers": [
+    4,
+    8,
+    16
+  ]
+}

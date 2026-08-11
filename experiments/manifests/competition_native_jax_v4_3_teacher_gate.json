@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "kind": "INDEPENDENTLY_VALID_TRAINED_CHECKPOINT_GATE",
+  "disposition": "NO_VALID_TRAINED_CHECKPOINT",
+  "promote_to_medium": false,
+  "score_rate": 0.375,
+  "expander_score_rate": 0.5,
+  "hunter_score_rate": 0.0,
+  "reasons": [
+    "expander_score_rate_0.5",
+    "hunter_score_rate_0.0",
+    "overall_below_even_0.375"
+  ],
+  "updated_at": "2026-08-07T01:37:26.471837+00:00"
+}

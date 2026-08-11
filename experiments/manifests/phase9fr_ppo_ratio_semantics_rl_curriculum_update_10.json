@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FR_PPO_STEP_ZERO_RATIO_ENTROPY_AUDIT",
+  "created_at": "2026-08-05T10:07:29.634063+00:00",
+  "checkpoint_json": "experiments\\phase9f_overnight_ppo\\rl_curriculum\\update_10.json",
+  "architecture": "recurrent_cnn_v2",
+  "reward_config": "control_v1",
+  "rollout_steps_requested": 32,
+  "rollout_steps_collected": 32,
+  "torch_device": "cuda",
+  "numerical_tolerance_contract": {
+    "tolerance_profile": "CUDA_float32",
+    "abs_new_minus_old_logp_le": 0.0001,
+    "abs_ratio_minus_1_le": 0.0001
+  },
+  "step_zero_ratio_gate": {
+    "transitions_passed": 2,
+    "transitions_total": 32,
+    "pass_rate": 0.0625
+  },
+  "entropy_diagnosis": {
+    "behaviour_entropy_full_legal_mean": 1.0022383886462194,
+    "update_mask_entropy_same_logits_mean": 0.190099176048534,
+    "update_impl_entropy_mean": 0.15878717601299286
+  },
+  "support_diagnostics": {
+    "support_kind_old": "FULL_ACTION_SPACE_LEGAL_MASK (as used in actors.py)",
+    "support_kind_new_update_mask": "HYBRID_EXECUTABLE_SET (chosen action + PASS only; as used in ppo_update_from_fragment)",
+    "legal_support_sizes_mean": 7.875,
+    "legal_support_sizes_min": 1,
+    "legal_support_sizes_max": 13,
+    "update_support_sizes_unique": [
+      1,
+      2
+    ],
+    "pass_action_fraction": 0.25,
+    "pass_probability_full_legal_mean": 0.31119008433961426,
+    "pass_probability_full_legal_min": 0.001045067678205669
+  },
+  "hidden_state_and_sequence_provenance": {
+    "actor_state_hash_before": "bb3438c9688bab83",
+    "actor_state_hash_after": "3152822b63b59ed5",
+    "note": "Old_logp computed with persistent actor hidden/cell_mem evolving sequentially. New_logp_impl computed by ppo_update_from_fragment semantics which reset hidden/cell_mem to model.initial_* per-transition batch element."
+  },
+  "ratios_summary": {
+    "ratio_update_impl_mean": 6.342824459075928,
+    "ratio_update_impl_min": 0.00012075502309016883,
+    "ratio_update_impl_max": 84.24592590332031,
+    "abs_new_minus_old_logp_mean": 2.373584508895874,
+    "abs_new_minus_old_logp_max": 9.021746635437012
+  },
+  "entropy_update_support_effect": {
+    "entropy_update_mask_same_logits_minus_behaviour_mean": -0.8121392125976854
+  },
+  "step0_samples": [
+    {
+      "t": 0,
+      "acts_idx": 0,
+      "old_logp_full": 0.0,
+      "new_logp_impl_update_mask": 0.0,
+      "ratio_update_impl": 1.0,
+      "abs_delta_logp": 0.0,
+      "legal_support_size": 1,
+      "update_support_size": 1,
+      "entropy_full_legal": 0.0,
+      "entropy_update_mask_same_logits": 0.0,
+      "pass_probability_full_legal": 1.0
+    },
+    {
+      "t": 1,
+      "acts_idx": 0,
+      "old_logp_full": 0.0,
+      "new_logp_impl_update_mask": 0.0,
+      "ratio_update_impl": 1.0,
+      "abs_delta_logp": 0.0,
+      "legal_support_size": 1,
+      "update_support_size": 1,
+      "entropy_full_legal": 0.0,
+      "entropy_update_mask_same_logits": 0.0,
+      "pass_probability_full_legal": 1.0
+    },
+    {
+      "t": 2,
+      "acts_idx": 0,
+      "old_logp_full": -0.00023409724235534668,
+      "new_logp_impl_update_mask": 0.0,
+      "ratio_update_impl": 1.0002341270446777,
+      "abs_delta_logp": 0.00023409724235534668,
+      "legal_support_size": 5,
+      "update_support_size": 1,
+      "entropy_full_legal": 0.0024959531147032976,
+      "entropy_update_mask_same_logits": 0.0,
+      "pass_probability_full_legal": 0.999765932559967
+    },
+    {
+      "t": 3,
+      "acts_idx": 1652,
+      "old_logp_full": -1.0626089572906494,
+      "new_logp_impl_update_mask": -0.11623561382293701,
+      "ratio_update_impl": 2.5763492584228516,
+      "abs_delta_logp": 0.9463733434677124,
+      "legal_support_size": 5,
+      "update_support_size": 2,
+      "entropy_full_legal": 0.8463057279586792,
+      "entropy_update_mask_same_logits": 0.31426137685775757,
+      "pass_probability_full_legal": 0.036330752074718475
+    },
+    {
+      "t": 4,
+      "acts_idx": 1652,
+      "old_logp_full": -1.34075927734375,
+      "new_logp_impl_update_mask": -0.5035550594329834,
+      "ratio_update_impl": 2.3099000453948975,
+      "abs_delta_logp": 0.8372042179107666,
+      "legal_support_size": 5,
+      "update_support_size": 2,
+      "entropy_full_legal": 1.467214822769165,
+      "entropy_update_mask_same_logits": 0.6745704412460327,
+      "pass_probability_full_legal": 0.17730174958705902
+    },
+    {
+      "t": 5,
+      "acts_idx": 1821,
+      "old_logp_full": -1.7017126083374023,
+      "new_logp_impl_update_mask": -0.027103424072265625,
+      "ratio_update_impl": 5.336709022521973,
+      "abs_delta_logp": 1.6746091842651367,
+      "legal_support_size": 7,
+      "update_support_size": 2,
+      "entropy_full_legal": 0.5857154130935669,
+      "entropy_update_mask_same_logits": 0.05871371924877167,
+      "pass_probability_full_legal": 0.0019527270924299955
+    },
+    {
+      "t": 6,
+      "acts_idx": 0,
+      "old_logp_full": -0.0007259584963321686,
+      "new_logp_impl_update_mask": 0.0,
+      "ratio_update_impl": 1.0007262229919434,
+      "abs_delta_logp": 0.0007259584963321686,
+      "legal_support_size": 5,
+      "update_support_size": 1,
+      "entropy_full_legal": 0.006547177210450172,
+      "entropy_update_mask_same_logits": 0.0,
+      "pass_probability_full_legal": 0.9992743134498596
+    },
+    {
+      "t": 7,
+      "acts_idx": 1655,
+      "old_logp_full": -2.1790332794189453,
+      "new_logp_impl_update_mask": -0.6037964820861816,
+      "ratio_update_impl": 4.83188533782959,
+      "abs_delta_logp": 1.5752367973327637,
+      "legal_support_size": 5,
+      "update_support_size": 2,
+      "entropy_full_legal": 1.4914648532867432,
+      "entropy_update_mask_same_logits": 0.6901412606239319,
+      "pass_probability_full_legal": 0.0968744084239006
+    }
+  ]
+}

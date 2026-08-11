@@ -1,13 +1,21 @@
 {
+
   "schema_version": 1,
+
   "role": "recommended",
+
   "status": "NO_CANDIDATE_CURRENTLY_RECOMMENDED",
+
   "candidate_id": null,
+
   "package_zip": null,
+
   "package_sha256": null,
-  "programme": "competition_native_jax_preovernight_v1",
-  "resume_scope": "CUDA_JAX_REPAIR_AND_DAYTIME_RESUME",
-  "primary_blocker": "BLOCKED_COMPUTE",
-  "secondary_blocker": "AWAITING_OPERATOR_ACTION_WSL_UBUNTU_OOBE",
-  "updated_at": "2026-08-06T02:20:00+00:00"
+
+  "programme": "competition_native_jax_end_to_end_rebuild",
+
+  "primary_blocker": "END_TO_END_JAX_CORRECT_BUT_TOO_SLOW",
+
+  "updated_at": "2026-08-06T12:10:00+00:00"
+
 }

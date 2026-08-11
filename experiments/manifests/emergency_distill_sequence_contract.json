@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kind": "DISTILLATION_SEQUENCE_CONTRACT",
+  "sequence_length": 32,
+  "burn_in": 8,
+  "supervised_loss_steps": 24,
+  "student_initial_state": "zero_ObsMemory_only_at_true_episode_start",
+  "fragment_boundary_reset": false,
+  "terminal_reset": true,
+  "padding_contributes_to_loss": false,
+  "recurrent_state": "ObsMemory(seen_own,last_army,turn)",
+  "hidden_state_loss": "OFF",
+  "student": {
+    "emb": 96,
+    "layers": 2,
+    "heads": 4
+  },
+  "schema_hashes": {
+    "observation_schema_hash": "4f4285e4348f8c7fb3d62b0ca57ceee7c96363c3e4c043f96045372ce7628ce2",
+    "normalisation_hash": "f6042f9a06b571a581f855ba10b34f6673b192714238aaddd7cdcc567577123e",
+    "action_mapping_hash": "feb70dc2a6f368d7ddf3c56ec3eba38ec984f5cd97108915419ce123719d0e95",
+    "legal_support_hash": "f8de0211650332480cf3c7e09e2a1ab3768ec5e093bedacfbbf77dc25f3b7a8a",
+    "student_architecture_hash": "b4083d74169c842f3526ae8ffcfe894b4a27b24115f8f5a385c481780a43afa3"
+  },
+  "data_source_priority": [
+    "persisted_ppo_trajectories",
+    "eval_canary_trajectories",
+    "cpu_simulator_trajectories",
+    "synthetic_fixtures_smoke_only"
+  ],
+  "mixture_target": {
+    "self_play": 0.5,
+    "hunter": 0.2,
+    "expander_aggressive": 0.2,
+    "fixtures": 0.1
+  },
+  "cache_max_bytes": 1073741824,
+  "updated_at": "2026-08-07T04:32:59.124725+00:00"
+}

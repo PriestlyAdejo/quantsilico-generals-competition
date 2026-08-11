@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_OVERNIGHT_MATCHED_PPO",
+  "created_at": "2026-08-05T07:15:02.827084+01:00",
+  "stop_at": "2026-08-05T07:15:00+01:00",
+  "init_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_cnn_ranker_v1\\checkpoints\\bc\\model.json",
+  "arms": {
+    "RL_CONTROL": {
+      "updates": 144,
+      "final_policy_version": 144,
+      "elapsed_s": 9391.788223199997,
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_control\\final.json",
+      "persistent_actor": true,
+      "synchronous_ppo": true
+    },
+    "RL_CURRICULUM": {
+      "updates": 127,
+      "final_policy_version": 127,
+      "elapsed_s": 9341.282613999996,
+      "final_checkpoint": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_curriculum\\final.json",
+      "persistent_actor": true,
+      "synchronous_ppo": true
+    }
+  },
+  "MANDATORY_RL_GATE": "PASS"
+}

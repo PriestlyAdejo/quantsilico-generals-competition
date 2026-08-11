@@ -1,0 +1,146 @@
+{
+  "schema_version": 2,
+  "kind": "PHASE9F_PACKAGE_REGISTRY",
+  "created_at": "2026-08-05T00:32:10.034524+00:00",
+  "canonical_portal_id": "heuristic_v2f_plus_planner_terminal_fix",
+  "stable_portal_id": "QS-P9F-PORTAL-V0",
+  "strict_upload_ready_dir": "dist/upload_ready",
+  "strict_upload_ready_policy": "EMPTY_UNTIL_OFFICIAL_UPLOAD_READY",
+  "physical_migration_deferred": false,
+  "packages": [
+    {
+      "role_label": "portal_current_verified",
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_candidate_id": "QS-P9F-PORTAL-V0",
+      "alias_of": "QS-P9F-PORTAL-V0",
+      "package_path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/upload_ready/quantsilico_portal_current_verified_packaged.zip",
+      "sha256": "5176c838c9a3d88db06746ad67c2f69886cf9bf900da684b2baa86fa3bfe38ea",
+      "zip_size": 216085,
+      "qualification_level": "WINDOWS_PROTOCOL_SMOKE_PASS",
+      "official_upload_ready": false,
+      "legacy_status": "LEGACY_MISLABELLED",
+      "physical_migration": "COMPLETED_TO_LEGACY_AND_WINDOWS_SMOKE",
+      "original_candidate_id_recorded": "heuristic_v2f_plus_planner_terminal_fix",
+      "windows_smoke": {
+        "package": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\dist\\upload_ready\\quantsilico_portal_current_verified_packaged.zip",
+        "sha256": "5176c838c9a3d88db06746ad67c2f69886cf9bf900da684b2baa86fa3bfe38ea",
+        "structural_status": "PACKAGED",
+        "handshake": "PASS",
+        "eof_shutdown": "PASS",
+        "status": "PASS",
+        "notes": [
+          "structure validation only; Linux parity not implied",
+          "Windows clean-package handshake+EOF smoke PASS"
+        ],
+        "first_action": "0 0 1 3 0"
+      },
+      "note": "Same portal heuristic under role alias; Windows smoke only; not OFFICIAL_UPLOAD_READY",
+      "created_at": "2026-08-04T17:37:37.567794+00:00",
+      "corrected_at": "2026-08-05T00:32:10.034524+00:00",
+      "legacy_dir": "dist/legacy_mislabelled_upload_ready",
+      "windows_smoke_dir": "dist/windows_smoke_passed"
+    },
+    {
+      "role_label": "best_overall_equals_portal_no_stronger_yet",
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_candidate_id": "QS-P9F-PORTAL-V0",
+      "alias_of": "QS-P9F-PORTAL-V0",
+      "package_path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/upload_ready/quantsilico_phase9f_best_overall_packaged.zip",
+      "sha256": "f6cc278527456d865485d7c69c237efeb5d6136a7bcdd0f30ca46c576b12cd56",
+      "zip_size": 216079,
+      "qualification_level": "WINDOWS_PROTOCOL_SMOKE_PASS",
+      "official_upload_ready": false,
+      "legacy_status": "LEGACY_MISLABELLED",
+      "physical_migration": "COMPLETED_TO_LEGACY_AND_WINDOWS_SMOKE",
+      "original_candidate_id_recorded": "heuristic_v2f_plus_planner_terminal_fix",
+      "windows_smoke": {
+        "package": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\dist\\upload_ready\\quantsilico_phase9f_best_overall_packaged.zip",
+        "sha256": "f6cc278527456d865485d7c69c237efeb5d6136a7bcdd0f30ca46c576b12cd56",
+        "structural_status": "PACKAGED",
+        "handshake": "PASS",
+        "eof_shutdown": "PASS",
+        "status": "PASS",
+        "notes": [
+          "structure validation only; Linux parity not implied",
+          "Windows clean-package handshake+EOF smoke PASS"
+        ],
+        "first_action": "0 0 1 3 0"
+      },
+      "note": "Same portal heuristic under role alias; Windows smoke only; not OFFICIAL_UPLOAD_READY",
+      "created_at": "2026-08-04T17:37:39.239814+00:00",
+      "corrected_at": "2026-08-05T00:32:10.034524+00:00",
+      "legacy_dir": "dist/legacy_mislabelled_upload_ready",
+      "windows_smoke_dir": "dist/windows_smoke_passed"
+    },
+    {
+      "role_label": "safe_fallback",
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_candidate_id": "QS-P9F-PORTAL-V0",
+      "alias_of": "QS-P9F-PORTAL-V0",
+      "package_path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/upload_ready/quantsilico_phase9f_safe_fallback_packaged.zip",
+      "sha256": "593de5958ed41b6c2c62e165341d1b72c0aa6d63f9e7cede987bf3bef97f77fe",
+      "zip_size": 216081,
+      "qualification_level": "WINDOWS_PROTOCOL_SMOKE_PASS",
+      "official_upload_ready": false,
+      "legacy_status": "LEGACY_MISLABELLED",
+      "physical_migration": "COMPLETED_TO_LEGACY_AND_WINDOWS_SMOKE",
+      "original_candidate_id_recorded": "heuristic_v2f_plus_planner_terminal_fix",
+      "windows_smoke": {
+        "package": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\dist\\upload_ready\\quantsilico_phase9f_safe_fallback_packaged.zip",
+        "sha256": "593de5958ed41b6c2c62e165341d1b72c0aa6d63f9e7cede987bf3bef97f77fe",
+        "structural_status": "PACKAGED",
+        "handshake": "PASS",
+        "eof_shutdown": "PASS",
+        "status": "PASS",
+        "notes": [
+          "structure validation only; Linux parity not implied",
+          "Windows clean-package handshake+EOF smoke PASS"
+        ],
+        "first_action": "0 0 1 3 0"
+      },
+      "note": "Same portal heuristic under role alias; Windows smoke only; not OFFICIAL_UPLOAD_READY",
+      "created_at": "2026-08-04T17:37:40.885916+00:00",
+      "corrected_at": "2026-08-05T00:32:10.034524+00:00",
+      "legacy_dir": "dist/legacy_mislabelled_upload_ready",
+      "windows_smoke_dir": "dist/windows_smoke_passed"
+    },
+    {
+      "role_label": "best_deterministic",
+      "candidate_id": "heuristic_v2f_plus_planner_terminal_fix",
+      "stable_candidate_id": "QS-P9F-PORTAL-V0",
+      "alias_of": "QS-P9F-PORTAL-V0",
+      "package_path": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/upload_ready/quantsilico_phase9f_best_deterministic_packaged.zip",
+      "sha256": "131f4abaeee76dead56a3f1795370f36fd44c963abedba6e4f792900fd471c38",
+      "zip_size": 216091,
+      "qualification_level": "WINDOWS_PROTOCOL_SMOKE_PASS",
+      "official_upload_ready": false,
+      "legacy_status": "LEGACY_MISLABELLED",
+      "physical_migration": "COMPLETED_TO_LEGACY_AND_WINDOWS_SMOKE",
+      "original_candidate_id_recorded": "heuristic_v2f_plus_planner_terminal_fix",
+      "windows_smoke": {
+        "package": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\dist\\upload_ready\\quantsilico_phase9f_best_deterministic_packaged.zip",
+        "sha256": "131f4abaeee76dead56a3f1795370f36fd44c963abedba6e4f792900fd471c38",
+        "structural_status": "PACKAGED",
+        "handshake": "PASS",
+        "eof_shutdown": "PASS",
+        "status": "PASS",
+        "notes": [
+          "structure validation only; Linux parity not implied",
+          "Windows clean-package handshake+EOF smoke PASS"
+        ],
+        "first_action": "0 0 1 3 0"
+      },
+      "note": "Same portal heuristic under role alias; Windows smoke only; not OFFICIAL_UPLOAD_READY",
+      "created_at": "2026-08-04T17:37:42.988463+00:00",
+      "corrected_at": "2026-08-05T00:32:10.034524+00:00",
+      "legacy_dir": "dist/legacy_mislabelled_upload_ready",
+      "windows_smoke_dir": "dist/windows_smoke_passed"
+    }
+  ],
+  "evidence_bundle": "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/dist/evidence/quantsilico_phase9f_evidence_bundle.zip",
+  "evidence_sha256": "f57c2e3e67cddcfccf2afd1d69e0a3fde29ed2a8b0c6698cbe6703f0218c5739",
+  "neural_packages": "NONE_QUALIFIED",
+  "hybrid_packages": "NONE_YET",
+  "strict_upload_ready_empty": true,
+  "updated_at": "2026-08-05T06:17:33.240934+00:00"
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_2_ACCEPTED_CHANGES",
+  "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+  "changes": [
+    {
+      "id": "device_competition_reset_pool",
+      "status": "ACCEPTED",
+      "files": [
+        "src/generals_bot/competition_native_jax/competition_env_jax.py",
+        "train/competition_native_jax/rollout_selfplay_jax.py"
+      ],
+      "rationale": "Eliminate in-scan generate_grid; indexed reset from canonical competition pool"
+    },
+    {
+      "id": "static_action_geometry",
+      "status": "ACCEPTED_LOOKUPS_ONLY",
+      "files": ["src/generals_bot/competition_native_jax/static_geometry_jax.py"],
+      "rationale": "Precompute geometry for tests/lookups; hot-path index_to_engine_action remains inline (avoids JAX tracer leak from module-level arrays in jit)"
+    },
+    {
+      "id": "reset_pool_reuse_outside_timed_loop",
+      "status": "ACCEPTED",
+      "files": ["train/competition_native_jax/train_jax.py", "train/competition_native_jax/rollout_selfplay_jax.py"],
+      "rationale": "Build pool once; refresh every 10 updates — removes per-update pool rebuild that collapsed TPS to ~16"
+    },
+    {
+      "id": "gae_bootstrap_post_scan_value",
+      "status": "ACCEPTED",
+      "files": ["train/competition_native_jax/rollout_selfplay_jax.py", "train/competition_native_jax/train_jax.py"],
+      "rationale": "Replace duplicated last value with device post-scan bootstrap value"
+    },
+    {
+      "id": "ppo_gradient_accumulation_optional",
+      "status": "ACCEPTED_SEMANTICS_PRESERVING",
+      "files": ["train/competition_native_jax/ppo_jax.py"],
+      "rationale": "Optional minibatch gradient accumulation with one Optax step; not sequential param updates"
+    },
+    {
+      "id": "bf16_mixed_precision",
+      "status": "DEFERRED_PENDING_MEASUREMENT",
+      "rationale": "Keep FP32 systems path until matched E shows BF16 wins TPS or unlocks config"
+    },
+    {
+      "id": "compact_legal_support_bitpack",
+      "status": "DEFERRED_DENSE_BOOL_RETAINED",
+      "rationale": "Dense bool[3970] retained pending bake-off; no silent representation change"
+    }
+  ],
+  "ppo_semantics": "FULL_BATCH_ONE_OPTAX_UPDATE_CANONICAL",
+  "inherited_from_v4_1": ["batched_gae_lax_scan"]
+}

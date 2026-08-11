@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9F_RESEARCH_CANDIDATES",
+  "created_at": "2026-08-05T06:17:33.240934+00:00",
+  "candidates": [
+    {
+      "id": "QS-P9F-CNN-RANKER-V1",
+      "kind": "bc_checkpoint",
+      "path": "experiments/phase9f_cnn_ranker_v1/checkpoints/bc/model.json",
+      "qualification_level": "RESEARCH_ONLY",
+      "official_upload_ready": false
+    },
+    {
+      "id": "QS-P9F-CNN-PPO-CONTROL-V1",
+      "kind": "overnight_ppo",
+      "arm": "RL_CONTROL",
+      "path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_control\\final.json",
+      "updates": 144,
+      "qualification_level": "RESEARCH_ONLY",
+      "official_upload_ready": false,
+      "note": "Mandatory sync PPO completed; not CPU/Linux tournament packaged"
+    },
+    {
+      "id": "QS-P9F-CNN-PPO-CURRICULUM-V1",
+      "kind": "overnight_ppo",
+      "arm": "RL_CURRICULUM",
+      "path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_curriculum\\final.json",
+      "updates": 127,
+      "qualification_level": "RESEARCH_ONLY",
+      "official_upload_ready": false
+    }
+  ]
+}

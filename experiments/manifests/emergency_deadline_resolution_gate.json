@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_DEADLINE_RESOLUTION_GATE",
+  "status": "DEADLINE_UNRESOLVED_KEEP_ORIGINAL_HARD_END",
+  "portal_deadline_resolved": false,
+  "portal_deadline": null,
+  "evidence_paths_scanned_hits": [
+    "experiments/manifests/emergency_rolling_programme_state.json",
+    "experiments/manifests/phase9f_autonomous_run_state.json",
+    "experiments/manifests/phase9f_finalist_tournament.json",
+    "experiments/manifests/phase9f_generated_plan_v2.json",
+    "experiments/manifests/phase9f_resume_baseline.json",
+    "experiments/manifests/phase9f_risk_register.json",
+    "experiments/manifests/phase9f_role_registry.json"
+  ],
+  "decision": "DO_NOT_EXTEND_TO_NOON",
+  "reason": "No exact portal submission deadline found in local docs/portal metadata without mutation, and no operator-provided deadline. Preserve original hard end 11:21 BST rather than assuming noon is safe.",
+  "original_sprint_end_at": "2026-08-07T10:21:06.079517+00:00",
+  "original_sprint_end_local": "2026-08-07T11:21:06+01:00",
+  "updated_at": "2026-08-07T04:28:26.453094+00:00"
+}

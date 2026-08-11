@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "PHASE9FR_ROLE_REGISTRY",
+  "created_at": "2026-08-05T12:04:45.048706+00:00",
+  "migration": {
+    "from_key": "best_learned_research",
+    "to_key": "most_complete_learned_research_checkpoint",
+    "note": "Renamed for clarity; overnight PPO remains TRAINER_SEMANTICS_INVALID"
+  },
+  "roles": {
+    "most_complete_learned_research_checkpoint": {
+      "candidate_id": "QS-P9F-CNN-PPO-CONTROL-V1",
+      "path": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition\\experiments\\phase9f_overnight_ppo\\rl_control\\final.json",
+      "qualification_level": "RESEARCH_ONLY",
+      "official_upload_ready": false,
+      "trainer_status": "TRAINER_SEMANTICS_INVALID",
+      "label": "MOST_COMPLETE_LEARNED_RESEARCH_CHECKPOINT_OBSERVATIONAL",
+      "note": "Never continue training; restart from BC for repaired PPO."
+    }
+  }
+}

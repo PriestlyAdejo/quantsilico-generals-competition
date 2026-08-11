@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "kind": "CHECKPOINT_EXACT_CONTINUATION",
+  "status": "CHECKPOINT_EXACT_CONTINUATION_PASS",
+  "param_err_after_2": 0.0,
+  "ema_err_after_2": 0.0,
+  "opt_err_after_2": 0.0,
+  "metric_err_after_2": 0.0,
+  "param_err_after_1": 0.0,
+  "tol": 1e-05,
+  "ckpt_dir": "/mnt/c/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/competition_native_jax/v4_3_ckpt_roundtrip/ckpt_after_1",
+  "updated_at": "2026-08-06T20:37:36.584718+00:00"
+}

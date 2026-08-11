@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_DISTILL_PLUMBING",
+  "status": "DISTILLATION_MINIMAL_ROUTE_READY",
+  "stage_a_note": "Synthetic/legal plumbing targets only; NOT imitation quality. Real quality after GPU teacher annotation.",
+  "elapsed_s": 87.25952860799953,
+  "plumbing_deadline_s": 1800,
+  "blocker": null,
+  "steps": [
+    {
+      "name": "sequence_contract_frozen",
+      "ok": true,
+      "detail": "",
+      "elapsed_s": 0.08193120099986118
+    },
+    {
+      "name": "student_jax_forward",
+      "ok": true,
+      "detail": "logits=(3970,)",
+      "elapsed_s": 29.89928381199934
+    },
+    {
+      "name": "STUDENT_RUNTIME_ARCHITECTURE_PARITY",
+      "ok": true,
+      "detail": "max|d_logits|=1.553e-06 max|d_v|=6.855e-07",
+      "elapsed_s": 29.99345211399941
+    },
+    {
+      "name": "STUDENT_INPUT_OUTPUT_SCHEMA_PARITY",
+      "ok": true,
+      "detail": "{\"observation_schema_hash\": \"4f4285e4348f8c7fb3d62b0ca57ceee7c96363c3e4c043f96045372ce7628ce2\", \"normalisation_hash\": \"f6042f9a06b571a581f855ba10b34f6673b192714238aaddd7cdcc567577123e\", \"action_mapping_hash\": \"feb70dc2a6f368d7ddf3c56ec3eba38ec984f5cd97108915419ce123719d0e95\", \"legal_support_hash\": \"f8de0211650332480cf3c7e09e2a1ab3768ec5e093bedacfbbf77dc25f3b7a8a\", \"student_architecture_hash\": \"b4083d74169c842f3526ae8ffcfe894b4a27b24115f8f5a385c481780a43afa3\"}",
+      "elapsed_s": 29.993792613999176
+    },
+    {
+      "name": "RECURRENT_SEQUENCE_PARITY_SMOKE",
+      "ok": true,
+      "detail": "shape=(32, 3970)",
+      "elapsed_s": 32.57894916699934
+    },
+    {
+      "name": "stage_a_backward_optim",
+      "ok": true,
+      "detail": "loss0=6.1434 loss1=3.9205 (synthetic targets; not imitation quality)",
+      "elapsed_s": 84.16085386199939
+    },
+    {
+      "name": "export_reload",
+      "ok": true,
+      "detail": "/home/pries/quantsilico-runtime/emergency_rolling_v1/distill/stage_a_smoke/student_emb96_stage_a.npz",
+      "elapsed_s": 84.89759684899946
+    },
+    {
+      "name": "competition_runtime_invocation",
+      "ok": true,
+      "detail": "action=Action(kind=0, row=5, col=5, direction=3, split=0)",
+      "elapsed_s": 86.80962031599938
+    },
+    {
+      "name": "chosen_legal_action_parity",
+      "ok": true,
+      "detail": "jax=46 numpy=46",
+      "elapsed_s": 87.25934640799915
+    }
+  ],
+  "export_path": "/home/pries/quantsilico-runtime/emergency_rolling_v1/distill/stage_a_smoke/student_emb96_stage_a.npz",
+  "sequence_contract": "experiments/manifests/emergency_distill_sequence_contract.json",
+  "updated_at": "2026-08-07T04:34:26.384249+00:00"
+}

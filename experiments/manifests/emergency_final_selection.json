@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_FINAL_SELECTION",
+  "status": "EMERGENCY_BASELINE_FALLBACK_PACKAGE_EXISTS",
+  "selected": {
+    "kind": "HEURISTIC_FALLBACK_INSURANCE",
+    "package_id": "heuristic_v2_preppo_8f7405fe9834161c",
+    "zip": "submission/packages/heuristic_v2_preppo_8f7405fe9834161c_packaged.zip",
+    "sha256": "e1237f77dee469935fc3a60811b9a34522b83dd37bf4d76fa2555e6107a8edfa",
+    "control_mode": "CONTROL_OFF",
+    "reason": "no_technically_qualified_learned_package",
+    "learned_alternate": {
+      "zip": "/mnt/c/Users/pries/Documents/Projects/quantsilico-generals-competition/submission/packages/QS-P9G-COMPETITION-EMERGENCY-BOOTSTRAP-V1/8650e57623978a4e/package.zip",
+      "sha256": "8650e57623978a4ed437cc80495f9b370c82c895d28481bfef3c2355b630b618",
+      "technical": "NOT_TECHNICALLY_QUALIFIED",
+      "status_class": "EMERGENCY_LEARNED_PROVISIONAL_PACKAGE_EXISTS",
+      "latency_note": {
+        "p50_ms": 75.61,
+        "p99_ms": 314.01,
+        "max_ms": 560.6,
+        "n": 100,
+        "note": "Measured under concurrent PPO resume compile contention; p50 under 100ms but p99 spikes fail hard gate"
+      }
+    }
+  },
+  "shadow": {
+    "replay_status": "CONTROL_REPLAY_NOT_PROMISING",
+    "mpc": "MPC_DEFERRED_DEADLINE_PROTECTION",
+    "policy_benefit": "NOT_CLAIMED"
+  },
+  "canary_summary": [
+    {
+      "name": "ckpt_u1024",
+      "W": 0,
+      "D": 0,
+      "L": 2,
+      "update": 1024
+    }
+  ],
+  "limitations": [
+    "MANUAL_UPLOAD_ONLY",
+    "no portal mutation from this gate",
+    "COMPETITIVELY_UNCONFIRMED unless paired evidence present"
+  ],
+  "updated_at": "2026-08-07T06:05:01.376772+00:00"
+}

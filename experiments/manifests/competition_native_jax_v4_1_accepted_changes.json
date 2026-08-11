@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "kind": "COMPETITION_NATIVE_JAX_V4_1_ACCEPTED_CHANGES",
+  "performance_programme": "END_TO_END_JAX_V4_1",
+  "parent_v4_tps": 9.510967309770074,
+  "changes": [
+    {
+      "id": "batched_gae_lax_scan",
+      "status": "ACCEPTED_MANDATORY",
+      "files": ["train/competition_native_jax/gae_jax.py", "train/competition_native_jax/train_jax.py"],
+      "rationale": "Python per-env GAE loop blocks promotion; replaced with batched reverse lax.scan over [T,B]",
+      "retention_rule": "mandatory_device_residency"
+    },
+    {
+      "id": "vectorised_transformer_patch_ops",
+      "status": "CANDIDATE_PENDING_CLEAN_TPS",
+      "files": ["src/generals_bot/competition_native_jax/transformer_jax.py"],
+      "rationale": "Remove Python patch/unpatch/pack loops inside compiled forward (indexing only; no architecture change)",
+      "retention_rule": "keep_if_tps_or_vram_enables_faster_config"
+    },
+    {
+      "id": "concat_index_to_engine_batch",
+      "status": "CANDIDATE_PENDING_CLEAN_TPS",
+      "files": ["train/competition_native_jax/rollout_selfplay_jax.py"],
+      "rationale": "Single batched index_to_engine_action over 2N seats instead of two launches",
+      "retention_rule": "keep_if_tps_or_vram_enables_faster_config"
+    }
+  ],
+  "rejected": [],
+  "env_implementation_hash_unchanged_expected": "c63394113f2abd67d206de8df6dd88e3fa699a35088603704146d9253c02b4dd",
+  "note": "Final retention decided after clean profiler-off ladder"
+}

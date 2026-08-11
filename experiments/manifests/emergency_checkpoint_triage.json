@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_CHECKPOINT_TRIAGE",
+  "status": "COMPLETE",
+  "candidates": [
+    {
+      "id": "ckpt_u1_raw",
+      "tag": "u1",
+      "which": "raw",
+      "path": "experiments/competition_native_jax/v4_3_r_e6/ckpt_u1",
+      "update": 1,
+      "transitions": 1024,
+      "COMPLETE_marker": false,
+      "legacy_r_e6_publish": true,
+      "consumable": true,
+      "raw": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "ema": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "opt_state": {
+        "exists": true,
+        "finite": true,
+        "arrays": 49,
+        "elements": 3669889
+      },
+      "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
+    },
+    {
+      "id": "ckpt_u1_ema",
+      "tag": "u1",
+      "which": "ema",
+      "path": "experiments/competition_native_jax/v4_3_r_e6/ckpt_u1",
+      "update": 1,
+      "transitions": 1024,
+      "COMPLETE_marker": false,
+      "legacy_r_e6_publish": true,
+      "consumable": true,
+      "raw": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "ema": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "opt_state": {
+        "exists": true,
+        "finite": true,
+        "arrays": 49,
+        "elements": 3669889
+      },
+      "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
+    },
+    {
+      "id": "ckpt_u152_raw",
+      "tag": "u152",
+      "which": "raw",
+      "path": "experiments/competition_native_jax/v4_3_r_e6/ckpt_u152",
+      "update": 152,
+      "transitions": 155648,
+      "COMPLETE_marker": false,
+      "legacy_r_e6_publish": true,
+      "consumable": true,
+      "raw": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "ema": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "opt_state": {
+        "exists": true,
+        "finite": true,
+        "arrays": 49,
+        "elements": 3669889
+      },
+      "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
+    },
+    {
+      "id": "ckpt_u152_ema",
+      "tag": "u152",
+      "which": "ema",
+      "path": "experiments/competition_native_jax/v4_3_r_e6/ckpt_u152",
+      "update": 152,
+      "transitions": 155648,
+      "COMPLETE_marker": false,
+      "legacy_r_e6_publish": true,
+      "consumable": true,
+      "raw": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "ema": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "opt_state": {
+        "exists": true,
+        "finite": true,
+        "arrays": 49,
+        "elements": 3669889
+      },
+      "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
+    },
+    {
+      "id": "ckpt_u304_raw",
+      "tag": "u304",
+      "which": "raw",
+      "path": "experiments/competition_native_jax/v4_3_r_e6/ckpt_u304",
+      "update": 304,
+      "transitions": 311296,
+      "COMPLETE_marker": false,
+      "legacy_r_e6_publish": true,
+      "consumable": true,
+      "raw": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "ema": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "opt_state": {
+        "exists": true,
+        "finite": true,
+        "arrays": 49,
+        "elements": 3669889
+      },
+      "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
+    },
+    {
+      "id": "ckpt_u304_ema",
+      "tag": "u304",
+      "which": "ema",
+      "path": "experiments/competition_native_jax/v4_3_r_e6/ckpt_u304",
+      "update": 304,
+      "transitions": 311296,
+      "COMPLETE_marker": false,
+      "legacy_r_e6_publish": true,
+      "consumable": true,
+      "raw": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "ema": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "opt_state": {
+        "exists": true,
+        "finite": true,
+        "arrays": 49,
+        "elements": 3669889
+      },
+      "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
+    },
+    {
+      "id": "ckpt_final_raw",
+      "tag": "final",
+      "which": "raw",
+      "path": "experiments/competition_native_jax/v4_3_r_e6/ckpt_final",
+      "update": 420,
+      "transitions": 430080,
+      "COMPLETE_marker": false,
+      "legacy_r_e6_publish": true,
+      "consumable": true,
+      "raw": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "ema": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "opt_state": {
+        "exists": true,
+        "finite": true,
+        "arrays": 49,
+        "elements": 3669889
+      },
+      "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
+    },
+    {
+      "id": "ckpt_final_ema",
+      "tag": "final",
+      "which": "ema",
+      "path": "experiments/competition_native_jax/v4_3_r_e6/ckpt_final",
+      "update": 420,
+      "transitions": 430080,
+      "COMPLETE_marker": false,
+      "legacy_r_e6_publish": true,
+      "consumable": true,
+      "raw": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "ema": {
+        "exists": true,
+        "finite": true,
+        "arrays": 24,
+        "elements": 1834944
+      },
+      "opt_state": {
+        "exists": true,
+        "finite": true,
+        "arrays": 49,
+        "elements": 3669889
+      },
+      "learner": "2b10b1e326ba4f3b6532441b6a9f11fbb696e9d90684c81d6105f893df12ece2"
+    }
+  ],
+  "consumable_count": 8,
+  "updated_at": "2026-08-07T02:30:03.554146+00:00"
+}

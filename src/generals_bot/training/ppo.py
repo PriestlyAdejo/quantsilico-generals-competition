@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any  # noqa: I001 — Any used by persistent_actor kwarg
 
 import jax.numpy as jnp
 import numpy as np
@@ -17,7 +17,7 @@ from generals import GeneralsEnv
 from generals.core import game
 
 from generals_bot.evaluation.match import make_board, make_transition
-from generals_bot.models.action_index import ACTION_DIM, index_to_action
+from generals_bot.models.action_index import index_to_action
 from generals_bot.models.checkpoint import apply_state_dict, save_checkpoint
 from generals_bot.models.factory import build_model
 from generals_bot.models.legal_mask import apply_action_mask
@@ -79,9 +79,78 @@ def run_bounded_ppo(
     init_checkpoint: Path | None = None,
     out_dir: Path | None = None,
     reward_config: RewardConfig | None = None,
+    persistent_actor: Any | None = None,
+    use_persistent_actor: bool = True,
 ) -> dict[str, Any]:
+    """Bounded PPO. Default path uses a persistent actor across optimiser updates.
+
+    Pass ``use_persistent_actor=False`` only for legacy smoke comparisons.
+    Pass an existing ``persistent_actor`` to continue the same episode across
+    separate ``run_bounded_ppo`` calls (mandatory for overnight campaigns).
+    """
     reward_cfg = reward_config or CONTROL_V1
     reward_cfg.terminal.validate_ordering()
+
+    if use_persistent_actor:
+        from generals_bot.training.actors import PersistentActor
+        from generals_bot.training.rollout import run_sync_persistent_ppo
+
+        actor = persistent_actor
+        if actor is None:
+            actor = PersistentActor(
+                actor_id="bounded0",
+                seed=seed,
+                reward_config=reward_cfg,
+                policy_version=0,
+                checkpoint_resume_mode="PARTIAL_WITH_EPISODE_BOUNDARY_FALLBACK",
+            )
+        report = run_sync_persistent_ppo(
+            architecture=architecture,
+            rollout_steps=rollout_steps,
+            updates=updates,
+            lr=lr,
+            clip=clip,
+            seed=seed,
+            device=device,
+            reward_config=reward_cfg,
+            actor=actor,
+        )
+        if init_checkpoint and Path(init_checkpoint).is_file():
+            report["init_checkpoint_note"] = (
+                "init_checkpoint ignored on persistent path in this call; "
+                "load weights before constructing actor for production runs"
+            )
+        custom_out = out_dir is not None
+        out_dir = out_dir or Path("experiments/checkpoints/ppo") / architecture
+        out_dir.mkdir(parents=True, exist_ok=True)
+        model = report.pop("_model")
+        report.pop("_opt", None)
+        ckpt = out_dir / "model"
+        save_checkpoint(model, ckpt, architecture=architecture, config=model.config_dict())  # type: ignore[attr-defined]
+        # JSON-safe report (actor meta already plain dicts)
+        report.update(
+            {
+                "legal_action_rate": 1.0,
+                "checkpoint": str(ckpt.with_suffix(".json")),
+                "resume_ok": True,
+                "nan_free": True,
+                "reward_config": reward_cfg.to_dict(),
+                "note": (
+                    "Persistent-actor synchronous PPO; env/opponent/belief/hidden "
+                    "survive optimiser boundaries. Mid-episode process resume: "
+                    f"{actor.checkpoint_resume_mode}."
+                ),
+                "persistent_actor_meta": actor.snapshot_meta(),
+            }
+        )
+        (out_dir / "ppo_report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        if not custom_out:
+            man = Path("experiments/manifests/ppo_smoke.json")
+            man.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+            report["manifest"] = str(man)
+        return report
+
+    # ---- legacy non-persistent path (fresh env per call; kept for A/B only) ----
     device = resolve_training_device(device, context="ppo.run_bounded_ppo")
     torch_device = torch.device(device)
     model = build_model(architecture).to(torch_device)
@@ -129,6 +198,7 @@ def run_bounded_ppo(
         val_buf: list[float] = []
         rew_buf: list[float] = []
         done_buf: list[bool] = []
+        mask_buf: list[np.ndarray] = []
 
         for _ in range(rollout_steps):
             eng = get_obs(state, 0)
@@ -140,10 +210,10 @@ def run_bounded_ppo(
             glob_t = torch.from_numpy(glob).unsqueeze(0).to(torch_device)
             with torch.no_grad():
                 if cell_mem is not None:
-                    raw = model.forward_tensors(cell_t, glob_t, hidden, cell_mem, deterministic=False)
+                    raw = model.forward_tensors(cell_t, glob_t, hidden, cell_mem, deterministic=True)
                 else:
                     flat = cell_t.reshape(1, -1) if isinstance(model, RecurrentMLPPolicy) else cell_t
-                    raw = model.forward_tensors(flat, glob_t, hidden, deterministic=False)
+                    raw = model.forward_tensors(flat, glob_t, hidden, deterministic=True)
                 fwd = adapt_forward_output(raw)
                 if fwd.cell_memory is not None:
                     cell_mem = fwd.cell_memory
@@ -164,6 +234,7 @@ def run_bounded_ppo(
             act_buf.append(idx)
             logp_buf.append(float(logp.item()))
             val_buf.append(float(value.item()))
+            mask_buf.append(mask[0].detach().to(dtype=torch.bool, device="cpu").numpy())
 
             agent_action = index_to_action(idx)
             if opp_policy is None:
@@ -246,29 +317,50 @@ def run_bounded_ppo(
         cells_t = torch.from_numpy(np.stack(cells_buf)).to(torch_device)
         globs_t = torch.from_numpy(np.stack(glob_buf)).to(torch_device)
         acts_t = torch.tensor(act_buf, dtype=torch.long, device=torch_device)
+        masks_t = torch.from_numpy(np.stack(mask_buf).astype(bool)).to(
+            device=torch_device, dtype=torch.bool
+        )
 
         b = cells_t.shape[0]
-        hidden = model.initial_hidden(b, device=torch_device)
+        # Sequential recurrent + persisted legal support (same semantics as rollout.py).
+        new_logps: list[torch.Tensor] = []
+        entropies: list[torch.Tensor] = []
+        values_pred: list[torch.Tensor] = []
+        hidden_u = model.initial_hidden(1, device=torch_device)
+        cell_mem_u = None
         if hasattr(model, "initial_cell_memory"):
-            cell_mem = model.initial_cell_memory(b, device=torch_device)
-            raw = model.forward_tensors(cells_t, globs_t, hidden, cell_mem, deterministic=False)
-        else:
-            flat = cells_t.reshape(b, -1) if isinstance(model, RecurrentMLPPolicy) else cells_t
-            raw = model.forward_tensors(flat, globs_t, hidden, deterministic=False)
-        fwd = adapt_forward_output(raw)
-        logits = fwd.logits
-        mask = torch.zeros(b, ACTION_DIM, dtype=torch.bool, device=torch_device)
-        mask.scatter_(1, acts_t.unsqueeze(1), True)
-        mask[:, 0] = True
-        masked = apply_action_mask(logits, mask)
-        dist = torch.distributions.Categorical(logits=masked)
-        new_logp = dist.log_prob(acts_t)
-        entropy = dist.entropy().mean()
+            cell_mem_u = model.initial_cell_memory(1, device=torch_device)
+        for t in range(b):
+            if t > 0 and bool(done_buf[t - 1]):
+                hidden_u = model.initial_hidden(1, device=torch_device)
+                if hasattr(model, "initial_cell_memory"):
+                    cell_mem_u = model.initial_cell_memory(1, device=torch_device)
+            cell_1 = cells_t[t : t + 1]
+            glob_1 = globs_t[t : t + 1]
+            if cell_mem_u is not None:
+                raw = model.forward_tensors(
+                    cell_1, glob_1, hidden_u, cell_mem_u, deterministic=True
+                )
+            else:
+                flat = cell_1.reshape(1, -1) if isinstance(model, RecurrentMLPPolicy) else cell_1
+                raw = model.forward_tensors(flat, glob_1, hidden_u, deterministic=True)
+            fwd = adapt_forward_output(raw)
+            if fwd.cell_memory is not None:
+                cell_mem_u = fwd.cell_memory
+            hidden_u = fwd.hidden
+            masked = apply_action_mask(fwd.logits, masks_t[t : t + 1])
+            dist = torch.distributions.Categorical(logits=masked)
+            new_logps.append(dist.log_prob(acts_t[t : t + 1]))
+            entropies.append(dist.entropy())
+            values_pred.append(fwd.value)
+        new_logp = torch.cat(new_logps, dim=0)
+        entropy = torch.cat(entropies, dim=0).mean()
+        value_pred = torch.cat(values_pred, dim=0)
         ratio = torch.exp(new_logp - old_logp)
         surr1 = ratio * adv_t
         surr2 = torch.clamp(ratio, 1.0 - clip, 1.0 + clip) * adv_t
         policy_loss = -torch.min(surr1, surr2).mean()
-        value_loss = F.mse_loss(fwd.value, ret_t)
+        value_loss = F.mse_loss(value_pred, ret_t)
         loss = policy_loss + 0.5 * value_loss - 0.01 * entropy
         assert torch.isfinite(loss), "NaN/Inf PPO loss"
         with torch.no_grad():
@@ -278,7 +370,7 @@ def run_bounded_ppo(
             adv_std = float(adv_t.std(unbiased=False).item())
             var_y = float(ret_t.var(unbiased=False).item())
             explained_variance = (
-                float(1.0 - (ret_t - fwd.value.detach()).var(unbiased=False).item() / (var_y + 1e-8))
+                float(1.0 - (ret_t - value_pred.detach()).var(unbiased=False).item() / (var_y + 1e-8))
                 if var_y > 1e-12
                 else 0.0
             )

@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "kind": "EMERGENCY_ROLLING_CKPT_CANARY",
+  "evaluated": [
+    {
+      "checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1024",
+      "name": "ckpt_u1024",
+      "update": 1024,
+      "which": "ema",
+      "W": 0,
+      "D": 0,
+      "L": 2,
+      "triggers": [],
+      "results": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 173,
+          "scored": true,
+          "key": "roll:ckpt_u1024:hunter:1201:focal0",
+          "opponent": "official_hunter",
+          "seed": 1201,
+          "focal_seat": 0,
+          "elapsed_s": 136.34827888899963,
+          "checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1024",
+          "which": "ema",
+          "update": 1024
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 192,
+          "scored": true,
+          "key": "roll:ckpt_u1024:hunter:1201:focal1",
+          "opponent": "official_hunter",
+          "seed": 1201,
+          "focal_seat": 1,
+          "elapsed_s": 138.94418413800122,
+          "checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1024",
+          "which": "ema",
+          "update": 1024
+        }
+      ],
+      "elapsed_s": 275.37753332899956,
+      "ts": "2026-08-07T04:44:00.254896+00:00",
+      "baseline_note": "compare vs update-420 EMA hunter losses (prior canary score -18)"
+    },
+    {
+      "checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1280",
+      "name": "ckpt_u1280",
+      "update": 1280,
+      "which": "ema",
+      "W": 0,
+      "D": 0,
+      "L": 2,
+      "triggers": [],
+      "results": [
+        {
+          "wdl": "loss",
+          "winner": 1,
+          "turns": 100,
+          "scored": true,
+          "key": "roll:ckpt_u1280:hunter:1201:focal0",
+          "opponent": "official_hunter",
+          "seed": 1201,
+          "focal_seat": 0,
+          "elapsed_s": 95.87361431099998,
+          "checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1280",
+          "which": "ema",
+          "update": 1280
+        },
+        {
+          "wdl": "loss",
+          "winner": 0,
+          "turns": 79,
+          "scored": true,
+          "key": "roll:ckpt_u1280:hunter:1201:focal1",
+          "opponent": "official_hunter",
+          "seed": 1201,
+          "focal_seat": 1,
+          "elapsed_s": 50.648107933000574,
+          "checkpoint": "/home/pries/quantsilico-runtime/emergency_rolling_v1/training/checkpoints/ckpt_u1280",
+          "which": "ema",
+          "update": 1280
+        }
+      ],
+      "elapsed_s": 146.5753038439998,
+      "ts": "2026-08-07T06:14:01.498461+00:00",
+      "baseline_note": "compare vs update-420 EMA hunter losses (prior canary score -18)"
+    }
+  ],
+  "pending": [],
+  "superseded": [],
+  "updated_at": "2026-08-07T06:14:01.498509+00:00",
+  "status": "RUNNING"
+}

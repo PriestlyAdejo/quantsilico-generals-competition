@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "POLICY_VERSION_REPLAY_GATE",
+  "created_at": "2026-08-05T12:26:01.866236+00:00",
+  "gate_status": "PASS",
+  "enforcement": "ppo_update_from_fragment raises on expected_policy_version mismatch",
+  "tests": [
+    "tests/unit/test_ppo_action_support.py::test_policy_version_replay_rejects_stale"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "kind": "PUBLIC_VERSION_EPOCH_GATE",
+  "gate_status": "WAITING_FOR_PUBLIC_OBSERVATION",
+  "created_at": "2026-08-05T13:23:35.514855+00:00",
+  "note": "Monitoring may begin after upload freeze; epoch completes on first public observation."
+}
