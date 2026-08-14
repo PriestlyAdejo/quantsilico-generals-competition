@@ -1,0 +1,80 @@
+{
+  "SCHEMA_VERSION": "1.0.0",
+  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
+  "UPDATED_AT_UTC": "2026-08-14T18:18:16Z",
+  "OWNER_ROLE": "CODEX_GPT_5_6_SOL_ARCHITECT",
+  "STATUS": "ARCHITECT_HANDOFF_READY",
+  "CURRENT_STAGE": "STAGE_0",
+  "CURRENT_TASK": "BEGIN_FORENSIC_FREEZE_AND_AUTHORITY",
+  "BASE_COMMIT": "bd028b438cf6750f5c20e5902d7cc63dec9f365d",
+  "HEAD_COMMIT": "SELF",
+  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
+  "DIRTY_FILES": [],
+  "LAST_VALIDATED_COMMIT": "SELF",
+  "TESTS_COMPLETED": [
+    {
+      "COMMAND": "git diff --check",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": "JSON schema/key/status validation for experiments/marathon/ACTIVE_STATE.json",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": "python scripts/dev/verify_repository.py",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
+      "RESULT": "PASS_AT_SELF"
+    }
+  ],
+  "TESTS_PENDING": [
+    "Create and validate docs/marathon/DESIGN_AUTHORITY.md during the first bounded Stage 0 slice.",
+    "Create and validate docs/marathon/EVIDENCE_LEDGER.md during the first bounded Stage 0 slice.",
+    "Create and validate docs/marathon/CONTROL_ENGINEERING.md during the first bounded Stage 0 slice.",
+    "Create and validate configs/marathon/programme.yaml during Stage 0.",
+    "Reproduce and validate MARATHON_BASELINE_V0 during Stage 1; no baseline claim is made by this handoff."
+  ],
+  "ACTIVE_LOCAL_PROCESSES": {
+    "AUDIT_STATUS": "AUDITED",
+    "AUDITED_AT_UTC": "2026-08-14T18:18:16Z",
+    "ACTIVE_PROJECT_WORKLOADS": [],
+    "NOTES": [
+      "No active local Marathon trainer, evaluator, dashboard, packaging, or deployment workload was found.",
+      "The Codex desktop Node kernel for this task was observed and excluded as agent infrastructure."
+    ]
+  },
+  "ACTIVE_REMOTE_PROCESSES": {
+    "AUDIT_STATUS": "AUDITED_READ_ONLY",
+    "AUDITED_AT_UTC": "2026-08-14T18:18:16Z",
+    "ACTIVE_PROJECT_WORKLOADS": [],
+    "OBSERVED_RESOURCES": [
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "wvjrnxbpcjnr8h",
+        "NAME": "generals_competition",
+        "STATE": "EXITED"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "SERVERLESS_ENDPOINTS",
+        "STATE": "NONE_FOUND"
+      }
+    ]
+  },
+  "CURRENT_EXPERIMENT": null,
+  "CURRENT_CHECKPOINT": {
+    "ACTIVE": null,
+    "HISTORICAL_STAGE_1_REFERENCE": {
+      "REFERENCE_ID": "SPRINT_VALID_PPO_7M59",
+      "SOURCE_NAME": "ckpt_final_u482_t7593984",
+      "PATH": "C:\\Users\\pries\\quantsilico-runtime\\cloud_assisted_deadline_salvage_v1_final\\ckpt_final_u482_t7593984",
+      "STATUS": "PRESERVE_AND_REVERIFY_DURING_STAGE_1"
+    }
+  },
+  "NEXT_SAFE_ACTION": "Cursor must read root AGENTS.md and every existing Marathon authority, reconstruct repository truth from source and evidence, then implement only the first bounded Stage 0 authority/forensic-freeze slice. Create missing Stage 0 authorities explicitly; do not begin repository migration, dashboard work, packaging redesign, training, evaluation, or algorithm implementation.",
+  "BLOCKERS": [],
+  "PLAN_DEVIATIONS": []
+}
