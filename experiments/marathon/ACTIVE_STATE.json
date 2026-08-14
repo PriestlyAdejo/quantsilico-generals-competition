@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T00:05:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T00:35:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_1_PREP",
@@ -47,6 +47,10 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/analysis/semantic_state_hash.py C:/Users/pries/quantsilico-runtime/cloud_assisted_deadline_salvage_v1_final/ckpt_final_u482_t7593984",
       "RESULT": "PASS_FIVE_ARTEFACTS_FINGERPRINTED experiments/marathon/baseline_semantic_hashes.json"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_structural_probe.py",
+      "RESULT": "PASS_EXACT_MATCH_RAW_EMA_FROZEN_OPPONENT_OPT_STATE EV-0013"
     },
     {
       "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
@@ -101,7 +105,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 1 in progress: semantic-state fingerprints captured (experiments/marathon/baseline_semantic_hashes.json); baseline writer source identity remains UNRECOVERABLE locally (EV-0012). Next bounded action: structural load probe of ckpt_final_u482_t7593984 using the schema-v2 loader lineage from research/cloud-valid-learning-recovery-v1 (checkpoint_recovery.py), then first-N-observation behavioural fingerprint. Live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stage 1 in progress (EV-0012/EV-0013): semantic fingerprints captured and structural compatibility EXACT_MATCH against this branch's CNJ templates. Next bounded action: actual load_tree of raw/ema/opt_state on CPU, first-N-observation behavioural fingerprint, and rollout_carry template matching against this branch's carry lineage; then define the MARATHON_BASELINE_V0 capsule contents and resume proof. Live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
