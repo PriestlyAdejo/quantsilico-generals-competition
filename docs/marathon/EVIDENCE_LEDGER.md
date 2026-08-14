@@ -79,3 +79,22 @@ New research ideas follow `SOURCE -> mechanism -> interaction/risk -> bounded ex
 - Semantic state hashes and deterministic resume capsule for Stage 1.
 - Serious paired strength evaluation of historical and later checkpoints.
 - Exact Cursor Agent executable, authentication, supported-model listing, and available usage before live orchestration acceptance.
+
+### `EV-0008` — Stage 0B schema hardening validated (`ORCH-0001` continuation)
+
+- Source class: `LOCAL_RUNTIME_EVIDENCE`
+- Takeover finding: the uncommitted Codex hardening diff left `tests/unit/test_agentic_orchestrator_workflow.py` fixtures on the pre-hardening schema; a real run at HEAD `780a8ce` produced `17 passed, 5 failed` while `ACTIVE_STATE.json` still claimed `PASS_22_TESTS` (stale).
+- Repair at commit `5b345a7`: fixtures aligned with the hardened schema; latent `NameError` in `_validate_repository_report` for non-`COMPLETE` reports fixed by binding `normalized_files`/`actual` unconditionally; `DryRunAdapter` now reports the real changed-path set so repository-truth checks hold on a dirty worktree.
+- New coverage: `tests/unit/test_agentic_orchestrator_hardening.py` adds 19 tests (END_COMMIT/PLAN_ID rules, stable PROBLEM_ID, structured HUMAN_BOUNDARY consistency, recursive redaction, boundary keyword inference, PARTIAL-report validation, ToolingGateError routing).
+- Adjudication: `dry_run()` terminating in `ACCEPTED` before its pause/resume proofs is the intended contract; the prior `IDLE` expectation came from the pre-hardening flow.
+- Gate (all at `5b345a7`): `pytest` over the four orchestrator test modules `41 passed, 0 failed`; `ruff check` clean; `compileall` exit 0; `dry-run` all `DRY_RUN_PROOFS` and `RECOVERY_PROBES` true, exit 0; `tooling` reports Codex `READY` (`gpt-5.6-sol`) and Cursor `UNAVAILABLE` (matches the recorded live-acceptance blocker).
+- Decision: Stage 0B hardening is a completed bounded unit; live cross-provider acceptance remains blocked on Cursor CLI/usage.
+
+### `EV-0009` — Qoder takeover preservation snapshot
+
+- Source class: `LOCAL_RUNTIME_EVIDENCE`
+- Safety ref: `backup/codex-takeover-snapshot` created at `780a8ce` before any edit.
+- Dirty-diff snapshot: `var/marathon_takeover/codex-takeover-dirty.patch` (binary-capable `git diff --binary HEAD`, 45,065 bytes), SHA-256 `dd0cf6efd3d979a7cfafede27498d46f3b93ed8ab835ca3185a055be3600352b`.
+- Round-trip proof: with the dirty changes stashed, `git apply --check` of the patch succeeded; the stash was restored and the five modified files verified intact. A branch ref alone is not treated as preservation of uncommitted work.
+- No untracked files required snapshotting at takeover (`git status -uall` showed only the five tracked modifications).
+- Decision: takeover state is independently recoverable; proceed with Stage 0B completion.
