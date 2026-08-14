@@ -78,12 +78,23 @@ Two failed attempts at the same substantive problem trigger architect escalation
 
 Reviewer verdicts are exactly one of:
 
-- `SHIP`
+- `ACCEPT`
 - `FIX_FIRST`
 - `RETHINK`
 - `INSUFFICIENT_EVIDENCE`
+- `HUMAN_BOUNDARY`
 
 The reviewer checks the diff, repository truth, tests, evidence, scope, plan gates, rollback, and handoff state. It does not accept an implementer's success claim in place of evidence. Material reviewer disagreement follows `PLAN_CONFLICT`.
+
+`ACCEPT` is the automation-facing spelling of the former `SHIP` verdict. Historical `SHIP` records remain interpretable as `ACCEPT`, but new records emit `ACCEPT`. `HUMAN_BOUNDARY` pauses without treating the implementation as failed.
+
+## 5.1 Local orchestration (`ORCH-0001`)
+
+The Stage 0B supervisor implements this protocol; it does not replace it. Codex architect/reviewer subprocesses are read-only. The designated implementer is the only writer. The supervisor validates structured task, implementation-report, and review records, persists every transition atomically under ignored runtime state, and recovers after interruption. Three review/repair cycles are the absolute task ceiling, while two failed attempts carrying the same substantive-problem fingerprint trigger earlier architect escalation.
+
+The desired model identity is a requirement, not an undocumented CLI alias. The supervisor queries installed CLI configuration/model listings where supported, records the resolved identity, and fails or pauses loudly when unavailable. It never silently selects another model family.
+
+Live orchestration must pause as `PAUSED_USAGE` on quota exhaustion and `PAUSED_HUMAN_BOUNDARY` before paid-resource creation or expansion, repository visibility changes, competition uploads, destructive evidence removal, force pushes/history rewriting, pinned-engine edits, credential operations, or an explicit human boundary. A model-usage pause must not kill an independent healthy trainer.
 
 ## 6. Human-controlled operations
 

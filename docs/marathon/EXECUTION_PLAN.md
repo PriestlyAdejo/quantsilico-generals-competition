@@ -96,6 +96,26 @@ Record at minimum:
 
 Stage 0 passes when authorities and configuration parse, the inventory is evidence-backed, unique research evidence is frozen, no unsupported deletion occurred, and `ACTIVE_STATE.json` identifies the next bounded Stage 1 action.
 
+### 5.5 Stage 0B — local agentic orchestration amendment
+
+After the authority bootstrap, implement a deterministic local supervisor for the existing agentic execution protocol. This is an operator-approved amendment to `MARATHON_REDESIGN_LOCKED_V1`, recorded as `ORCH-0001`; it does not reopen the model/research architecture.
+
+The supervisor coordinates one bounded task at a time:
+
+```text
+CODEX_ARCHITECT -> IMPLEMENTER -> CODEX_REVIEW
+-> FIX_FIRST: IMPLEMENTER_REPAIR -> CODEX_REVIEW
+-> ACCEPT: persist evidence/state -> request one next bounded task
+```
+
+Codex architect and reviewer calls are read-only and use fresh/ephemeral review context. Cursor Agent with the requested Grok model remains the preferred external implementer when its installed CLI, authentication, model identity, and quota are available. The human owner may assign Codex as implementer; independent review is still required. No model family may be silently substituted.
+
+Persist versioned, atomic runtime records under the ignored `var/agentic/` tree. Required states are `IDLE`, `ARCHITECTING`, `IMPLEMENTING`, `REVIEWING`, `REPAIRING`, `VALIDATING`, `ACCEPTED`, `BLOCKED`, `PAUSED_USAGE`, `PAUSED_HUMAN_BOUNDARY`, and `FAILED`. Recovery resumes persisted state rather than blindly replaying a stage. Three review/repair cycles are the absolute per-task ceiling; two failed attempts at the same substantive problem trigger earlier architect escalation.
+
+The orchestrator must detect quota/rate-limit failures as `PAUSED_USAGE`, enforce all human-controlled boundaries, prevent simultaneous writers, sanitize prompts/output, exclude secrets, and leave independent pre-authorized training processes untouched. It must default to bounded execution, never infinite unattended work.
+
+Before live edits, a dry run must prove schema validation, explicit state transitions, crash/restart recovery, human-boundary pause, quota pause, architect/proposal/review flow, and repair-loop bounds. A live end-to-end task is a separate acceptance gate and may not be claimed while a required CLI, authenticated model, or usage allowance is unavailable.
+
 ## 6. Stage 1 — reproduce `MARATHON_BASELINE_V0` before migration
 
 No large JAX source relocation, legacy-entrypoint removal, trainer rewrite, or performance-affecting repository migration may occur until the trusted learner is reproduced and fingerprinted.

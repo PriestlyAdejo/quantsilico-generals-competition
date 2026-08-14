@@ -1,27 +1,27 @@
 {
-  "SCHEMA_VERSION": "1.0.0",
+  "SCHEMA_VERSION": "1.1.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-14T18:18:16Z",
-  "OWNER_ROLE": "CODEX_GPT_5_6_SOL_ARCHITECT",
-  "STATUS": "ARCHITECT_HANDOFF_READY",
-  "CURRENT_STAGE": "STAGE_0",
-  "CURRENT_TASK": "BEGIN_FORENSIC_FREEZE_AND_AUTHORITY",
-  "BASE_COMMIT": "bd028b438cf6750f5c20e5902d7cc63dec9f365d",
+  "UPDATED_AT_UTC": "2026-08-14T19:10:48Z",
+  "OWNER_ROLE": "CODEX_GPT_5_6_SOL_IMPLEMENTER",
+  "STATUS": "PARTIAL",
+  "CURRENT_STAGE": "STAGE_0B",
+  "CURRENT_TASK": "IMPLEMENT_AGENTIC_ORCHESTRATOR_SIMULATION_SAFE_CORE",
+  "BASE_COMMIT": "4c84cb77d726aab638b68c7d8f1b37256569c4ac",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
   "DIRTY_FILES": [],
   "LAST_VALIDATED_COMMIT": "SELF",
   "TESTS_COMPLETED": [
     {
+      "COMMAND": "Python/PyYAML parse and canonical-key validation for configs/marathon/programme.yaml and experiments/marathon/ACTIVE_STATE.json",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": "Authority consistency validation for plan ID, review verdicts, PPO semantics, historical references, and ORCH-0001",
+      "RESULT": "PASS"
+    },
+    {
       "COMMAND": "git diff --check",
-      "RESULT": "PASS"
-    },
-    {
-      "COMMAND": "JSON schema/key/status validation for experiments/marathon/ACTIVE_STATE.json",
-      "RESULT": "PASS"
-    },
-    {
-      "COMMAND": "python scripts/dev/verify_repository.py",
       "RESULT": "PASS"
     },
     {
@@ -30,19 +30,20 @@
     }
   ],
   "TESTS_PENDING": [
-    "Create and validate docs/marathon/DESIGN_AUTHORITY.md during the first bounded Stage 0 slice.",
-    "Create and validate docs/marathon/EVIDENCE_LEDGER.md during the first bounded Stage 0 slice.",
-    "Create and validate docs/marathon/CONTROL_ENGINEERING.md during the first bounded Stage 0 slice.",
-    "Create and validate configs/marathon/programme.yaml during Stage 0.",
-    "Reproduce and validate MARATHON_BASELINE_V0 during Stage 1; no baseline claim is made by this handoff."
+    "Implement and test the simulation-safe local orchestration state machine, schemas, atomic runtime state, lock, restart recovery, quota pause, and human-boundary pause.",
+    "Run a Codex architect/proposal/reviewer dry run using the authenticated user-local Codex CLI.",
+    "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
+    "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
+    "Complete the remaining Stage 0 repository/entrypoint/worktree/output inventory before Stage 1."
   ],
   "ACTIVE_LOCAL_PROCESSES": {
-    "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-14T18:18:16Z",
-    "ACTIVE_PROJECT_WORKLOADS": [],
-    "NOTES": [
-      "No active local Marathon trainer, evaluator, dashboard, packaging, or deployment workload was found.",
-      "The Codex desktop Node kernel for this task was observed and excluded as agent infrastructure."
+    "AUDIT_STATUS": "PARTIAL",
+    "AUDITED_AT_UTC": "2026-08-14T19:10:48Z",
+    "ACTIVE_PROJECT_WORKLOADS": "UNKNOWN",
+    "UNKNOWN_REASON": "Windows process inspection found no Marathon trainer, evaluator, dashboard, packaging, or deployment process, but read-only WSL queries timed out while vmmemWSL was active. WSL was not shut down because an independent workload could not be excluded.",
+    "OBSERVED_INFRASTRUCTURE": [
+      "Codex desktop Node kernel for this task",
+      "vmmemWSL with workload not audited"
     ]
   },
   "ACTIVE_REMOTE_PROCESSES": {
@@ -71,10 +72,31 @@
       "REFERENCE_ID": "SPRINT_VALID_PPO_7M59",
       "SOURCE_NAME": "ckpt_final_u482_t7593984",
       "PATH": "C:\\Users\\pries\\quantsilico-runtime\\cloud_assisted_deadline_salvage_v1_final\\ckpt_final_u482_t7593984",
-      "STATUS": "PRESERVE_AND_REVERIFY_DURING_STAGE_1"
+      "STATUS": "HASH_VERIFIED_PRESERVE_AND_REPRODUCE_DURING_STAGE_1"
+    },
+    "OTHER_DISCOVERED_CHECKPOINTS": {
+      "STATUS": "KEEP_STRENGTH_UNKNOWN",
+      "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Cursor must read root AGENTS.md and every existing Marathon authority, reconstruct repository truth from source and evidence, then implement only the first bounded Stage 0 authority/forensic-freeze slice. Create missing Stage 0 authorities explicitly; do not begin repository migration, dashboard work, packaging redesign, training, evaluation, or algorithm implementation.",
-  "BLOCKERS": [],
-  "PLAN_DEVIATIONS": []
+  "NEXT_SAFE_ACTION": "Implement the bounded simulation-safe orchestration core from ORCH-0001 with versioned schemas, atomic ignored runtime state, an exclusive writer lock, deterministic transitions, restart recovery, quota and human-boundary pauses, and tests. Do not claim the live Cursor end-to-end gate while the official CLI/model/usage requirements are unavailable.",
+  "BLOCKERS": [
+    {
+      "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
+      "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
+      "DETAIL": "No native agent/cursor-agent executable was discovered; the official Windows route is WSL and WSL inspection timed out."
+    },
+    {
+      "ID": "CURSOR_USAGE_EXHAUSTED",
+      "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
+      "DETAIL": "The human operator reports exhausted Cursor credits. This is PAUSED_USAGE, not an implementation failure."
+    }
+  ],
+  "PLAN_DEVIATIONS": [
+    {
+      "ID": "ORCH-0001",
+      "STATUS": "RESOLVED_OPERATOR_AMENDMENT",
+      "SUMMARY": "Added bounded Stage 0B local Codex/implementer/Codex orchestration. New review records use ACCEPT instead of historical SHIP and add HUMAN_BOUNDARY."
+    }
+  ]
 }
