@@ -70,7 +70,16 @@ def main() -> int:
     args.out.mkdir(parents=True, exist_ok=True)
     sample = {
         key: np.asarray(batch[key])[:FIRST_N_STEPS, :FIRST_N_ENVS]
-        for key in ("spatial", "global", "mask", "actions", "old_logp", "values", "rewards", "dones")
+        for key in (
+            "spatial",
+            "global",
+            "mask",
+            "actions",
+            "old_logp",
+            "values",
+            "rewards",
+            "dones",
+        )
     }
     sample["ema_params_digest"] = np.frombuffer(
         bytes.fromhex(digest(jax.tree_util.tree_leaves(ema)[0])), dtype=np.uint8
@@ -95,7 +104,7 @@ def main() -> int:
             "action_hist": {
                 str(action): int(count)
                 for action, count in zip(
-                    *np.unique(np.asarray(batch["actions"]), return_counts=True)
+                    *np.unique(np.asarray(batch["actions"]), return_counts=True), strict=True
                 )
             },
             "value_mean": float(np.asarray(batch["values"]).mean()),
