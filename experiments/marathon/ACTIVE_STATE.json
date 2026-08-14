@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T00:35:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T01:05:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_1_PREP",
@@ -51,6 +51,10 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_structural_probe.py",
       "RESULT": "PASS_EXACT_MATCH_RAW_EMA_FROZEN_OPPONENT_OPT_STATE EV-0013"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_behaviour_fingerprint.py --num-envs 8 --rollout-len 16 --pool-size 128",
+      "RESULT": "PASS_BASELINE_RUNS_END_TO_END_CPU EV-0014"
     },
     {
       "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
@@ -105,7 +109,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 1 in progress (EV-0012/EV-0013): semantic fingerprints captured and structural compatibility EXACT_MATCH against this branch's CNJ templates. Next bounded action: actual load_tree of raw/ema/opt_state on CPU, first-N-observation behavioural fingerprint, and rollout_carry template matching against this branch's carry lineage; then define the MARATHON_BASELINE_V0 capsule contents and resume proof. Live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stage 1 in progress (EV-0012/0013/0014): baseline weights load and run end-to-end on this branch's CNJ lineage on CPU with coherent legal behaviour. Next bounded action: match rollout_carry.npz against this branch's carry lineage, then execute the one-update PPO resume proof from the baseline opt_state, then assemble the MARATHON_BASELINE_V0 capsule record under experiments/. Live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
