@@ -1,24 +1,36 @@
 {
-  "SCHEMA_VERSION": "1.1.0",
+  "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-14T19:10:48Z",
+  "UPDATED_AT_UTC": "2026-08-14T19:24:38Z",
   "OWNER_ROLE": "CODEX_GPT_5_6_SOL_IMPLEMENTER",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_0B",
-  "CURRENT_TASK": "IMPLEMENT_AGENTIC_ORCHESTRATOR_SIMULATION_SAFE_CORE",
-  "BASE_COMMIT": "4c84cb77d726aab638b68c7d8f1b37256569c4ac",
+  "CURRENT_TASK": "COMPLETE_STAGE_0_FORENSIC_INVENTORY_AND_RESOLVE_LIVE_CURSOR_GATE",
+  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
   "DIRTY_FILES": [],
   "LAST_VALIDATED_COMMIT": "SELF",
   "TESTS_COMPLETED": [
     {
-      "COMMAND": "Python/PyYAML parse and canonical-key validation for configs/marathon/programme.yaml and experiments/marathon/ACTIVE_STATE.json",
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_agentic_orchestrator_schemas.py tests/unit/test_agentic_orchestrator_subprocess.py tests/unit/test_agentic_orchestrator_workflow.py -q",
+      "RESULT": "PASS_22_TESTS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m ruff check tools/agentic_orchestrator tests/unit/test_agentic_orchestrator_*.py",
       "RESULT": "PASS"
     },
     {
-      "COMMAND": "Authority consistency validation for plan ID, review verdicts, PPO semantics, historical references, and ORCH-0001",
+      "COMMAND": ".venv/Scripts/python.exe -m compileall -q tools/agentic_orchestrator",
       "RESULT": "PASS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m tools.agentic_orchestrator dry-run",
+      "RESULT": "PASS_FIX_LOOP_ACCEPT_RESTART_HUMAN_BOUNDARY_USAGE_PAUSE"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m tools.agentic_orchestrator tooling",
+      "RESULT": "EXPECTED_PARTIAL_CODEX_READY_CURSOR_AGENT_UNAVAILABLE"
     },
     {
       "COMMAND": "git diff --check",
@@ -30,8 +42,7 @@
     }
   ],
   "TESTS_PENDING": [
-    "Implement and test the simulation-safe local orchestration state machine, schemas, atomic runtime state, lock, restart recovery, quota pause, and human-boundary pause.",
-    "Run a Codex architect/proposal/reviewer dry run using the authenticated user-local Codex CLI.",
+    "Run a real read-only Codex architect and fresh Codex reviewer probe through the supervisor.",
     "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
     "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
     "Complete the remaining Stage 0 repository/entrypoint/worktree/output inventory before Stage 1."
@@ -79,7 +90,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Implement the bounded simulation-safe orchestration core from ORCH-0001 with versioned schemas, atomic ignored runtime state, an exclusive writer lock, deterministic transitions, restart recovery, quota and human-boundary pauses, and tests. Do not claim the live Cursor end-to-end gate while the official CLI/model/usage requirements are unavailable.",
+  "NEXT_SAFE_ACTION": "Use Codex as the human-assigned implementer for the next bounded read-only-safe Stage 0 forensic inventory slice while preserving independent review. Separately resolve the official Cursor Agent CLI/model/usage gate without shutting down unknown WSL workloads. Do not claim live cross-provider acceptance until that gate passes.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

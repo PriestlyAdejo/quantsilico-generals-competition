@@ -63,6 +63,16 @@ New research ideas follow `SOURCE -> mechanism -> interaction/risk -> bounded ex
 - Evidence: read-only Runpod listing found pod `wvjrnxbpcjnr8h` (`generals_competition`) in `EXITED` state and no serverless endpoints.
 - Decision: no active remote workload; no resource mutation authorized or performed.
 
+### `EV-0007` — simulation-safe orchestration core
+
+- Source class: `REPOSITORY_FACT`
+- Implementation: `tools/agentic_orchestrator/` provides strict task/report/review schemas, atomic JSON replacement, durable JSONL transitions, an exclusive writer lock, legal transition validation, restart recovery, output/environment sanitization, CLI discovery, exact Cursor model matching, quota classification, human-boundary pauses, and bounded repair escalation.
+- Tests: 22 focused unit tests pass; Ruff and byte-compilation pass.
+- Dry run: deterministic architect/proposal/reviewer stand-ins exercised `FIX_FIRST -> REPAIRING -> ACCEPTED`, restart recovery, `PAUSED_HUMAN_BOUNDARY`, and `PAUSED_USAGE` without tracked repository edits.
+- Live probe: Codex is `READY`, authenticated through ChatGPT, configured as `gpt-5.6-sol`, and reports `codex-cli 0.147.0-alpha.6.5`. Cursor Agent remains `UNAVAILABLE` and no model list can be queried.
+- Limitation: the deterministic dry run is not a live cross-provider acceptance test. No live Cursor implementation or tiny real task is claimed.
+- Decision: promote the simulation-safe core as a completed bounded unit; keep live orchestration acceptance `PARTIAL / PAUSED_USAGE` until the Cursor CLI, exact model identity, authentication, and credits are available.
+
 ## Open evidence requirements
 
 - Complete Stage 0 artefact/worktree/entrypoint inventory.
