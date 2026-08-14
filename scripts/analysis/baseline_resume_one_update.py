@@ -53,7 +53,9 @@ def digest(tree) -> str:
 
 
 def finite(tree) -> bool:
-    return all(bool(np.isfinite(np.asarray(leaf)).all()) for leaf in jax.tree_util.tree_leaves(tree))
+    return all(
+        bool(np.isfinite(np.asarray(leaf)).all()) for leaf in jax.tree_util.tree_leaves(tree)
+    )
 
 
 def flatten_batch(batch: dict) -> dict:
