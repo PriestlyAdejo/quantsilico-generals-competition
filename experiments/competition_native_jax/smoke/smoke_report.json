@@ -9,11 +9,11 @@
     "seed": 1
   },
   "status": "COMPLETED",
-  "transitions": 52,
+  "transitions": 40,
   "updates": 2,
   "games": 2,
-  "elapsed_s": 101.49598129998776,
-  "measured_tps": 0.512335555890687,
+  "elapsed_s": 109.54771050001727,
+  "measured_tps": 0.36513770865155315,
   "device": {
     "numpy": true,
     "jax_backend": "cpu",

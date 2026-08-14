@@ -1,0 +1,115 @@
+schema_version: 1
+plan_id: MARATHON_REDESIGN_LOCKED_V1
+programme_status: STAGE_0_AUTHORITY_BOOTSTRAP
+
+repository:
+  official_engine_path: third_party/generals-bots
+  official_engine_commit: 9e3b9d13cca51caa1bb07db48bb85c9e90ce0462
+  visibility_policy: INTENTIONALLY_PUBLIC_EARLY_DEVELOPMENT
+  privacy_cutover_decision: REPOSITORY_PRIVACY_CUTOVER
+
+baseline:
+  id: MARATHON_BASELINE_V0
+  migration_blocked_until_reproduced: true
+  historical_source:
+    reference_id: SPRINT_VALID_PPO_7M59
+    checkpoint_name: ckpt_final_u482_t7593984
+    transitions: 7593984
+    variants: [raw, ema]
+  required_hashes: [FILE_SHA256, SEMANTIC_STATE_SHA256]
+  determinism_levels:
+    - BITWISE_DETERMINISM
+    - STATE_SEMANTIC_DETERMINISM
+    - BEHAVIOURAL_DETERMINISM
+
+evaluation:
+  score: {win: 1.0, draw: 0.5, loss: 0.0}
+  pair:
+    games: 2
+    common_map_and_seed: true
+    candidate_plays_both_seats: true
+    statistic_unit: PAIRED_CANDIDATE_MINUS_INCUMBENT
+  screen_pairs_per_opponent: 64
+  promotion_min_pairs: 512
+  promotion_max_pairs: 2048
+  confidence: 0.95
+  sequential_method: ANYTIME_VALID_EMPIRICAL_BERNSTEIN_CONFIDENCE_SEQUENCE
+  forbid_repeated_fixed_ci_peeking: true
+  matchup_metrics:
+    - WORST_MATCHUP_SCORE
+    - BOTTOM_QUARTILE_MATCHUP_SCORE
+    - MATCHUP_SCORE_STD
+
+promotion:
+  practical_margin: 0.01
+  robustness_noninferiority_margin: -0.005
+  worst_matchup_improvement: 0.05
+
+experiments:
+  successive_halving: true
+  raw_and_ema_always_on_when_compatible: true
+  reference_transition_budgets: [5000000, 25000000, 50000000, 100000000, 250000000, 500000000]
+  allow_stop_skip_or_extend: true
+  learning_velocity_metrics:
+    - DELTA_STRENGTH_PER_TRANSITION
+    - DELTA_STRENGTH_PER_GPU_HOUR
+    - DELTA_STRENGTH_PER_GPU_COST
+    - MARGINAL_STRENGTH_PER_GPU_HOUR
+
+control:
+  ppo_semantics:
+    - UNCHANGED
+    - PRE_SAMPLING_MASK
+    - OFF_POLICY_AUXILIARY
+    - EVAL_ONLY
+  early_training_controllers: [KL_CONTROLLER, CURRICULUM_CONTROLLER, ANCHOR_CONTROLLER]
+  castle_telemetry_early: true
+  castle_intervention_losses_enabled: false
+
+historical_references:
+  strength_diagnostics:
+    - HEURISTIC_V2_FALLBACK
+    - SPRINT_BC_STEP450
+    - SPRINT_VALID_PPO_7M59_RAW
+    - SPRINT_VALID_PPO_7M59_EMA
+  invalid_learning_evidence:
+    - FORENSIC_ZERO_REWARD_35M
+
+orchestration:
+  amendment_id: ORCH-0001
+  runtime_dir: var/agentic
+  default_max_tasks: 1
+  max_repair_iterations: 3
+  same_problem_failed_attempts_before_escalation: 2
+  states:
+    - IDLE
+    - ARCHITECTING
+    - IMPLEMENTING
+    - REVIEWING
+    - REPAIRING
+    - VALIDATING
+    - ACCEPTED
+    - BLOCKED
+    - PAUSED_USAGE
+    - PAUSED_HUMAN_BOUNDARY
+    - FAILED
+  review_verdicts: [ACCEPT, FIX_FIRST, RETHINK, INSUFFICIENT_EVIDENCE, HUMAN_BOUNDARY]
+  architect:
+    provider: CODEX_CLI
+    role: READ_ONLY
+    requested_identity: GPT-5.6_SOL_FROM_INSTALLED_CONFIG
+    require_exact_resolved_identity: true
+  implementer:
+    provider: CURSOR_AGENT_CLI
+    role: SOLE_WRITER
+    requested_identity: GROK_4.6
+    require_exact_resolved_identity: true
+    allow_silent_model_substitution: false
+  human_boundaries:
+    - PAID_RESOURCE_CREATE_OR_EXPAND
+    - REPOSITORY_VISIBILITY_CHANGE
+    - COMPETITION_UPLOAD
+    - DESTRUCTIVE_UNIQUE_EVIDENCE_REMOVAL
+    - FORCE_PUSH_OR_HISTORY_REWRITE
+    - PINNED_ENGINE_MODIFICATION
+    - CREDENTIAL_OPERATION

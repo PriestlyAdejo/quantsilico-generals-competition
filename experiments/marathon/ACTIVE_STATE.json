@@ -1,0 +1,146 @@
+{
+  "SCHEMA_VERSION": "1.2.0",
+  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
+  "UPDATED_AT_UTC": "2026-08-15T01:40:00Z",
+  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
+  "STATUS": "PARTIAL",
+  "CURRENT_STAGE": "STAGE_1_PREP",
+  "CURRENT_TASK": "BEGIN_MARATHON_BASELINE_V0_REPRODUCTION_PLANNING_AND_SMOKE",
+  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
+  "HEAD_COMMIT": "SELF",
+  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
+  "DIRTY_FILES": [],
+  "LAST_VALIDATED_COMMIT": "SELF",
+  "TESTS_COMPLETED": [
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_agentic_orchestrator_schemas.py tests/unit/test_agentic_orchestrator_subprocess.py tests/unit/test_agentic_orchestrator_workflow.py tests/unit/test_agentic_orchestrator_hardening.py -q",
+      "RESULT": "PASS_41_TESTS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m ruff check tools/agentic_orchestrator tests/unit/test_agentic_orchestrator_schemas.py tests/unit/test_agentic_orchestrator_subprocess.py tests/unit/test_agentic_orchestrator_workflow.py tests/unit/test_agentic_orchestrator_hardening.py",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m compileall -q tools/agentic_orchestrator",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m tools.agentic_orchestrator dry-run",
+      "RESULT": "PASS_ALL_PROOFS_AND_RECOVERY_PROBES_TRUE"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m tools.agentic_orchestrator tooling",
+      "RESULT": "EXPECTED_PARTIAL_CODEX_READY_CURSOR_AGENT_UNAVAILABLE"
+    },
+    {
+      "COMMAND": "git diff --check",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/detect_training_hardware.py",
+      "RESULT": "PASS_CPU_ONLY_JAX_RTX3070_PRESENT_NO_CUDA_TORCH var/training/hardware_report.json"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/run_competition_native_jax_smoke.py",
+      "RESULT": "PASS_DONE_COMPLETED_2_UPDATES_CPU"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/semantic_state_hash.py C:/Users/pries/quantsilico-runtime/cloud_assisted_deadline_salvage_v1_final/ckpt_final_u482_t7593984",
+      "RESULT": "PASS_FIVE_ARTEFACTS_FINGERPRINTED experiments/marathon/baseline_semantic_hashes.json"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_structural_probe.py",
+      "RESULT": "PASS_EXACT_MATCH_RAW_EMA_FROZEN_OPPONENT_OPT_STATE EV-0013"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_behaviour_fingerprint.py --num-envs 8 --rollout-len 16 --pool-size 128",
+      "RESULT": "PASS_BASELINE_RUNS_END_TO_END_CPU EV-0014"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_resume_one_update.py",
+      "RESULT": "PASS_RESUME_ONE_UPDATE_RATIO_1.0_ALL_FINITE EV-0015"
+    },
+    {
+      "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
+      "RESULT": "PASS_AT_SELF_SUPERSEDED_BY_DIRTY_TAKEOVER_STATE"
+    }
+  ],
+  "TESTS_PENDING": [
+    "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
+    "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
+    "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon."
+  ],
+  "ACTIVE_LOCAL_PROCESSES": {
+    "AUDIT_STATUS": "PARTIAL",
+    "AUDITED_AT_UTC": "2026-08-14T19:10:48Z",
+    "ACTIVE_PROJECT_WORKLOADS": "UNKNOWN",
+    "UNKNOWN_REASON": "Windows process inspection found no Marathon trainer, evaluator, dashboard, packaging, or deployment process, but read-only WSL queries timed out while vmmemWSL was active. WSL was not shut down because an independent workload could not be excluded.",
+    "OBSERVED_INFRASTRUCTURE": [
+      "Codex desktop Node kernel for this task",
+      "vmmemWSL with workload not audited"
+    ]
+  },
+  "ACTIVE_REMOTE_PROCESSES": {
+    "AUDIT_STATUS": "AUDITED_READ_ONLY",
+    "AUDITED_AT_UTC": "2026-08-14T18:18:16Z",
+    "ACTIVE_PROJECT_WORKLOADS": [],
+    "OBSERVED_RESOURCES": [
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "wvjrnxbpcjnr8h",
+        "NAME": "generals_competition",
+        "STATE": "EXITED"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "SERVERLESS_ENDPOINTS",
+        "STATE": "NONE_FOUND"
+      }
+    ]
+  },
+  "CURRENT_EXPERIMENT": null,
+  "CURRENT_CHECKPOINT": {
+    "ACTIVE": null,
+    "HISTORICAL_STAGE_1_REFERENCE": {
+      "REFERENCE_ID": "SPRINT_VALID_PPO_7M59",
+      "SOURCE_NAME": "ckpt_final_u482_t7593984",
+      "PATH": "C:\\Users\\pries\\quantsilico-runtime\\cloud_assisted_deadline_salvage_v1_final\\ckpt_final_u482_t7593984",
+      "STATUS": "HASH_VERIFIED_PRESERVE_AND_REPRODUCE_DURING_STAGE_1"
+    },
+    "OTHER_DISCOVERED_CHECKPOINTS": {
+      "STATUS": "KEEP_STRENGTH_UNKNOWN",
+      "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
+    }
+  },
+  "NEXT_SAFE_ACTION": "Stage 1 resume proof complete (EV-0015: one PPO update from restored baseline state, ratio 1.0, all finite, CPU). Remaining MARATHON_BASELINE_V0 gates: assemble the tracked capsule record under experiments/ (semantic hashes + resume report + determinism contract JAX_VERSION/XLA/DTYPE_POLICY), measure hot-path/end-to-end/valid-learning TPS separately on CPU, and schedule external paired gameplay measurement (Stage 2 evaluator dependency). GPU-class reproduction remains available under the compute amendment when credits are checked. Live Cursor acceptance remains a separate external gate.",
+  "BLOCKERS": [
+    {
+      "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
+      "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
+      "DETAIL": "No native agent/cursor-agent executable was discovered; the official Windows route is WSL and WSL inspection timed out."
+    },
+    {
+      "ID": "CURSOR_USAGE_EXHAUSTED",
+      "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
+      "DETAIL": "The human operator reports exhausted Cursor credits. This is PAUSED_USAGE, not an implementation failure."
+    }
+  ],
+  "PLAN_DEVIATIONS": [
+    {
+      "ID": "ORCH-0001",
+      "STATUS": "RESOLVED_OPERATOR_AMENDMENT",
+      "SUMMARY": "Added bounded Stage 0B local Codex/implementer/Codex orchestration. New review records use ACCEPT instead of historical SHIP and add HUMAN_BOUNDARY."
+    },
+    {
+      "ID": "QODER-AUTONOMY-2026-08-14",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Operator pre-authorised set-and-forget autonomous execution: checkpoint commits, pushes, PR/merge and main synchronisation, W4 harness creation, and continuation through canonical stages without routine approval. Retained human boundaries: cash spend beyond existing credits, visibility changes, competition uploads, destructive unique-evidence removal, force push/history rewrite, pinned-engine edits, credential operations."
+    },
+    {
+      "ID": "QODER-COMPUTE-2026-08-14",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Existing prepaid/promotional/trial compute credits are authorised for GPU training and experiments within the available balance; new cash spend, credit purchases, and payment-method changes remain human-controlled. Accelerator selection optimises validated throughput per credit with a utilisation gate before scaling."
+    }
+  ]
+}
