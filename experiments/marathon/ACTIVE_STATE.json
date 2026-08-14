@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T01:40:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T02:10:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_1_PREP",
@@ -61,6 +61,10 @@
       "RESULT": "PASS_RESUME_ONE_UPDATE_RATIO_1.0_ALL_FINITE EV-0015"
     },
     {
+      "COMMAND": "post-merge proof on main@983d87a: pytest 5 orchestrator+hook modules + orchestrator dry-run",
+      "RESULT": "PASS_55_TESTS_DRY_RUN_PROOFS_TRUE PR#2_MERGED"
+    },
+    {
       "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
       "RESULT": "PASS_AT_SELF_SUPERSEDED_BY_DIRTY_TAKEOVER_STATE"
     }
@@ -113,7 +117,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 1 resume proof complete (EV-0015: one PPO update from restored baseline state, ratio 1.0, all finite, CPU). Remaining MARATHON_BASELINE_V0 gates: assemble the tracked capsule record under experiments/ (semantic hashes + resume report + determinism contract JAX_VERSION/XLA/DTYPE_POLICY), measure hot-path/end-to-end/valid-learning TPS separately on CPU, and schedule external paired gameplay measurement (Stage 2 evaluator dependency). GPU-class reproduction remains available under the compute amendment when credits are checked. Live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stage 0/0B merged to main via PR #2 (merge commit 983d87a; post-merge proof 55 tests green). Stage 1 continues: assemble the tracked MARATHON_BASELINE_V0 capsule record under experiments/ (semantic hashes + resume report + determinism contract JAX_VERSION/XLA_VERSION/DTYPE_POLICY/DETERMINISM_MODE), measure hot-path/end-to-end/valid-learning TPS separately on CPU, then begin Stage 2 paired evaluator work that unlocks external gameplay measurement. GPU-class reproduction available under the compute amendment once the credit balance is checked. Live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
