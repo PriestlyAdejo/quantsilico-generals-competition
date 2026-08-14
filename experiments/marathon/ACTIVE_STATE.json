@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-14T22:55:00Z",
+  "UPDATED_AT_UTC": "2026-08-14T23:25:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_0",
-  "CURRENT_TASK": "COMPLETE_STAGE_0_FORENSIC_INVENTORY_AND_RESOLVE_LIVE_CURSOR_GATE",
+  "CURRENT_STAGE": "STAGE_1_PREP",
+  "CURRENT_TASK": "BEGIN_MARATHON_BASELINE_V0_REPRODUCTION_PLANNING_AND_SMOKE",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -44,7 +44,7 @@
   "TESTS_PENDING": [
     "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
     "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
-    "Create and test the pre-authorised minimum Qoder harness (marathon-evidence-contract rule, ultra-review and quantisilico-marathon-resume skills, guardrail hooks)."
+    "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon."
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "PARTIAL",
@@ -89,7 +89,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 0 freeze record is complete (EV-0010) with the baseline checkpoint re-verified 6/6 artefact hashes. Next: create and test the pre-authorised minimum Qoder harness (W4), then begin Stage 1 MARATHON_BASELINE_V0 reproduction from ckpt_final_u482_t7593984. Live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stage 0 and Stage 0B are complete (EV-0007/0008/0010/0011; Qoder harness tested 14/14). Next bounded action: Stage 1 MARATHON_BASELINE_V0 preparation — verify the JAX training environment locally (scripts/dev/verify_training_environment.py, detect_training_hardware.py), run the cheapest possible resume smoke of ckpt_final_u482_t7593984, and start the baseline capsule fingerprinting per EXECUTION_PLAN §6. Live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
