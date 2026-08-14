@@ -13,6 +13,7 @@ from .orchestrator import (
     Orchestrator,
     OrchestratorError,
     RuntimePaths,
+    ToolingGateError,
 )
 from .schemas import State
 
@@ -72,7 +73,17 @@ def command_pause(args: argparse.Namespace) -> int:
 
 def command_resume(args: argparse.Namespace) -> int:
     orchestrator = _orchestrator(args)
-    orchestrator.resume()
+    state = State(orchestrator.state["STATE"])
+    if state in {
+        State.ARCHITECTING,
+        State.IMPLEMENTING,
+        State.VALIDATING,
+        State.REVIEWING,
+        State.REPAIRING,
+    }:
+        orchestrator.recover()
+    else:
+        orchestrator.resume()
     _print(orchestrator.status())
     return 0
 
@@ -83,8 +94,17 @@ def command_run(args: argparse.Namespace) -> int:
         adapter = LiveAgentAdapter(
             repo=Path(args.repo).resolve(),
             runtime=orchestrator.runtime,
+            requested_codex_identity=args.codex_model_id,
             requested_cursor_identity=args.cursor_model_display,
         )
+        orchestrator.record_tooling(adapter.identities)
+    except ToolingGateError as exc:
+        if exc.classification == "USAGE_EXHAUSTED":
+            orchestrator.pause_usage(str(exc))
+        else:
+            orchestrator.block(str(exc))
+        _print(orchestrator.status())
+        return 2
     except OrchestratorError as exc:
         orchestrator.block(str(exc))
         _print(orchestrator.status())
@@ -139,6 +159,11 @@ def build_parser() -> argparse.ArgumentParser:
     dry_run.set_defaults(func=command_dry_run)
 
     run = subparsers.add_parser("run", help="run bounded live tasks")
+    run.add_argument(
+        "--codex-model-id",
+        default="gpt-5.6-sol",
+        help="exact configured Codex model identity required for architect/reviewer calls",
+    )
     run.add_argument(
         "--cursor-model-display",
         default="Grok 4.6",

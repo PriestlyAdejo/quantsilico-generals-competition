@@ -7,16 +7,19 @@ from pathlib import Path
 import pytest
 
 from tools.agentic_orchestrator.orchestrator import (
+    PLAN_ID,
     ConcurrentWriterError,
     Orchestrator,
     OrchestratorError,
     RuntimePaths,
     WriterLock,
+    _actual_changed_paths,
     atomic_write_json,
 )
 from tools.agentic_orchestrator.schemas import SCHEMA_VERSION, State
 
 REPO = Path(__file__).resolve().parents[2]
+ACTIVE_STATE_PATH = "experiments/marathon/ACTIVE_STATE.json"
 
 
 def head() -> str:
@@ -65,15 +68,16 @@ class InvalidThenValidArchitect:
     def __init__(self) -> None:
         self.calls = 0
         self.base = head()
+        self.changed = sorted(_actual_changed_paths(REPO, self.base))
 
     def architect(self, context: dict, *, correction: str | None = None) -> dict:
         self.calls += 1
         if self.calls == 1:
             return {"bad": "schema"}
-        return _task()
+        return _task(changed=self.changed)
 
     def implement(self, task: dict, *, repair: dict | None = None) -> dict:
-        return _report(self.base)
+        return _report(self.base, changed=self.changed)
 
     def review(self, task: dict, report: dict, *, iteration: int) -> dict:
         return _review("ACCEPT")
@@ -89,8 +93,12 @@ def test_architect_schema_is_corrected_once(tmp_path: Path) -> None:
 
 class HumanBoundaryArchitect(InvalidThenValidArchitect):
     def architect(self, context: dict, *, correction: str | None = None) -> dict:
-        value = _task()
-        value["HUMAN_BOUNDARY"] = ["REQUIRES_NOW:PAID_RESOURCE_CREATE_OR_EXPAND"]
+        value = _task(changed=self.changed)
+        value["HUMAN_BOUNDARY"] = {
+            "REQUIRED": True,
+            "ACTIONS": ["PAID_RESOURCE_CREATE_OR_EXPAND"],
+            "REASON": "Task would create a paid Runpod pod.",
+        }
         return value
 
 
@@ -105,11 +113,14 @@ def test_nonverification_completion_requires_active_state_update(tmp_path: Path)
     orchestrator = Orchestrator(repo=REPO, runtime=RuntimePaths(tmp_path))
     base = head()
     orchestrator.state["BASE_COMMIT"] = base
-    task = _task()
+    changed = sorted(_actual_changed_paths(REPO, base))
+    if ACTIVE_STATE_PATH in changed:
+        pytest.skip("ACTIVE_STATE is part of the live diff; gate unreachable")
+    task = _task(changed=changed)
     task["VERIFICATION_ONLY"] = False
-    report = _report(base)
+    report = _report(base, changed=changed)
+    report["END_COMMIT"] = "WORKTREE"
     report["HEAD_COMMIT"] = "WORKTREE"
-    report["FILES_CHANGED"] = ["tools/example.py"]
     with pytest.raises(OrchestratorError, match="ACTIVE_STATE"):
         orchestrator._validate_repository_report(task, report)
 
@@ -120,17 +131,18 @@ class RepeatedFailureAdapter(InvalidThenValidArchitect):
         self.implement_calls = 0
 
     def architect(self, context: dict, *, correction: str | None = None) -> dict:
-        return _task()
+        return _task(changed=self.changed)
 
     def implement(self, task: dict, *, repair: dict | None = None) -> dict:
         self.implement_calls += 1
-        value = _report(self.base)
+        value = _report(self.base, changed=self.changed)
         value["STATUS"] = "PARTIAL"
         value["TESTS_FAILED"] = ["same failure"]
         return value
 
     def review(self, task: dict, report: dict, *, iteration: int) -> dict:
         value = _review("FIX_FIRST")
+        value["PROBLEM_ID"] = "SAME_PROBLEM"
         value["FAILED_CRITERIA"] = ["same problem"]
         value["REQUIRED_FIXES"] = ["fix the same substantive problem"]
         return value
@@ -145,38 +157,44 @@ def test_same_problem_twice_escalates_before_absolute_cap(tmp_path: Path) -> Non
     assert orchestrator.state["REPAIR_ITERATION"] == 2
 
 
-def _task() -> dict:
+def _task(changed: list[str] | None = None) -> dict:
+    areas = sorted(set(changed)) if changed else ["var/agentic"]
+    if ACTIVE_STATE_PATH not in areas:
+        areas = sorted([*areas, ACTIVE_STATE_PATH])
     return {
         "SCHEMA_VERSION": SCHEMA_VERSION,
         "TASK_ID": "TEST_TASK",
         "PLAN_STAGE": "STAGE_0B",
         "GOAL": "Verify orchestration.",
-        "FILES_OR_AREAS": ["var/agentic"],
+        "FILES_OR_AREAS": areas,
         "REPOSITORY_FACTS": ["test repository"],
         "IMPLEMENTATION_SPEC": "Return deterministic records.",
         "ACCEPTANCE_CRITERIA": ["records validate"],
         "TESTS_REQUIRED": ["pytest"],
         "FORBIDDEN_ACTIONS": ["repository edit"],
-        "HUMAN_BOUNDARY": [],
+        "HUMAN_BOUNDARY": {"REQUIRED": False, "ACTIONS": [], "REASON": ""},
         "EXPECTED_OUTPUT": "Validated report.",
         "VERIFICATION_ONLY": True,
     }
 
 
-def _report(base: str) -> dict:
+def _report(base: str, changed: list[str] | None = None) -> dict:
     return {
         "SCHEMA_VERSION": SCHEMA_VERSION,
+        "PLAN_ID": PLAN_ID,
         "STATUS": "COMPLETE",
         "TASK_ID": "TEST_TASK",
         "BASE_COMMIT": base,
         "HEAD_COMMIT": base,
-        "FILES_CHANGED": [],
+        "END_COMMIT": base,
+        "FILES_CHANGED": list(changed) if changed is not None else [],
         "TESTS_RUN": ["pytest"],
         "TESTS_PASSED": ["pytest"],
         "TESTS_FAILED": [],
         "EVIDENCE": ["test"],
         "KNOWN_LIMITATIONS": [],
         "PLAN_CONFLICTS": [],
+        "PLAN_DEVIATIONS": [],
         "NEXT_SAFE_ACTION": "review",
     }
 
@@ -186,6 +204,7 @@ def _review(verdict: str) -> dict:
         "SCHEMA_VERSION": SCHEMA_VERSION,
         "VERDICT": verdict,
         "TASK_ID": "TEST_TASK",
+        "PROBLEM_ID": "NONE",
         "FINDINGS": [],
         "FAILED_CRITERIA": [],
         "REQUIRED_FIXES": [],

@@ -10,6 +10,7 @@ import tomllib
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 MAX_CAPTURE_CHARS = 2_000_000
 SENSITIVE_ENV_RE = re.compile(
@@ -86,6 +87,17 @@ def sanitize_text(text: str) -> str:
     if len(sanitized) > MAX_CAPTURE_CHARS:
         return sanitized[:MAX_CAPTURE_CHARS] + "\n[TRUNCATED]"
     return sanitized
+
+
+def sanitize_value(value: Any) -> Any:
+    """Recursively redact strings before prompt or durable-output persistence."""
+    if isinstance(value, str):
+        return sanitize_text(value)
+    if isinstance(value, (list, tuple)):
+        return [sanitize_value(item) for item in value]
+    if isinstance(value, dict):
+        return {str(key): sanitize_value(item) for key, item in value.items()}
+    return value
 
 
 def safe_environment(extra: Mapping[str, str] | None = None) -> dict[str, str]:

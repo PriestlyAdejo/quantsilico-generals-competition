@@ -23,7 +23,7 @@ def task(*, verification_only: bool = False) -> dict:
         "ACCEPTANCE_CRITERIA": ["tests pass"],
         "TESTS_REQUIRED": ["pytest"],
         "FORBIDDEN_ACTIONS": ["paid resources"],
-        "HUMAN_BOUNDARY": [],
+        "HUMAN_BOUNDARY": {"REQUIRED": False, "ACTIONS": [], "REASON": ""},
         "EXPECTED_OUTPUT": "A validated report.",
         "VERIFICATION_ONLY": verification_only,
     }
@@ -32,10 +32,12 @@ def task(*, verification_only: bool = False) -> dict:
 def report() -> dict:
     return {
         "SCHEMA_VERSION": SCHEMA_VERSION,
+        "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
         "STATUS": "COMPLETE",
         "TASK_ID": "T-1",
         "BASE_COMMIT": "a" * 40,
         "HEAD_COMMIT": "b" * 40,
+        "END_COMMIT": "b" * 40,
         "FILES_CHANGED": ["example.py"],
         "TESTS_RUN": ["pytest"],
         "TESTS_PASSED": ["pytest"],
@@ -43,6 +45,7 @@ def report() -> dict:
         "EVIDENCE": ["diff"],
         "KNOWN_LIMITATIONS": [],
         "PLAN_CONFLICTS": [],
+        "PLAN_DEVIATIONS": [],
         "NEXT_SAFE_ACTION": "Review.",
     }
 
@@ -52,6 +55,7 @@ def review() -> dict:
         "SCHEMA_VERSION": SCHEMA_VERSION,
         "VERDICT": "ACCEPT",
         "TASK_ID": "T-1",
+        "PROBLEM_ID": "NONE",
         "FINDINGS": [],
         "FAILED_CRITERIA": [],
         "REQUIRED_FIXES": [],
@@ -85,6 +89,7 @@ def test_complete_report_requires_tests() -> None:
 def test_fix_first_requires_fixes() -> None:
     value = review()
     value["VERDICT"] = "FIX_FIRST"
+    value["PROBLEM_ID"] = "STABLE_PROBLEM"
     with pytest.raises(SchemaError, match="REQUIRED_FIXES"):
         validate_review(value, task=task())
 
