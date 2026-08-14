@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T01:05:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T01:40:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_1_PREP",
@@ -57,6 +57,10 @@
       "RESULT": "PASS_BASELINE_RUNS_END_TO_END_CPU EV-0014"
     },
     {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_resume_one_update.py",
+      "RESULT": "PASS_RESUME_ONE_UPDATE_RATIO_1.0_ALL_FINITE EV-0015"
+    },
+    {
       "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
       "RESULT": "PASS_AT_SELF_SUPERSEDED_BY_DIRTY_TAKEOVER_STATE"
     }
@@ -109,7 +113,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 1 in progress (EV-0012/0013/0014): baseline weights load and run end-to-end on this branch's CNJ lineage on CPU with coherent legal behaviour. Next bounded action: match rollout_carry.npz against this branch's carry lineage, then execute the one-update PPO resume proof from the baseline opt_state, then assemble the MARATHON_BASELINE_V0 capsule record under experiments/. Live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stage 1 resume proof complete (EV-0015: one PPO update from restored baseline state, ratio 1.0, all finite, CPU). Remaining MARATHON_BASELINE_V0 gates: assemble the tracked capsule record under experiments/ (semantic hashes + resume report + determinism contract JAX_VERSION/XLA/DTYPE_POLICY), measure hot-path/end-to-end/valid-learning TPS separately on CPU, and schedule external paired gameplay measurement (Stage 2 evaluator dependency). GPU-class reproduction remains available under the compute amendment when credits are checked. Live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
