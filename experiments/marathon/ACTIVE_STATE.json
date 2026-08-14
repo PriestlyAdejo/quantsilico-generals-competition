@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-14T22:35:00Z",
+  "UPDATED_AT_UTC": "2026-08-14T22:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_0",
@@ -44,7 +44,6 @@
   "TESTS_PENDING": [
     "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
     "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
-    "Complete the Stage 0 repository/entrypoint/worktree/output inventory before Stage 1.",
     "Create and test the pre-authorised minimum Qoder harness (marathon-evidence-contract rule, ultra-review and quantisilico-marathon-resume skills, guardrail hooks)."
   ],
   "ACTIVE_LOCAL_PROCESSES": {
@@ -90,7 +89,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Complete the bounded Stage 0 forensic inventory (entrypoints, worktrees, checkpoints, manifests, dist/submission classification) with path/hash evidence, then create and test the pre-authorised minimum Qoder harness, then proceed to Stage 1 baseline reproduction. Live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stage 0 freeze record is complete (EV-0010) with the baseline checkpoint re-verified 6/6 artefact hashes. Next: create and test the pre-authorised minimum Qoder harness (W4), then begin Stage 1 MARATHON_BASELINE_V0 reproduction from ckpt_final_u482_t7593984. Live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
