@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T12:05:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T12:25:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_SH_R3_EXECUTING_PLUS_STAGE_4B_PARALLEL",
-  "CURRENT_TASK": "MONITOR_SH_R3_THEN_ADJUDICATE_AND_DECLARE_SH_R4_WHILE_4B_LANE_CONTINUES",
+  "CURRENT_STAGE": "STAGE_4A_SH_R4_EXECUTING_PLUS_STAGE_4B_PARALLEL",
+  "CURRENT_TASK": "MONITOR_SH_R4_THEN_ADJUDICATE_AND_ROUTE_FINALISTS_TO_PAIRED_EVAL_WHILE_4B_LANE_CONTINUES",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -196,7 +196,7 @@
     "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
     "AUDITED_AT_UTC": "2026-08-15T12:05:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "SH-R3-SEEDS round on pod o27sds4rsf9hjs (194.68.245.240:22186): sequential arms at ~6 min/arm; round log /workspace/sh_r3_round.log; telemetry /workspace/screening_runs_r3/<arm>/telemetry.jsonl; est finish ~12:02-12:10Z; disposition STOP after artefact fetch"
+      "SH-R4-BUDGET-ESCALATION round on pod tinlsf21h08qd2 (194.68.245.124:22005, machine z3ghhcrigmrs): 6 arms x 240 updates sequential, ~17 min/arm post pool-fix; round log /workspace/sh_r4_round.log; telemetry /workspace/screening_runs_r4/<arm>/telemetry.jsonl; restarted 12:20:46Z after cwd fix (7daa33f); est finish ~14:10Z; disposition STOP after artefact fetch. First launch attempt failed fast (12:17Z, relative path) with zero telemetry written - round log replaced on relaunch; recorded for provenance"
     ],
     "OBSERVED_RESOURCES": [
       {
@@ -217,10 +217,17 @@
       {
         "PROVIDER": "RUNPOD",
         "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "tinlsf21h08qd2",
+        "NAME": "quantisilico_sh_r4_a40",
+        "STATE": "RUNNING_VERIFIED_WORKLOAD_SH_R4",
+        "LEDGER": "experiments/marathon/runpod_resources.json"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
         "RESOURCE_ID": "o27sds4rsf9hjs",
         "NAME": "quantisilico_sh_r3_a40",
-        "STATE": "RUNNING_VERIFIED_WORKLOAD_SH_R3",
-        "LEDGER": "experiments/marathon/runpod_resources.json"
+        "STATE": "EXITED_STOPPED_AFTER_SH_R3_EVIDENCE_FETCH_HOST_FULL_ON_RESTART"
       },
       {
         "PROVIDER": "RUNPOD",
@@ -236,7 +243,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#sh-r3-seeds#2a98430be4d7",
+  "CURRENT_EXPERIMENT": "experiment#sh-r4-budget-escalation#f4a79a0412e9",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -250,7 +257,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "SH-R3 round executing (~6 min/arm post pool-fix, 6 arms, est finish ~12:10Z). Next bounded actions: (1) poll /workspace/sh_r3_round.log for the round-end boundary; (2) on end: scp all six arm dirs + round log to experiments/marathon/screening_round_3_runs/, apply screening_round_3_plan.yaml rules (GEOMETRY_DROPPED if any seed of a geometry fails), register run/checkpoint records, record EV, then STOP pod o27sds4rsf9hjs (watchdog --stop-idle if idle earlier); (3) predeclare SH-R4 BEFORE inspecting anything beyond the predeclared rules: survivors get >=200-update budgets at their geometry with 2 seeds, plus Stage-2 paired-eval path for finalists (EV-0021 draw regime); (4) if NO geometry survives all seeds: move to the next canonical Stage-4A family (spawn-distance/opponent-difficulty curriculum per programme.yaml) with fresh predeclaration; (5) Stage 4B lane continues dependency-safe units during GPU waits (next candidates: outbox end-to-end against a real promoted package, supported-command inventory); (6) zero-idle-burn watchdog cadence between polls; never leave the A40 idle. Zero-idle-burn invariant RUNPOD-ZERO-IDLE-BURN-2026-08-15 permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "SH-R4-BUDGET-ESCALATION executing (6 arms x 240 updates, ~17 min/arm, est finish ~14:10Z on pod tinlsf21h08qd2). Next bounded actions: (1) poll /workspace/sh_r4_round.log for arm/end boundaries (watchdog cadence; GPU must show a live trainer between polls or investigate); (2) on round end: scp all six arm dirs + round log to experiments/marathon/screening_round_4_runs/, adjudicate with the SH-R4 predeclared rules (GEOMETRY_ELIMINATED if any seed fails), register records, EV entry, then STOP the pod; (3) routing per screening_round_4_plan.yaml promotion_path: 2+ surviving geometries -> finalist pair to promotion-scale Stage-2 seat-swapped paired evaluation; exactly 1 survivor -> direct paired eval vs baseline; telemetry alone NEVER promotes (EV-0021 draw regime); (4) if no geometry survives: SH-R4 VOID, predeclare the next canonical family (spawn-distance/opponent-difficulty curriculum per programme.yaml); (5) Stage 4B lane continues dependency-safe units meanwhile (next: outbox end-to-end against a real promoted package with scratch root, supported-command inventory); (6) zero-idle-burn: session resume queries RunPod FIRST; watchdog --stop-idle if the pod ever idles.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
