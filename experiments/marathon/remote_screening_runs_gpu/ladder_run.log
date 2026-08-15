@@ -1,0 +1,68 @@
+BUILD_POOL 4096
+POOL_READY 76.4s
+LADDER_START e32_r32
+LADDER_DONE e32_r32 tps=2645.55 gpu={'gpu_util_pct': 51.0, 'vram_used_mib': 38965.0, 'vram_total_mib': 46068.0}
+LADDER_START e64_r32
+LADDER_DONE e64_r32 tps=4970.66 gpu={'gpu_util_pct': 76.0, 'vram_used_mib': 38969.0, 'vram_total_mib': 46068.0}
+LADDER_START e128_r32
+LADDER_DONE e128_r32 tps=6339.81 gpu={'gpu_util_pct': 76.0, 'vram_used_mib': 39015.0, 'vram_total_mib': 46068.0}
+LADDER_START e256_r32
+LADDER_DONE e256_r32 tps=7610.95 gpu={'gpu_util_pct': 100.0, 'vram_used_mib': 39017.0, 'vram_total_mib': 46068.0}
+LADDER_START e512_r32
+W0815 05:01:06.596219   11129 bfc_allocator.cc:590] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.34GiB (rounded to 2516582400) from the lower end requested by op 
+If this is caused by memory fragmentation, the environment variable 'TF_GPU_ALLOCATOR=cuda_malloc_async' may improve the situation.
+Current allocation summary follows.
+W0815 05:01:06.599754   11129 bfc_allocator.cc:601] ***********************************************************************************************_____
+W0815 05:01:16.604021   11129 bfc_allocator.cc:590] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.34GiB (rounded to 2516582400) from the lower end requested by op 
+If this is caused by memory fragmentation, the environment variable 'TF_GPU_ALLOCATOR=cuda_malloc_async' may improve the situation.
+Current allocation summary follows.
+W0815 05:01:16.605248   11129 bfc_allocator.cc:601] ***********************************************************************************************_____
+W0815 05:01:46.141677   11435 bfc_allocator.cc:363] Allocator (GPU_0_bfc) ran out of memory trying to allocate 2.36GiB from the lower end with freed_by_count=0. The caller indicates that this is not a failure, but this may mean that there could be performance gains if more memory were available.
+E0815 05:01:46.142788   11129 config_assigner.cc:478] Could not get config for HLO: %gemm_fusion_dot.1 = f32[8,192,768]{2,1,0} fusion(%bitcast.17.0, %bitcast.10.0), kind=kCustom, calls=
+(parameter_0: f32[192,8,102400], parameter_1: f32[8,102400,768]) -> f32[8,192,768] {
+  %parameter_0 = f32[192,8,102400]{0,2,1} parameter(0)
+  %parameter_1 = f32[8,102400,768]{2,1,0} parameter(1)
+  ROOT %dot.2 = f32[8,192,768]{2,1,0} dot(%parameter_0, %parameter_1), lhs_batch_dims={1}, lhs_contracting_dims={2}, rhs_batch_dims={0}, rhs_contracting_dims={1}, metadata={op_name="jit(dot_general)/dot_general" stack_frame_id=18}
+}, metadata={op_name="jit(dot_general)/dot_general" stack_frame_id=18}, backend_config={"operation_queue_id":"0","fusion_backend_config":{"kind":"__triton_gemm"},"force_earliest_schedule":false,"reification_cost":[],"device_type":"DEVICE_TYPE_INVALID"}. Status: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 2.36GiB. [tf-allocator-allocation-error='']
+=== Source Location Trace: ===
+external/xla/xla/stream_executor/integrations/tf_allocator_adapter.cc:269
+external/xla/xla/stream_executor/integrations/tf_allocator_adapter.cc:192
+external/xla/xla/stream_executor/gpu/redzone_allocator.cc:93
+external/xla/xla/stream_executor/gpu/redzone_allocator.cc:262
+external/xla/xla/service/gpu/autotuning/redzone_buffers.cc:107
+external/xla/xla/service/gpu/autotuning/redzone_buffers.cc:89
+external/xla/xla/backends/gpu/autotuner/gpu_profiler.cc:269
+external/xla/xla/backends/autotuner/config_runner.cc:69
+external/xla/xla/backends/autotuner/config_assigner.cc:417
+
+LADDER_ERR e512_r32 RESOURCE_EXHAUSTED: Out of memory while trying to allocate 2.36GiB. [tf-allocator-allocation-error='']
+LADDER_START e64_r64
+LADDER_DONE e64_r64 tps=5802.15 gpu={'gpu_util_pct': 100.0, 'vram_used_mib': 39021.0, 'vram_total_mib': 46068.0}
+LADDER_START e128_r64
+LADDER_DONE e128_r64 tps=7418.05 gpu={'gpu_util_pct': 100.0, 'vram_used_mib': 39023.0, 'vram_total_mib': 46068.0}
+{
+  "best": {
+    "num_envs": 256,
+    "rollout_len": 32,
+    "tag": "e256_r32",
+    "status": "OK",
+    "updates": 4,
+    "transitions": 32768,
+    "elapsed_s": 4.305377115961164,
+    "valid_learning_tps": 7610.947686445495,
+    "gpu": {
+      "gpu_util_pct": 100.0,
+      "vram_used_mib": 39017.0,
+      "vram_total_mib": 46068.0
+    },
+    "vram_api_mib": 39017.0,
+    "last_metrics": {
+      "entropy": 1.255159854888916,
+      "pg": 0.00012847318430431187,
+      "ratio": 0.9999970197677612,
+      "vloss": 2.3560800552368164,
+      "loss": 1.165616750717163
+    }
+  },
+  "n_ok": 6
+}
