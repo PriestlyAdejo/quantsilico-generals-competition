@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T12:25:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T14:35:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_SH_R4_EXECUTING_PLUS_STAGE_4B_PARALLEL",
-  "CURRENT_TASK": "MONITOR_SH_R4_THEN_ADJUDICATE_AND_ROUTE_FINALISTS_TO_PAIRED_EVAL_WHILE_4B_LANE_CONTINUES",
+  "CURRENT_STAGE": "STAGE_4A_PROMOTION_EVAL_EXECUTING_PLUS_STAGE_4B_PARALLEL",
+  "CURRENT_TASK": "COLLECT_SH_R4_FINALIST_PAIRED_EVAL_AND_APPLY_PREDECLARED_DECISION_RULES",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -180,11 +180,14 @@
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-15T11:05:00Z",
-    "ACTIVE_PROJECT_WORKLOADS": [],
+    "AUDITED_AT_UTC": "2026-08-15T14:35:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [
+      "SH-R4-FINALIST-PROMOTION-EVAL on laptop CPU via var/marathon_takeover/run_sh4_promotion_eval.ps1 (background terminal): sh-r4-finalist-a0 vs {sh-r4-finalist-a1, marathon_baseline_v0, legal_random} 12 seat-swapped pairs each, then sh-r4-finalist-a1 vs {marathon_baseline_v0, legal_random}; log var/marathon_takeover/sh_r4_promotion_eval.log; est ~15-20 min total; serving smoke PASS 1 pair 24s EV-0032"
+    ],
     "COMPLETED_THIS_SESSION": [
-      "SH-R1-A0-CONTROL CPU arm completed 195/195 updates (summary written, registered run#sh-r1-a0-control-cpu#39acdbacdf72)",
-      "runpod_start_retry_loop.py ended (A100 machine GPU-full; cancelled per zero-idle-burn section 8)"
+      "SH-R4-BUDGET-ESCALATION round: ALL SIX ARMS SURVIVE; finalists A0-CONTROL + A1-HORIZON-64 (EV-0032); 12 registry records",
+      "SH-R1-A0-CONTROL CPU arm completed 195/195 updates (registered)",
+      "runpod_start_retry_loop.py ended (cancelled per zero-idle-burn section 8)"
     ],
     "UNKNOWN_REASON": "",
     "OBSERVED_INFRASTRUCTURE": [
@@ -194,10 +197,8 @@
   },
   "ACTIVE_REMOTE_PROCESSES": {
     "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
-    "AUDITED_AT_UTC": "2026-08-15T12:05:00Z",
-    "ACTIVE_PROJECT_WORKLOADS": [
-      "SH-R4-BUDGET-ESCALATION round on pod tinlsf21h08qd2 (194.68.245.124:22005, machine z3ghhcrigmrs): 6 arms x 240 updates sequential, ~17 min/arm post pool-fix; round log /workspace/sh_r4_round.log; telemetry /workspace/screening_runs_r4/<arm>/telemetry.jsonl; restarted 12:20:46Z after cwd fix (7daa33f); est finish ~14:10Z; disposition STOP after artefact fetch. First launch attempt failed fast (12:17Z, relative path) with zero telemetry written - round log replaced on relaunch; recorded for provenance"
-    ],
+    "AUDITED_AT_UTC": "2026-08-15T14:35:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [],
     "OBSERVED_RESOURCES": [
       {
         "PROVIDER": "RUNPOD",
@@ -219,8 +220,7 @@
         "RESOURCE_TYPE": "POD",
         "RESOURCE_ID": "tinlsf21h08qd2",
         "NAME": "quantisilico_sh_r4_a40",
-        "STATE": "RUNNING_VERIFIED_WORKLOAD_SH_R4",
-        "LEDGER": "experiments/marathon/runpod_resources.json"
+        "STATE": "EXITED_STOPPED_AFTER_SH_R4_EVIDENCE_FETCH_13:08Z"
       },
       {
         "PROVIDER": "RUNPOD",
@@ -257,7 +257,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "SH-R4-BUDGET-ESCALATION executing (6 arms x 240 updates, ~17 min/arm, est finish ~14:10Z on pod tinlsf21h08qd2). Next bounded actions: (1) poll /workspace/sh_r4_round.log for arm/end boundaries (watchdog cadence; GPU must show a live trainer between polls or investigate); (2) on round end: scp all six arm dirs + round log to experiments/marathon/screening_round_4_runs/, adjudicate with the SH-R4 predeclared rules (GEOMETRY_ELIMINATED if any seed fails), register records, EV entry, then STOP the pod; (3) routing per screening_round_4_plan.yaml promotion_path: 2+ surviving geometries -> finalist pair to promotion-scale Stage-2 seat-swapped paired evaluation; exactly 1 survivor -> direct paired eval vs baseline; telemetry alone NEVER promotes (EV-0021 draw regime); (4) if no geometry survives: SH-R4 VOID, predeclare the next canonical family (spawn-distance/opponent-difficulty curriculum per programme.yaml); (5) Stage 4B lane continues dependency-safe units meanwhile (next: outbox end-to-end against a real promoted package with scratch root, supported-command inventory); (6) zero-idle-burn: session resume queries RunPod FIRST; watchdog --stop-idle if the pod ever idles.",
+  "NEXT_SAFE_ACTION": "SH-R4-FINALIST-PROMOTION-EVAL executing locally (CPU, ~15-20 min; log var/marathon_takeover/sh_r4_promotion_eval.log). Next bounded actions: (1) collect both eval JSON reports from experiments/marathon/paired_eval_runs/; apply sh_r4_finalist_promotion_eval_plan.yaml decision rules strictly (CS lower bound vs 0.01 practical margin; draws are UNRESOLVED not wins; NO post-hoc relaxation); (2) register evaluation records + EV-0033 + verdict; (3) routing: PROMOTE -> Stage-7 lineage/packaging path; UNRESOLVED/NO_PROMOTION -> horizon family recorded telemetry-only, predeclare next canonical Stage-4A family (spawn-distance/opponent-difficulty curriculum per programme.yaml) and launch on A40 under the same SH discipline; (4) Stage 4B continues in parallel (remaining canonical items: supported-command inventory, dist provenance sidecars, dashboard polish); (5) SCHEDULING BOUNDARY (operator query): Qoder scheduled tasks are created via the /schedule IDE command which the agent cannot invoke programmatically; the operator must run /schedule in this chat with the resume prompt (text in the session report); wallet protection meanwhile = watchdog + stop gate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

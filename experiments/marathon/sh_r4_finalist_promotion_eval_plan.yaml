@@ -1,0 +1,58 @@
+schema_version: "1.0.0"
+kind: MARATHON_PROMOTION_EVAL_PLAN
+eval_id: SH-R4-FINALIST-PROMOTION-EVAL
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+status: PREDECLARED
+
+purpose: >
+  Promotion-scale seat-swapped paired gameplay evaluation of the SH-R4
+  finalist pair (predeclared routing, screening_round_4_plan.yaml
+  promotion_path, EV-0032). Screening telemetry cannot separate the
+  finalists (A0 mean +0.00647 vs A1 mean +0.00609, overlapping across
+  seeds); gameplay is the arbiter. EV-0021 established that this regime
+  draws heavily at truncation, so verdicts rely on the EV-0017
+  confidence-sequence evaluator, not raw win counts alone.
+
+candidates:
+  - id: sh-r4-finalist-a0
+    geometry: {num_envs: 256, rollout_len: 32}
+    checkpoint: SH-R4-A0-CONTROL-B16 terminal raw.npz
+    seed_note: B16 chosen per geometry as the higher vloss-reduction seed
+    main: experiments/marathon/eval_candidates/sh-r4-finalist-a0/main.py
+    ppo_semantics: EVAL_ONLY
+  - id: sh-r4-finalist-a1
+    geometry: {num_envs: 128, rollout_len: 64}
+    checkpoint: SH-R4-A1-HORIZON-64-B16 terminal raw.npz
+    main: experiments/marathon/eval_candidates/sh-r4-finalist-a1/main.py
+    ppo_semantics: EVAL_ONLY
+
+matchups:
+  - candidate: sh-r4-finalist-a0
+    opponents:
+      - {id: sh-r4-finalist-a1, main: experiments/marathon/eval_candidates/sh-r4-finalist-a1/main.py}
+      - {id: marathon_baseline_v0, main: baselines/marathon_baseline_v0/main.py}
+      - {id: legal_random, main: baselines/legal_random/main.py}
+  - candidate: sh-r4-finalist-a1
+    opponents:
+      - {id: marathon_baseline_v0, main: baselines/marathon_baseline_v0/main.py}
+      - {id: legal_random, main: baselines/legal_random/main.py}
+
+protocol:
+  pairs_per_opponent: 12            # seat-swapped, promotion-scale
+  mode: competition
+  evaluator: EV-0017 anytime-valid bounded mixture CS (run_marathon_paired_eval.py)
+  namespace: marathon-eval-v1
+
+decision_rules_predeclared:
+  - a finalist PROMOTES over an opponent only if the EV-0017 confidence
+    sequence rejects non-superiority at the programme.yaml margin
+  - draws at truncation count per the evaluator's bounded-outcome model
+    (EV-0021); a 0-0-with-draws result is UNRESOLVED, not a win
+  - if neither finalist separates from marathon_baseline_v0, the horizon
+    round is recorded as telemetry-only and the programme advances to the
+    next canonical Stage-4A family (no silent promotion)
+  - no post-hoc margin relaxation; additional pairs require a NEW
+    predeclared plan
+
+evidence_links: [EV-0017, EV-0019, EV-0021, EV-0032]
