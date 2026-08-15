@@ -3,7 +3,7 @@ kind: MARATHON_PROMOTION_EVAL_PLAN
 eval_id: SH-R4-FINALIST-PROMOTION-EVAL
 programme: MARATHON_REDESIGN_LOCKED_V1
 stage: STAGE_4A
-status: RERUN_EXECUTING
+status: EXECUTED_VERDICT_NO_PROMOTION_EV_0035
 
 purpose: >
   Promotion-scale seat-swapped paired gameplay evaluation of the SH-R4

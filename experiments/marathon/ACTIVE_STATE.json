@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T15:35:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T17:05:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_HORIZON_FAMILY_REOPENED_SERVING_DEFECT_REPAIRED_RERUN_EXECUTING",
-  "CURRENT_TASK": "SH_R4_FINALIST_PROMOTION_EVAL_RERUN_V2_AFTER_EVAL_ONLY_SERVING_REPAIR_EV_0034",
+  "CURRENT_STAGE": "STAGE_4A_HORIZON_FAMILY_CLOSED_CLEAN_EV_0035_CURRICULUM_LAUNCH_NEXT",
+  "CURRENT_TASK": "LAUNCH_SPAWN_DISTANCE_CURRICULUM_R1_ON_FRESH_A40",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -179,20 +179,31 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/analysis/serving_sanity_probe.py",
       "RESULT": "PASS_AFTER_REPAIR_L1_WEIGHTS_LOAD_AND_MATTER_L2_PROTOCOL_ACTIONS_WELLFORMED_DETERMINISTIC EV-0034"
+    },
+    {
+      "COMMAND": "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 via var/marathon_takeover/run_sh4_promotion_eval_rerun_v2.ps1 (A0 36 pairs, A1 24 pairs, fresh run dir)",
+      "RESULT": "PASS_CLEAN_ADJUDICATION_NO_PROMOTION_BOTH_FINALISTS_120_OF_120_GAMES_DRAW_AT_TRUNCATION_ZERO_FAULTS_CS_LOWER_MINUS_0.006_AND_MINUS_0.121 EV-0035"
     }
   ],
   "TESTS_PENDING": [
     "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
     "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
-    "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon."
+    "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon.",
+    "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 completion -> adjudicate per predeclared rules (EV-0034), update registry evaluation records, then LAUNCH SPAWN-DISTANCE-CURRICULUM-R1 on fresh A40 (plan + experiment record already registered: experiment#spawn-distance-curriculum-r1#c9255f18cd8f)."
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-15T15:35:00Z",
+    "AUDITED_AT_UTC": "2026-08-15T17:05:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 (local CPU, background terminal): same predeclared protocol, fresh run dir paired_eval_runs/sh_r4_finalist_rerun_v2, wrappers repaired (EV-0034)"
+      "DURABLE LOOP ARMED: background terminal emits AGENT_LOOP_TICK_MARATHON every 30 min with docs/marathon/MARATHON_LOOP_PROMPT.md resume instruction (lease + RunPod-first reconciliation)"
     ],
     "COMPLETED_THIS_SESSION": [
+      "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 adjudicated: NO_PROMOTION both finalists, 120/120 games DRAW-at-truncation, zero faults; horizon family CLOSED on clean evidence (EV-0035); 2 rerun evaluation records registered",
+      "ELITE_REPLAY_AUGMENTATION family persisted: charter docs/marathon/ELITE_REPLAY_AUGMENTATION.md + EXECUTION_PLAN 9.5 + project skill + registry-independent dataset contract",
+      "Replay data plane pilot: scripts/data/fetch_elite_replays.py + capture_leaderboard_snapshot.py; DATASET-ELITE-2026-08-15-V01 (6 replays, 151-486 ticks, sha256-sealed manifest); 4 fixture tests PASS",
+      "Durable continuation layer: scripts/dev/marathon_execution_lease.py (mutual exclusion + stale takeover tested) + docs/marathon/MARATHON_LOOP_PROMPT.md + /loop armed 30m",
+      "SPAWN-DISTANCE-CURRICULUM-R1 predeclared (curriculum_round_1_plan.yaml) + registered; additive min_generals_distance knob with determinism/effect tests + parity suite green (6 PASS)",
+      "Stage 4B: docs/marathon/SUPPORTED_COMMANDS.md inventory",
       "Serving sanity audit: FOUND + REPAIRED genuine serving defect (missing Policy-protocol adapter); EV-0033 invalidated (EV-0034)",
       "SH-R4-FINALIST-PROMOTION-EVAL first execution: NO_PROMOTION verdict INVALIDATED - 72/72 games AGENT_FAULT (EV-0033 -> EV-0034)",
       "SH-R4-BUDGET-ESCALATION round: ALL SIX ARMS SURVIVE; finalists routed per predeclared plan (EV-0032); 12 registry records",
@@ -267,7 +278,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "SH-R4 promotion-eval RERUN-V2 executing locally (EV-0034; same predeclared plan, rules unchanged). Next bounded actions, in order: (1) when rerun finishes: adjudicate per predeclared decision rules from the fresh run dir; verify zero AGENT_FAULT games this time; record EV; update registry evaluation records; (2) if NO_PROMOTION is now the clean gameplay verdict: close the horizon family for real and predeclare + register + launch the spawn-distance / opponent-difficulty curriculum family on a fresh A40 (SH discipline + zero-idle-burn); if PROMOTION: follow the predeclared promotion path; (3) persist the ELITE_REPLAY_AUGMENTATION programme amendment + bounded replay-data-plane pilot in dependency-safe local capacity (does not delay curriculum); (4) persist the durable marathon loop prompt + execution lease in-repo; operator activates the recurring Qoder /loop via the one minimal command returned by the executor; (5) Stage 4B continues dependency-safe units in parallel. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "Horizon family CLOSED on clean gameplay evidence (EV-0035: NO_PROMOTION both finalists, 120/120 games draw-at-truncation, zero faults). Next bounded action: LAUNCH SPAWN-DISTANCE-CURRICULUM-R1 - plan predeclared (curriculum_round_1_plan.yaml), experiment registered (experiment#spawn-distance-curriculum-r1#c9255f18cd8f), runner knob tested. Steps: duplicate-capacity check -> fresh A40 pod (EU-SE-1 pattern) -> bootstrap clone+submodule+uv venv -> GPU validation smoke (3 updates) -> adapt scripts/dev/remote_sh_r4_orchestrator.sh for 6 arms x 240 updates with --min-generals-distance {17,17,8,8,21,21} -> launch -> ledger entry -> monitor via loop. Then: fetch/stop/adjudicate per predeclared rules; register arms/checkpoints; gameplay-eval any separating variant. Parallel: dependency-safe 4B + replay-plane units (legal-POV reconstruction stage is the next replay milestone). Durable loop armed (30 min ticks, AGENT_LOOP_TICK_MARATHON); lease held by qoder-quest-979999d1. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
