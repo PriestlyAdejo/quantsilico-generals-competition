@@ -19,10 +19,8 @@ from generals_bot.marathon_registry import SCHEMA_VERSION, Registry, canonical_i
 REGISTRY_ROOT = REPO / "experiments/marathon/registry"
 CAPSULE = REPO / "experiments/marathon/baseline_capsule_v0.json"
 SEMANTIC_HASHES = REPO / "experiments/marathon/baseline_semantic_hashes.json"
-EVAL_SUMMARY = (
-    REPO
-    / "experiments/marathon/paired_eval_runs/baseline_v0_vs_legal_random_cpu"
-    / "marathon_baseline_v0/summary.json"
+EVAL_RUNS = (
+    REPO / "experiments/marathon/paired_eval_runs"
 )
 CHECKPOINT_PATH = (
     Path.home()
@@ -42,7 +40,6 @@ def _base_record(kind: str, name: str, material: str) -> dict:
 def main() -> int:
     capsule = json.loads(CAPSULE.read_text(encoding="utf-8"))
     semantic = json.loads(SEMANTIC_HASHES.read_text(encoding="utf-8"))
-    evaluation = json.loads(EVAL_SUMMARY.read_text(encoding="utf-8"))
     if capsule.get("status") != "PASS":
         print("capsule status is not PASS; refusing to register", file=sys.stderr)
         return 1
@@ -112,34 +109,61 @@ def main() -> int:
         }
     )
 
-    evaluation_record = _base_record(
-        "evaluation", "baseline-v0-vs-legal-random-cpu", "v1"
-    )
-    evaluation_record.update(
+    evaluation_specs = [
         {
-            "CANDIDATE_ID": candidate["ID"],
-            "EVALUATOR_IDENTITY": "marathon_paired_evaluator_v1",
-            "EVAL_PROTOCOL": "SEAT_SWAPPED_PAIRS_ANYTIME_VALID_BOUNDED_MIXTURE_CS",
-            "RESULTS_LOCATION": (
-                "experiments/marathon/paired_eval_runs/baseline_v0_vs_legal_random_cpu"
+            "name": "baseline-v0-vs-legal-random-cpu",
+            "run_dir": "baseline_v0_vs_legal_random_cpu",
+            "opponents": (("legal-random", "legal_random", "baselines/legal_random/main.py"),),
+        },
+        {
+            "name": "baseline-v0-vs-heuristics-cpu",
+            "run_dir": "baseline_v0_vs_heuristics_cpu",
+            "opponents": (
+                ("heuristic-v0", "heuristic_v0", "baselines/heuristic_v0/main.py"),
+                ("heuristic-v1", "heuristic_v1", "baselines/heuristic_v1/main.py"),
             ),
-            "PAIRS_COMPLETED": evaluation["pairs_completed"],
-            "PROMOTION": evaluation["promotion"],
-            "EVIDENCE_LINKS": ["EV-0017", "EV-0019"],
-        }
-    )
-
-    opponent = _base_record("opponent_reference", "legal-random", "v1")
-    opponent.update(
-        {
-            "NAME": "legal_random",
-            "SOURCE_IDENTITY": {"path": "baselines/legal_random/main.py"},
-            "ARTEFACT_LOCATIONS": ["baselines/legal_random"],
-        }
-    )
+        },
+    ]
+    eval_records = []
+    opponent_records = []
+    for spec in evaluation_specs:
+        summary_path = EVAL_RUNS / spec["run_dir"] / "marathon_baseline_v0/summary.json"
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        evaluation_record = _base_record("evaluation", spec["name"], "v1")
+        evaluation_record.update(
+            {
+                "CANDIDATE_ID": candidate["ID"],
+                "EVALUATOR_IDENTITY": "marathon_paired_evaluator_v1",
+                "EVAL_PROTOCOL": (
+                    "SEAT_SWAPPED_PAIRS_ANYTIME_VALID_BOUNDED_MIXTURE_CS"
+                ),
+                "RESULTS_LOCATION": f"experiments/marathon/paired_eval_runs/{spec['run_dir']}",
+                "PAIRS_COMPLETED": summary["pairs_completed"],
+                "PROMOTION": summary["promotion"],
+                "EVIDENCE_LINKS": ["EV-0017", "EV-0019"],
+            }
+        )
+        eval_records.append(evaluation_record)
+        for ref_name, opponent_name, opponent_path in spec["opponents"]:
+            opponent = _base_record("opponent_reference", ref_name, "v1")
+            opponent.update(
+                {
+                    "NAME": opponent_name,
+                    "SOURCE_IDENTITY": {"path": opponent_path},
+                    "ARTEFACT_LOCATIONS": [str(Path(opponent_path).parent)],
+                }
+            )
+            opponent_records.append(opponent)
 
     added = 0
-    for record in (experiment, run, checkpoint, candidate, evaluation_record, opponent):
+    for record in (
+        experiment,
+        run,
+        checkpoint,
+        candidate,
+        *eval_records,
+        *opponent_records,
+    ):
         if registry.exists(record["ID"]):
             print(f"EXISTS {record['ID']}")
             continue

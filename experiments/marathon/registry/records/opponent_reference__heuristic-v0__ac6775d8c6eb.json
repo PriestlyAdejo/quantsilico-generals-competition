@@ -1,0 +1,13 @@
+{
+  "ARTEFACT_LOCATIONS": [
+    "baselines\\heuristic_v0"
+  ],
+  "ID": "opponent_reference#heuristic-v0#ac6775d8c6eb",
+  "KIND": "opponent_reference",
+  "NAME": "heuristic_v0",
+  "RECORDED_AT_UTC": "2026-08-15T02:21:21Z",
+  "SCHEMA_VERSION": "1.0.0",
+  "SOURCE_IDENTITY": {
+    "path": "baselines/heuristic_v0/main.py"
+  }
+}
