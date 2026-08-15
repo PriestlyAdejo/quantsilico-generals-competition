@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T05:10:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T05:35:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_4A_SCREENING_RUNNER",
@@ -189,7 +189,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "GPU access in flight (EV-0025): bounded retry loop runpod_start_retry_loop.py is attempting to start generals_competition (24 tries x 5 min; log var/marathon_takeover/runpod_start_retry.log; billing log var/marathon_takeover/runpod_billing_log.jsonl). Next bounded actions: (1) if the loop reports STARTED/RUNNING: poll-ready, SSH in (local key matches pod PUBLIC_KEY), inspect /workspace prior state (preserve), restore or build the JAX CUDA env (cloud_restore_environment.sh archive if present), reproduce commit e387f51, run GPU validation (cloud_a100_env_ladder.py probes + run_sh_r1_arm.py --arm-id gpu-smoke resume ratio-1.0 gate), record throughput/billing, then launch SH-R1-A1/A2; (2) if exit 3 (still HOST_FULL): provision the pre-declared A40 fallback pod (HIGH stock, $0.44/h secure) with the same validation sequence — pre-declared in EV-0025 BEFORE any results; (3) stop the pod whenever no job is actively training. Meanwhile SH-R1-A0-CONTROL continues on CPU — do not kill it; on completion validate summary vs predeclared rules and register run/checkpoint records.",
+  "NEXT_SAFE_ACTION": "SH-R1 round complete with honest verdict NO_SURVIVORS (all arms eliminated by predeclared NO_VLOSS_REDUCTION at the 25k budget = 3 updates; EV-0027); GPU runs + ladder + checkpoints registered (15 registry records); A40 pod STOPPED (billing-logged; ~$0.45 total). SH-R1-A0-CONTROL still training on CPU (~100 of 195 updates); do not kill it. Next bounded actions: (1) predeclare SH-R2 per the EV-0027 design input BEFORE launch: budget by UPDATES (>=50 per arm) at matched 256x32-class geometry on A40, horizon family at matched update counts, same predeclared metrics/elimination rules, register the experiment pre-launch; (2) when the CPU control finishes: validate summary, register run/checkpoint, append EV; (3) restart the A40 pod only when SH-R2 launches (env + checkpoints persist on its volume); stop it again immediately after; (4) continue Stage 4A families / Stage 4B platform work while GPU is idle.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
