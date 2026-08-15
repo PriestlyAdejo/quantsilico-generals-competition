@@ -1,0 +1,98 @@
+schema_version: "1.0.0"
+kind: MARATHON_SCREENING_ROUND_PLAN
+round_id: SPAWN-DISTANCE-CURRICULUM-R1
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+family: SPAWN_DISTANCE_CURRICULUM
+status: PREDECLARED_CONDITIONAL
+
+purpose: >
+  First round of the spawn-distance / opponent-difficulty curriculum family
+  (EXECUTION_PLAN 9.3; amendment ELITE-REPLAY-INTELLIGENCE-DURABLE-
+  CONTINUATION-2026-08-15). Hypothesis: starting self-play on boards whose
+  generals spawn at non-default minimum distance changes learning speed,
+  sample efficiency and/or external strength versus the competition-default
+  board distribution, at matched transitions. The knob is map generation
+  only (build_competition_reset_pool min_generals_distance, additive,
+  default-preserving): PPO_SEMANTICS UNCHANGED. Telemetry screens; gameplay
+  evaluation decides (EV-0021, EV-0034).
+
+entry_condition: >
+  The SH-R4 finalist promotion-evaluation RERUN-V2 (EV-0034 repair) is
+  adjudicated and recorded. The curriculum family proceeds regardless of
+  that verdict (the horizon family's outcome only decides whether a horizon
+  candidate joins the gameplay comparison set), but no GPU spend before the
+  verdict is recorded.
+
+compute_class: GPU_RUNPOD_A40
+compute_note: >
+  Fresh A40 (duplicate-capacity check first; zero-idle-burn invariant;
+  previous hosts HOST_FULL on restart). Sequential arms, 256x32 geometry,
+  post pool-fix steady rate ~6 min per 60 updates -> ~25 min per 240-update
+  arm; 6 arms ~2.6 A40-hours.
+
+arms_predeclared:
+  - {arm: CURR1-A0-CONTROL-S1, min_generals_distance: 17, seed: 20260816}
+  - {arm: CURR1-A0-CONTROL-S2, min_generals_distance: 17, seed: 20260818}
+  - {arm: CURR1-A1-CLOSE-8-S1, min_generals_distance: 8, seed: 20260816}
+  - {arm: CURR1-A1-CLOSE-8-S2, min_generals_distance: 8, seed: 20260818}
+  - {arm: CURR1-A2-FAR-21-S1, min_generals_distance: 21, seed: 20260816}
+  - {arm: CURR1-A2-FAR-21-S2, min_generals_distance: 21, seed: 20260818}
+
+arm_notes: >
+  All arms share the SH-R4 finalist geometry (256 envs x 32 rollout) so the
+  only systematic difference is spawn distance. CONTROL replicates the exact
+  competition reset distribution (distance 17) and doubles as the family's
+  matched control. CLOSE-8 increases early contact frequency; FAR-21 delays
+  it. Values chosen to be satisfiable on all pool grid sizes (18..21).
+
+per_arm_budget:
+  budget_updates: 240
+  budget_transitions: 1966080   # 240 * 8192
+
+screening_metrics_predeclared:
+  primary:
+    - VLOSS_REDUCTION_OVER_ROUND
+    - VALID_LEARNING_SHARE
+    - ENTROPY_HEALTH
+  secondary:
+    - PG_MAGNITUDE
+    - TPS_MEASURED
+elimination_rules_predeclared:
+  - any non-finite metric in any update -> immediate elimination (INTEGRITY_FAILURE)
+  - VALID_LEARNING_SHARE < 0.9 -> elimination
+  - entropy collapse: final entropy < 0.05 -> elimination
+  - VLOSS_REDUCTION_OVER_ROUND <= 0 -> elimination
+  - FAMILY_ARM_ELIMINATED: >
+      a curriculum variant whose both seeds fail any rule above is dropped;
+      the control's survival is REQUIRED for the round to adjudicate
+      (a dead control invalidates the round, not the family)
+stop_rules:
+  - fixed 240-update budget per arm
+  - wall cap 90 min per arm; exceeding recorded as PARTIAL_BUDGET
+  - no early stopping for performance reasons (integrity stops only)
+  - arms sequential on one A40
+
+promotion_path:
+  - >
+    screening telemetry alone NEVER promotes (EV-0021 draw regime;
+    EV-0034 lesson: gameplay is the arbiter)
+  - >
+    if a variant beats the control on mean vloss-reduction across both
+    seeds (no sign flip), its better seed advances to promotion-scale
+    seat-swapped paired evaluation against marathon_baseline_v0 and the
+    control's terminal checkpoint, under the EV-0017 evaluator
+  - >
+    if no variant separates from the control, the round is recorded as a
+    clean negative result and the next canonical family is predeclared
+  - >
+    champion promotion only via the EV-0017 evaluator with programme.yaml
+    margins
+
+ppo_semantics_declaration: UNCHANGED
+serving_sanity_requirement: >
+  Any finalist from this family must pass scripts/analysis/
+  serving_sanity_probe.py equivalents BEFORE promotion-scale gameplay
+  evaluation (EV-0034 precondition now standing procedure).
+
+evidence_links: [EV-0017, EV-0021, EV-0029, EV-0031, EV-0032, EV-0034]

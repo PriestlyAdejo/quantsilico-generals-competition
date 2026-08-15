@@ -63,7 +63,13 @@ def step_one_jax(state: game.GameState, actions: jnp.ndarray):
     return new_state, rewards, terminated, truncated, info
 
 
-def reset_one_jax(key: jax.Array, height: int = MAX_HW, width: int = MAX_HW) -> game.GameState:
+def reset_one_jax(
+    key: jax.Array,
+    height: int = MAX_HW,
+    width: int = MAX_HW,
+    *,
+    min_generals_distance: int = 17,
+) -> game.GameState:
     """Generate one competition board (no neutral castles), padded to pad_to via generate_grid."""
     key, kg = jax.random.split(key)
     # Official competition mountain/castle ranges from env preset
@@ -72,7 +78,7 @@ def reset_one_jax(key: jax.Array, height: int = MAX_HW, width: int = MAX_HW) -> 
         grid_dims=(height, width),
         mountain_density_range=(0.24, 0.26),
         num_castles_range=(9, 11),
-        min_generals_distance=17,
+        min_generals_distance=min_generals_distance,
         castle_val_range=(20, 26),
         pad_to=MAX_HW,
     )
@@ -209,15 +215,17 @@ legal_mask_batch_p1 = jax.jit(jax.vmap(legal_mask_one_p1))
 index_to_engine_action_batch = jax.jit(jax.vmap(index_to_engine_action))
 
 
-def _make_pool_batch(keys: jax.Array, h: int, w: int) -> game.GameState:
+def _make_pool_batch(keys: jax.Array, h: int, w: int, *, min_generals_distance: int = 17) -> game.GameState:
     """JIT-friendly batch of same-sized boards via canonical reset_one_jax."""
-    return _make_pool_batch_cached(h, w)(keys)
+    return _make_pool_batch_cached(h, w, min_generals_distance)(keys)
 
 
-def _make_pool_batch_cached(h: int, w: int):
+def _make_pool_batch_cached(h: int, w: int, min_generals_distance: int = 17):
     @jax.jit
     def _fn(keys: jax.Array) -> game.GameState:
-        return jax.vmap(lambda k: reset_one_jax(k, height=h, width=w))(keys)
+        return jax.vmap(
+            lambda k: reset_one_jax(k, height=h, width=w, min_generals_distance=min_generals_distance)
+        )(keys)
 
     return _fn
 
@@ -228,11 +236,14 @@ def build_competition_reset_pool(
     *,
     min_grid: int = 18,
     max_grid: int = 21,
+    min_generals_distance: int = 17,
 ) -> game.GameState:
     """Pregenerate competition initial states using exact canonical reset semantics.
 
     Mirrors official GeneralsEnv.reset pool construction (size combos, concat, shuffle).
     Each entry is produced by ``reset_one_jax`` — no extra post-process beyond that path.
+    ``min_generals_distance`` defaults to the competition value (17); curriculum
+    research arms may override it (PPO_SEMANTICS UNCHANGED: map generation only).
     """
     k_pool, k_shuffle = jax.random.split(key)
     sizes = [(h, w) for h in range(min_grid, max_grid + 1) for w in range(min_grid, max_grid + 1)]
@@ -244,7 +255,9 @@ def build_competition_reset_pool(
     for i, (h, w) in enumerate(sizes):
         combo_keys = pool_keys[i * per_combo : (i + 1) * per_combo]
         # static h,w per compiled specialty via python loop over combos (outside scan)
-        pools.append(_make_pool_batch(combo_keys, h, w))
+        pools.append(
+            _make_pool_batch(combo_keys, h, w, min_generals_distance=min_generals_distance)
+        )
     pool = jax.tree_util.tree_map(lambda *xs: jnp.concatenate(xs, axis=0), *pools)
     perm = jax.random.permutation(k_shuffle, actual)
     return jax.tree_util.tree_map(lambda x: x[perm], pool)

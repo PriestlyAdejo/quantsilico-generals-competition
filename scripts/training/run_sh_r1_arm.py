@@ -82,6 +82,12 @@ def main() -> int:
         help="default: experiments/marathon/screening_runs/<arm-id>",
     )
     parser.add_argument("--max-updates", type=int, default=None)
+    parser.add_argument(
+        "--min-generals-distance",
+        type=int,
+        default=17,
+        help="spawn-distance curriculum knob (map generation only; PPO_SEMANTICS UNCHANGED)",
+    )
     args = parser.parse_args()
 
     out_dir = args.out_dir or REPO / f"experiments/marathon/screening_runs/{args.arm_id}"
@@ -115,7 +121,9 @@ def main() -> int:
     # Environment initialisation only; PPO_SEMANTICS unchanged.
     pool_started = time.perf_counter()
     reset_pool = build_competition_reset_pool(
-        jax.random.PRNGKey(args.seed), RESET_POOL_SIZE
+        jax.random.PRNGKey(args.seed),
+        RESET_POOL_SIZE,
+        min_generals_distance=args.min_generals_distance,
     )
     jax.block_until_ready(jax.tree_util.tree_leaves(reset_pool))
     pool_wall = time.perf_counter() - pool_started
@@ -179,6 +187,7 @@ def main() -> int:
         "finished_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "geometry": {"num_envs": args.num_envs, "rollout_len": args.rollout_len},
         "seed": args.seed,
+        "min_generals_distance": args.min_generals_distance,
         "budget_transitions": args.budget_transitions,
         "actual_transitions": transitions,
         "updates": len(records),
