@@ -1,0 +1,82 @@
+schema_version: "1.0.0"
+kind: MARATHON_SCREENING_ROUND_PLAN
+round_id: SH-R1-CPU-PILOT
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+status: PREDECLARED
+
+purpose: >
+  First successive-halving screening round (EXECUTION_PLAN 9.1). Predeclared
+  arms, budgets, metrics, and stop rules. Cheap telemetry results from this
+  round CANNOT directly promote a champion; finalists receive fresh
+  promotion-scale paired evaluation (Stage 2 evaluator, EV-0017).
+
+compute_class: CPU
+compute_note: >
+  Measured CPU throughput (EV-0016): hot-path 1.8 TPS, end-to-end 1.9 TPS,
+  valid-learning 1.9 TPS at num_envs=8 x rollout_len=16. GPU-class rounds
+  remain gated on CLOUD_CREDIT_BALANCE_UNKNOWN (operator credentials or
+  balance statement required). All budgets below are CPU-feasible.
+
+arms:
+  - arm_id: SH-R1-A0-CONTROL
+    description: >
+      Baseline lineage resume at current geometry (num_envs=8, rollout_len=16,
+      128 transitions/update), LR 3e-4, optax clip(1.0)+adam. Continues from
+      MARATHON_BASELINE_V0 raw weights + opt_state (EV-0015 resume proof).
+    ppo_semantics: UNCHANGED
+    geometry: {num_envs: 8, rollout_len: 16}
+    budget_transitions: 25000
+    seeds: [20260815]
+  - arm_id: SH-R1-A1-HORIZON-64
+    description: >
+      Same transitions per update budget family but doubled temporal horizon
+      (num_envs=4, rollout_len=32 = 128 transitions/update), testing GAE
+      context length at matched batch size (9.2 HORIZON_ABLATION, confounds
+      recorded: minibatches, optimizer exposure, temporal correlation).
+    ppo_semantics: UNCHANGED
+    geometry: {num_envs: 4, rollout_len: 32}
+    budget_transitions: 25000
+    seeds: [20260815]
+  - arm_id: SH-R1-A2-HORIZON-32
+    description: >
+      Shorter horizon control (num_envs=16, rollout_len=8 = 128
+      transitions/update) completing the horizon sweep at matched batch size.
+    ppo_semantics: UNCHANGED
+    geometry: {num_envs: 16, rollout_len: 8}
+    budget_transitions: 25000
+    seeds: [20260815]
+
+screening_metrics_predeclared:
+  primary:
+    - VLOSS_REDUCTION_OVER_ROUND   # value-loss trend, slope of per-update means
+    - VALID_LEARNING_SHARE         # share of updates with finite metrics and 0.5<=ratio<=2
+    - ENTROPY_HEALTH               # entropy stays within [0.1, 1.5] of its round-open value band
+  secondary:
+    - PG_MAGNITUDE                 # policy gradient magnitude trend (no explosion)
+    - TPS_MEASURED                 # hot-path / end-to-end / valid-learning, reported separately
+elimination_rules_predeclared:
+  - any non-finite metric (NaN/Inf) in any update -> immediate elimination (INTEGRITY_FAILURE)
+  - VALID_LEARNING_SHARE < 0.9 -> elimination
+  - entropy collapse: final entropy < 0.05 -> elimination
+  - VLOSS_REDUCTION_OVER_ROUND <= 0 (value head did not improve across the round) -> elimination
+stop_rules:
+  - fixed transition budget per arm (25000)
+  - wall cap 8h per arm on this CPU class; exceeding wall cap with budget
+    incomplete is recorded as PARTIAL_BUDGET and screened on collected data
+  - no early stopping for performance reasons in round 1 (integrity stops only)
+
+measurement_note_draw_regime: >
+  EV-0021 established that all current protocol-agent pairings truncate as
+  draws at 1200 turns; win/loss pair scores cannot differentiate these arms
+  yet. Round 1 therefore screens on training telemetry only. Any future use
+  of truncation tie-breaks or supplementary gameplay metrics (territory/army
+  deltas) requires a declared evaluation-protocol amendment BEFORE use, and
+  promotion always requires the paired evaluator at promotion scale.
+
+promotion_path:
+  - round 1 survivors advance to SH-R2 with 2-3 seeds and 100k transitions
+  - finalists receive promotion-scale seat-swapped paired evaluation
+  - champion promotion only via EV-0017 evaluator with programme.yaml margins
+
+evidence_links: [EV-0015, EV-0016, EV-0017, EV-0021]

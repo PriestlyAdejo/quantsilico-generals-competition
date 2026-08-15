@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T03:10:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T03:25:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_DESIGN",
-  "CURRENT_TASK": "PREDECLARE_FIRST_SUCCESSIVE_HALVING_SCREENING_ROUND",
+  "CURRENT_STAGE": "STAGE_4A_SCREENING_RUNNER",
+  "CURRENT_TASK": "IMPLEMENT_SH_R1_SCREENING_RUNNER_AND_CONTROL_PILOT",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -123,6 +123,10 @@
     {
       "COMMAND": "post-merge proof on main@bc6970c: pytest evaluator+stop-gate+hooks+registry+parity suites and engine integration suite",
       "RESULT": "PASS_50_UNIT_PLUS_3_ENGINE_TESTS PR#3_MERGED"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_screening_round_1.py",
+      "RESULT": "PASS_EXPERIMENT_REGISTERED_PRE_LAUNCH experiment#sh-r1-cpu-pilot#796c4d71603c EV-0022"
     }
   ],
   "TESTS_PENDING": [
@@ -173,7 +177,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stages 1-3 merged to main via PR #3 (merge commit bc6970c; post-merge proof 50 unit + 3 engine tests green; branch fast-forwarded and pushed). Next bounded action: Stage 4A design — predeclare the first successive-halving screening round as a tracked plan (candidate arms, small CPU-feasible budgets, one seed, predeclared screening metrics and stop rules, integrity-failure elimination criteria) and register it as an experiment record in the registry before any training launch; the draw-heavy measurement regime (EV-0021) must be addressed in the screening metric design (truncation tie-breaks or supplementary metrics require a declared evaluation-protocol amendment first). GPU-class rounds remain gated on the CLOUD_CREDIT_BALANCE_UNKNOWN blocker (operator credentials/balance statement required); CPU-class screening may proceed meanwhile.",
+  "NEXT_SAFE_ACTION": "Stage 4A round SH-R1-CPU-PILOT predeclared (experiments/marathon/screening_round_1_plan.yaml) and registered pre-launch (EV-0022; 10 registry records). Next bounded action: implement the SH-R1 screening runner (resume from MARATHON_BASELINE_V0 raw/opt_state via load_tree, per-arm geometry, fixed 25k-transition budgets, per-update telemetry JSONL + arm summary with the predeclared metrics), verify it with a tiny smoke update count, then launch the control arm (SH-R1-A0-CONTROL) as a bounded pilot and record its run/checkpoint records in the registry; GPU-class rounds remain gated on CLOUD_CREDIT_BALANCE_UNKNOWN.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
