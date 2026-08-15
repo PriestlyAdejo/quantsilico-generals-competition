@@ -1,0 +1,77 @@
+schema_version: "1.0.0"
+kind: MARATHON_SCREENING_ROUND_PLAN
+round_id: SH-R4-BUDGET-ESCALATION
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+status: PREDECLARED_CONDITIONAL
+
+purpose: >
+  Fourth successive-halving round, predeclared BEFORE SH-R3 results are
+  inspected. If SH-R3 leaves one or more geometry families with all seeds
+  surviving, SH-R4 escalates the budget (240 updates at the 8,192-batch
+  geometry, ~2M transitions/arm) to produce a promotion-grade separation
+  signal between surviving geometries. If SH-R3 leaves NO surviving
+  geometry family, this round is VOID and the next canonical Stage-4A
+  family (spawn-distance / opponent-difficulty curriculum) is predeclared
+  instead.
+
+entry_condition: >
+  At least one geometry family {256x32, 128x64, 64x128} passes the SH-R3
+  cross-seed rule (all of its seeds survive the predeclared elimination
+  rules and none flip the vloss-reduction sign vs SH-R2).
+
+compute_class: GPU_RUNPOD_A40
+compute_note: >
+  Reuse the SH-R3 pod if still warm, else restart/create one A40
+  (duplicate-capacity check first; zero-idle-burn invariant). Sequential
+  arms (~39 GiB VRAM each). Post pool-fix steady rate ~6 min per 60
+  updates, so 240 updates/arm ≈ 25 min/arm.
+
+arms_rule: >
+  One arm per SURVIVING geometry family, seeds {20260816, 20260818}
+  (20260818 is new; 20260816 re-validated at the escalated budget for
+  budget-change sensitivity). Arm ids SH-R4-<GEOMETRY>-B<seed suffix>.
+  Arm count therefore 2..6 depending on SH-R3 survivors; the arm table is
+  materialised at launch from the adjudicated survivor list and written
+  into the round log header before the first arm starts.
+
+per_arm_budget:
+  budget_updates: 240
+  budget_transitions: 1966080   # 240 * 8192
+
+screening_metrics_predeclared:
+  primary:
+    - VLOSS_REDUCTION_OVER_ROUND
+    - VALID_LEARNING_SHARE
+    - ENTROPY_HEALTH
+  secondary:
+    - PG_MAGNITUDE
+    - TPS_MEASURED
+elimination_rules_predeclared:
+  - any non-finite metric in any update -> immediate elimination (INTEGRITY_FAILURE)
+  - VALID_LEARNING_SHARE < 0.9 -> elimination
+  - entropy collapse: final entropy < 0.05 -> elimination
+  - VLOSS_REDUCTION_OVER_ROUND <= 0 -> elimination
+  - GEOMETRY_ELIMINATED: >
+      a surviving SH-R3 geometry whose SH-R4 seed fails any rule above is
+      eliminated as a family
+stop_rules:
+  - fixed 240-update budget per arm
+  - wall cap 90 min per arm; exceeding recorded as PARTIAL_BUDGET
+  - no early stopping for performance reasons (integrity stops only)
+  - arms sequential on one A40
+
+promotion_path:
+  - >
+    if 2+ geometries survive SH-R4, the finalist pair (highest mean
+    vloss-reduction across seeds, tie -> higher VALID_LEARNING_SHARE)
+    receives promotion-scale Stage-2 seat-swapped paired evaluation;
+    telemetry alone never promotes (EV-0021 draw regime)
+  - >
+    if exactly 1 geometry survives, it advances directly to
+    promotion-scale paired evaluation against the baseline candidate
+  - >
+    champion promotion only via the EV-0017 evaluator with programme.yaml
+    margins
+
+evidence_links: [EV-0015, EV-0017, EV-0021, EV-0028, EV-0029, EV-0030]
