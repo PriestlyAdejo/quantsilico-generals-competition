@@ -21,6 +21,7 @@ from dashboard.backend.app.readers.evidence import (
     profile_snapshot_dto,
     submitted_package_dto,
 )
+from dashboard.backend.app.readers.marathon_registry import marathon_registry_dto
 from dashboard.backend.app.readers.qualification import qualification_dashboard_dto
 from dashboard.backend.app.readers.repository_status import repository_status_dto
 from dashboard.backend.app.services import env_sessions
@@ -775,6 +776,12 @@ def env_delete_session(session_id: str) -> dict[str, Any]:
     if not ok:
         raise HTTPException(404, "session not found")
     return {"schema_version": 1, "closed": True, "session_id": session_id}
+
+
+@router.get("/api/marathon-registry")
+def marathon_registry() -> dict[str, Any]:
+    """Stage-3 canonical registry view (read-only; kinds are typed)."""
+    return marathon_registry_dto(REPO_ROOT)
 
 
 @router.get("/api/champion")
