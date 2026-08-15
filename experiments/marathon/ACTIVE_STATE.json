@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T04:35:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T05:10:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_4A_SCREENING_RUNNER",
@@ -146,7 +146,8 @@
     "AUDIT_STATUS": "AUDITED",
     "AUDITED_AT_UTC": "2026-08-15T03:55:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "SH-R1-A0-CONTROL screening arm training on CPU via scripts/training/run_sh_r1_arm.py (budget 25000 transitions, est ~6h); telemetry experiments/marathon/screening_runs/SH-R1-A0-CONTROL/telemetry.jsonl; console log var/marathon_takeover/sh_r1_a0_control.log"
+      "SH-R1-A0-CONTROL screening arm training on CPU via scripts/training/run_sh_r1_arm.py (budget 25000 transitions, est ~6h); telemetry experiments/marathon/screening_runs/SH-R1-A0-CONTROL/telemetry.jsonl; console log var/marathon_takeover/sh_r1_a0_control.log",
+      "runpod_start_retry_loop.py bounded pod-start retry (24 tries x 5 min, no paid resources held while waiting); log var/marathon_takeover/runpod_start_retry.log"
     ],
     "UNKNOWN_REASON": "",
     "OBSERVED_INFRASTRUCTURE": [
@@ -188,7 +189,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "RunPod access proven (EV-0024; key at ~/.runpod/config.toml, fingerprint-only references; probe scripts/dev/runpod_account_probe.py). Next bounded action: BOUNDED GPU VALIDATION on existing pod generals_competition (id wvjrnxbpcjnr8h, A100 SXM 80GB, $1.59/h, EXITED): start it, inspect /workspace for prior QuantSilico state (preserve, do not wipe), install only missing deps (PyPI-from-machine is broken here; pod-side installs should work from RunPod network — verify), reproduce commit de27575 sources on the pod, verify JAX sees CUDA with no silent fallback, transfer MARATHON_BASELINE_V0 checkpoint, run the run_sh_r1_arm.py resume smoke with ratio-1.0 gate, measure GPU TPS/utilisation/compilation-vs-execution, capture billing evidence (pod id, rate, start/end), then decide reuse-vs-alternative accelerator from throughput-per-dollar and launch SH-R1-A1/A2; stop the pod whenever no job is actively training. Meanwhile SH-R1-A0-CONTROL continues on CPU (~6h) — do not kill it; when it finishes, validate summary + register run/checkpoint records.",
+  "NEXT_SAFE_ACTION": "GPU access in flight (EV-0025): bounded retry loop runpod_start_retry_loop.py is attempting to start generals_competition (24 tries x 5 min; log var/marathon_takeover/runpod_start_retry.log; billing log var/marathon_takeover/runpod_billing_log.jsonl). Next bounded actions: (1) if the loop reports STARTED/RUNNING: poll-ready, SSH in (local key matches pod PUBLIC_KEY), inspect /workspace prior state (preserve), restore or build the JAX CUDA env (cloud_restore_environment.sh archive if present), reproduce commit e387f51, run GPU validation (cloud_a100_env_ladder.py probes + run_sh_r1_arm.py --arm-id gpu-smoke resume ratio-1.0 gate), record throughput/billing, then launch SH-R1-A1/A2; (2) if exit 3 (still HOST_FULL): provision the pre-declared A40 fallback pod (HIGH stock, $0.44/h secure) with the same validation sequence — pre-declared in EV-0025 BEFORE any results; (3) stop the pod whenever no job is actively training. Meanwhile SH-R1-A0-CONTROL continues on CPU — do not kill it; on completion validate summary vs predeclared rules and register run/checkpoint records.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
