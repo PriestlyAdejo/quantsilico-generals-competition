@@ -202,3 +202,25 @@ def test_hook_contract_emergency_stop_env(monkeypatch: pytest.MonkeyPatch) -> No
     )
     assert completed.returncode == 0, completed.stderr
     assert json.loads(completed.stdout) == {}
+
+
+def test_runpod_ledger_flags_unverified_running(tmp_path: Path) -> None:
+    """RUNPOD-ZERO-IDLE-BURN-2026-08-15 section 10: ledger surfaces stops."""
+    ledger = tmp_path / "experiments" / "marathon" / "runpod_resources.json"
+    ledger.parent.mkdir(parents=True)
+    ledger.write_text(
+        json.dumps(
+            {
+                "resources": [
+                    {"pod_id": "p1", "name": "busy", "status": "RUNNING"},
+                    {"pod_id": "p2", "name": "done", "status": "EXITED_STOPPED"},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    assert gate.runpod_unexplained_running(tmp_path) == ["busy"]
+
+
+def test_runpod_ledger_missing_is_fail_open(tmp_path: Path) -> None:
+    assert gate.runpod_unexplained_running(tmp_path) == []

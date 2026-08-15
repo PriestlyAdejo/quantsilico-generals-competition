@@ -1,0 +1,49 @@
+{
+  "ACTUAL_TRANSITIONS": 24960,
+  "ARTEFACT_HASHES": {
+    "summary.json": "218600f90f6adf3fcc41becc3479d86b489012b6cce7c229c4efe9b82e374d6e",
+    "telemetry.jsonl": "7babece2bf3edee5e76ff856ae6fbc320f316359621f246d1ba5e9a67116e826"
+  },
+  "ARTEFACT_LOCATIONS": [
+    "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/marathon/screening_runs/SH-R1-A0-CONTROL/summary.json",
+    "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/marathon/screening_runs/SH-R1-A0-CONTROL/telemetry.jsonl"
+  ],
+  "BUDGET": "25000 transitions / 195 updates",
+  "COMMAND": "run_sh_r1_arm.py --arm-id SH-R1-A0-CONTROL --num-envs 8 --rollout-len 16",
+  "ENVIRONMENT": {
+    "jax": "0.11.0+cuda12",
+    "python": "3.12.14"
+  },
+  "EXPERIMENT_ID": "experiment#sh-r1-cpu-pilot#796c4d71603c",
+  "GEOMETRY": {
+    "num_envs": 8,
+    "rollout_len": 16
+  },
+  "HARDWARE": {
+    "cpu": "laptop CPU (JAX CPU backend)",
+    "provider": "local"
+  },
+  "ID": "run#sh-r1-a0-control-cpu#39acdbacdf72",
+  "KIND": "run",
+  "LINEAGE": {
+    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+    "LINEAGE_HASHES": {
+      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
+    },
+    "NAME": "competition_native_jax_v1"
+  },
+  "NAME": "SH-R1-A0-CONTROL-CPU",
+  "PPO_SEMANTICS": "UNCHANGED",
+  "RECORDED_AT_UTC": "2026-08-15T10:50:38Z",
+  "RESULT": "SURVIVED VLOSS_REDUCTION_0.00688 VALID_SHARE_1.000 EV-0028",
+  "SCHEMA_VERSION": "1.0.0",
+  "SEEDS": [
+    20260815
+  ],
+  "SOURCE_COMMIT": "6753c57",
+  "STOP_REASON": "BUDGET_REACHED"
+}

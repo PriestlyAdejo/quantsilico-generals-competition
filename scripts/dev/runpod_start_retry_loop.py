@@ -20,9 +20,15 @@ sys.path.insert(0, str(REPO / "scripts" / "dev"))
 from runpod_account_probe import load_key, rest  # noqa: E402
 from runpod_pod_control import BILLING_LOG, record_billing  # noqa: E402
 
+REPO = Path(__file__).resolve().parents[2]
+
 DEFAULT_POD_ID = "wvjrnxbpcjnr8h"
 MAX_TRIES = 24
 RETRY_INTERVAL_S = 300
+# RUNPOD-ZERO-IDLE-BURN-2026-08-15 section 8: once a fallback resource owns
+# the workload, touch this marker to cancel outstanding preferred-resource
+# retries so both can never end up RUNNING for one single-GPU workload.
+CANCEL_MARKER = REPO / "var/marathon_takeover/stop_pod_retries"
 
 
 def attempt_start(key: str, pod_id: str) -> tuple[str, str]:
@@ -52,6 +58,12 @@ def main() -> int:
     pod_id = args.pod_id
     key = load_key()
     for index in range(1, args.max_tries + 1):
+        if CANCEL_MARKER.exists():
+            print(
+                f"{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} "
+                f"CANCELLED by marker {CANCEL_MARKER.name} (fallback owns workload)"
+            )
+            return 4
         stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         outcome, detail = attempt_start(key, pod_id)
         print(f"{stamp} try {index}/{args.max_tries}: {outcome} {detail[:160]}", flush=True)

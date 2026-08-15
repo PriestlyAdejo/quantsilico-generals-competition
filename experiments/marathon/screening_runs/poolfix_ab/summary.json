@@ -1,0 +1,38 @@
+{
+  "actual_transitions": 384,
+  "arm_id": "poolfix-ab",
+  "budget_transitions": 25000,
+  "eliminated": true,
+  "elimination": [
+    "NO_VLOSS_REDUCTION"
+  ],
+  "finished_at_utc": "2026-08-15T10:48:19Z",
+  "geometry": {
+    "num_envs": 8,
+    "rollout_len": 16
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "ENTROPY_FIRST": 0.9884719848632812,
+    "ENTROPY_LAST": 1.0043365955352783,
+    "PG_FIRST": -0.0008151911315508187,
+    "PG_LAST": -7.956207264214754e-05,
+    "RATIO_FIRST": 1.0,
+    "RATIO_LAST": 1.0,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3580360412597656,
+    "VLOSS_LAST": 2.3584933280944824,
+    "VLOSS_REDUCTION_OVER_ROUND": -0.0004572868347167969
+  },
+  "seed": 20260815,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 16.84646613343902,
+    "collect_wall_s": 22.79409800004214,
+    "end_to_end_tps": 5.240435178183465,
+    "reset_pool_build_s": 131.57855979999295,
+    "total_wall_s": 73.79206060001161,
+    "update_wall_s": 50.48225919995457
+  },
+  "updates": 3
+}

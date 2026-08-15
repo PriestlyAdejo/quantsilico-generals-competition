@@ -1,0 +1,96 @@
+schema_version: "1.0.0"
+kind: MARATHON_SCREENING_ROUND_PLAN
+round_id: SH-R3-SEEDS
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+status: PREDECLARED
+
+purpose: >
+  Third successive-halving round. SH-R2 (EV-0028) left all three horizon
+  geometries surviving with <10% telemetry differences — single-seed
+  screening cannot separate them. SH-R3 asks the reproducibility question:
+  do the surviving geometries' training-health signals hold across multiple
+  seeds? Screening telemetry still cannot answer gameplay strength
+  (EV-0021 draw regime); finalists receive promotion-scale Stage-2 paired
+  evaluation afterwards.
+
+compute_class: GPU_RUNPOD_A40
+compute_note: >
+  Runner reset-pool fix validated by CPU A/B (EV-0029): collect wall for
+  3 updates at 8x16 dropped 273s -> 22.8s. Steady GPU TPS for SH-R3 arms
+  is measured from the arms' own telemetry (not the 7,611 warm-only ladder
+  figure) and recorded in each run record. Pod restart/creation on demand;
+  stopped immediately after the round (RUNPOD-SPEND-2026-08-15 section 7).
+
+arms:
+  - arm_id: SH-R3-A0-CONTROL-S1
+    geometry: {num_envs: 256, rollout_len: 32}
+    ppo_semantics: UNCHANGED
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260816]
+  - arm_id: SH-R3-A0-CONTROL-S2
+    geometry: {num_envs: 256, rollout_len: 32}
+    ppo_semantics: UNCHANGED
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260817]
+  - arm_id: SH-R3-A1-HORIZON-64-S1
+    geometry: {num_envs: 128, rollout_len: 64}
+    ppo_semantics: UNCHANGED
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260816]
+  - arm_id: SH-R3-A1-HORIZON-64-S2
+    geometry: {num_envs: 128, rollout_len: 64}
+    ppo_semantics: UNCHANGED
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260817]
+  - arm_id: SH-R3-A2-HORIZON-128-S1
+    geometry: {num_envs: 64, rollout_len: 128}
+    ppo_semantics: UNCHANGED
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260816]
+  - arm_id: SH-R3-A2-HORIZON-128-S2
+    geometry: {num_envs: 64, rollout_len: 128}
+    ppo_semantics: UNCHANGED
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260817]
+
+seed_note: >
+  Seed 20260815 per geometry is inherited from the SH-R2 runs themselves
+  (registered evidence), giving 3 seeds per geometry without re-running it.
+
+screening_metrics_predeclared:
+  primary:
+    - VLOSS_REDUCTION_OVER_ROUND   # VLOSS_FIRST - VLOSS_LAST over the arm's updates
+    - VALID_LEARNING_SHARE         # share of updates finite with 0.5<=ratio<=2
+    - ENTROPY_HEALTH               # final entropy >= 0.05 and finite throughout
+  secondary:
+    - PG_MAGNITUDE
+    - TPS_MEASURED                 # steady collect/e2e TPS from telemetry, post pool-fix
+elimination_rules_predeclared:
+  - any non-finite metric (NaN/Inf) in any update -> immediate elimination (INTEGRITY_FAILURE)
+  - VALID_LEARNING_SHARE < 0.9 -> elimination
+  - entropy collapse: final entropy < 0.05 -> elimination
+  - VLOSS_REDUCTION_OVER_ROUND <= 0 -> elimination
+  - GEOMETRY_DROPPED: >
+      a geometry whose seeds do not ALL survive (or whose surviving seeds
+      flip the vloss-reduction sign vs SH-R2) is dropped as a family
+      before SH-R4
+stop_rules:
+  - fixed 60-update budget per arm
+  - wall cap 2h per arm; exceeding with budget incomplete recorded as PARTIAL_BUDGET
+  - no early stopping for performance reasons (integrity stops only)
+  - arms run SEQUENTIALLY on a single A40 (each arm ~39 GiB VRAM)
+
+promotion_path:
+  - geometries passing cross-seed consistency advance to SH-R4 with larger
+    budgets (>=200 updates) at the surviving geometry only
+  - finalists receive promotion-scale seat-swapped paired evaluation
+  - champion promotion only via EV-0017 evaluator with programme.yaml margins
+
+evidence_links: [EV-0015, EV-0016, EV-0017, EV-0021, EV-0027, EV-0028, EV-0029]

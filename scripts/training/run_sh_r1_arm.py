@@ -23,6 +23,9 @@ sys.path.insert(0, str(REPO))
 import jax  # noqa: E402
 import jax.numpy as jnp  # noqa: E402
 
+from generals_bot.competition_native_jax.competition_env_jax import (  # noqa: E402
+    build_competition_reset_pool,
+)
 from generals_bot.competition_native_jax.transformer_jax import init_params  # noqa: E402
 from train.competition_native_jax.ema_jax import ema_update  # noqa: E402
 from train.competition_native_jax.gae_jax import gae_advantages_batch_jit  # noqa: E402
@@ -39,6 +42,7 @@ DEFAULT_CHECKPOINT = (
     / "ckpt_final_u482_t7593984"
 )
 LR = 3e-4
+RESET_POOL_SIZE = 4096
 
 
 def flatten_batch(batch: dict) -> dict:
@@ -106,6 +110,15 @@ def main() -> int:
     stop_reason = "BUDGET_REACHED"
     collect_wall = 0.0
     update_wall = 0.0
+    # Build the reset pool ONCE and reuse it across updates (ladder pattern,
+    # EV-0029): reconstructing boards per collect dominated wall-time.
+    # Environment initialisation only; PPO_SEMANTICS unchanged.
+    pool_started = time.perf_counter()
+    reset_pool = build_competition_reset_pool(
+        jax.random.PRNGKey(args.seed), RESET_POOL_SIZE
+    )
+    jax.block_until_ready(jax.tree_util.tree_leaves(reset_pool))
+    pool_wall = time.perf_counter() - pool_started
     started = time.perf_counter()
     telemetry_file = telemetry_path.open("w", encoding="utf-8")
     try:
@@ -116,7 +129,8 @@ def main() -> int:
                 num_envs=args.num_envs,
                 rollout_len=args.rollout_len,
                 seed=args.seed + index,
-                reset_pool_size=max(64, 4 * args.num_envs),
+                reset_pool_size=RESET_POOL_SIZE,
+                pool=reset_pool,
             )
             jax.block_until_ready(jax.tree_util.tree_leaves(batch["actions"]))
             collect_wall += time.perf_counter() - collect_started
@@ -186,6 +200,7 @@ def main() -> int:
             "RATIO_LAST": last.get("ratio"),
         },
         "throughput": {
+            "reset_pool_build_s": pool_wall,
             "collect_tps": transitions / max(collect_wall, 1e-9),
             "end_to_end_tps": transitions / max(collect_wall + update_wall, 1e-9),
             "collect_wall_s": collect_wall,

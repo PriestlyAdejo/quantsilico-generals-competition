@@ -1,0 +1,35 @@
+{
+  "actual_transitions": 491520,
+  "arm_id": "SH-R2-A1-HORIZON-64",
+  "budget_transitions": 491520,
+  "eliminated": false,
+  "elimination": [],
+  "finished_at_utc": "2026-08-15T07:57:33Z",
+  "geometry": {
+    "num_envs": 128,
+    "rollout_len": 64
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "ENTROPY_FIRST": 1.5809521675109863,
+    "ENTROPY_LAST": 2.661980628967285,
+    "PG_FIRST": -0.0006429367349483073,
+    "PG_LAST": 1.957896074600285e-06,
+    "RATIO_FIRST": 0.9999995827674866,
+    "RATIO_LAST": 1.0000035762786865,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.357391834259033,
+    "VLOSS_LAST": 2.351356267929077,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.006035566329956055
+  },
+  "seed": 20260815,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 125.48440765116038,
+    "collect_wall_s": 3916.9806767259724,
+    "end_to_end_tps": 121.71250970082208,
+    "total_wall_s": 4039.789099871181,
+    "update_wall_s": 121.38810893287882
+  },
+  "updates": 60
+}

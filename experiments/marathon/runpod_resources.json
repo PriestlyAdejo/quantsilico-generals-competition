@@ -1,0 +1,41 @@
+{
+  "kind": "RUNPOD_RESOURCE_LEDGER",
+  "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
+  "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
+  "updated_at_utc": "2026-08-15T11:05:00Z",
+  "resources": [
+    {
+      "pod_id": "ba86a74lq28t3f",
+      "name": "quantisilico_sh_r2_a40",
+      "status": "EXITED_STOPPED_BY_WATCHDOG_RECONCILIATION",
+      "owner_run": "SH-R2-UPDATES-MATCHED (all 3 arms)",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "started_at_utc": "2026-08-15T05:34:41Z",
+      "stopped_at_utc": "2026-08-15T10:39:00Z",
+      "disposition": "retain EXITED volume (env + checkpoints) for SH-R3 restart"
+    },
+    {
+      "pod_id": "tmmov7t54z5mbu",
+      "name": "quantisilico_sh_r1_a40",
+      "status": "EXITED_STOPPED_AFTER_ROUND",
+      "owner_run": "SH-R1 GPU ladder + arms",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "started_at_utc": "2026-08-15T04:14:45Z",
+      "stopped_at_utc": "2026-08-15T05:17:40Z",
+      "disposition": "retain EXITED volume (R1 env)"
+    },
+    {
+      "pod_id": "wvjrnxbpcjnr8h",
+      "name": "generals_competition",
+      "status": "EXITED_STOPPED_BY_WATCHDOG_RECONCILIATION",
+      "owner_run": "none (resumed by user 05:29Z, verified idle: GPU 0%/0MiB, no trainer)",
+      "rate_usd_per_hr": 1.59,
+      "started_at_utc": "2026-08-15T05:29:31Z",
+      "stopped_at_utc": "2026-08-15T10:41:00Z",
+      "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
+    }
+  ],
+  "active_workloads": []
+}

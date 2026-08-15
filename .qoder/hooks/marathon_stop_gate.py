@@ -25,6 +25,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 ACTIVE_STATE_PATH = REPO / "experiments/marathon/ACTIVE_STATE.json"
+RUNPOD_LEDGER_PATH = REPO / "experiments/marathon/runpod_resources.json"
 EMERGENCY_MARKER = REPO / "var/marathon_takeover/EMERGENCY_STOP"
 BLOCK_COUNTER_PATH = REPO / "var/marathon_takeover/stop_gate_blocks.json"
 MAX_BLOCKS = 200
@@ -175,6 +176,32 @@ def _emergency_active() -> bool:
         return False
 
 
+def runpod_unexplained_running(repo_root: Path | None = None) -> list[str]:
+    """RUNPOD-ZERO-IDLE-BURN-2026-08-15 stop-gate check (amendment section 10).
+
+    Returns the names of ledger resources still recorded as ACTIVE-paid
+    without a verified workload disposition. The hook itself cannot query
+    RunPod; the resource ledger is the reconciliation surface, and session
+    recovery must re-run scripts/dev/runpod_idle_watchdog.py against live
+    state (amendment section 11). Missing ledger file means no declared
+    paid resources (fail-open).
+    """
+    root = repo_root or REPO
+    path = root / "experiments/marathon/runpod_resources.json"
+    try:
+        ledger = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    problems = []
+    for record in ledger.get("resources", []):
+        if not isinstance(record, dict):
+            continue
+        status = str(record.get("status", "")).upper()
+        if status in {"RUNNING", "ACTIVE_UNVERIFIED", "RUNNING_UNVERIFIED"}:
+            problems.append(str(record.get("name") or record.get("pod_id")))
+    return problems
+
+
 def _read_prior_blocks() -> int:
     try:
         return int(json.loads(BLOCK_COUNTER_PATH.read_text(encoding="utf-8")).get("blocks", 0))
@@ -221,6 +248,29 @@ def main() -> int:
             )
         )
         return 0
+
+    if not _emergency_active():
+        unexplained = runpod_unexplained_running()
+        if unexplained:
+            prior = _read_prior_blocks()
+            _write_prior_blocks(prior + 1)
+            print(
+                json.dumps(
+                    {
+                        "followup_message": (
+                            "RUNPOD-ZERO-IDLE-BURN-2026-08-15: paid resource(s) "
+                            f"{', '.join(unexplained)} are recorded RUNNING without "
+                            "a verified active workload. Before stopping: run "
+                            "scripts/dev/runpod_idle_watchdog.py --stop-idle, fetch "
+                            "any outstanding artefacts, stop idle pods, and update "
+                            "experiments/marathon/runpod_resources.json. Do not end "
+                            "a session leaving unexplained paid compute running."
+                        )
+                    },
+                    sort_keys=True,
+                )
+            )
+            return 0
 
     try:
         state = json.loads(ACTIVE_STATE_PATH.read_text(encoding="utf-8"))

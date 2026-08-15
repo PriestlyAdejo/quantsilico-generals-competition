@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T06:20:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T11:05:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_SCREENING_RUNNER",
-  "CURRENT_TASK": "IMPLEMENT_SH_R1_SCREENING_RUNNER_AND_CONTROL_PILOT",
+  "CURRENT_STAGE": "STAGE_4A_SCREENING_SH_R3",
+  "CURRENT_TASK": "LAUNCH_SH_R3_SEEDS_ROUND_ON_GPU_AFTER_RECONCILIATION",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -135,6 +135,26 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/dev/runpod_account_probe.py",
       "RESULT": "PASS_RUNPOD_AUTH_BALANCE_17.89_SPEND_LIMIT_80_PER_HR_POD_generals_competition_EXITED_A100_SXM_1.59_PER_HR EV-0024"
+    },
+    {
+      "COMMAND": "live-state reconciliation: runpod_pod_control status; ssh workload probes on both RUNNING pods; scp of all SH-R2 artefacts to experiments/marathon/screening_round_2_runs/; stop of ba86a74lq28t3f and wvjrnxbpcjnr8h",
+      "RESULT": "PASS_IDLE_PODS_STOPPED_EVIDENCE_PRESERVED_FIRST_BILLING_LOGGED_A100_PRIOR_STATE_INVENTORIED EV-0028"
+    },
+    {
+      "COMMAND": "SH-R2 adjudication from actual artefacts (summaries + telemetry, predeclared rules)",
+      "RESULT": "PASS_ALL_THREE_ARMS_SURVIVE_CPU_CONTROL_ALSO_SURVIVES_195_UPDATES_9_REGISTRY_RECORDS_ADDED EV-0028"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe var/marathon_takeover/reconcile_tps.py",
+      "RESULT": "PASS_TPS_DISCREPANCY_ROOT_CAUSED_RESET_POOL_REBUILD_NOT_REGRESSION_POOL_FIX_CPU_AB_273S_TO_23S EV-0029"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_qoder_stop_gate.py -q",
+      "RESULT": "PASS_15_TESTS_INCL_RUNPOD_ZERO_IDLE_BURN_STOP_GATE_CHECK"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/runpod_idle_watchdog.py",
+      "RESULT": "PASS_LIVE_VERDICT_NO_RUNNING_PODS_WATCHDOG_OPERATIONAL"
     }
   ],
   "TESTS_PENDING": [
@@ -144,21 +164,21 @@
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-15T03:55:00Z",
-    "ACTIVE_PROJECT_WORKLOADS": [
-      "SH-R1-A0-CONTROL screening arm training on CPU via scripts/training/run_sh_r1_arm.py (budget 25000 transitions, est ~6h); telemetry experiments/marathon/screening_runs/SH-R1-A0-CONTROL/telemetry.jsonl; console log var/marathon_takeover/sh_r1_a0_control.log",
-      "runpod_start_retry_loop.py bounded pod-start retry (24 tries x 5 min, no paid resources held while waiting); log var/marathon_takeover/runpod_start_retry.log"
+    "AUDITED_AT_UTC": "2026-08-15T11:05:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [],
+    "COMPLETED_THIS_SESSION": [
+      "SH-R1-A0-CONTROL CPU arm completed 195/195 updates (summary written, registered run#sh-r1-a0-control-cpu#39acdbacdf72)",
+      "runpod_start_retry_loop.py ended (A100 machine GPU-full; cancelled per zero-idle-burn section 8)"
     ],
     "UNKNOWN_REASON": "",
     "OBSERVED_INFRASTRUCTURE": [
       "Qoder agent process for this task",
-      "SH-R1-A0-CONTROL CPU training (this project)",
       "vmmemWSL with workload not audited (unchanged; untouched)"
     ]
   },
   "ACTIVE_REMOTE_PROCESSES": {
-    "AUDIT_STATUS": "AUDITED_READ_ONLY",
-    "AUDITED_AT_UTC": "2026-08-14T18:18:16Z",
+    "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
+    "AUDITED_AT_UTC": "2026-08-15T10:55:47Z",
     "ACTIVE_PROJECT_WORKLOADS": [],
     "OBSERVED_RESOURCES": [
       {
@@ -166,7 +186,22 @@
         "RESOURCE_TYPE": "POD",
         "RESOURCE_ID": "wvjrnxbpcjnr8h",
         "NAME": "generals_competition",
-        "STATE": "EXITED"
+        "STATE": "EXITED_STOPPED_AFTER_IDLE_VERIFICATION",
+        "LEDGER": "experiments/marathon/runpod_resources.json"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "ba86a74lq28t3f",
+        "NAME": "quantisilico_sh_r2_a40",
+        "STATE": "EXITED_STOPPED_AFTER_EVIDENCE_FETCH"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "tmmov7t54z5mbu",
+        "NAME": "quantisilico_sh_r1_a40",
+        "STATE": "EXITED_RETAINS_R1_ENV_VOLUME"
       },
       {
         "PROVIDER": "RUNPOD",
@@ -175,7 +210,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": null,
+  "CURRENT_EXPERIMENT": "experiment#sh-r3-seeds#2a98430be4d7",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -189,7 +224,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "SH-R2-UPDATES-MATCHED round EXECUTING on fresh A40 pod ba86a74lq28t3f (194.68.245.122:22101; round log /workspace/sh_r2_round.log; arms sequential; est ~3h wall at observed ~65 s/update; worst-case billed ~$1.5). SH-R1-A0-CONTROL on laptop CPU near completion (~140/195 updates). Next bounded actions: (1) poll /workspace/sh_r2_round.log for arm end boundaries; when round ends, scp the three arm dirs (telemetry/summary; npz stay pod-side, hash them remotely or fetch) to experiments/marathon/screening_round_2_runs/, apply the predeclared elimination rules, register run/checkpoint records, record EV, then STOP the pod; (2) if the pod or an arm died mid-run: resume from the runner's telemetry (it refuses overwrite; restart remaining arms only); (3) when the CPU control finishes: validate + register + EV; (4) afterwards: SH-R3 predeclaration for survivors (2-3 seeds) or the next Stage 4A family if none survive; (5) keep checking the stopped generals_competition A100 and quantisilico_sh_r1_a40 pods stay EXITED (never pay for idle).",
+  "NEXT_SAFE_ACTION": "SH-R3-SEEDS launch: (1) provision/restart ONE A40 (try starting tmmov7t54z5mbu which keeps the R1 env; if HOST_FULL, create fresh via runpod_pod_create.py --pod-name quantisilico_sh_r3_a40); (2) sync the pool-fixed runner + R3 orchestrator (6 arms: 3 geometries x seeds 20260816/20260817, 60 updates each, sequential); (3) update experiments/marathon/runpod_resources.json with the ACTIVE workload record BEFORE launch; (4) after launch, keep watchdog cadence: scripts/dev/runpod_idle_watchdog.py between polls; (5) on round end: scp artefacts to experiments/marathon/screening_round_3_runs/, adjudicate against screening_round_3_plan.yaml rules (GEOMETRY_DROPPED if any seed fails), register records, EV entry, STOP POD, then SH-R4 budget escalation for consistent geometries or paired-eval finalists; (6) Stage 4B dependency-safe lane runs locally/agent-side only (no live-training-critical files). Zero-idle-burn invariant RUNPOD-ZERO-IDLE-BURN-2026-08-15 is now permanent: session resume must query RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -227,7 +262,12 @@
       "ID": "RUNPOD-SPEND-2026-08-15",
       "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
       "SUMMARY": "Supersedes the earlier existing-credits-only rule for Marathon research compute: reasonable additional cash spend on GPU/CPU compute is pre-authorised; low balance must not shrink scientifically justified budgets, truncate promising candidates, or replace appropriate GPU runs with impractical CPU runs. Optimisation target is strength per compute/dollar via the canonical funnel (pilot -> utilisation -> control -> external strength -> marginal value); failed/dominated arms receive no extra compute; reference transition points (5M..500M+) are decision points, not ceilings; official RunPod tooling preferred; RUNPOD_API_KEY never exposed/committed; no new payment methods/legal terms/ownership changes; paid accelerators stopped when idle; billing evidence recorded per run. Scientific gates (Stage 2 statistics, Stage 3 registration, controls, evaluation) are NOT weakened by spend.",
-      "OPERATIONAL_NOTES": "Credential at ~/.runpod/config.toml (KEY_SHA256 a34c0f0e...; rotate after marathon window since it transited chat). API surface verified: GraphQL api.runpod.io/graphql + REST rest.runpod.io/v1 (runpodctl 6fc6f8b5 queries). PyPI unreachable FROM THE LAPTOP; pods install fine. Pod inventory: generals_competition A100 (wvjrnxbpcjnr8h, host GPU-full, EXITED), quantisilico_sh_r1_a40 (tmmov7t54z5mbu, its machine's GPU also re-occupied, EXITED with R1 env/volume), quantisilico_sh_r2_a40 (ba86a74lq28t3f, RUNNING for SH-R2)."
+      "OPERATIONAL_NOTES": "Credential at ~/.runpod/config.toml (KEY_SHA256 a34c0f0e...; rotate after marathon window since it transited chat). API surface verified: GraphQL api.runpod.io/graphql + REST rest.runpod.io/v1 (runpodctl 6fc6f8b5 queries). PyPI unreachable FROM THE LAPTOP; pods install fine. Balance 26.94 after operator top-up. Pod inventory: all three pods EXITED (see experiments/marathon/runpod_resources.json)."
+    },
+    {
+      "ID": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "No paid RunPod GPU may remain RUNNING without a verified active workload or bounded startup window. Implements: resource ownership ledger (experiments/marathon/runpod_resources.json), workload verification over pod status, scripts/dev/runpod_idle_watchdog.py (--stop-idle, billing-logged), completion-means-STOP ordering, duplicate-capacity prevention, fallback-retry self-cancel marker (var/marathon_takeover/stop_pod_retries), stop-gate ledger check (.qoder/hooks/marathon_stop_gate.py runpod_unexplained_running), and session-recovery-first RunPod reconciliation. Documented in docs/marathon/RUNPOD_ZERO_IDLE_BURN.md. Cost is telemetry, not the optimisation target; spend policy remains RUNPOD-SPEND-2026-08-15."
     }
   ]
 }
