@@ -1,0 +1,36 @@
+{
+  "actual_transitions": 491520,
+  "arm_id": "SH-R3-A0-CONTROL-S1",
+  "budget_transitions": 491520,
+  "eliminated": false,
+  "elimination": [],
+  "finished_at_utc": "2026-08-15T11:32:27Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "ENTROPY_FIRST": 1.1862478256225586,
+    "ENTROPY_LAST": 2.0349979400634766,
+    "PG_FIRST": -0.0005220849998295307,
+    "PG_LAST": 1.5926903870422393e-05,
+    "RATIO_FIRST": 0.9999992251396179,
+    "RATIO_LAST": 1.0000061988830566,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3577558994293213,
+    "VLOSS_LAST": 2.351351261138916,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.0064046382904052734
+  },
+  "seed": 20260816,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 8518.275205420196,
+    "collect_wall_s": 57.701822041068226,
+    "end_to_end_tps": 1976.2650526113835,
+    "reset_pool_build_s": 80.62125452188775,
+    "total_wall_s": 250.34894854715094,
+    "update_wall_s": 191.00975606963038
+  },
+  "updates": 60
+}

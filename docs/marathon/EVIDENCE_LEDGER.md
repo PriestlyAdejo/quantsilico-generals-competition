@@ -286,3 +286,12 @@ New research ideas follow `SOURCE -> mechanism -> interaction/risk -> bounded ex
   - Dashboard: registry-backed read-only API `GET /api/marathon-registry` (reader `dashboard/backend/app/readers/marathon_registry.py`) consuming Stage-3 canonical registry instead of filenames; typed kinds experiment/run/checkpoint/candidate/evaluation/opponent_reference; 20 dashboard tests pass incl. 3 new contract tests.
 - Commits: 76a0212 (SH-R3 launch), af6cbe3 (outbox), 7ff03db (cleanup inventory), 036162b + ac0f11c (dashboard registry API).
 - Pre-existing ruff E501 violations in dashboard/backend/app/routes/api.py were NOT touched (unrelated to the 4B additions; noted, not silently fixed).
+
+### `EV-0031` — SH-R3 adjudication: ALL SIX ARMS SURVIVE, all three geometry families survive; SH-R4 entry condition MET; post-fix steady TPS 28–31k
+
+- Source class: `REMOTE_RUNTIME_EVIDENCE` + `LOCAL_RUNTIME_EVIDENCE`
+- Round executed 11:26:39→11:59:08Z (32.5 min for 6 arms, commit dc3ac79 pool-fixed runner) on pod o27sds4rsf9hjs; artefacts fetched FIRST, then pod STOPPED (billing-logged; zero-idle-burn observed end-to-end).
+- Per-arm verdicts from actual artefacts (predeclared rules, adjudication script var/marathon_takeover/adjudicate_sh_r3.py): A0-S1 +0.00640 / A0-S2 +0.00613; A1-S1 +0.00595 / A1-S2 +0.00576; A2-S1 +0.00530 / A2-S2 +0.00506; VALID_LEARNING_SHARE 1.000 for all six; entropy finite and rising for all six; 60/60 updates each. ALL SIX SURVIVE.
+- Cross-seed rule: every geometry family survives (all seeds pass; no vloss-reduction sign flip vs SH-R2). Ranking stable and reproducible across seeds: A0 ≥ A1 ≥ A2 (differences < 25% and monotone across both new seeds — a real, reproducible ordering, still telemetry-grade only).
+- THROUGHPUT (supersedes all prior runner figures): steady collect TPS 28,097–31,411 (per-update deltas, updates 5–60) vs 126–136 pre-fix — pool fix worth ~220× on collect; ~4× the 7,611 warm-only ladder figure because the runner now also avoids per-update pool overheads the ladder timing excluded. End-to-end 250 s per 60-update arm. A40 $0.44/h ≈ $0.00004 per 1,000 transitions; GPU-selection decisions use these numbers.
+- 12 registry records added (6 runs + 6 terminal checkpoints). SH-R4-BUDGET-ESCALATION entry condition MET: launch per the predeclared plan (240 updates/arm at surviving geometries, seeds 20260816/20260818; finalists to Stage-2 paired evaluation — telemetry never promotes).
