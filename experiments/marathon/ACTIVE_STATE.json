@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T11:05:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T12:05:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_SCREENING_SH_R3",
-  "CURRENT_TASK": "LAUNCH_SH_R3_SEEDS_ROUND_ON_GPU_AFTER_RECONCILIATION",
+  "CURRENT_STAGE": "STAGE_4A_SH_R3_EXECUTING_PLUS_STAGE_4B_PARALLEL",
+  "CURRENT_TASK": "MONITOR_SH_R3_THEN_ADJUDICATE_AND_DECLARE_SH_R4_WHILE_4B_LANE_CONTINUES",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -155,6 +155,22 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/dev/runpod_idle_watchdog.py",
       "RESULT": "PASS_LIVE_VERDICT_NO_RUNNING_PODS_WATCHDOG_OPERATIONAL"
+    },
+    {
+      "COMMAND": "SH-R3 GPU validation on o27sds4rsf9hjs (bootstrap.sh r3-smoke) + round launch via remote_sh_r3_orchestrator.sh",
+      "RESULT": "PASS_JAX_0.11_CUDA_A40_NO_SILENT_FALLBACK_RESUME_SMOKE_3_OF_3_ROUND_TRAINING_PID_5046_THEN_5MIN51S_PER_ARM_POOLFIX_CONFIRMED EV-0030"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_submission_outbox.py -q",
+      "RESULT": "PASS_4_TESTS_OUTBOX_ALLOCATOR_DETERMINISTIC_ATOMIC_COLLISION_REFUSAL EV-0030"
+    },
+    {
+      "COMMAND": ".venv-training/Scripts/python.exe -m pytest dashboard/backend/tests -q",
+      "RESULT": "PASS_20_TESTS_INCL_REGISTRY_BACKED_MARATHON_API_CONTRACT EV-0030"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/repo_cleanup_inventory.py --out var/marathon_takeover/repo_cleanup_inventory_dry_run.json",
+      "RESULT": "PASS_DRY_RUN_23_DIST_13_EMPTY_SCAFFOLDS_2_STAGING_NO_DELETIONS EV-0030"
     }
   ],
   "TESTS_PENDING": [
@@ -178,8 +194,10 @@
   },
   "ACTIVE_REMOTE_PROCESSES": {
     "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
-    "AUDITED_AT_UTC": "2026-08-15T10:55:47Z",
-    "ACTIVE_PROJECT_WORKLOADS": [],
+    "AUDITED_AT_UTC": "2026-08-15T12:05:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [
+      "SH-R3-SEEDS round on pod o27sds4rsf9hjs (194.68.245.240:22186): sequential arms at ~6 min/arm; round log /workspace/sh_r3_round.log; telemetry /workspace/screening_runs_r3/<arm>/telemetry.jsonl; est finish ~12:02-12:10Z; disposition STOP after artefact fetch"
+    ],
     "OBSERVED_RESOURCES": [
       {
         "PROVIDER": "RUNPOD",
@@ -195,6 +213,14 @@
         "RESOURCE_ID": "ba86a74lq28t3f",
         "NAME": "quantisilico_sh_r2_a40",
         "STATE": "EXITED_STOPPED_AFTER_EVIDENCE_FETCH"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "o27sds4rsf9hjs",
+        "NAME": "quantisilico_sh_r3_a40",
+        "STATE": "RUNNING_VERIFIED_WORKLOAD_SH_R3",
+        "LEDGER": "experiments/marathon/runpod_resources.json"
       },
       {
         "PROVIDER": "RUNPOD",
@@ -224,7 +250,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "SH-R3-SEEDS launch: (1) provision/restart ONE A40 (try starting tmmov7t54z5mbu which keeps the R1 env; if HOST_FULL, create fresh via runpod_pod_create.py --pod-name quantisilico_sh_r3_a40); (2) sync the pool-fixed runner + R3 orchestrator (6 arms: 3 geometries x seeds 20260816/20260817, 60 updates each, sequential); (3) update experiments/marathon/runpod_resources.json with the ACTIVE workload record BEFORE launch; (4) after launch, keep watchdog cadence: scripts/dev/runpod_idle_watchdog.py between polls; (5) on round end: scp artefacts to experiments/marathon/screening_round_3_runs/, adjudicate against screening_round_3_plan.yaml rules (GEOMETRY_DROPPED if any seed fails), register records, EV entry, STOP POD, then SH-R4 budget escalation for consistent geometries or paired-eval finalists; (6) Stage 4B dependency-safe lane runs locally/agent-side only (no live-training-critical files). Zero-idle-burn invariant RUNPOD-ZERO-IDLE-BURN-2026-08-15 is now permanent: session resume must query RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "SH-R3 round executing (~6 min/arm post pool-fix, 6 arms, est finish ~12:10Z). Next bounded actions: (1) poll /workspace/sh_r3_round.log for the round-end boundary; (2) on end: scp all six arm dirs + round log to experiments/marathon/screening_round_3_runs/, apply screening_round_3_plan.yaml rules (GEOMETRY_DROPPED if any seed of a geometry fails), register run/checkpoint records, record EV, then STOP pod o27sds4rsf9hjs (watchdog --stop-idle if idle earlier); (3) predeclare SH-R4 BEFORE inspecting anything beyond the predeclared rules: survivors get >=200-update budgets at their geometry with 2 seeds, plus Stage-2 paired-eval path for finalists (EV-0021 draw regime); (4) if NO geometry survives all seeds: move to the next canonical Stage-4A family (spawn-distance/opponent-difficulty curriculum per programme.yaml) with fresh predeclaration; (5) Stage 4B lane continues dependency-safe units during GPU waits (next candidates: outbox end-to-end against a real promoted package, supported-command inventory); (6) zero-idle-burn watchdog cadence between polls; never leave the A40 idle. Zero-idle-burn invariant RUNPOD-ZERO-IDLE-BURN-2026-08-15 permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -263,6 +289,11 @@
       "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
       "SUMMARY": "Supersedes the earlier existing-credits-only rule for Marathon research compute: reasonable additional cash spend on GPU/CPU compute is pre-authorised; low balance must not shrink scientifically justified budgets, truncate promising candidates, or replace appropriate GPU runs with impractical CPU runs. Optimisation target is strength per compute/dollar via the canonical funnel (pilot -> utilisation -> control -> external strength -> marginal value); failed/dominated arms receive no extra compute; reference transition points (5M..500M+) are decision points, not ceilings; official RunPod tooling preferred; RUNPOD_API_KEY never exposed/committed; no new payment methods/legal terms/ownership changes; paid accelerators stopped when idle; billing evidence recorded per run. Scientific gates (Stage 2 statistics, Stage 3 registration, controls, evaluation) are NOT weakened by spend.",
       "OPERATIONAL_NOTES": "Credential at ~/.runpod/config.toml (KEY_SHA256 a34c0f0e...; rotate after marathon window since it transited chat). API surface verified: GraphQL api.runpod.io/graphql + REST rest.runpod.io/v1 (runpodctl 6fc6f8b5 queries). PyPI unreachable FROM THE LAPTOP; pods install fine. Balance 26.94 after operator top-up. Pod inventory: all three pods EXITED (see experiments/marathon/runpod_resources.json)."
+    },
+    {
+      "ID": "ACTIVATE-STAGE-4B-PARALLEL-LANE-2026-08-15",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Stage 4B is a genuinely concurrent platform track: dependency-safe packaging (outbox allocator), cleanup classification (dry-run), and registry-backed dashboard APIs proceed in parallel with Stage 4A GPU research. Constraints: no modification of live-training-critical files (trainer, screening runner, active experiment config, checkpoint schema, observation/action/PPO semantics, telemetry formats) during SH-R3; no destructive deletion of unique evidence; no trainer namespace migration before a safe experiment boundary with capsule parity + throughput gates; portal upload stays manual; 4B must never delay 4A; Stage 5 starts when its real gates pass, not after irrelevant polish. EV-0030."
     },
     {
       "ID": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
