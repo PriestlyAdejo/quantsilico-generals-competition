@@ -52,7 +52,7 @@ def _http(url: str, key: str, payload: dict | None = None, method: str | None = 
             body = exc.read().decode("utf-8", "replace")[:400]
             if exc.code in (400, 401, 403):
                 raise RuntimeError(f"HTTP {exc.code}: {body}") from exc
-            last_error = exc
+            last_error = RuntimeError(f"HTTP {exc.code}: {body}")
             print(f"HTTP {exc.code} attempt {attempt + 1}: {body}", file=sys.stderr)
         except (urllib.error.URLError, ConnectionError, TimeoutError) as exc:
             last_error = exc
@@ -67,8 +67,8 @@ def gql(key: str, query: str) -> dict:
     return result["data"]
 
 
-def rest(key: str, endpoint: str, method: str = "GET") -> object:
-    return _http(f"{REST_API}{endpoint}", key, method=method)
+def rest(key: str, endpoint: str, method: str = "GET", payload: dict | None = None) -> object:
+    return _http(f"{REST_API}{endpoint}", key, payload=payload, method=method)
 
 
 def main() -> int:
