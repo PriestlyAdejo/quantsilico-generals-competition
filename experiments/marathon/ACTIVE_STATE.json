@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T21:10:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T22:10:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_4A_CURRICULUM_FAMILY_R1_ADJUDICATED_GAMEPLAY_EVAL_EXECUTING",
@@ -193,12 +193,14 @@
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-15T21:10:00Z",
+    "AUDITED_AT_UTC": "2026-08-15T22:10:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "CURR1-ADVANCING-VARIANTS-GAMEPLAY-EVAL (local CPU, background terminal): predeclared plan, 48 pairs total",
-      "DURABLE LOOP ARMED (BEST-EFFORT ONLY per EV-0036 audit): AGENT_LOOP_TICK_MARATHON 30 min - ticks fire but do not drive agent turns; remote self-stop wrapper now carries the billing invariant"
+      "CURR1-ADVANCING-VARIANTS-GAMEPLAY-EVAL (local CPU, background terminal): predeclared plan, 48 pairs total, FAR-21 phase in progress, draws so far per EV-0021 regime",
+      "DURABLE LOOP COMMISSIONED via /loop: AGENT_LOOP_TICK_MAREXEC 30 min executing docs/marathon/MARATHON_DURABLE_EXECUTOR_PROMPT.md (EV-0037); old AGENT_LOOP_TICK_MARATHON sentinel deprecated; remote self-stop wrapper carries the billing invariant"
     ],
     "COMPLETED_THIS_SESSION": [
+      "Replay legal-POV reconstruction HARD GATE implemented + proven (scripts/data/replay_legal_pov.py, 6 fixture tests incl. leak guard, real-data probe on DATASET-ELITE-2026-08-15-V01) EV-0037",
+      "Durable /loop commissioned + executor prompt versioned (docs/marathon/MARATHON_DURABLE_EXECUTOR_PROMPT.md) EV-0037",
       "RECOVERY PASS (operator intervention after laptop sleep): RunPod reconciled FIRST; CURR1 round found COMPLETE since 18:08:44Z with pod idle; artefacts fetched + integrity-verified (6/6 arms 240/240); pod STOPPED 20:51:15Z; idle interval 2.71h ~$1.19 billing-logged",
       "CURR1 adjudicated per predeclared rules: ALL SIX SURVIVE; FAR-21 (+0.87%) and CLOSE-8 (+0.06%) advance on literal rule - telemetry-grade only, gameplay arbiter pending (EV-0036); 12 registry records",
       "SELF-WAKE AUDIT answered with evidence (EV-0036): 11+ ticks emitted, zero agent executions; Windows sleep suspends local processes; remote_orchestrator_with_stop.sh installed as the durable fix",
