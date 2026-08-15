@@ -1,0 +1,56 @@
+schema_version: "1.0.0"
+kind: MARATHON_PROMOTION_EVAL_PLAN
+eval_id: CURR1-ADVANCING-VARIANTS-GAMEPLAY-EVAL
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+status: PREDECLARED
+
+purpose: >
+  Promotion-scale seat-swapped paired gameplay evaluation of the two
+  curriculum variants that advance under the predeclared
+  curriculum_round_1_plan.yaml promotion_path (both beat the control mean
+  vloss-reduction across seeds with no sign flip: A2-FAR-21 +0.87%,
+  A1-CLOSE-8 +0.06%; EV-0036). The margins are telemetry-grade only, so
+  this evaluation is the honest arbiter: either a variant converts its
+  screening edge into gameplay strength, or the family closes like the
+  horizon family (EV-0035 draw regime). Serving sanity probe is a standing
+  precondition (EV-0034).
+
+candidates:
+  - id: curr1-a2-far-21-s1
+    checkpoint: CURR1-A2-FAR-21-S1 terminal raw.npz
+    main: experiments/marathon/eval_candidates/curr1-a2-far-21-s1/main.py
+    ppo_semantics: EVAL_ONLY
+  - id: curr1-a1-close-8-s1
+    checkpoint: CURR1-A1-CLOSE-8-S1 terminal raw.npz
+    main: experiments/marathon/eval_candidates/curr1-a1-close-8-s1/main.py
+    ppo_semantics: EVAL_ONLY
+
+matchups:
+  - candidate: curr1-a2-far-21-s1
+    opponents:
+      - {id: curr1-a0-control-s1, main: experiments/marathon/eval_candidates/curr1-a0-control-s1/main.py}
+      - {id: marathon_baseline_v0, main: baselines/marathon_baseline_v0/main.py}
+  - candidate: curr1-a1-close-8-s1
+    opponents:
+      - {id: curr1-a0-control-s1, main: experiments/marathon/eval_candidates/curr1-a0-control-s1/main.py}
+      - {id: marathon_baseline_v0, main: baselines/marathon_baseline_v0/main.py}
+
+protocol:
+  pairs_per_opponent: 12            # seat-swapped, promotion-scale
+  mode: competition
+  evaluator: EV-0017 anytime-valid bounded mixture CS (run_marathon_paired_eval.py)
+  namespace: marathon-eval-v1
+
+decision_rules_predeclared:
+  - a variant PROMOTES over an opponent only if the EV-0017 confidence
+    sequence rejects non-superiority at the programme.yaml margin
+  - draws at truncation count per the evaluator's bounded-outcome model
+    (EV-0021); a draws-only result is UNRESOLVED, not a win
+  - if neither variant separates from the control or the baseline, the
+    curriculum family R1 closes as a clean negative and the programme
+    advances to the next canonical family (no silent promotion, no post-hoc
+    margin relaxation)
+  - additional pairs require a NEW predeclared plan
+
+evidence_links: [EV-0017, EV-0019, EV-0021, EV-0034, EV-0035, EV-0036]

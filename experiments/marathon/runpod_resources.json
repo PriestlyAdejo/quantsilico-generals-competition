@@ -2,23 +2,21 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-15T17:25:00Z",
+  "updated_at_utc": "2026-08-15T21:05:00Z",
   "resources": [
     {
       "pod_id": "z7zutn5ui0yo41",
       "name": "quantisilico_curr1_a40",
-      "status": "RUNNING",
+      "status": "EXITED_STOPPED_AFTER_CURR1_EVIDENCE_FETCH",
       "owner_run": "experiment#spawn-distance-curriculum-r1#c9255f18cd8f",
-      "expected_workload": "remote_curr1_orchestrator.sh -> run_sh_r1_arm.py (6 arms sequential, 240 updates each @ 256x32, min_generals_distance 17/8/21, wall cap 90 min/arm)",
       "rate_usd_per_hr": 0.44,
       "data_center": "EU-SE-1",
       "machine_id": "thgbb0r95l89",
-      "ssh": "root@194.68.245.66:22042",
       "started_at_utc": "2026-08-15T16:40:51Z",
-      "last_verified_heartbeat_utc": "2026-08-15T17:25:00Z",
-      "heartbeat_evidence": "setup complete (clone+submodule+uv 3.12+JAX 0.11.0 GPU); checkpoint scp'd; curr1-smoke GPU validation in progress",
-      "expected_completion": "round log /workspace/curr1_round.log end boundary (est ~2.6h)",
-      "disposition_after_completion": "STOP immediately after artefact fetch"
+      "round_end_utc": "2026-08-15T18:08:44Z",
+      "stopped_at_utc": "2026-08-15T20:51:15Z",
+      "idle_interval_logged": "2.71h ~$1.19 (EV-0036; local continuation loop never woke the executor)",
+      "disposition": "retain EXITED volume (env + arm outputs); artefacts fetched to experiments/marathon/curriculum_round_1_runs/"
     },
     {
       "pod_id": "tinlsf21h08qd2",
@@ -77,7 +75,5 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": [
-    {"pod_id": "z7zutn5ui0yo41", "experiment": "experiment#spawn-distance-curriculum-r1#c9255f18cd8f", "note": "GPU smoke validating; round launch immediately after PASS"}
-  ]
+  "active_workloads": []
 }

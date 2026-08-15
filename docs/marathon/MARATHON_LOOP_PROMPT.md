@@ -10,6 +10,21 @@ The recurring task terminates ONLY at canonical Marathon completion
 (Stage 7 + final integration + post-merge proof) or a genuine ALL-scope hard
 blocker. `TurnLimited` is NOT `MARATHON_COMPLETE`.
 
+## Proven capability boundaries (EV-0036 audit)
+
+- A monitored-shell loop emitting text sentinels DOES NOT by itself drive an
+  agent turn in this harness. Ticks fired 11+ times with zero continuation
+  executed. Treat the local loop as BEST-EFFORT semantic continuation only.
+- Windows sleep suspends ALL local Qoder processes; local timers buffer and
+  fire late on wake. A local mechanism CANNOT act while the machine sleeps.
+- Therefore long GPU jobs MUST use the remote self-termination wrapper
+  `scripts/dev/remote_orchestrator_with_stop.sh`: after the orchestrator
+  finishes it writes a ROUND_COMPLETE marker and stops its own pod via the
+  RunPod API from the pod itself (outputs durable on the volume first).
+  Completion-means-STOP no longer depends on the laptop being awake.
+- Operator guidance: for overnight jobs keep the laptop awake (screen may
+  lock) until a truly OS-level/remote continuation mechanism is proven.
+
 ---
 
 ## QUANTSILICO MARATHON RESUME ITERATION

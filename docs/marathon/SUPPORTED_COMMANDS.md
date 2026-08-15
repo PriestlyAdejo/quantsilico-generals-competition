@@ -21,6 +21,7 @@ state; commit afterwards), REMOTE_SPEND (paid RunPod actions), MANUAL_ONLY
 | `.venv/Scripts/python.exe scripts/dev/runpod_idle_watchdog.py --stop-idle` | REMOTE_SPEND | Stop idle/finished pods AFTER preservation; billing-logged |
 | `.venv/Scripts/python.exe scripts/dev/runpod_probe.py` | SAFE | Account/pod inventory snapshot |
 | pod create/restart via `var/marathon_takeover/runpod_introspect.py` helpers | REMOTE_SPEND | Duplicate-capacity check REQUIRED before create |
+| launch rounds via `scripts/dev/remote_orchestrator_with_stop.sh <orchestrator.sh>` (EV-0036) | REMOTE_SPEND | Remote self-stop after round end: completion-means-STOP without laptop dependency |
 
 ## Research funnel
 
