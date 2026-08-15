@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T14:35:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T14:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_PROMOTION_EVAL_EXECUTING_PLUS_STAGE_4B_PARALLEL",
-  "CURRENT_TASK": "COLLECT_SH_R4_FINALIST_PAIRED_EVAL_AND_APPLY_PREDECLARED_DECISION_RULES",
+  "CURRENT_STAGE": "STAGE_4A_HORIZON_FAMILY_CLOSED_NEXT_FAMILY_PENDING_PREDECLARATION",
+  "CURRENT_TASK": "PREDECLARE_SPAWN_DISTANCE_CURRICULUM_FAMILY_WITH_SERVING_SANITY_PROBE",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -171,6 +171,10 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/dev/repo_cleanup_inventory.py --out var/marathon_takeover/repo_cleanup_inventory_dry_run.json",
       "RESULT": "PASS_DRY_RUN_23_DIST_13_EMPTY_SCAFFOLDS_2_STAGING_NO_DELETIONS EV-0030"
+    },
+    {
+      "COMMAND": "SH-R4-FINALIST-PROMOTION-EVAL via var/marathon_takeover/run_sh4_promotion_eval.ps1 (A0 36 pairs, A1 24 pairs, seat-swapped, competition mode)",
+      "RESULT": "PASS_PIPELINE_NO_PROMOTION_BOTH_FINALISTS_CS_LOWER_NEGATIVE_LOSE_TO_BASELINE_AND_LEGAL_RANDOM EV-0033"
     }
   ],
   "TESTS_PENDING": [
@@ -180,12 +184,11 @@
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-15T14:35:00Z",
-    "ACTIVE_PROJECT_WORKLOADS": [
-      "SH-R4-FINALIST-PROMOTION-EVAL on laptop CPU via var/marathon_takeover/run_sh4_promotion_eval.ps1 (background terminal): sh-r4-finalist-a0 vs {sh-r4-finalist-a1, marathon_baseline_v0, legal_random} 12 seat-swapped pairs each, then sh-r4-finalist-a1 vs {marathon_baseline_v0, legal_random}; log var/marathon_takeover/sh_r4_promotion_eval.log; est ~15-20 min total; serving smoke PASS 1 pair 24s EV-0032"
-    ],
+    "AUDITED_AT_UTC": "2026-08-15T14:55:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [],
     "COMPLETED_THIS_SESSION": [
-      "SH-R4-BUDGET-ESCALATION round: ALL SIX ARMS SURVIVE; finalists A0-CONTROL + A1-HORIZON-64 (EV-0032); 12 registry records",
+      "SH-R4-FINALIST-PROMOTION-EVAL: NO_PROMOTION both finalists (EV-0033); 2 candidate + 2 evaluation registry records",
+      "SH-R4-BUDGET-ESCALATION round: ALL SIX ARMS SURVIVE; finalists routed per predeclared plan (EV-0032); 12 registry records",
       "SH-R1-A0-CONTROL CPU arm completed 195/195 updates (registered)",
       "runpod_start_retry_loop.py ended (cancelled per zero-idle-burn section 8)"
     ],
@@ -243,7 +246,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#sh-r4-budget-escalation#f4a79a0412e9",
+  "CURRENT_EXPERIMENT": null,
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -257,7 +260,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "SH-R4-FINALIST-PROMOTION-EVAL executing locally (CPU, ~15-20 min; log var/marathon_takeover/sh_r4_promotion_eval.log). Next bounded actions: (1) collect both eval JSON reports from experiments/marathon/paired_eval_runs/; apply sh_r4_finalist_promotion_eval_plan.yaml decision rules strictly (CS lower bound vs 0.01 practical margin; draws are UNRESOLVED not wins; NO post-hoc relaxation); (2) register evaluation records + EV-0033 + verdict; (3) routing: PROMOTE -> Stage-7 lineage/packaging path; UNRESOLVED/NO_PROMOTION -> horizon family recorded telemetry-only, predeclare next canonical Stage-4A family (spawn-distance/opponent-difficulty curriculum per programme.yaml) and launch on A40 under the same SH discipline; (4) Stage 4B continues in parallel (remaining canonical items: supported-command inventory, dist provenance sidecars, dashboard polish); (5) SCHEDULING BOUNDARY (operator query): Qoder scheduled tasks are created via the /schedule IDE command which the agent cannot invoke programmatically; the operator must run /schedule in this chat with the resume prompt (text in the session report); wallet protection meanwhile = watchdog + stop gate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "Horizon family CLOSED (EV-0033 NO_PROMOTION). Next bounded actions, in order: (1) SERVING SANITY PROBE (integrity precondition, cheap, local): verify the finalist serving path on a contrived board where a sane policy has an obvious winning move, and diff training-time vs serving-time action distributions on a fixed batch - a policy losing to legal_random must be audited before the next GPU round spends money; record EV; (2) predeclare + register the spawn-distance / opponent-difficulty curriculum family per programme.yaml (arms, budgets, metrics, elimination rules, PPO_SEMANTICS declaration); launch on a fresh A40 under the same SH discipline + zero-idle-burn; (3) Stage 4B continues dependency-safe units in parallel (supported-command inventory, dist provenance sidecars, dashboard polish); (4) if the sanity probe finds a serving defect: fix under EVAL_ONLY semantics, re-run the paired eval predeclared plan, then decide curriculum launch; (5) SCHEDULING BOUNDARY: Qoder scheduled tasks are created via the /schedule IDE command which the agent cannot invoke programmatically - the operator runs /schedule in this chat (resume prompt text provided in the session report); wallet protection meanwhile = watchdog + stop gate + ledger. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

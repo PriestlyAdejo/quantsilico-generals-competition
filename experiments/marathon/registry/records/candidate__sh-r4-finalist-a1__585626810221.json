@@ -1,0 +1,14 @@
+{
+  "CHECKPOINT_ID": "checkpoint#sh-r4-a1-horizon-64-b16-terminal#cff66887671f",
+  "EVIDENCE_LINKS": [
+    "EV-0019",
+    "EV-0032"
+  ],
+  "ID": "candidate#sh-r4-finalist-a1#585626810221",
+  "KIND": "candidate",
+  "PARITY_PROOF": "tests/unit/test_baseline_agent_parity.py",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "experiments/marathon/eval_candidates/sh-r4-finalist-a1/main.py",
+  "RECORDED_AT_UTC": "2026-08-15T13:58:28Z",
+  "SCHEMA_VERSION": "1.0.0"
+}
