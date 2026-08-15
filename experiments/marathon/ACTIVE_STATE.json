@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T05:35:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T06:20:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_4A_SCREENING_RUNNER",
@@ -189,7 +189,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "SH-R1 round complete with honest verdict NO_SURVIVORS (all arms eliminated by predeclared NO_VLOSS_REDUCTION at the 25k budget = 3 updates; EV-0027); GPU runs + ladder + checkpoints registered (15 registry records); A40 pod STOPPED (billing-logged; ~$0.45 total). SH-R1-A0-CONTROL still training on CPU (~100 of 195 updates); do not kill it. Next bounded actions: (1) predeclare SH-R2 per the EV-0027 design input BEFORE launch: budget by UPDATES (>=50 per arm) at matched 256x32-class geometry on A40, horizon family at matched update counts, same predeclared metrics/elimination rules, register the experiment pre-launch; (2) when the CPU control finishes: validate summary, register run/checkpoint, append EV; (3) restart the A40 pod only when SH-R2 launches (env + checkpoints persist on its volume); stop it again immediately after; (4) continue Stage 4A families / Stage 4B platform work while GPU is idle.",
+  "NEXT_SAFE_ACTION": "SH-R2-UPDATES-MATCHED round EXECUTING on fresh A40 pod ba86a74lq28t3f (194.68.245.122:22101; round log /workspace/sh_r2_round.log; arms sequential; est ~3h wall at observed ~65 s/update; worst-case billed ~$1.5). SH-R1-A0-CONTROL on laptop CPU near completion (~140/195 updates). Next bounded actions: (1) poll /workspace/sh_r2_round.log for arm end boundaries; when round ends, scp the three arm dirs (telemetry/summary; npz stay pod-side, hash them remotely or fetch) to experiments/marathon/screening_round_2_runs/, apply the predeclared elimination rules, register run/checkpoint records, record EV, then STOP the pod; (2) if the pod or an arm died mid-run: resume from the runner's telemetry (it refuses overwrite; restart remaining arms only); (3) when the CPU control finishes: validate + register + EV; (4) afterwards: SH-R3 predeclaration for survivors (2-3 seeds) or the next Stage 4A family if none survive; (5) keep checking the stopped generals_competition A100 and quantisilico_sh_r1_a40 pods stay EXITED (never pay for idle).",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -226,7 +226,8 @@
     {
       "ID": "RUNPOD-SPEND-2026-08-15",
       "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
-      "SUMMARY": "Supersedes the earlier existing-credits-only rule for Marathon research compute: reasonable additional cash spend on GPU/CPU compute is pre-authorised; low balance must not shrink scientifically justified budgets, truncate promising candidates, or replace appropriate GPU runs with impractical CPU runs. Optimisation target is strength per compute/dollar via the canonical funnel (pilot -> utilisation -> control -> external strength -> marginal value); failed/dominated arms receive no extra compute; reference transition points (5M..500M+) are decision points, not ceilings; official RunPod tooling preferred; RUNPOD_API_KEY never exposed/committed; no new payment methods/legal terms/ownership changes; paid accelerators stopped when idle; billing evidence recorded per run. Scientific gates (Stage 2 statistics, Stage 3 registration, controls, evaluation) are NOT weakened by spend."
+      "SUMMARY": "Supersedes the earlier existing-credits-only rule for Marathon research compute: reasonable additional cash spend on GPU/CPU compute is pre-authorised; low balance must not shrink scientifically justified budgets, truncate promising candidates, or replace appropriate GPU runs with impractical CPU runs. Optimisation target is strength per compute/dollar via the canonical funnel (pilot -> utilisation -> control -> external strength -> marginal value); failed/dominated arms receive no extra compute; reference transition points (5M..500M+) are decision points, not ceilings; official RunPod tooling preferred; RUNPOD_API_KEY never exposed/committed; no new payment methods/legal terms/ownership changes; paid accelerators stopped when idle; billing evidence recorded per run. Scientific gates (Stage 2 statistics, Stage 3 registration, controls, evaluation) are NOT weakened by spend.",
+      "OPERATIONAL_NOTES": "Credential at ~/.runpod/config.toml (KEY_SHA256 a34c0f0e...; rotate after marathon window since it transited chat). API surface verified: GraphQL api.runpod.io/graphql + REST rest.runpod.io/v1 (runpodctl 6fc6f8b5 queries). PyPI unreachable FROM THE LAPTOP; pods install fine. Pod inventory: generals_competition A100 (wvjrnxbpcjnr8h, host GPU-full, EXITED), quantisilico_sh_r1_a40 (tmmov7t54z5mbu, its machine's GPU also re-occupied, EXITED with R1 env/volume), quantisilico_sh_r2_a40 (ba86a74lq28t3f, RUNNING for SH-R2)."
     }
   ]
 }
