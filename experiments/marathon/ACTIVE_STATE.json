@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T03:55:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T04:35:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_4A_SCREENING_RUNNER",
@@ -131,6 +131,10 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/training/run_sh_r1_arm.py --arm-id smoke --num-envs 8 --rollout-len 16 --max-updates 3",
       "RESULT": "PASS_PIPELINE_SMOKE_RATIO_1.0_VALID_SHARE_1.0_PREDECLARED_RULES_FIRE_AS_DESIGNED EV-0023"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/runpod_account_probe.py",
+      "RESULT": "PASS_RUNPOD_AUTH_BALANCE_17.89_SPEND_LIMIT_80_PER_HR_POD_generals_competition_EXITED_A100_SXM_1.59_PER_HR EV-0024"
     }
   ],
   "TESTS_PENDING": [
@@ -184,7 +188,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "SH-R1-A0-CONTROL is training on CPU (~6h; ACTIVE_LOCAL_PROCESSES records it; do not kill it without recording why). Next bounded actions: (1) when the arm finishes, validate its summary against the predeclared rules, register its run/checkpoint records in the registry, and record EV; (2) install/verify official RunPod tooling (runpodctl or the runpod-plugins-official skill + MCP) as soon as the operator provisions a dedicated restricted API key locally — that is the single dependency for GPU-class rounds and for inspecting/reusing the existing generals_competition A100 pod per RUNPOD-SPEND-2026-08-15; (3) once GPU access works: inspect the existing pod (GPU/CPU/RAM/volume/image/cost/prior state), benchmark throughput-per-dollar for this workload, then launch SH-R1-A1/A2 horizon arms on the selected accelerator with billing evidence; (4) never leave paid pods idle. Meanwhile local work that does not need RunPod may proceed (e.g. Stage 4B planning, evaluator EB-tightening design).",
+  "NEXT_SAFE_ACTION": "RunPod access proven (EV-0024; key at ~/.runpod/config.toml, fingerprint-only references; probe scripts/dev/runpod_account_probe.py). Next bounded action: BOUNDED GPU VALIDATION on existing pod generals_competition (id wvjrnxbpcjnr8h, A100 SXM 80GB, $1.59/h, EXITED): start it, inspect /workspace for prior QuantSilico state (preserve, do not wipe), install only missing deps (PyPI-from-machine is broken here; pod-side installs should work from RunPod network — verify), reproduce commit de27575 sources on the pod, verify JAX sees CUDA with no silent fallback, transfer MARATHON_BASELINE_V0 checkpoint, run the run_sh_r1_arm.py resume smoke with ratio-1.0 gate, measure GPU TPS/utilisation/compilation-vs-execution, capture billing evidence (pod id, rate, start/end), then decide reuse-vs-alternative accelerator from throughput-per-dollar and launch SH-R1-A1/A2; stop the pod whenever no job is actively training. Meanwhile SH-R1-A0-CONTROL continues on CPU (~6h) — do not kill it; when it finishes, validate summary + register run/checkpoint records.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -195,11 +199,6 @@
       "ID": "CURSOR_USAGE_EXHAUSTED",
       "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
       "DETAIL": "The human operator reports exhausted Cursor credits. This is PAUSED_USAGE, not an implementation failure."
-    },
-    {
-      "ID": "CLOUD_CREDIT_BALANCE_UNKNOWN",
-      "SCOPE": "GPU_CLASS_TRAINING_TOOLING_PROVISIONING_ONLY",
-      "DETAIL": "RUNPOD-SPEND-2026-08-15 amendment authorises cash-backed compute; remaining need is operational only: no RunPod credentials, runpodctl, or .env exist on this machine yet. The operator creates a dedicated restricted API key and configures it locally (never in chat/repo). CPU-class research and the SH-R1 pipeline proceed meanwhile and are NOT blocked by this."
     }
   ],
   "PLAN_DEVIATIONS": [
