@@ -28,8 +28,14 @@ def test_real_registry_is_typed_and_complete() -> None:
     assert sum(dto["counts"].values()) + len(dto["malformed"]) == total
     assert dto["malformed"] == [], f"unrecognised registry kinds: {dto['malformed']}"
     # experiments carry semantics + lineage summaries
+    valid_semantics = {
+        "UNCHANGED",
+        "PRE_SAMPLING_MASK",
+        "OFF_POLICY_AUXILIARY",
+        "EVAL_ONLY",
+    }
     for record in dto["records"]["experiment"]:
-        assert record["PPO_SEMANTICS"] in {"UNCHANGED", "PRE_SAMPLING_MASK", "OFF_POLICY_AUXILIARY", "EVAL_ONLY"}
+        assert record["PPO_SEMANTICS"] in valid_semantics
 
 
 def test_missing_registry_dir_is_empty_not_error(tmp_path: Path) -> None:
