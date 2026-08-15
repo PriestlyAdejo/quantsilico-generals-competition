@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T14:55:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T15:35:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_HORIZON_FAMILY_CLOSED_NEXT_FAMILY_PENDING_PREDECLARATION",
-  "CURRENT_TASK": "PREDECLARE_SPAWN_DISTANCE_CURRICULUM_FAMILY_WITH_SERVING_SANITY_PROBE",
+  "CURRENT_STAGE": "STAGE_4A_HORIZON_FAMILY_REOPENED_SERVING_DEFECT_REPAIRED_RERUN_EXECUTING",
+  "CURRENT_TASK": "SH_R4_FINALIST_PROMOTION_EVAL_RERUN_V2_AFTER_EVAL_ONLY_SERVING_REPAIR_EV_0034",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -174,7 +174,11 @@
     },
     {
       "COMMAND": "SH-R4-FINALIST-PROMOTION-EVAL via var/marathon_takeover/run_sh4_promotion_eval.ps1 (A0 36 pairs, A1 24 pairs, seat-swapped, competition mode)",
-      "RESULT": "PASS_PIPELINE_NO_PROMOTION_BOTH_FINALISTS_CS_LOWER_NEGATIVE_LOSE_TO_BASELINE_AND_LEGAL_RANDOM EV-0033"
+      "RESULT": "INVALIDATED_AGENT_FAULT_72_OF_72_GAMES_SERVING_CRASH_NOT_GAMEPLAY_SEE_EV_0034"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/serving_sanity_probe.py",
+      "RESULT": "PASS_AFTER_REPAIR_L1_WEIGHTS_LOAD_AND_MATTER_L2_PROTOCOL_ACTIONS_WELLFORMED_DETERMINISTIC EV-0034"
     }
   ],
   "TESTS_PENDING": [
@@ -184,10 +188,13 @@
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-15T14:55:00Z",
-    "ACTIVE_PROJECT_WORKLOADS": [],
+    "AUDITED_AT_UTC": "2026-08-15T15:35:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [
+      "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 (local CPU, background terminal): same predeclared protocol, fresh run dir paired_eval_runs/sh_r4_finalist_rerun_v2, wrappers repaired (EV-0034)"
+    ],
     "COMPLETED_THIS_SESSION": [
-      "SH-R4-FINALIST-PROMOTION-EVAL: NO_PROMOTION both finalists (EV-0033); 2 candidate + 2 evaluation registry records",
+      "Serving sanity audit: FOUND + REPAIRED genuine serving defect (missing Policy-protocol adapter); EV-0033 invalidated (EV-0034)",
+      "SH-R4-FINALIST-PROMOTION-EVAL first execution: NO_PROMOTION verdict INVALIDATED - 72/72 games AGENT_FAULT (EV-0033 -> EV-0034)",
       "SH-R4-BUDGET-ESCALATION round: ALL SIX ARMS SURVIVE; finalists routed per predeclared plan (EV-0032); 12 registry records",
       "SH-R1-A0-CONTROL CPU arm completed 195/195 updates (registered)",
       "runpod_start_retry_loop.py ended (cancelled per zero-idle-burn section 8)"
@@ -260,7 +267,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Horizon family CLOSED (EV-0033 NO_PROMOTION). Next bounded actions, in order: (1) SERVING SANITY PROBE (integrity precondition, cheap, local): verify the finalist serving path on a contrived board where a sane policy has an obvious winning move, and diff training-time vs serving-time action distributions on a fixed batch - a policy losing to legal_random must be audited before the next GPU round spends money; record EV; (2) predeclare + register the spawn-distance / opponent-difficulty curriculum family per programme.yaml (arms, budgets, metrics, elimination rules, PPO_SEMANTICS declaration); launch on a fresh A40 under the same SH discipline + zero-idle-burn; (3) Stage 4B continues dependency-safe units in parallel (supported-command inventory, dist provenance sidecars, dashboard polish); (4) if the sanity probe finds a serving defect: fix under EVAL_ONLY semantics, re-run the paired eval predeclared plan, then decide curriculum launch; (5) SCHEDULING BOUNDARY: Qoder scheduled tasks are created via the /schedule IDE command which the agent cannot invoke programmatically - the operator runs /schedule in this chat (resume prompt text provided in the session report); wallet protection meanwhile = watchdog + stop gate + ledger. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "SH-R4 promotion-eval RERUN-V2 executing locally (EV-0034; same predeclared plan, rules unchanged). Next bounded actions, in order: (1) when rerun finishes: adjudicate per predeclared decision rules from the fresh run dir; verify zero AGENT_FAULT games this time; record EV; update registry evaluation records; (2) if NO_PROMOTION is now the clean gameplay verdict: close the horizon family for real and predeclare + register + launch the spawn-distance / opponent-difficulty curriculum family on a fresh A40 (SH discipline + zero-idle-burn); if PROMOTION: follow the predeclared promotion path; (3) persist the ELITE_REPLAY_AUGMENTATION programme amendment + bounded replay-data-plane pilot in dependency-safe local capacity (does not delay curriculum); (4) persist the durable marathon loop prompt + execution lease in-repo; operator activates the recurring Qoder /loop via the one minimal command returned by the executor; (5) Stage 4B continues dependency-safe units in parallel. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -309,6 +316,11 @@
       "ID": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
       "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
       "SUMMARY": "No paid RunPod GPU may remain RUNNING without a verified active workload or bounded startup window. Implements: resource ownership ledger (experiments/marathon/runpod_resources.json), workload verification over pod status, scripts/dev/runpod_idle_watchdog.py (--stop-idle, billing-logged), completion-means-STOP ordering, duplicate-capacity prevention, fallback-retry self-cancel marker (var/marathon_takeover/stop_pod_retries), stop-gate ledger check (.qoder/hooks/marathon_stop_gate.py runpod_unexplained_running), and session-recovery-first RunPod reconciliation. Documented in docs/marathon/RUNPOD_ZERO_IDLE_BURN.md. Cost is telemetry, not the optimisation target; spend policy remains RUNPOD-SPEND-2026-08-15."
+    },
+    {
+      "ID": "ELITE-REPLAY-INTELLIGENCE-DURABLE-CONTINUATION-2026-08-15",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Adds ELITE_REPLAY_AUGMENTATION as a new evidence-gated Stage-4A research family (additive, not a replacement): bounded replay-data plane with immutable provenance, fog-of-war legal-POV parity gate, player/time/seed/style-disjoint anti-overfit splits, per-player caps, sub-experiments BC warm start / auxiliary replay loss / elite opponent clones / scenario curriculum / disagreement mining, multi-metric generalisation report before any scalar, external leaderboard telemetry as supplement not authority. Also mandates durable continuation: inspect installed Qoder /loop capability, persist the marathon loop prompt + execution lease in-repo, ~30 min default cadence, loop may only terminate at canonical completion or ALL-scope hard blocker. Horizon family verdict handling: EV-0033 contaminated by serving defect (EV-0034); rerun under unchanged predeclared rules decides the family; no SH-R5 merely because SH-R4 failed."
     }
   ]
 }

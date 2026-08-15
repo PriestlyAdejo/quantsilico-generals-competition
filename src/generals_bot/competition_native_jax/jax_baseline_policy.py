@@ -20,6 +20,7 @@ from generals_bot.competition_native_jax.inference_jax import infer
 from generals_bot.competition_native_jax.legal_mask import legal_mask_from_observation
 from generals_bot.competition_native_jax.obs_memory import ObsMemory, encode_observation
 from generals_bot.observation import Observation
+from generals_bot.policies.base import ActionDecision, PolicyState
 
 
 @jax.jit
@@ -63,3 +64,38 @@ def load_jax_checkpoint(raw_npz: Path, template: dict) -> dict:
     from train.competition_native_jax.train_jax import load_tree
 
     return load_tree(raw_npz, template)
+
+
+class JaxTransformerProtocolPolicy:
+    """Protocol adapter so the frozen JAX policy can run under run_agent.
+
+    PPO_SEMANTICS: EVAL_ONLY. JaxTransformerPolicy speaks reset()/act();
+    the stdio competition loop requires the Policy protocol
+    (initial_state/act -> ActionDecision). This adapter bridges the two
+    without touching the parity-proven inference path.
+    """
+
+    policy_id = "marathon_jax_baseline_protocol"
+
+    def __init__(self, params: dict, *, seed: int = 0) -> None:
+        self._inner = JaxTransformerPolicy(params, seed=seed)
+
+    def initial_state(self, context) -> PolicyState:
+        self._inner.reset(context.height, context.width)
+        return PolicyState()
+
+    def act(
+        self,
+        observation: Observation,
+        state: PolicyState,
+        *,
+        deterministic: bool,
+        trace=None,
+        deadline: float | None = None,
+    ) -> ActionDecision:
+        action = self._inner.act(observation, deterministic=deterministic)
+        return ActionDecision(
+            action=action,
+            new_state=state,
+            policy_id=self.policy_id,
+        )

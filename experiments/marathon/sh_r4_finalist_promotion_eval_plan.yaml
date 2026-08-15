@@ -3,7 +3,7 @@ kind: MARATHON_PROMOTION_EVAL_PLAN
 eval_id: SH-R4-FINALIST-PROMOTION-EVAL
 programme: MARATHON_REDESIGN_LOCKED_V1
 stage: STAGE_4A
-status: PREDECLARED
+status: RERUN_EXECUTING
 
 purpose: >
   Promotion-scale seat-swapped paired gameplay evaluation of the SH-R4
@@ -56,3 +56,14 @@ decision_rules_predeclared:
     predeclared plan
 
 evidence_links: [EV-0017, EV-0019, EV-0021, EV-0032]
+
+contamination_record: >
+  First execution (paired_eval_runs/dev) is INVALIDATED: both finalist
+  wrappers crashed at handshake (AttributeError - JaxTransformerPolicy lacks
+  the run_agent Policy protocol), so every game was recorded as AGENT_FAULT
+  (72/72 games, exit=1, initial_state traceback in stderr_tail). Its
+  NO_PROMOTION verdict measured the serving defect, not gameplay strength.
+  Serving sanity probe (scripts/analysis/serving_sanity_probe.py) PASS after
+  bounded EVAL_ONLY repair (JaxTransformerProtocolPolicy adapter). Same
+  predeclared protocol re-executed against a fresh run directory;
+  rules unchanged (no post-hoc relaxation).
