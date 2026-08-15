@@ -67,8 +67,8 @@ def gql(key: str, query: str) -> dict:
     return result["data"]
 
 
-def rest(key: str, endpoint: str) -> object:
-    return _http(f"{REST_API}{endpoint}", key)
+def rest(key: str, endpoint: str, method: str = "GET") -> object:
+    return _http(f"{REST_API}{endpoint}", key, method=method)
 
 
 def main() -> int:
