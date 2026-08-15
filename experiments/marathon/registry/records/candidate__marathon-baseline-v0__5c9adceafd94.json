@@ -1,0 +1,13 @@
+{
+  "CHECKPOINT_ID": "checkpoint#marathon-baseline-v0#241591ce549b",
+  "EVIDENCE_LINKS": [
+    "EV-0019"
+  ],
+  "ID": "candidate#marathon-baseline-v0#5c9adceafd94",
+  "KIND": "candidate",
+  "PARITY_PROOF": "tests/unit/test_baseline_agent_parity.py",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "baselines/marathon_baseline_v0/main.py",
+  "RECORDED_AT_UTC": "2026-08-15T02:04:43Z",
+  "SCHEMA_VERSION": "1.0.0"
+}

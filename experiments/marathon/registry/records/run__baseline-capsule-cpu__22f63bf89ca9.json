@@ -1,0 +1,48 @@
+{
+  "ARTEFACT_LOCATIONS": [
+    "experiments/marathon/baseline_capsule_v0.json"
+  ],
+  "BUDGET": {
+    "wall_seconds": 1485.6339557000028
+  },
+  "COMMAND": ".venv/Scripts/python.exe scripts/analysis/assemble_baseline_capsule.py",
+  "ENVIRONMENT": {
+    "BACKEND": "cpu",
+    "CUDA_VERSION": null,
+    "DETERMINISM_MODE": "CPU_DEFAULT_NO_ASYNC",
+    "DTYPE_POLICY": "float32_default",
+    "EVIDENCE": {
+      "behaviour_digests_match": true,
+      "update_ema_digests_match": true,
+      "update_metrics_match": {
+        "entropy": true,
+        "loss": true,
+        "pg": true,
+        "ratio": true,
+        "vloss": true
+      },
+      "update_opt_digests_match": true,
+      "update_params_digests_match": true
+    },
+    "GPU_MODEL": null,
+    "JAXLIB_VERSION": "0.11.0",
+    "JAX_VERSION": "0.11.0",
+    "LEVELS_CLAIMED": [
+      "BITWISE_DETERMINISM",
+      "STATE_SEMANTIC_DETERMINISM",
+      "BEHAVIOURAL_DETERMINISM"
+    ],
+    "LEVELS_DEMONSTRATED": [
+      "STATE_SEMANTIC_DETERMINISM",
+      "BEHAVIOURAL_DETERMINISM"
+    ],
+    "XLA_FLAGS": null,
+    "XLA_VERSION": null
+  },
+  "EXPERIMENT_ID": "experiment#marathon-baseline-v0-repro#5e9100e819c5",
+  "ID": "run#baseline-capsule-cpu#22f63bf89ca9",
+  "KIND": "run",
+  "RECORDED_AT_UTC": "2026-08-15T02:04:43Z",
+  "SCHEMA_VERSION": "1.0.0",
+  "STOP_REASON": "COMPLETE"
+}

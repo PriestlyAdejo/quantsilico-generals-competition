@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T01:58:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T02:35:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_3_REGISTRY",
-  "CURRENT_TASK": "IMPLEMENT_MINIMUM_CANONICAL_REGISTRY_WITH_VALIDATION_AND_TESTS",
+  "CURRENT_STAGE": "STAGE_3_REGISTRY_COMPLETE",
+  "CURRENT_TASK": "EXTEND_BASELINE_GAMEPLAY_MEASUREMENT_TO_HEURISTIC_OPPONENTS",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -99,6 +99,14 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id marathon_baseline_v0 --candidate-main baselines/marathon_baseline_v0/main.py --opponent legal_random=baselines/legal_random/main.py --pairs-per-opponent 3",
       "RESULT": "PASS_3_PAIRS_6_GAMES_ALL_DRAW_AT_TRUNCATION_NO_FAULTS experiments/marathon/paired_eval_runs/baseline_v0_vs_legal_random_cpu EV-0019"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_marathon_registry.py -q",
+      "RESULT": "PASS_8_TESTS_REGISTRY_VALIDATION EV-0020"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_marathon_baseline_v0.py",
+      "RESULT": "PASS_6_RECORDS_REGISTERED experiments/marathon/registry EV-0020"
     }
   ],
   "TESTS_PENDING": [
@@ -149,7 +157,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Continuous-execution stop gate live (EV-0018); MARATHON_BASELINE_V0 packaged as EVAL_ONLY protocol agent with proven serving/training parity and its first external gameplay measurement recorded (3 pairs vs legal_random, all draws at truncation; EV-0019). Next bounded action: implement the Stage 3 minimum canonical registry (experiment/run/checkpoint/candidate/evaluation/opponent-reference records: stable IDs + hashes, atomic writes, schema versions, source/engine/config identity, lineage, seeds, commands, budgets, stop reasons, artefact locations, evidence links; reject incompatible lineage, unresolved hashes, missing evaluator identity, silent overwrite; PPO_SEMANTICS enforcement) with tests, register MARATHON_BASELINE_V0 and the Stage 2 evaluation into it, then extend baseline gameplay measurement to heuristic opponents with larger pair budgets. GPU-class training remains gated on Stages 2-3 satisfaction per the compute amendment; live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stop gate live (EV-0018); MARATHON_BASELINE_V0 measured externally vs legal_random (EV-0019); Stage 3 minimum canonical registry implemented, tested 8/8, and seeded with the baseline chain (EV-0020). Next bounded action: extend MARATHON_BASELINE_V0 gameplay measurement to the heuristic protocol opponents (heuristic_v0, heuristic_v1; 2 pairs each, CPU) via the paired evaluator, register those evaluations in the registry, then merge the coherent Stage 1-3 integration unit to main with post-merge proof and continue into Stage 4A research planning (transition-budget experiments stay gated on the compute amendment's utilisation gates). Live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
