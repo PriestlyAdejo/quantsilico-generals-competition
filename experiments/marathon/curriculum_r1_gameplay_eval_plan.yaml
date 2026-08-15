@@ -3,7 +3,7 @@ kind: MARATHON_PROMOTION_EVAL_PLAN
 eval_id: CURR1-ADVANCING-VARIANTS-GAMEPLAY-EVAL
 programme: MARATHON_REDESIGN_LOCKED_V1
 stage: STAGE_4A
-status: PREDECLARED
+status: EXECUTED_NO_SEPARATION_FAMILY_CLOSED_EV_0038
 
 purpose: >
   Promotion-scale seat-swapped paired gameplay evaluation of the two

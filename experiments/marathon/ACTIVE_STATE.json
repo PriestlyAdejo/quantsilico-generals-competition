@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T22:10:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T23:20:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_CURRICULUM_FAMILY_R1_ADJUDICATED_GAMEPLAY_EVAL_EXECUTING",
-  "CURRENT_TASK": "CURR1_ADVANCING_VARIANTS_GAMEPLAY_EVAL_THEN_FAMILY_CLOSE_OR_PROMOTE",
+  "CURRENT_STAGE": "STAGE_4A_CURRICULUM_FAMILY_R1_CLOSED_CLEAN_NEGATIVE_RAW_VS_EMA_R1_EXECUTING",
+  "CURRENT_TASK": "RAW_VS_EMA_R1_GAMEPLAY_EVAL_THEN_ADJUDICATE",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -199,6 +199,8 @@
       "DURABLE LOOP COMMISSIONED via /loop: AGENT_LOOP_TICK_MAREXEC 30 min executing docs/marathon/MARATHON_DURABLE_EXECUTOR_PROMPT.md (EV-0037); old AGENT_LOOP_TICK_MARATHON sentinel deprecated; remote self-stop wrapper carries the billing invariant"
     ],
     "COMPLETED_THIS_SESSION": [
+      "CURRICULUM FAMILY R1 CLOSED as clean negative (EV-0038): both advancing variants ALL-DRAW vs control+baseline (96/96 OK, zero faults), NO_PROMOTION; win-conversion confirmed binding constraint across three 2M PPO lines; 4 registry records",
+      "RAW-VS-EMA-R1 PREDECLARED + LAUNCHED (CPU-only, same-run matched; EMA wrapper serves distinct actions from raw; plan raw_vs_ema_r1_plan.yaml)",
       "Replay legal-POV reconstruction HARD GATE implemented + proven (scripts/data/replay_legal_pov.py, 6 fixture tests incl. leak guard, real-data probe on DATASET-ELITE-2026-08-15-V01) EV-0037",
       "Durable /loop commissioned + executor prompt versioned (docs/marathon/MARATHON_DURABLE_EXECUTOR_PROMPT.md) EV-0037",
       "RECOVERY PASS (operator intervention after laptop sleep): RunPod reconciled FIRST; CURR1 round found COMPLETE since 18:08:44Z with pod idle; artefacts fetched + integrity-verified (6/6 arms 240/240); pod STOPPED 20:51:15Z; idle interval 2.71h ~$1.19 billing-logged",
@@ -285,7 +287,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "CURR1 gameplay eval executing locally (paired_eval_runs/curr1_advancing_variants; FAR-21-S1 + CLOSE-8-S1 vs A0-CONTROL-S1 + marathon_baseline_v0, 12 pairs/opponent, serving sanity precondition PASSED for all three wrappers). Next bounded actions: (1) on completion adjudicate per curriculum_r1_gameplay_eval_plan.yaml predeclared rules (draws UNRESOLVED, no relaxation); register evaluation records; record EV; (2) if neither variant separates: curriculum R1 CLOSED as clean negative -> predeclare+register+launch the next canonical Stage-4A family (raw-vs-EMA evaluation family is cheapest next: EMA checkpoints already maintained in every arm - GPU or CPU adjudicable) using scripts/dev/remote_orchestrator_with_stop.sh (remote self-stop, EV-0036); (3) if a variant promotes: follow promotion path; (4) parallel dependency-safe work: replay legal-POV reconstruction stage (next replay milestone), 4B polish; (5) CONTINUATION BOUNDARIES PROVEN (EV-0036): local loop ticks do NOT drive agent turns; Windows sleep suspends local processes - long GPU jobs must use remote self-stop wrapper; keep laptop awake for overnight jobs until an OS-level mechanism is proven. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "RAW-VS-EMA-R1 executing locally (paired_eval_runs/raw_vs_ema_r1; EMA vs raw+baseline from the SAME CURR1-A0 run, 12 pairs/opponent, serving sanity precondition PASSED - EMA and raw serve distinct actions; predeclared rules in raw_vs_ema_r1_plan.yaml). Next bounded actions: (1) on completion adjudicate per predeclared rules (draws UNRESOLVED -> EMA stays serving default; no relaxation); register records; record EV; (2) then continue the canonical Stage-4A queue - EV-0038 accumulation points at WIN CONVERSION as the binding constraint: next family candidates = reward-integrity/progress-pressure or top-advantage fractions; predeclare BEFORE launch; GPU rounds use scripts/dev/remote_orchestrator_with_stop.sh (remote self-stop, EV-0036); (3) parallel dependency-safe work: replay action-extraction milestone (legal-POV gate DONE, EV-0037), leaderboard snapshot cadence, 4B polish; (4) durable loop AGENT_LOOP_TICK_MAREXEC (30 min, docs/marathon/MARATHON_DURABLE_EXECUTOR_PROMPT.md) carries continuation; CONTINUATION BOUNDARIES PROVEN (EV-0036): local loop ticks do NOT drive agent turns; Windows sleep suspends local processes - long GPU jobs must use remote self-stop wrapper; keep laptop awake for overnight jobs until an OS-level mechanism is proven. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

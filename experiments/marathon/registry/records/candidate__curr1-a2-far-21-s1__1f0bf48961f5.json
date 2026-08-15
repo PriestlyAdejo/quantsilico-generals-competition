@@ -1,0 +1,15 @@
+{
+  "CHECKPOINT_ID": "checkpoint#curr1-a2-far-21-s1-terminal#59f09efda70b",
+  "EVIDENCE_LINKS": [
+    "EV-0019",
+    "EV-0034",
+    "EV-0036"
+  ],
+  "ID": "candidate#curr1-a2-far-21-s1#1f0bf48961f5",
+  "KIND": "candidate",
+  "PARITY_PROOF": "tests/unit/test_baseline_agent_parity.py",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "experiments/marathon/eval_candidates/curr1-a2-far-21-s1/main.py",
+  "RECORDED_AT_UTC": "2026-08-15T22:27:14Z",
+  "SCHEMA_VERSION": "1.0.0"
+}

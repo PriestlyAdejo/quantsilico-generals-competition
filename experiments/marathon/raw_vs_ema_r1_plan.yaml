@@ -1,0 +1,49 @@
+schema_version: "1.0.0"
+kind: MARATHON_PROMOTION_EVAL_PLAN
+eval_id: RAW-VS-EMA-R1
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+family: RAW_VS_EMA
+status: PREDECLARED
+
+purpose: >
+  First round of the raw-vs-EMA family (EXECUTION_PLAN 9.3: "evaluate raw and
+  EMA from the same transitions at negligible additional training cost; do
+  not assume EMA wins"). Both weight lineages come from the SAME training run
+  (CURR1-A0-CONTROL-S1, competition-default board distribution, 2M
+  transitions), so the comparison is perfectly matched. CPU-adjudicable; no
+  GPU required. Serving sanity probe is a standing precondition (EV-0034).
+
+candidates:
+  - id: curr1-a0-control-s1
+    lineage: raw terminal weights
+    main: experiments/marathon/eval_candidates/curr1-a0-control-s1/main.py
+    ppo_semantics: EVAL_ONLY
+  - id: curr1-a0-control-s1-ema
+    lineage: EMA terminal weights (tau 0.999)
+    main: experiments/marathon/eval_candidates/curr1-a0-control-s1-ema/main.py
+    ppo_semantics: EVAL_ONLY
+
+matchups:
+  - candidate: curr1-a0-control-s1-ema
+    opponents:
+      - {id: curr1-a0-control-s1, main: experiments/marathon/eval_candidates/curr1-a0-control-s1/main.py}
+      - {id: marathon_baseline_v0, main: baselines/marathon_baseline_v0/main.py}
+
+protocol:
+  pairs_per_opponent: 12            # seat-swapped, promotion-scale
+  mode: competition
+  evaluator: EV-0017 anytime-valid bounded mixture CS (run_marathon_paired_eval.py)
+  namespace: marathon-eval-v1
+
+decision_rules_predeclared:
+  - EMA PROMOTES over raw only if the EV-0017 confidence sequence rejects
+    non-superiority at the programme.yaml margin
+  - draws at truncation count per the bounded-outcome model (EV-0021); a
+    draws-only result is UNRESOLVED between the lineages and EMA REMAINS the
+    serving default (status quo, no change of behaviour)
+  - if EMA is demonstrably WORSE (CS rejects in the opposite direction),
+    future rounds serve raw and the switch is recorded with evidence
+  - no post-hoc margin relaxation; additional pairs require a NEW plan
+
+evidence_links: [EV-0017, EV-0021, EV-0034, EV-0038]
