@@ -32,7 +32,7 @@ echo "=== checkpoint present ==="
 ls -l "${CKPT_DIR}"
 
 echo "=== resume smoke (${ARM_ID}, ${MAX_UPDATES} updates) ==="
-PYTHONPATH="${REPO_DIR}/src:${REPO_DIR}/third_party/generals-bots" "${VENV_BIN}/python" scripts/training/run_sh_r1_arm.py \
+PYTHONPATH="${REPO_DIR}:${REPO_DIR}/src:${REPO_DIR}/third_party/generals-bots" "${VENV_BIN}/python" scripts/training/run_sh_r1_arm.py \
   --arm-id "${ARM_ID}" \
   --num-envs "${NUM_ENVS}" \
   --rollout-len "${ROLLOUT_LEN}" \
