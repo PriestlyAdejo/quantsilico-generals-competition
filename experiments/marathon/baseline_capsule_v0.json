@@ -1,0 +1,167 @@
+{
+  "assembled_at_utc": "2026-08-15T00:34:45Z",
+  "behaviour_fingerprint": {
+    "config": {
+      "num_envs": 4,
+      "reset_pool_size": 64,
+      "rollout_len": 8,
+      "seed": 1234
+    },
+    "first_n_digests": {
+      "actions": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "dones": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "global": "15f893ea1de7497949cc743aefb4d63fb6d51c689507118b9b87ca226a945a68",
+      "mask": "3ed6d1c82a2ce5d6ffea7414c492f9e8bf0a36cf3c7cdbad2d9c7e3c5a89bbc6",
+      "old_logp": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "rewards": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+      "spatial": "3983793f8b4e6c27c4ed9453b056724614f4b5aa88a5878e8782448d858b36c7",
+      "values": "90dcede60de6971f9d37c575fe27c6a69d0a44019f893c56271ecfe9afed7151"
+    }
+  },
+  "checkpoint": {
+    "path": "C:\\Users\\pries\\quantsilico-runtime\\cloud_assisted_deadline_salvage_v1_final\\ckpt_final_u482_t7593984",
+    "semantic_hashes_file": "experiments/marathon/baseline_semantic_hashes.json"
+  },
+  "determinism_contract": {
+    "BACKEND": "cpu",
+    "CUDA_VERSION": null,
+    "DETERMINISM_MODE": "CPU_DEFAULT_NO_ASYNC",
+    "DTYPE_POLICY": "float32_default",
+    "EVIDENCE": {
+      "behaviour_digests_match": true,
+      "update_ema_digests_match": true,
+      "update_metrics_match": {
+        "entropy": true,
+        "loss": true,
+        "pg": true,
+        "ratio": true,
+        "vloss": true
+      },
+      "update_opt_digests_match": true,
+      "update_params_digests_match": true
+    },
+    "GPU_MODEL": null,
+    "JAXLIB_VERSION": "0.11.0",
+    "JAX_VERSION": "0.11.0",
+    "LEVELS_CLAIMED": [
+      "BITWISE_DETERMINISM",
+      "STATE_SEMANTIC_DETERMINISM",
+      "BEHAVIOURAL_DETERMINISM"
+    ],
+    "LEVELS_DEMONSTRATED": [
+      "STATE_SEMANTIC_DETERMINISM",
+      "BEHAVIOURAL_DETERMINISM"
+    ],
+    "XLA_FLAGS": null,
+    "XLA_VERSION": null
+  },
+  "kind": "MARATHON_BASELINE_V0_CAPSULE",
+  "resume_proof": {
+    "config": {
+      "lr": 0.0003,
+      "num_envs": 4,
+      "reset_pool_size": 64,
+      "rollout_len": 8,
+      "seed": 7
+    },
+    "metrics": {
+      "entropy": 0.619606614112854,
+      "loss": 1.171844720840454,
+      "pg": -0.0008098572725430131,
+      "ratio": 1.0,
+      "vloss": 2.357701539993286
+    },
+    "post_digests": {
+      "ema": "ad51eb23364b45249da54d36fe4e8bc0ed233530f616a5472ad48835694b4b28",
+      "opt_state": "6dad6ea716e75d74b05da2ef42cdf17715ecc4a39d8984c51b5e347ae32f01aa",
+      "params": "bb60ab08e5b5d9484db758203a406a31b81021d2010bead5b2f1b0fde7a6c351"
+    },
+    "update_seconds": 37.32082180000725
+  },
+  "schema_version": 1,
+  "source_identity": {
+    "branch": "research/phase9g-competition-native-jax-preovernight-v1",
+    "engine_submodule": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462 third_party/generals-bots (competition-engine-2026-15-g9e3b9d1)",
+    "lineage_hashes": {
+      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
+    },
+    "repo_commit": "417a8f3c0dd912b8cdbd3d39d449e5f766dee28e"
+  },
+  "status": "PASS",
+  "throughput": {
+    "device": "[CpuDevice(id=0)]",
+    "end_to_end": {
+      "config": {
+        "iterations": 4,
+        "num_envs": 8,
+        "reset_pool_size": 128,
+        "rollout_len": 16
+      },
+      "definition": "collection + one full-batch PPO update per iteration",
+      "tps": 1.8501870034233525,
+      "transitions": 512,
+      "update_seconds_each": [
+        21.036096399999224,
+        1.5766929000092205,
+        1.9546697000041604,
+        1.716473299980862
+      ],
+      "wall_seconds": 276.7287842000078
+    },
+    "hot_path": {
+      "config": {
+        "batches": 12,
+        "num_envs": 8,
+        "reset_pool_size": 128,
+        "rollout_len": 16
+      },
+      "definition": "self-play collection only, frozen baseline policy, warm JIT",
+      "tps": 1.8113617139201252,
+      "transitions": 1536,
+      "wall_seconds": 847.9808247000037
+    },
+    "valid_learning": {
+      "definition": "transitions behind updates passing finite-metric/ratio health",
+      "healthy_updates": 4,
+      "metrics_by_update": [
+        {
+          "entropy": 0.8636388778686523,
+          "loss": 1.1693322658538818,
+          "pg": -0.0012143832864239812,
+          "ratio": 0.9999999403953552,
+          "vloss": 2.358366012573242
+        },
+        {
+          "entropy": 0.888329267501831,
+          "loss": 1.1706318855285645,
+          "pg": -6.254621257539839e-05,
+          "ratio": 1.0,
+          "vloss": 2.3591551780700684
+        },
+        {
+          "entropy": 0.8184657096862793,
+          "loss": 1.1711430549621582,
+          "pg": 5.009764572605491e-05,
+          "ratio": 1.0,
+          "vloss": 2.3585550785064697
+        },
+        {
+          "entropy": 1.0437290668487549,
+          "loss": 1.1694674491882324,
+          "pg": 0.00036627333611249924,
+          "ratio": 1.0,
+          "vloss": 2.359076976776123
+        }
+      ],
+      "tps": 1.8501870034233525,
+      "transitions": 512,
+      "updates": 4,
+      "wall_seconds": 276.7287842000078
+    }
+  },
+  "total_wall_seconds": 1485.6339557000028
+}
