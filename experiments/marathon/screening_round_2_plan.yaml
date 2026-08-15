@@ -1,0 +1,90 @@
+schema_version: "1.0.0"
+kind: MARATHON_SCREENING_ROUND_PLAN
+round_id: SH-R2-UPDATES-MATCHED
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+status: PREDECLARED
+
+purpose: >
+  Second successive-halving screening round. SH-R1 (EV-0027) proved the
+  pipeline end-to-end but eliminated every arm under the predeclared
+  NO_VLOSS_REDUCTION rule because a 25k-transition budget allows only 3
+  optimizer updates at matched 8192-transition batches — too few for the
+  value head to show improvement. SH-R2 therefore budgets by UPDATES (the
+  design input declared in EV-0027 BEFORE this round), keeping the SAME
+  predeclared metrics and elimination rules as SH-R1 (no weakening, no
+  post-hoc relaxation).
+
+compute_class: GPU_RUNPOD_A40
+compute_note: >
+  A40 saturation geometry established by the measured ladder (EV-0026/27):
+  256x32 = 7,611 valid-learning TPS at 100% GPU utilisation / 39.0 GiB VRAM;
+  e512 OOM. Pod quantisilico_sh_r1_a40 retained EXITED with environment and
+  checkpoint on its volume; restart only for this round, stop after
+  (RUNPOD-SPEND-2026-08-15 section 7). Estimated billed time ~30 minutes.
+
+arms:
+  - arm_id: SH-R2-A0-CONTROL
+    description: >
+      Baseline lineage resume at the saturation geometry (num_envs=256,
+      rollout_len=32, 8192 transitions/update), LR 3e-4, optax
+      clip(1.0)+adam. Continues from MARATHON_BASELINE_V0 raw weights +
+      opt_state (EV-0015 resume proof; GPU resume semantics proven in
+      EV-0026 gpu-smoke).
+    ppo_semantics: UNCHANGED
+    geometry: {num_envs: 256, rollout_len: 32}
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260815]
+  - arm_id: SH-R2-A1-HORIZON-64
+    description: >
+      Doubled temporal horizon at matched batch (num_envs=128,
+      rollout_len=64 = 8192 transitions/update; 60 updates). HORIZON_ABLATION
+      confounds recorded: minibatches, optimizer exposure, temporal
+      correlation (EXECUTION_PLAN 9.2).
+    ppo_semantics: UNCHANGED
+    geometry: {num_envs: 128, rollout_len: 64}
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260815]
+  - arm_id: SH-R2-A2-HORIZON-128
+    description: >
+      Quadrupled horizon control (num_envs=64, rollout_len=128 = 8192
+      transitions/update; 60 updates) completing the horizon sweep at
+      matched batch and matched update count.
+    ppo_semantics: UNCHANGED
+    geometry: {num_envs: 64, rollout_len: 128}
+    budget_updates: 60
+    budget_transitions: 491520
+    seeds: [20260815]
+
+screening_metrics_predeclared:
+  primary:
+    - VLOSS_REDUCTION_OVER_ROUND   # VLOSS_FIRST - VLOSS_LAST over the arm's updates
+    - VALID_LEARNING_SHARE         # share of updates finite with 0.5<=ratio<=2
+    - ENTROPY_HEALTH               # final entropy >= 0.05 and finite throughout
+  secondary:
+    - PG_MAGNITUDE                 # policy gradient magnitude trend (no explosion)
+    - TPS_MEASURED                 # collect / end-to-end / valid-learning, reported separately
+elimination_rules_predeclared:
+  - any non-finite metric (NaN/Inf) in any update -> immediate elimination (INTEGRITY_FAILURE)
+  - VALID_LEARNING_SHARE < 0.9 -> elimination
+  - entropy collapse: final entropy < 0.05 -> elimination
+  - VLOSS_REDUCTION_OVER_ROUND <= 0 (final update vloss not below first update vloss) -> elimination
+stop_rules:
+  - fixed 60-update budget per arm (491,520 transitions)
+  - wall cap 2h per arm; exceeding with budget incomplete recorded as PARTIAL_BUDGET
+  - no early stopping for performance reasons (integrity stops only)
+  - arms run SEQUENTIALLY on the single A40 (each arm needs ~39 GiB VRAM)
+
+measurement_note_draw_regime: >
+  Same as SH-R1 (EV-0021): gameplay pair scores cannot differentiate yet;
+  round 2 screens on training telemetry only. Promotion always requires the
+  Stage-2 paired evaluator at promotion scale with programme.yaml margins.
+
+promotion_path:
+  - round 2 survivors advance to SH-R3 with 2-3 seeds at the surviving geometry
+  - finalists receive promotion-scale seat-swapped paired evaluation
+  - champion promotion only via EV-0017 evaluator with programme.yaml margins
+
+evidence_links: [EV-0015, EV-0016, EV-0017, EV-0021, EV-0026, EV-0027]

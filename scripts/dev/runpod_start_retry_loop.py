@@ -20,14 +20,14 @@ sys.path.insert(0, str(REPO / "scripts" / "dev"))
 from runpod_account_probe import load_key, rest  # noqa: E402
 from runpod_pod_control import BILLING_LOG, record_billing  # noqa: E402
 
-POD_ID = "wvjrnxbpcjnr8h"
+DEFAULT_POD_ID = "wvjrnxbpcjnr8h"
 MAX_TRIES = 24
 RETRY_INTERVAL_S = 300
 
 
-def attempt_start(key: str) -> tuple[str, str]:
+def attempt_start(key: str, pod_id: str) -> tuple[str, str]:
     try:
-        pod = rest(key, f"/pods/{POD_ID}/start", method="POST")
+        pod = rest(key, f"/pods/{pod_id}/start", method="POST")
     except RuntimeError as exc:
         message = str(exc)
         if "not enough free GPUs" in message:
@@ -42,11 +42,19 @@ def attempt_start(key: str) -> tuple[str, str]:
 
 
 def main() -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--pod-id", default=DEFAULT_POD_ID)
+    parser.add_argument("--max-tries", type=int, default=MAX_TRIES)
+    parser.add_argument("--interval", type=int, default=RETRY_INTERVAL_S)
+    args = parser.parse_args()
+    pod_id = args.pod_id
     key = load_key()
-    for index in range(1, MAX_TRIES + 1):
+    for index in range(1, args.max_tries + 1):
         stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-        outcome, detail = attempt_start(key)
-        print(f"{stamp} try {index}/{MAX_TRIES}: {outcome} {detail[:160]}", flush=True)
+        outcome, detail = attempt_start(key, pod_id)
+        print(f"{stamp} try {index}/{args.max_tries}: {outcome} {detail[:160]}", flush=True)
         with BILLING_LOG.open("a", encoding="utf-8") as handle:
             handle.write(
                 json.dumps(
@@ -54,7 +62,7 @@ def main() -> int:
                         "recorded_at_utc": stamp,
                         "provider": "runpod",
                         "action": "POD_START_ATTEMPT",
-                        "pod_id": POD_ID,
+                        "pod_id": pod_id,
                         "outcome": outcome,
                     },
                     sort_keys=True,
@@ -65,7 +73,7 @@ def main() -> int:
             return 0
         if outcome == "ERROR":
             return 1
-        time.sleep(RETRY_INTERVAL_S)
+        time.sleep(args.interval)
     return 3
 
 
