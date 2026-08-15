@@ -1,0 +1,10 @@
+{
+  "held": false,
+  "owner": "qoder-quest-979999d1",
+  "acquired_at_utc": "2026-08-15T15:02:02Z",
+  "heartbeat_utc": "2026-08-15T15:02:04Z",
+  "host": "PriestlyRig",
+  "stale_takeover_from": null,
+  "stale_after_s": 5400,
+  "released_at_utc": "2026-08-15T15:02:05Z"
+}

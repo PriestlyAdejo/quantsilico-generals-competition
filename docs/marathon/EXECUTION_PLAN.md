@@ -291,6 +291,10 @@ Test `KL_CONTROLLER`, `CURRICULUM_CONTROLLER`, and `ANCHOR_CONTROLLER` early bec
 
 Implement castle telemetry and schemas early. Keep castle intervention losses disabled until controlled evidence promotes them.
 
+### 9.5 ELITE_REPLAY_AUGMENTATION family (operator amendment 2026-08-15)
+
+Additive, evidence-gated Stage 4A family: elite/top-player replay intelligence with a bounded replay-data plane, fog-of-war legal-POV parity gate, adversarial anti-overfit splits, and gameplay-authority promotion. Canonical charter: `docs/marathon/ELITE_REPLAY_AUGMENTATION.md`. It does not replace or reorder the families above; it runs in dependency-safe capacity and must not delay higher-priority GPU research.
+
 ## 10. Stage 4B — platform track in parallel
 
 Stage 4B may proceed independently after shared prerequisites pass. It may not block Stage 4A except where experiment identity, baseline integrity, or evaluator correctness requires it. Independent work must avoid conflicting edits and preserve equivalence gates.

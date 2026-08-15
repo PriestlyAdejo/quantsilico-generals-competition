@@ -127,3 +127,6 @@ Desktop.ini
 .vscode/
 *.swp
 *.swo
+
+experiments/datasets/leaderboard_snapshots/
+var/marathon_takeover/*.log
