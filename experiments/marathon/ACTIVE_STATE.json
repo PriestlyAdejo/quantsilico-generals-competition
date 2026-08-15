@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T02:10:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T00:45:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_1_PREP",
-  "CURRENT_TASK": "BEGIN_MARATHON_BASELINE_V0_REPRODUCTION_PLANNING_AND_SMOKE",
+  "CURRENT_STAGE": "STAGE_2_IN_PROGRESS",
+  "CURRENT_TASK": "MEASURE_MARATHON_BASELINE_V0_EXTERNAL_GAMEPLAY_VIA_PAIRED_EVALUATOR",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -67,6 +67,26 @@
     {
       "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
       "RESULT": "PASS_AT_SELF_SUPERSEDED_BY_DIRTY_TAKEOVER_STATE"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/assemble_baseline_capsule.py",
+      "RESULT": "PASS_CAPSULE_ASSEMBLED_DETERMINISM_DEMONSTRATED_TPS_MEASURED EV-0016 experiments/marathon/baseline_capsule_v0.json"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_marathon_evaluator.py -q",
+      "RESULT": "PASS_11_TESTS_CS_COVERAGE_FIXED_AND_OPTIONAL_STOPPING EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/integration/test_marathon_paired_evaluator_engine.py tests/integration/test_pass_match.py -q",
+      "RESULT": "PASS_4_TESTS_REAL_SEAT_SWAPPED_PAIR_ENGINE_PROTOCOL EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id legal_random --candidate-main baselines/legal_random/main.py --opponent pass_bot=baselines/pass_bot/main.py --pairs-per-opponent 2 --max-turns 80",
+      "RESULT": "PASS_PIPELINE_SMOKE_NO_PROMOTION_AT_2_PAIRS experiments/marathon/paired_eval_runs/smoke_legal_random_vs_pass_bot EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q",
+      "RESULT": "193_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY_REPRODUCED_IDENTICALLY_ON_MAIN_983d87a EV-0017"
     }
   ],
   "TESTS_PENDING": [
@@ -117,7 +137,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 0/0B merged to main via PR #2 (merge commit 983d87a; post-merge proof 55 tests green). Stage 1 continues: assemble the tracked MARATHON_BASELINE_V0 capsule record under experiments/ (semantic hashes + resume report + determinism contract JAX_VERSION/XLA_VERSION/DTYPE_POLICY/DETERMINISM_MODE), measure hot-path/end-to-end/valid-learning TPS separately on CPU, then begin Stage 2 paired evaluator work that unlocks external gameplay measurement. GPU-class reproduction available under the compute amendment once the credit balance is checked. Live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stage 1 capsule merged (experiments/marathon/baseline_capsule_v0.json, EV-0016) and Stage 2 canonical paired evaluator implemented/tested/engine-smoked (EV-0017). Next bounded action: use the evaluator to measure MARATHON_BASELINE_V0 external gameplay on CPU — package the baseline checkpoint as a protocol agent (EVAL_ONLY semantics declaration required), run paired evaluation against the baseline protocol opponents (legal_random, pass_bot, heuristic_v0/v1) to establish the historical reference strength, then proceed to Stage 3 registry work. Repair of the 9 KNOWN_FAILED_LEGACY_CUDA_POLICY tests remains deferred debt. GPU-class training available under the compute amendment once the credit balance is checked; live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -145,6 +165,11 @@
       "ID": "QODER-COMPUTE-2026-08-14",
       "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
       "SUMMARY": "Existing prepaid/promotional/trial compute credits are authorised for GPU training and experiments within the available balance; new cash spend, credit purchases, and payment-method changes remain human-controlled. Accelerator selection optimises validated throughput per credit with a utilisation gate before scaling."
+    },
+    {
+      "ID": "SEQUENTIAL-METHOD-2026-08-15",
+      "STATUS": "ACTIVE_DECLARED_SUBSTITUTION",
+      "SUMMARY": "programme.yaml names ANYTIME_VALID_EMPIRICAL_BERNSTEIN_CONFIDENCE_SEQUENCE; the shipped Stage 2 evaluator uses ANYTIME_VALID_BOUNDED_MIXTURE_CONFIDENCE_SEQUENCE (Hoeffding-mixture CS), a conservative valid member of the anytime-valid family permitted by EXECUTION_PLAN section 7.2, with exact martingale-inversion and Monte Carlo coverage tests. Empirical-Bernstein tightening deferred for large pair budgets. EV-0017."
     }
   ]
 }
