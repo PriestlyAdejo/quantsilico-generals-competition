@@ -16,7 +16,7 @@
     ],
     "stop": [
       {
-        "command": ".venv/Scripts/python.exe .qoder/hooks/evidence_gate.py",
+        "command": ".venv/Scripts/python.exe .qoder/hooks/marathon_stop_gate.py",
         "fail_closed": false
       }
     ]

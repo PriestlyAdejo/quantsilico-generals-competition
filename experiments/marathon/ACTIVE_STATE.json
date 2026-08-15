@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T01:40:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T02:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_1_PREP",
-  "CURRENT_TASK": "BEGIN_MARATHON_BASELINE_V0_REPRODUCTION_PLANNING_AND_SMOKE",
+  "CURRENT_STAGE": "STAGE_3_REGISTRY_COMPLETE",
+  "CURRENT_TASK": "EXTEND_BASELINE_GAMEPLAY_MEASUREMENT_TO_HEURISTIC_OPPONENTS",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -61,8 +61,64 @@
       "RESULT": "PASS_RESUME_ONE_UPDATE_RATIO_1.0_ALL_FINITE EV-0015"
     },
     {
+      "COMMAND": "post-merge proof on main@983d87a: pytest 5 orchestrator+hook modules + orchestrator dry-run",
+      "RESULT": "PASS_55_TESTS_DRY_RUN_PROOFS_TRUE PR#2_MERGED"
+    },
+    {
       "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
       "RESULT": "PASS_AT_SELF_SUPERSEDED_BY_DIRTY_TAKEOVER_STATE"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/assemble_baseline_capsule.py",
+      "RESULT": "PASS_CAPSULE_ASSEMBLED_DETERMINISM_DEMONSTRATED_TPS_MEASURED EV-0016 experiments/marathon/baseline_capsule_v0.json"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_marathon_evaluator.py -q",
+      "RESULT": "PASS_11_TESTS_CS_COVERAGE_FIXED_AND_OPTIONAL_STOPPING EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/integration/test_marathon_paired_evaluator_engine.py tests/integration/test_pass_match.py -q",
+      "RESULT": "PASS_4_TESTS_REAL_SEAT_SWAPPED_PAIR_ENGINE_PROTOCOL EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id legal_random --candidate-main baselines/legal_random/main.py --opponent pass_bot=baselines/pass_bot/main.py --pairs-per-opponent 2 --max-turns 80",
+      "RESULT": "PASS_PIPELINE_SMOKE_NO_PROMOTION_AT_2_PAIRS experiments/marathon/paired_eval_runs/smoke_legal_random_vs_pass_bot EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q",
+      "RESULT": "193_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY_REPRODUCED_IDENTICALLY_ON_MAIN_983d87a EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_qoder_stop_gate.py tests/unit/test_qoder_hooks.py -q",
+      "RESULT": "PASS_27_TESTS_CONTINUOUS_EXECUTION_STOP_GATE EV-0018"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_baseline_agent_parity.py -q",
+      "RESULT": "PASS_4_TESTS_SERVING_TRAINING_OBSERVATION_MASK_PARITY EV-0019"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id marathon_baseline_v0 --candidate-main baselines/marathon_baseline_v0/main.py --opponent legal_random=baselines/legal_random/main.py --pairs-per-opponent 3",
+      "RESULT": "PASS_3_PAIRS_6_GAMES_ALL_DRAW_AT_TRUNCATION_NO_FAULTS experiments/marathon/paired_eval_runs/baseline_v0_vs_legal_random_cpu EV-0019"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_marathon_registry.py -q",
+      "RESULT": "PASS_8_TESTS_REGISTRY_VALIDATION EV-0020"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_marathon_baseline_v0.py",
+      "RESULT": "PASS_6_RECORDS_REGISTERED experiments/marathon/registry EV-0020"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id marathon_baseline_v0 --candidate-main baselines/marathon_baseline_v0/main.py --opponent heuristic_v0=baselines/heuristic_v0/main.py --opponent heuristic_v1=baselines/heuristic_v1/main.py --pairs-per-opponent 2",
+      "RESULT": "PASS_4_PAIRS_8_GAMES_ALL_DRAW_AT_TRUNCATION_NO_FAULTS experiments/marathon/paired_eval_runs/baseline_v0_vs_heuristics_cpu EV-0021"
+    },
+    {
+      "COMMAND": "control match heuristic_v1 vs heuristic_v0 seed=55 via run_python_agent_match",
+      "RESULT": "DRAW_AT_TRUNCATION_1200_ZERO_FAULTS_CONFIRMS_ENVIRONMENT_LEVEL_PROPERTY EV-0021"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q (post-Stage-3 gate)",
+      "RESULT": "218_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY EV-0021"
     }
   ],
   "TESTS_PENDING": [
@@ -113,7 +169,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 1 resume proof complete (EV-0015: one PPO update from restored baseline state, ratio 1.0, all finite, CPU). Remaining MARATHON_BASELINE_V0 gates: assemble the tracked capsule record under experiments/ (semantic hashes + resume report + determinism contract JAX_VERSION/XLA/DTYPE_POLICY), measure hot-path/end-to-end/valid-learning TPS separately on CPU, and schedule external paired gameplay measurement (Stage 2 evaluator dependency). GPU-class reproduction remains available under the compute amendment when credits are checked. Live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Stages 1-3 form a coherent integration unit on this branch (capsule EV-0016, evaluator EV-0017, stop gate EV-0018, baseline agent + 14-game external measurement EV-0019/EV-0021, registry EV-0020; 9 registry records; 218 unit tests green + 9 known legacy). Next bounded action: open the PR for this unit, merge to main, synchronise main, and run the post-merge proof (evaluator + parity + registry + hook suites plus one engine pair), then begin Stage 4A: predeclare the first successive-halving screening round (metrics + stop rules) and check cloud credit balance — note CLOUD_CREDIT_BALANCE_UNKNOWN blocker: no Runpod credentials exist locally, so the balance check requires operator-provided credentials or a manual balance statement; CPU-class Stage 4A design and small-budget CPU screening proceed meanwhile.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -124,6 +180,11 @@
       "ID": "CURSOR_USAGE_EXHAUSTED",
       "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
       "DETAIL": "The human operator reports exhausted Cursor credits. This is PAUSED_USAGE, not an implementation failure."
+    },
+    {
+      "ID": "CLOUD_CREDIT_BALANCE_UNKNOWN",
+      "SCOPE": "GPU_CLASS_TRAINING_ONLY",
+      "DETAIL": "No Runpod credentials or runpodctl exist on this machine and no .env is present; the compute amendment's balance check before GPU provisioning requires operator-provided credentials or a manual balance statement. CPU-class research is unaffected."
     }
   ],
   "PLAN_DEVIATIONS": [
@@ -141,6 +202,11 @@
       "ID": "QODER-COMPUTE-2026-08-14",
       "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
       "SUMMARY": "Existing prepaid/promotional/trial compute credits are authorised for GPU training and experiments within the available balance; new cash spend, credit purchases, and payment-method changes remain human-controlled. Accelerator selection optimises validated throughput per credit with a utilisation gate before scaling."
+    },
+    {
+      "ID": "SEQUENTIAL-METHOD-2026-08-15",
+      "STATUS": "ACTIVE_DECLARED_SUBSTITUTION",
+      "SUMMARY": "programme.yaml names ANYTIME_VALID_EMPIRICAL_BERNSTEIN_CONFIDENCE_SEQUENCE; the shipped Stage 2 evaluator uses ANYTIME_VALID_BOUNDED_MIXTURE_CONFIDENCE_SEQUENCE (Hoeffding-mixture CS), a conservative valid member of the anytime-valid family permitted by EXECUTION_PLAN section 7.2, with exact martingale-inversion and Monte Carlo coverage tests. Empirical-Bernstein tightening deferred for large pair budgets. EV-0017."
     }
   ]
 }

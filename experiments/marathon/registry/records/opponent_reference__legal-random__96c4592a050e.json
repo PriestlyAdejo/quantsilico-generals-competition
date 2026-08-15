@@ -1,0 +1,13 @@
+{
+  "ARTEFACT_LOCATIONS": [
+    "baselines/legal_random"
+  ],
+  "ID": "opponent_reference#legal-random#96c4592a050e",
+  "KIND": "opponent_reference",
+  "NAME": "legal_random",
+  "RECORDED_AT_UTC": "2026-08-15T02:04:43Z",
+  "SCHEMA_VERSION": "1.0.0",
+  "SOURCE_IDENTITY": {
+    "path": "baselines/legal_random/main.py"
+  }
+}

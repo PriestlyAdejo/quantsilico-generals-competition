@@ -1,0 +1,21 @@
+{
+  "CANDIDATE_ID": "candidate#marathon-baseline-v0#5c9adceafd94",
+  "EVALUATOR_IDENTITY": "marathon_paired_evaluator_v1",
+  "EVAL_PROTOCOL": "SEAT_SWAPPED_PAIRS_ANYTIME_VALID_BOUNDED_MIXTURE_CS",
+  "EVIDENCE_LINKS": [
+    "EV-0017",
+    "EV-0019"
+  ],
+  "ID": "evaluation#baseline-v0-vs-heuristics-cpu#81dd91f99143",
+  "KIND": "evaluation",
+  "PAIRS_COMPLETED": 4,
+  "PROMOTION": {
+    "pathway": "NO_PROMOTION",
+    "practical_margin": 0.01,
+    "promoted": false,
+    "reason": "CS lower bound -1.00000 does not exceed practical margin 0.01000 and robustness criteria are not met"
+  },
+  "RECORDED_AT_UTC": "2026-08-15T02:21:21Z",
+  "RESULTS_LOCATION": "experiments/marathon/paired_eval_runs/baseline_v0_vs_heuristics_cpu",
+  "SCHEMA_VERSION": "1.0.0"
+}
