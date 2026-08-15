@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T17:05:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T17:35:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_HORIZON_FAMILY_CLOSED_CLEAN_EV_0035_CURRICULUM_LAUNCH_NEXT",
-  "CURRENT_TASK": "LAUNCH_SPAWN_DISTANCE_CURRICULUM_R1_ON_FRESH_A40",
+  "CURRENT_STAGE": "STAGE_4A_CURRICULUM_FAMILY_R1_TRAINING_ON_GPU",
+  "CURRENT_TASK": "MONITOR_SPAWN_DISTANCE_CURRICULUM_R1_ROUND_THEN_FETCH_STOP_ADJUDICATE",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -193,11 +193,12 @@
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-15T17:05:00Z",
+    "AUDITED_AT_UTC": "2026-08-15T17:35:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
       "DURABLE LOOP ARMED: background terminal emits AGENT_LOOP_TICK_MARATHON every 30 min with docs/marathon/MARATHON_LOOP_PROMPT.md resume instruction (lease + RunPod-first reconciliation)"
     ],
     "COMPLETED_THIS_SESSION": [
+      "SPAWN-DISTANCE-CURRICULUM-R1 LAUNCHED on fresh A40 z7zutn5ui0yo41 (EU-SE-1 thgbb0r95l89): setup + curr1-smoke GPU validation PASS (3 updates ratio 1.0, knob recorded); round start 16:58:38Z commit 9f0cef8, trainer PID verified, 39GB VRAM allocated",
       "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 adjudicated: NO_PROMOTION both finalists, 120/120 games DRAW-at-truncation, zero faults; horizon family CLOSED on clean evidence (EV-0035); 2 rerun evaluation records registered",
       "ELITE_REPLAY_AUGMENTATION family persisted: charter docs/marathon/ELITE_REPLAY_AUGMENTATION.md + EXECUTION_PLAN 9.5 + project skill + registry-independent dataset contract",
       "Replay data plane pilot: scripts/data/fetch_elite_replays.py + capture_leaderboard_snapshot.py; DATASET-ELITE-2026-08-15-V01 (6 replays, 151-486 ticks, sha256-sealed manifest); 4 fixture tests PASS",
@@ -218,8 +219,20 @@
   },
   "ACTIVE_REMOTE_PROCESSES": {
     "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
-    "AUDITED_AT_UTC": "2026-08-15T14:35:00Z",
-    "ACTIVE_PROJECT_WORKLOADS": [],
+    "AUDITED_AT_UTC": "2026-08-15T17:35:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "z7zutn5ui0yo41",
+        "NAME": "quantisilico_curr1_a40",
+        "STATE": "RUNNING_VERIFIED_TRAINER_PID_5082_GPU_MEM_ALLOCATED",
+        "OWNER": "experiment#spawn-distance-curriculum-r1#c9255f18cd8f",
+        "SSH": "root@194.68.245.66:22042",
+        "ROUND_LOG": "/workspace/curr1_round.log",
+        "LEDGER": "experiments/marathon/runpod_resources.json"
+      }
+    ],
     "OBSERVED_RESOURCES": [
       {
         "PROVIDER": "RUNPOD",
@@ -264,7 +277,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": null,
+  "CURRENT_EXPERIMENT": "experiment#spawn-distance-curriculum-r1#c9255f18cd8f",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -278,7 +291,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Horizon family CLOSED on clean gameplay evidence (EV-0035: NO_PROMOTION both finalists, 120/120 games draw-at-truncation, zero faults). Next bounded action: LAUNCH SPAWN-DISTANCE-CURRICULUM-R1 - plan predeclared (curriculum_round_1_plan.yaml), experiment registered (experiment#spawn-distance-curriculum-r1#c9255f18cd8f), runner knob tested. Steps: duplicate-capacity check -> fresh A40 pod (EU-SE-1 pattern) -> bootstrap clone+submodule+uv venv -> GPU validation smoke (3 updates) -> adapt scripts/dev/remote_sh_r4_orchestrator.sh for 6 arms x 240 updates with --min-generals-distance {17,17,8,8,21,21} -> launch -> ledger entry -> monitor via loop. Then: fetch/stop/adjudicate per predeclared rules; register arms/checkpoints; gameplay-eval any separating variant. Parallel: dependency-safe 4B + replay-plane units (legal-POV reconstruction stage is the next replay milestone). Durable loop armed (30 min ticks, AGENT_LOOP_TICK_MARATHON); lease held by qoder-quest-979999d1. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "SPAWN-DISTANCE-CURRICULUM-R1 TRAINING on pod z7zutn5ui0yo41 (EU-SE-1, $0.44/h, started 16:40:51Z, round log /workspace/curr1_round.log, est ~2.6h for 6 arms x 240 updates @ 256x32). Loop iteration duties: (1) reconcile RunPod first; verify workload via pgrep run_sh_r1_arm.py + nvidia-smi (not pod status); (2) while arms train, execute dependency-safe work (replay legal-POV reconstruction stage is next replay milestone; 4B polish); (3) on round end: fetch all arm dirs + round log to experiments/marathon/curriculum_round_1_runs/, STOP pod (billing-log), adjudicate per curriculum_round_1_plan.yaml predeclared rules (control survival REQUIRED; variant must beat control mean vloss-reduction across seeds with no sign flip), register arms/checkpoints, record EV; (4) separating variant -> promotion-scale paired gameplay eval under EV-0017 (serving sanity probe FIRST, EV-0034 standing procedure); no separation -> clean negative, predeclare next canonical family; (5) durable loop armed (AGENT_LOOP_TICK_MARATHON 30 min); lease held by qoder-quest-979999d1 (heartbeat during long work). Zero-idle-burn permanent.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
