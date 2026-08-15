@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T00:45:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T01:58:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_2_IN_PROGRESS",
-  "CURRENT_TASK": "MEASURE_MARATHON_BASELINE_V0_EXTERNAL_GAMEPLAY_VIA_PAIRED_EVALUATOR",
+  "CURRENT_STAGE": "STAGE_3_REGISTRY",
+  "CURRENT_TASK": "IMPLEMENT_MINIMUM_CANONICAL_REGISTRY_WITH_VALIDATION_AND_TESTS",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -87,6 +87,18 @@
     {
       "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q",
       "RESULT": "193_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY_REPRODUCED_IDENTICALLY_ON_MAIN_983d87a EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_qoder_stop_gate.py tests/unit/test_qoder_hooks.py -q",
+      "RESULT": "PASS_27_TESTS_CONTINUOUS_EXECUTION_STOP_GATE EV-0018"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_baseline_agent_parity.py -q",
+      "RESULT": "PASS_4_TESTS_SERVING_TRAINING_OBSERVATION_MASK_PARITY EV-0019"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id marathon_baseline_v0 --candidate-main baselines/marathon_baseline_v0/main.py --opponent legal_random=baselines/legal_random/main.py --pairs-per-opponent 3",
+      "RESULT": "PASS_3_PAIRS_6_GAMES_ALL_DRAW_AT_TRUNCATION_NO_FAULTS experiments/marathon/paired_eval_runs/baseline_v0_vs_legal_random_cpu EV-0019"
     }
   ],
   "TESTS_PENDING": [
@@ -137,7 +149,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 1 capsule merged (experiments/marathon/baseline_capsule_v0.json, EV-0016) and Stage 2 canonical paired evaluator implemented/tested/engine-smoked (EV-0017). Next bounded action: use the evaluator to measure MARATHON_BASELINE_V0 external gameplay on CPU — package the baseline checkpoint as a protocol agent (EVAL_ONLY semantics declaration required), run paired evaluation against the baseline protocol opponents (legal_random, pass_bot, heuristic_v0/v1) to establish the historical reference strength, then proceed to Stage 3 registry work. Repair of the 9 KNOWN_FAILED_LEGACY_CUDA_POLICY tests remains deferred debt. GPU-class training available under the compute amendment once the credit balance is checked; live Cursor acceptance remains a separate external gate.",
+  "NEXT_SAFE_ACTION": "Continuous-execution stop gate live (EV-0018); MARATHON_BASELINE_V0 packaged as EVAL_ONLY protocol agent with proven serving/training parity and its first external gameplay measurement recorded (3 pairs vs legal_random, all draws at truncation; EV-0019). Next bounded action: implement the Stage 3 minimum canonical registry (experiment/run/checkpoint/candidate/evaluation/opponent-reference records: stable IDs + hashes, atomic writes, schema versions, source/engine/config identity, lineage, seeds, commands, budgets, stop reasons, artefact locations, evidence links; reject incompatible lineage, unresolved hashes, missing evaluator identity, silent overwrite; PPO_SEMANTICS enforcement) with tests, register MARATHON_BASELINE_V0 and the Stage 2 evaluation into it, then extend baseline gameplay measurement to heuristic opponents with larger pair budgets. GPU-class training remains gated on Stages 2-3 satisfaction per the compute amendment; live Cursor acceptance remains a separate external gate.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
