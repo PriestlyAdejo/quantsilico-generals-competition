@@ -33,6 +33,10 @@ class MatchResult:
     faults1: int = 0
     elapsed_s: float = 0.0
     truncated: bool = False
+    crashed0: bool = False
+    crashed1: bool = False
+    stderr_tail0: str = ""
+    stderr_tail1: str = ""
 
 
 def make_board(env: GeneralsEnv, seed: int):
@@ -95,6 +99,10 @@ def run_python_agent_match(
     max_turns: int | None = None,
 ) -> MatchResult:
     """Spawn two ``python -u main.py`` agents and play a competition match."""
+    # Agents run with cwd=main.parent, so relative paths would resolve against
+    # the child's directory; pin absolute paths up front.
+    agent0_main = Path(agent0_main).resolve()
+    agent1_main = Path(agent1_main).resolve()
     protocol = _load_engine_protocol()
     decode_action = protocol.decode_action
     encode_handshake = protocol.encode_handshake
@@ -129,15 +137,32 @@ def run_python_agent_match(
     p0 = spawn(agent0_main, 0)
     p1 = spawn(agent1_main, 1)
     faults = [0, 0]
+    crashed = [False, False]
+    stderr_tails = ["", ""]
     t0 = time.perf_counter()
     turn = 0
     winner = -1
     truncated = False
 
+    def _stderr_tail(proc: subprocess.Popen[str]) -> str:
+        try:
+            if proc.stderr is None:
+                return ""
+            return proc.stderr.read()[-2000:]
+        except Exception:
+            return ""
+
     def ask(proc: subprocess.Popen[str], obs, idx: int) -> jnp.ndarray:
         assert proc.stdin is not None and proc.stdout is not None
-        proc.stdin.write(encode_observation(obs))
-        proc.stdin.flush()
+        try:
+            proc.stdin.write(encode_observation(obs))
+            proc.stdin.flush()
+        except OSError as exc:
+            # Broken stdin means the agent process died; attribute the crash
+            # with its stderr tail instead of aborting the whole evaluation.
+            crashed[idx] = True
+            stderr_tails[idx] = f"{exc!r} | exit={proc.poll()} | {_stderr_tail(proc)}"
+            raise
         line = proc.stdout.readline()
         if not line:
             faults[idx] += 1
@@ -152,8 +177,13 @@ def run_python_agent_match(
         while turn < truncation:
             obs0 = get_obs(state, 0)
             obs1 = get_obs(state, 1)
-            a0 = ask(p0, obs0, 0)
-            a1 = ask(p1, obs1, 1)
+            try:
+                a0 = ask(p0, obs0, 0)
+                a1 = ask(p1, obs1, 1)
+            except OSError:
+                # A crashed agent forfeits to the opponent.
+                winner = 1 if crashed[0] else 0
+                break
             state, info = transition(state, jnp.stack([a0, a1]))
             turn += 1
             if bool(info.is_done):
@@ -186,4 +216,8 @@ def run_python_agent_match(
         faults1=faults[1],
         elapsed_s=time.perf_counter() - t0,
         truncated=truncated,
+        crashed0=crashed[0],
+        crashed1=crashed[1],
+        stderr_tail0=stderr_tails[0],
+        stderr_tail1=stderr_tails[1],
     )

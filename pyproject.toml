@@ -42,6 +42,7 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 markers = [
   "slow: long-running benchmarks excluded from default fast feedback",
+  "integration: engine/process-level tests spanning subprocess agents",
 ]
 
 [tool.ruff]
