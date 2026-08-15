@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T02:55:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T03:10:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_3_REGISTRY_COMPLETE",
-  "CURRENT_TASK": "EXTEND_BASELINE_GAMEPLAY_MEASUREMENT_TO_HEURISTIC_OPPONENTS",
+  "CURRENT_STAGE": "STAGE_4A_DESIGN",
+  "CURRENT_TASK": "PREDECLARE_FIRST_SUCCESSIVE_HALVING_SCREENING_ROUND",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -119,6 +119,10 @@
     {
       "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q (post-Stage-3 gate)",
       "RESULT": "218_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY EV-0021"
+    },
+    {
+      "COMMAND": "post-merge proof on main@bc6970c: pytest evaluator+stop-gate+hooks+registry+parity suites and engine integration suite",
+      "RESULT": "PASS_50_UNIT_PLUS_3_ENGINE_TESTS PR#3_MERGED"
     }
   ],
   "TESTS_PENDING": [
@@ -169,7 +173,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stages 1-3 form a coherent integration unit on this branch (capsule EV-0016, evaluator EV-0017, stop gate EV-0018, baseline agent + 14-game external measurement EV-0019/EV-0021, registry EV-0020; 9 registry records; 218 unit tests green + 9 known legacy). Next bounded action: open the PR for this unit, merge to main, synchronise main, and run the post-merge proof (evaluator + parity + registry + hook suites plus one engine pair), then begin Stage 4A: predeclare the first successive-halving screening round (metrics + stop rules) and check cloud credit balance — note CLOUD_CREDIT_BALANCE_UNKNOWN blocker: no Runpod credentials exist locally, so the balance check requires operator-provided credentials or a manual balance statement; CPU-class Stage 4A design and small-budget CPU screening proceed meanwhile.",
+  "NEXT_SAFE_ACTION": "Stages 1-3 merged to main via PR #3 (merge commit bc6970c; post-merge proof 50 unit + 3 engine tests green; branch fast-forwarded and pushed). Next bounded action: Stage 4A design — predeclare the first successive-halving screening round as a tracked plan (candidate arms, small CPU-feasible budgets, one seed, predeclared screening metrics and stop rules, integrity-failure elimination criteria) and register it as an experiment record in the registry before any training launch; the draw-heavy measurement regime (EV-0021) must be addressed in the screening metric design (truncation tie-breaks or supplementary metrics require a declared evaluation-protocol amendment first). GPU-class rounds remain gated on the CLOUD_CREDIT_BALANCE_UNKNOWN blocker (operator credentials/balance statement required); CPU-class screening may proceed meanwhile.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
