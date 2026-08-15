@@ -16,6 +16,7 @@ export XLA_PYTHON_CLIENT_PREALLOCATE=true
 export XLA_PYTHON_CLIENT_MEM_FRACTION=0.85
 
 stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
+cd "${REPO}"   # runner script paths are relative to the repo root
 mkdir -p "$OUT_ROOT"
 echo "=== SH-R4 round start $(stamp) commit $(cd $REPO && git rev-parse --short HEAD)" >> "$ROUND_LOG"
 echo "=== SH-R4 arm table (predeclared survivors x seeds): A0-CONTROL A1-HORIZON-64 A2-HORIZON-128 x {20260816 20260818}, 240 updates @ 8192 batch" >> "$ROUND_LOG"

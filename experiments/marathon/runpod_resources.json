@@ -2,23 +2,34 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-15T11:15:00Z",
+  "updated_at_utc": "2026-08-15T12:30:00Z",
   "resources": [
+    {
+      "pod_id": "tinlsf21h08qd2",
+      "name": "quantisilico_sh_r4_a40",
+      "status": "RUNNING",
+      "owner_run": "experiment#sh-r4-budget-escalation#f4a79a0412e9",
+      "expected_workload": "remote_sh_r4_orchestrator.sh -> run_sh_r1_arm.py (6 arms sequential, 240 updates each, wall cap 90 min/arm)",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "machine_id": "z3ghhcrigmrs",
+      "ssh": "root@194.68.245.124:22005",
+      "started_at_utc": "2026-08-15T12:03:35Z",
+      "last_verified_heartbeat_utc": "2026-08-15T12:30:00Z",
+      "heartbeat_evidence": "bootstrap complete; r4-smoke GPU validation in progress",
+      "expected_completion": "round log /workspace/sh_r4_round.log end boundary (est ~2.5h)",
+      "disposition_after_completion": "STOP immediately after artefact fetch"
+    },
     {
       "pod_id": "o27sds4rsf9hjs",
       "name": "quantisilico_sh_r3_a40",
-      "status": "RUNNING",
+      "status": "EXITED_STOPPED_AFTER_EVIDENCE_FETCH",
       "owner_run": "experiment#sh-r3-seeds#2a98430be4d7",
-      "expected_workload": "remote_sh_r3_orchestrator.sh -> run_sh_r1_arm.py (6 arms sequential, 60 updates each)",
       "rate_usd_per_hr": 0.44,
       "data_center": "EU-SE-1",
-      "machine_id": "nhe5hmyamtrg",
-      "ssh": "root@194.68.245.240:22186",
       "started_at_utc": "2026-08-15T10:58:23Z",
-      "last_verified_heartbeat_utc": "2026-08-15T11:30:00Z",
-      "heartbeat_evidence": "run_sh_r1_arm.py pid 5046 arm SH-R3-A0-CONTROL-S1; 38951 MiB VRAM allocated; round log boundary written; commit dc3ac79",
-      "expected_completion": "round log /workspace/sh_r3_round.log end boundary",
-      "disposition_after_completion": "STOP immediately after artefact fetch"
+      "stopped_at_utc": "2026-08-15T12:02:00Z",
+      "disposition": "retain EXITED volume (R3 env/runs); restart attempt after SH-R3 hit HOST_FULL, superseded by tinlsf21h08qd2"
     },
     {
       "pod_id": "ba86a74lq28t3f",
@@ -54,6 +65,6 @@
     }
   ],
   "active_workloads": [
-    {"pod_id": "o27sds4rsf9hjs", "experiment": "experiment#sh-r3-seeds#2a98430be4d7", "note": "TRAINING: SH-R3-A0-CONTROL-S1 256x32 seed 20260816 in progress (pid 5046)"}
+    {"pod_id": "tinlsf21h08qd2", "experiment": "experiment#sh-r4-budget-escalation#f4a79a0412e9", "note": "bootstrap + GPU smoke; round launch imminent"}
   ]
 }
