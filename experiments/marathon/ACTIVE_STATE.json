@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-15T03:25:00Z",
+  "UPDATED_AT_UTC": "2026-08-15T03:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_4A_SCREENING_RUNNER",
@@ -127,6 +127,10 @@
     {
       "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_screening_round_1.py",
       "RESULT": "PASS_EXPERIMENT_REGISTERED_PRE_LAUNCH experiment#sh-r1-cpu-pilot#796c4d71603c EV-0022"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/training/run_sh_r1_arm.py --arm-id smoke --num-envs 8 --rollout-len 16 --max-updates 3",
+      "RESULT": "PASS_PIPELINE_SMOKE_RATIO_1.0_VALID_SHARE_1.0_PREDECLARED_RULES_FIRE_AS_DESIGNED EV-0023"
     }
   ],
   "TESTS_PENDING": [
@@ -135,13 +139,16 @@
     "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon."
   ],
   "ACTIVE_LOCAL_PROCESSES": {
-    "AUDIT_STATUS": "PARTIAL",
-    "AUDITED_AT_UTC": "2026-08-14T19:10:48Z",
-    "ACTIVE_PROJECT_WORKLOADS": "UNKNOWN",
-    "UNKNOWN_REASON": "Windows process inspection found no Marathon trainer, evaluator, dashboard, packaging, or deployment process, but read-only WSL queries timed out while vmmemWSL was active. WSL was not shut down because an independent workload could not be excluded.",
+    "AUDIT_STATUS": "AUDITED",
+    "AUDITED_AT_UTC": "2026-08-15T03:55:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [
+      "SH-R1-A0-CONTROL screening arm training on CPU via scripts/training/run_sh_r1_arm.py (budget 25000 transitions, est ~6h); telemetry experiments/marathon/screening_runs/SH-R1-A0-CONTROL/telemetry.jsonl; console log var/marathon_takeover/sh_r1_a0_control.log"
+    ],
+    "UNKNOWN_REASON": "",
     "OBSERVED_INFRASTRUCTURE": [
-      "Codex desktop Node kernel for this task",
-      "vmmemWSL with workload not audited"
+      "Qoder agent process for this task",
+      "SH-R1-A0-CONTROL CPU training (this project)",
+      "vmmemWSL with workload not audited (unchanged; untouched)"
     ]
   },
   "ACTIVE_REMOTE_PROCESSES": {
@@ -177,7 +184,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "Stage 4A round SH-R1-CPU-PILOT predeclared (experiments/marathon/screening_round_1_plan.yaml) and registered pre-launch (EV-0022; 10 registry records). Next bounded action: implement the SH-R1 screening runner (resume from MARATHON_BASELINE_V0 raw/opt_state via load_tree, per-arm geometry, fixed 25k-transition budgets, per-update telemetry JSONL + arm summary with the predeclared metrics), verify it with a tiny smoke update count, then launch the control arm (SH-R1-A0-CONTROL) as a bounded pilot and record its run/checkpoint records in the registry; GPU-class rounds remain gated on CLOUD_CREDIT_BALANCE_UNKNOWN.",
+  "NEXT_SAFE_ACTION": "SH-R1-A0-CONTROL is training on CPU (~6h; ACTIVE_LOCAL_PROCESSES records it; do not kill it without recording why). Next bounded actions: (1) when the arm finishes, validate its summary against the predeclared rules, register its run/checkpoint records in the registry, and record EV; (2) install/verify official RunPod tooling (runpodctl or the runpod-plugins-official skill + MCP) as soon as the operator provisions a dedicated restricted API key locally — that is the single dependency for GPU-class rounds and for inspecting/reusing the existing generals_competition A100 pod per RUNPOD-SPEND-2026-08-15; (3) once GPU access works: inspect the existing pod (GPU/CPU/RAM/volume/image/cost/prior state), benchmark throughput-per-dollar for this workload, then launch SH-R1-A1/A2 horizon arms on the selected accelerator with billing evidence; (4) never leave paid pods idle. Meanwhile local work that does not need RunPod may proceed (e.g. Stage 4B planning, evaluator EB-tightening design).",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -191,8 +198,8 @@
     },
     {
       "ID": "CLOUD_CREDIT_BALANCE_UNKNOWN",
-      "SCOPE": "GPU_CLASS_TRAINING_ONLY",
-      "DETAIL": "No Runpod credentials or runpodctl exist on this machine and no .env is present; the compute amendment's balance check before GPU provisioning requires operator-provided credentials or a manual balance statement. CPU-class research is unaffected."
+      "SCOPE": "GPU_CLASS_TRAINING_TOOLING_PROVISIONING_ONLY",
+      "DETAIL": "RUNPOD-SPEND-2026-08-15 amendment authorises cash-backed compute; remaining need is operational only: no RunPod credentials, runpodctl, or .env exist on this machine yet. The operator creates a dedicated restricted API key and configures it locally (never in chat/repo). CPU-class research and the SH-R1 pipeline proceed meanwhile and are NOT blocked by this."
     }
   ],
   "PLAN_DEVIATIONS": [
@@ -215,6 +222,11 @@
       "ID": "SEQUENTIAL-METHOD-2026-08-15",
       "STATUS": "ACTIVE_DECLARED_SUBSTITUTION",
       "SUMMARY": "programme.yaml names ANYTIME_VALID_EMPIRICAL_BERNSTEIN_CONFIDENCE_SEQUENCE; the shipped Stage 2 evaluator uses ANYTIME_VALID_BOUNDED_MIXTURE_CONFIDENCE_SEQUENCE (Hoeffding-mixture CS), a conservative valid member of the anytime-valid family permitted by EXECUTION_PLAN section 7.2, with exact martingale-inversion and Monte Carlo coverage tests. Empirical-Bernstein tightening deferred for large pair budgets. EV-0017."
+    },
+    {
+      "ID": "RUNPOD-SPEND-2026-08-15",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Supersedes the earlier existing-credits-only rule for Marathon research compute: reasonable additional cash spend on GPU/CPU compute is pre-authorised; low balance must not shrink scientifically justified budgets, truncate promising candidates, or replace appropriate GPU runs with impractical CPU runs. Optimisation target is strength per compute/dollar via the canonical funnel (pilot -> utilisation -> control -> external strength -> marginal value); failed/dominated arms receive no extra compute; reference transition points (5M..500M+) are decision points, not ceilings; official RunPod tooling preferred; RUNPOD_API_KEY never exposed/committed; no new payment methods/legal terms/ownership changes; paid accelerators stopped when idle; billing evidence recorded per run. Scientific gates (Stage 2 statistics, Stage 3 registration, controls, evaluation) are NOT weakened by spend."
     }
   ]
 }

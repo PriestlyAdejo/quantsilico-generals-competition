@@ -1,0 +1,37 @@
+{
+  "actual_transitions": 384,
+  "arm_id": "smoke",
+  "budget_transitions": 25000,
+  "eliminated": true,
+  "elimination": [
+    "NO_VLOSS_REDUCTION"
+  ],
+  "finished_at_utc": "2026-08-15T03:22:48Z",
+  "geometry": {
+    "num_envs": 8,
+    "rollout_len": 16
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "ENTROPY_FIRST": 0.9579211473464966,
+    "ENTROPY_LAST": 0.8810412883758545,
+    "PG_FIRST": -0.0010575596243143082,
+    "PG_LAST": 0.00010500342614250258,
+    "RATIO_FIRST": 1.0,
+    "RATIO_LAST": 1.0,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.358104944229126,
+    "VLOSS_LAST": 2.3597497940063477,
+    "VLOSS_REDUCTION_OVER_ROUND": -0.0016448497772216797
+  },
+  "seed": 20260815,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 1.4043337882601952,
+    "collect_wall_s": 273.4392657999997,
+    "end_to_end_tps": 1.1998875322920883,
+    "total_wall_s": 320.6232630999875,
+    "update_wall_s": 46.590728399925865
+  },
+  "updates": 3
+}
