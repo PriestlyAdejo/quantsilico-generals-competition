@@ -18,7 +18,7 @@
       "round_start_utc": "2026-08-16T00:39:53Z",
       "gpu_smoke": "PASS ratio ~1.0000 valid_share 1.0 (TOPADV-GPU-SMOKE, fraction 0.5, 2 updates)",
       "verified_active": "2026-08-16T01:03Z watchdog ACTIVE_WORKLOAD_VERIFIED (trainer pid alive, 38889 MiB); round log arms 1-2 COMPLETE, arm 3/6 TOPADV-A1-TOP50-S1 started 00:59:32Z (EV-0041)",
-      "security_note": "RUNPOD API key briefly visible in remote ps listing at launch (EV-0040); OPERATOR MUST ROTATE the key after TOPADV-R1 completes (self-stop depends on it until then)"
+      "security_note": "Key-rotation requirement RESCINDED by operator 2026-08-16 (EV-0042): rotation not required"
     },
     {
       "pod_id": "z7zutn5ui0yo41",

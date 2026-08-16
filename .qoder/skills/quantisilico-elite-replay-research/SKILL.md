@@ -8,6 +8,44 @@ description: Operational rules for elite/top-player replay research in the Quant
 Authority: `docs/marathon/ELITE_REPLAY_AUGMENTATION.md` + `EXECUTION_PLAN.md` §9.5.
 This skill is operational knowledge only; the canonical programme wins conflicts.
 
+## Competition authority (EV-0042 — read before any replay/action work)
+
+Action validity / legality / observation semantics come from the COMPETITION
+ruleset, NOT generic present-day generals.io. Order: (1) the pinned engine
+`third_party/generals-bots` (submodule SHA is the executable source of truth
+and must be recorded in every derived dataset + audit report); (2) the
+official generals.bot competition rules/docs; (3) QuantSilico parity
+contracts; (4) the replay payload; (5) generic generals.io only where the
+competition inherits it.
+
+Operational rules:
+
+- No single `is_legal_action` boolean. Classify: PROTOCOL_VALID /
+  ENGINE_EXECUTED / ENGINE_SILENT_PASS / RUNNER_FAULT / PROCESS_FORFEIT,
+  plus a SEPARATE observation-legality / leakage question. Silent pass is a
+  well-formed-but-invalid action, NOT a runner fault; runner faults and
+  forfeits are not reconstructable from replay payloads — say so explicitly.
+- Engine-oracle-first: use the pinned engine's primitives as the oracle
+  (`scripts/data/replay_engine_oracle.py` wraps state reconstruction +
+  engine-exact move/build classification; `game.step` / `build_castles` /
+  `deathtouch` / competition composition builds→deathtouch→step). Any
+  duplicate validator needs DIFFERENTIAL parity tests vs the engine
+  (`tests/unit/test_replay_engine_oracle.py`) before it filters data.
+- Honour competition specifics: rectangular 18–21 boards; player-built
+  castles with dynamic crowding price (captured castles count as own);
+  simultaneous resolution (chasing > reinforcing > smaller army;
+  build-before-move; strict `>` combat favours defender); simultaneous
+  general capture = DRAW; deathtouch from turn 800 (`general_positions`
+  static); 1200-turn draw cap.
+- Keep TRUE_COMPETITION_STATE (oracle/analysis) separate from
+  LEGAL_PLAYER_OBSERVATION (policy input). Hidden destination properties are
+  recorded as visible/known/unknown, never BC features.
+- Silent-pass expert actions are NOT automatic BC labels; predeclare handling.
+- Prove replay timing alignment (engine-step-from-tick trace) before large
+  audits: `scripts/data/replay_alignment_trace.py`.
+- Audits use absolute player indices; test BOTH seats; real dims vs 21×21
+  training padding are distinguished (OUT_OF_BOUNDS, not "mountain").
+
 ## Acquisition
 
 - Public API: `https://www.generals.bot/api/leaderboard`

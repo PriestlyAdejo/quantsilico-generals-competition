@@ -1,4 +1,18 @@
-"""Action legality audit for extracted elite-replay actions (BC-prep milestone).
+"""SUPERSEDED (EV-0042) - kept for history; do NOT use for data decisions.
+
+This first-cut audit encoded GENERIC generals.io assumptions and a single
+legal/illegal boolean. Operator amendment 2026-08-16: action semantics are
+defined by the PINNED COMPETITION ENGINE, with a richer classification
+(PROTOCOL_VALID / ENGINE_EXECUTED / ENGINE_SILENT_PASS / RUNNER_FAULT /
+PROCESS_FORFEIT + separate observation-legality). Its EV-0041 probe verdicts
+are invalidated as authority; unaffected evidence (dataset, extraction, POV)
+is preserved. Replacement: scripts/data/replay_engine_oracle.py (engine-exact
+predicates + differential parity tests) and the competition-semantic audit
+built on it, gated by scripts/data/replay_alignment_trace.py.
+
+Original description follows.
+
+Action legality audit for extracted elite-replay actions (BC-prep milestone).
 
 ELITE_REPLAY_AUGMENTATION roadmap: action extraction + legality check before
 the BC warm-start predeclaration. Extracted actions are heuristic estimates

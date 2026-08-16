@@ -5,6 +5,61 @@ ADDITIVE to the canonical Stage 4A programme; it replaces no existing family.
 This family is evidence-gated like every other family: PREDECLARE → REGISTER →
 PILOT → health gate → successive halving → gameplay evaluation → promote/reject.
 
+## 0. Authority: the COMPETITION ruleset defines action/observation semantics (operator amendment 2026-08-16, EV-0042)
+
+Action validity, legality, observation semantics and replay interpretation are
+defined against the QuantSilico competition's pinned ruleset and engine —
+NEVER generic/present-day generals.io behaviour. Authority order:
+
+1. the PINNED competition engine in `third_party/generals-bots` (submodule
+   SHA recorded in every derived dataset and audit report) — executable
+   source of truth;
+2. the official generals.bot competition rules/docs
+   (`https://www.generals.bot/docs`, `https://www.generals.bot/rules`);
+3. existing QuantSilico competition parity tests/contracts;
+4. the replay payload;
+5. generic generals.io behaviour ONLY where the competition inherits it.
+
+Binding consequences:
+
+- Single "legal/illegal" booleans are BANNED for action semantics.
+  Classification distinguishes at minimum: PROTOCOL_VALID (five-int
+  `kind row col dir split`), ENGINE_EXECUTED, ENGINE_SILENT_PASS
+  (well-formed but invalid under competition rules; NOT a runner fault),
+  RUNNER_FAULT and PROCESS_FORFEIT (not reconstructable from replay
+  payloads — audits must say so explicitly), and OBSERVATION_LEGALITY /
+  information-leakage as a SEPARATE question.
+- Engine-oracle-first: reuse the pinned engine's transition/validity
+  primitives (`game.step` validity predicates, `build_castles.build_cost_grid`
+  and `apply_build_actions`, `deathtouch.step`, the competition composition
+  builds→deathtouch→step) as the oracle; any duplicate validator must pass
+  DIFFERENTIAL tests against the engine before it may filter data.
+- Competition specifics that MUST be honoured: rectangular 18–21 boards;
+  player-built castles with dynamic crowding pricing (captured castles count
+  as own structures); simultaneous-turn resolution (chasing > reinforcing >
+  smaller army; build-before-move; strict `>` combat favours the defender);
+  simultaneous general capture resolves as a DRAW; deathtouch from turn 800
+  (`general_positions` is static — the touch target is the general's tile);
+  hard 1200-turn draw cap; invalid actions are silent passes, malformed/late
+  replies are runner faults, crashes are forfeits.
+- TRUE_COMPETITION_STATE (full state, oracle/analysis only) and
+  LEGAL_PLAYER_OBSERVATION (`replay_legal_pov`, policy inputs only) stay
+  separate objects; hidden destination properties are recorded as
+  visible/known/unknown, never used as BC features.
+- Silent-pass expert actions are NOT automatic BC labels; their handling
+  rule is predeclared per §7A before any large-scale training.
+- Replay timing alignment must be PROVEN (obs → attempted actions →
+  resolution → true state T+1 trace against the engine) before large audits;
+  mismatches are reported, never papered over.
+- Replays use absolute player indices; perspective-relative encoding
+  (1=ME/2=OPPONENT) is the protocol layer's job; audits test BOTH seats.
+  Real board dims are distinguished from 21×21 training padding (out of real
+  bounds = OUT_OF_BOUNDS, never "mountain").
+- Derived datasets record: engine SHA, ruleset/mode, parser/POV/extraction/
+  audit versions, classification policy, silent-pass handling, content
+  hashes. Engine/rules changes create NEW derived versions, never silent
+  reinterpretation.
+
 ## 1. Hypothesis
 
 Elite replay augmentation improves GENERALISED external gameplay strength,
@@ -132,7 +187,9 @@ windows). Previous snapshots are never destroyed.
 
 Leaderboard parsing; match selection; seat-order dedup; resume; retries/
 backoff; corrupt-replay rejection; content hashes; immutable manifest; legal
-observation parity; action extraction + legality; no hidden-state leakage;
+observation parity; action extraction + competition-engine action
+classification with DIFFERENTIAL parity tests against the pinned engine
+(§0); timing-alignment trace before large audits; no hidden-state leakage;
 player/time-disjoint splits; seed dedup; per-player caps; deterministic
 derived shards; registry record validation. Fixtures/mocked responses; never
 hammer the public API in unit tests.

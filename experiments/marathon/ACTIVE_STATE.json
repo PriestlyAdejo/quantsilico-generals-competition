@@ -1,7 +1,7 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-16T01:16:00Z",
+  "UPDATED_AT_UTC": "2026-08-16T02:10:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "STAGE_4A_TOPADV_R1_GPU_ROUND_EXECUTING",
@@ -118,7 +118,15 @@
     },
     {
       "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/replay_action_legality.py --dataset-dir experiments/datasets/elite_replays/DATASET-ELITE-2026-08-15-V01 --out var/marathon_takeover/replay_action_legality_v01_probe.json",
-      "RESULT": "PASS_1440_OF_1443_MOVES_LEGAL_ALL_3_FLAGS_ADJACENT_ONLY_ZERO_RULE_VIOLATIONS EV-0041"
+      "RESULT": "PASS_1440_OF_1443_MOVES_LEGAL_ALL_3_FLAGS_ADJACENT_ONLY_ZERO_RULE_VIOLATIONS EV-0041 SUPERSEDED_AS_AUTHORITY_BY_EV-0042_COMPETITION_ENGINE_FRAMING"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe -m pytest tests/unit/test_replay_engine_oracle.py -q",
+      "RESULT": "PASS_23_DIFFERENTIAL_PARITY_TESTS_VS_PINNED_ENGINE_9e3b9d1 EV-0042"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/replay_alignment_trace.py --dataset-dir experiments/datasets/elite_replays/DATASET-ELITE-2026-08-15-V01 --out var/marathon_takeover/replay_alignment_trace_v01.json",
+      "RESULT": "PASS_TIMING_PROVEN_OWNERS_EXACT_1903_OF_1921_PHASE_INVARIANT_ARMIES_PHASE_0_BEST_316_OF_1921_EVEN_GROWTH_CONFIRMED_CELL_PARITY_99.0-99.4_PERCENT EV-0042"
     },
     {
       "COMMAND": "control match heuristic_v1 vs heuristic_v0 seed=55 via run_python_agent_match",
@@ -198,7 +206,8 @@
     "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
     "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon.",
     "TOPADV-R1 completion (~01:50-02:00Z est.): SSH-fetch screening_runs_topadv_r1 + topadv_r1_round.log, verify integrity, confirm pod self-stopped (else stop + billing-log idle), adjudicate per topadv_round_1_plan.yaml predeclared rules, back-register runs/checkpoints, EV.",
-    "After TOPADV-R1 adjudication: advancing variants -> predeclare gameplay eval; clean negative -> predeclare reward-integrity/progress-pressure family. Replay family: BC warm-start (charter §7A) predeclaration now data-plane-unblocked (extraction + legality DONE EV-0041) but GPU scheduling follows TOPADV; dataset expansion (V02) is dependency-safe CPU/network work."
+    "After TOPADV-R1 adjudication: advancing variants -> predeclare gameplay eval; clean negative -> predeclare reward-integrity/progress-pressure family. Replay lane (EV-0042): next milestone = exact action derivation via state-diff + engine oracle (replaces heuristic candidates), then competition-semantic audit, derived shards, split, bounded BC pilot. BC-A predeclaration follows; GPU scheduling after TOPADV. Dataset expansion (V02) remains dependency-safe CPU/network work.",
+    "Replay lane standing rules (EV-0042): competition engine semantics only (charter §0); no single legal/illegal boolean; silent-pass actions never auto-labelled; runner faults not reconstructable from replays; engine SHA in all derived datasets."
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
@@ -208,7 +217,8 @@
       "DURABLE LOOP ACTIVE: Qoder CLI cron job f5733a0c (every 30 min, /marathon-exec, persisted, permanent) EV-0041; ALL sentinel text loops remain DEPRECATED (operator ruling, EV-0036 class)"
     ],
     "COMPLETED_THIS_SESSION": [
-      "Replay action LEGALITY CHECK milestone DONE (scripts/data/replay_action_legality.py, 8 tests, real probe: 1440/1443 legal, 3 adjacent-only flags, zero rule violations) EV-0041 - BC-prep data plane now complete through legality; BC-A predeclaration is next replay milestone (GPU-scheduled after TOPADV)",
+      "REPLAY AUTHORITY CORRECTION executed (operator amendment, EV-0042): competition engine oracle (replay_engine_oracle.py) + 23 differential parity tests PASS vs pinned engine 9e3b9d1 + timing-alignment trace PROVEN (owners 99.06% exact, even-tick growth phase confirmed, cell parity 99.0-99.4%); EV-0041 generic-legality framing SUPERSEDED as authority, module marked superseded, unaffected evidence preserved; charter §0 + replay skill codified; RunPod key rotation rescinded by operator; TOPADV-R1 GPU path untouched",
+      "Replay action LEGALITY CHECK milestone DONE (scripts/data/replay_action_legality.py, 8 tests, real probe: 1440/1443 legal, 3 adjacent-only flags, zero rule violations) EV-0041 - framing superseded by EV-0042; module retained but not authoritative",
       "Durable Qoder CLI /loop commissioned (cron f5733a0c); lease reacquired by continuing executor identity with recorded handover EV-0041",
       "CURR1 gameplay eval on-disk reconciliation vs EV-0038: no drift (24/24 pairs per variant, ALL DRAW, NO_PROMOTION, 4 registry records present)",
       "RAW-VS-EMA-R1 adjudicated UNRESOLVED from actual artefacts (EV-0039): 48/48 draws zero faults, EMA remains serving default per predeclared rule; 2 registry records; four 2M PPO lines now at identical draw parity - win conversion is the binding constraint",
@@ -303,7 +313,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "TOPADV-R1 EXECUTING on zu2pvculot0yhp (EU-SE-1 A40; round start 2026-08-16T00:39:53Z; arms 1-2 COMPLETE, arm 3/6 TOPADV-A1-TOP50-S1 started 00:59:32Z; ~10 min/arm; est end ~01:50-02:00Z; remote self-stop armed). Next bounded actions: (1) on durable-loop tick after ~02:00Z: check round log; on completion SSH-fetch artefacts (screening_runs_topadv_r1 + topadv_r1_round.log), verify integrity, confirm pod self-stopped (else stop + billing-log idle); (2) adjudicate per topadv_round_1_plan.yaml predeclared rules (both seeds survive + beat control mean, no sign flip; sub-1% margins telemetry-grade only); back-register runs/checkpoints; record EV; (3) advancing variants -> predeclare gameplay eval; clean negative -> predeclare reward-integrity/progress-pressure family; (4) parallel dependency-safe work while GPU busy: replay dataset expansion (V02 snapshot, fetch_elite_replays.py) and BC-A predeclaration drafting (data plane complete through legality EV-0041), leaderboard snapshot cadence, 4B polish; (5) SECURITY: operator must ROTATE the RunPod API key after this round (EV-0040); (6) continuation: durable Qoder CLI cron job f5733a0c (30 min, /marathon-exec); sentinel loops DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "TOPADV-R1 EXECUTING on zu2pvculot0yhp (EU-SE-1 A40; round start 2026-08-16T00:39:53Z; arms 1-2 COMPLETE, arm 3/6 TOPADV-A1-TOP50-S1 started 00:59:32Z; ~10 min/arm; est end ~01:50-02:00Z; remote self-stop armed). Next bounded actions: (1) on durable-loop tick after ~02:00Z: check round log; on completion SSH-fetch artefacts (screening_runs_topadv_r1 + topadv_r1_round.log), verify integrity, confirm pod self-stopped (else stop + billing-log idle); (2) adjudicate per topadv_round_1_plan.yaml predeclared rules (both seeds survive + beat control mean, no sign flip; sub-1% margins telemetry-grade only); back-register runs/checkpoints; record EV; (3) advancing variants -> predeclare gameplay eval; clean negative -> predeclare reward-integrity/progress-pressure family; (4) parallel dependency-safe work while GPU busy: replay lane per EV-0042 (exact action derivation via state-diff + engine oracle is next, then competition-semantic audit), dataset expansion (V02 snapshot), leaderboard snapshot cadence, 4B polish; (5) RunPod key rotation RESCINDED by operator (EV-0042) - no action needed; (6) continuation: durable Qoder CLI cron job f5733a0c (30 min, /marathon-exec); sentinel loops DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
