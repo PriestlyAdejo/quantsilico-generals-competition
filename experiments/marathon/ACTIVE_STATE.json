@@ -1,7 +1,7 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T13:40:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T13:48:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
  "CURRENT_STAGE": "STAGE_5_T2_K1_ADJUDICATED_TELEMETRY_ADVANCE_GAMEPLAY_ARBITER_SETUP",
@@ -238,8 +238,9 @@
   "AUDIT_STATUS": "AUDITED",
   "AUDITED_AT_UTC": "2026-08-16T12:46:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "LOCAL CPU: BC-A-FULL-R1 training (PID 21376/36792 parent-child pair, feature walk 50/81)",
-   "NONE OTHER: pod start retry loop exited CANCELLED 12:56Z (marker; fallback pod owns workload)"
+   "LOCAL CPU: BC-A-FULL-R1 training (PID 21376/36792 parent-child pair, feature walk 70/81)",
+   "LOCAL CPU: T2 K1 gameplay arbiter eval (var/marathon_takeover/run_t2_arbiter.sh, 2 candidates x 3 opponents x 3 seat-swapped pairs, 1200-turn horizon, run dirs experiments/marathon/paired_eval_runs/t2_arbiter/)",
+   "NONE OTHER: pod start retry loops finished (cancel marker honoured then cleared for fetch)"
   ],
   "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection",
   "COMPLETED_THIS_SESSION": [
