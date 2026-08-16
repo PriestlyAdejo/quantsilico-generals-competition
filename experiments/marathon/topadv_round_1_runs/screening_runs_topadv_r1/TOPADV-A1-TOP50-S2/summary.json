@@ -1,0 +1,38 @@
+{
+  "actual_transitions": 1966080,
+  "arm_id": "TOPADV-A1-TOP50-S2",
+  "budget_transitions": 1966080,
+  "eliminated": false,
+  "elimination": [],
+  "finished_at_utc": "2026-08-16T01:19:02Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "ENTROPY_FIRST": 1.2034733295440674,
+    "ENTROPY_LAST": 2.115870714187622,
+    "PG_FIRST": -0.0005938808899372816,
+    "PG_LAST": 7.938651833683252e-06,
+    "RATIO_FIRST": 1.0000014305114746,
+    "RATIO_LAST": 0.9999982118606567,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3577017784118652,
+    "VLOSS_LAST": 2.351179599761963,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.006522178649902344
+  },
+  "min_generals_distance": 17,
+  "seed": 20260823,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 18295.570681812926,
+    "collect_wall_s": 107.46207561343908,
+    "end_to_end_tps": 4255.338812651518,
+    "reset_pool_build_s": 94.78763448446989,
+    "total_wall_s": 472.0810627192259,
+    "update_wall_s": 354.5645893737674
+  },
+  "top_advantage_fraction": 0.5,
+  "updates": 240
+}
