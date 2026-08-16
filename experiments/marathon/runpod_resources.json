@@ -2,21 +2,24 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T21:26:00Z",
+  "updated_at_utc": "2026-08-16T23:08:00Z",
   "resources": [
     {
       "pod_id": "6b65w6q02z7g6m",
       "name": "quantisilico_stage5_scale_r1_a40",
-      "status": "RUNNING_SCALE_R1_ROUND_STARTED_2026-08-16T21:24:01Z",
+      "status": "EXITED_STOPPED_AFTER_SCALE_ARTEFACT_FETCH_2026-08-16T23:03:57Z",
       "owner_run": "experiment#stage5-scale-r1#600fdb29e986 (run#scale-a0-8m-s1#62285c0c59e1, run#scale-a0-8m-s2#e7ec639079d9)",
       "expected_workload": "remote_stage5_scale_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (2 arms x 8M transitions, 60-min wall cap/arm; pod SELF-STOPS after round exit)",
       "rate_usd_per_hr": 0.44,
       "data_center": "EU-SE-1",
       "machine_id": "yulnj7cypb3b",
-      "ssh": "root@194.68.245.55 -p 22002",
+      "ssh": "root@194.68.245.55 -p 22002 (rotates on resume; host key rotates too - benign RunPod resume behaviour)",
       "started_at_utc": "2026-08-16T21:18:12Z",
       "round_start_utc": "2026-08-16T21:24:01Z",
-      "verified_active": "2026-08-16T21:26Z GPU 93%/38971MiB, wrapper + trainer PIDs alive, round log commit 3a7ee47",
+      "round_end_utc": "2026-08-16T22:06:33Z (2/2 arms exit=0, ~21 min/arm for 8M)",
+      "self_stop_confirmed": "watchdog NO_RUNNING_PODS 22:33:07Z - zero idle burn",
+      "fetch_status": "first fetch attempt HOST_FULL; retry loop STARTED 22:48:38Z (try 2/20); artefacts fetched 52MB; pod STOPPED 23:03:57Z (window 15.3 min incl. host-key handling, billing-logged POD_START/POD_STOP)",
+      "disposition": "retain EXITED volume until arbiter adjudication complete; integrity PASS both arms (1024/1024 updates, valid 1.0, ratio 1.0, entropy rising); sanity probe PASS; gameplay arbiter executing locally",
       "provision_note": "FRESH-POD FALLBACK (billing-logged POD_CREATE; 5pxc0rnfy34nal resume HOST_FULL again on machine 5yue4r7xuzpm; CA-MTL-1 no resources -> EU-SE-1 new host). Setup remote_curr1_setup.sh PASS (clone 3a7ee47, submodule 9e3b9d1, Python 3.12.14 EV-0047 guard verified pre-launch, JAX 0.11.0 gpu); ckpt_baseline_v0 uploaded 35MB (8 files). Est round end ~22:20-22:30Z; est cost <0.60 USD."
     },
     {
@@ -179,11 +182,5 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": [
-    {
-      "pod_id": "6b65w6q02z7g6m",
-      "verified_at_utc": "2026-08-16T21:26:00Z",
-      "evidence": "GPU 93%/38971MiB; wrapper + run_sh_r1_arm PIDs alive; round log SCALE-A0-8M-S1 started 21:24:01Z commit 3a7ee47"
-    }
-  ]
+  "active_workloads": []
 }
