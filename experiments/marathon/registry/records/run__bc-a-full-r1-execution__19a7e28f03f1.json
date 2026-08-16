@@ -1,0 +1,50 @@
+{
+  "ARTEFACT_HASHES": {
+    "adjudication.json": "3193f554af1fb491f8da6b5b752c7eb228fce8fcd444c693867da6bc43934bd4",
+    "bc_a_full_result.json": "ac9e07311484a4a94d88a76a595c93e85cdd9a2313df311ec84b581c0edcbd8c"
+  },
+  "ARTEFACT_LOCATIONS": [
+    "var/marathon_takeover/bc_a_full/bc_a_full_result.json",
+    "var/marathon_takeover/bc_a_full/bc_a_full_round.log",
+    "var/marathon_takeover/bc_a_full/adjudication.json"
+  ],
+  "BATCH_SIZE": 256,
+  "BUDGET": "40 epochs on 81-game union (feature phase + training); wall 19783.7s",
+  "COMMAND": "remote_bc_a_full_r1_orchestrator.sh -> bc_a_train_full.py --shard-dir DATASET-BC-DERIVED-UNION-A2 --epochs 40 --seed 20260831 (self-stop wrapper)",
+  "DATASET_ID": "BC-DERIVED-UNION-A2",
+  "ENGINE_SHA": "9e3b9d13cca51caa1bb07db48bb85c9e90ce0462",
+  "ENVIRONMENT": {
+    "jax": "0.11.0+cuda12 (epochs; features CPU)",
+    "python": "3.12.14"
+  },
+  "EPOCHS": 40,
+  "EXPERIMENT_ID": "experiment#bc-a-full-r1#abcfcd746ac7",
+  "HARDWARE": {
+    "data_center": "EU-SE-1",
+    "gpu": "NVIDIA A40 (epochs; feature phase CPU-bound)",
+    "machine_id": "5yue4r7xuzpm",
+    "pod_id": "5pxc0rnfy34nal",
+    "provider": "runpod",
+    "rate_usd_per_hr": 0.44
+  },
+  "HOLDOUT_PLAYERS": [
+    "ResBot",
+    "nanomena"
+  ],
+  "ID": "run#bc-a-full-r1-execution#19a7e28f03f1",
+  "KIND": "run",
+  "LOCAL_INCIDENT": "EV-0059: first local attempt killed epoch 5/40 by RAM contention; predeclared A40 fallback clause executed (deterministic same-seed same-shard rerun)",
+  "NAME": "BC-A-FULL-R1-EXECUTION",
+  "PPO_SEMANTICS": "OFF_POLICY_AUXILIARY",
+  "RECORDED_AT_UTC": "2026-08-16T21:12:17Z",
+  "RESULT": "VALID_NEGATIVE per predeclared rules: held-out-player top-1 ResBot=0.539441 nanomena=0.52445 beats legal-uniform (~0.023) by ~0.50 margin but falls below majority-pass (0.701174/0.710134) by 0.161733/0.185684; legal share 1.0 all splits; train top-1 0.969915 (overfitting gap recorded). Lane NOT VIABLE at current corpus scale (escalation_note); checkpoint never enters funnel; negative preserved EV-0060",
+  "ROUND_END_UTC": "2026-08-16T20:24:14Z",
+  "ROUND_START_UTC": "2026-08-16T14:52:45Z",
+  "SCHEMA_VERSION": "1.0.0",
+  "SEEDS": [
+    20260831
+  ],
+  "SOURCE_COMMIT": "e3a4627",
+  "STOP_REASON": "EPOCHS_COMPLETE",
+  "WALL_S": 19783.7
+}

@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T20:36:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T21:16:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_5_BC_A_FULL_ROUND_COMPLETE_SELF_STOPPED_FETCH_WINDOW_RETRYING",
- "CURRENT_TASK": "BC-A-FULL-R1 round COMPLETE (pod 5pxc0rnfy34nal self-stopped between 20:03-20:32Z - zero idle burn); artefact fetch resume retry loop (20x90s from 20:34Z, host 5yue4r7xuzpm congested); on RUNNING: read done marker + round log tail (features 70/81 last seen; epochs unknown), fetch bc_a_full_result.json + logs, STOP pod, adjudicate via var/marathon_takeover/adjudicate_bc_a_full.py per predeclared rules, registry + EV + consumption-gate routing",
+ "CURRENT_STAGE": "STAGE_5_BC_A_FULL_CLOSED_VALID_NEGATIVE_NEXT_AXIS_PREDECLARATION",
+ "CURRENT_TASK": "BC-A-FULL-R1 fully closed (EV-0060 VALID_NEGATIVE: beats legal-uniform, below majority-pass both holdout players; lane NOT VIABLE at corpus scale). T2 also closed NO_PROMOTION (EV-0058). NEXT: predeclare the next Stage-5 capacity/representation/value axis honestly against the full draw-wall evidence, then execute per funnel",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -238,12 +238,12 @@
   "AUDIT_STATUS": "AUDITED",
   "AUDITED_AT_UTC": "2026-08-16T12:46:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "LOCAL CPU: BC-A-FULL-R1 training (PID 21376/36792 parent-child pair, feature walk 70/81)",
-   "LOCAL CPU: T2 K1 gameplay arbiter eval (var/marathon_takeover/run_t2_arbiter.sh, 2 candidates x 3 opponents x 3 seat-swapped pairs, 1200-turn horizon, run dirs experiments/marathon/paired_eval_runs/t2_arbiter/)",
-   "NONE OTHER: pod start retry loops finished (cancel marker honoured then cleared for fetch)"
+   "NONE: BC-A-FULL-R1 round complete + adjudicated (EV-0060); T2 arbiter complete (EV-0058); all local eval/training workloads finished"
   ],
   "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection",
   "COMPLETED_THIS_SESSION": [
+   "BC-A-FULL-R1 EXECUTED on A40 fallback + ADJUDICATED VALID NEGATIVE this tick (EV-0059/EV-0060): round 14:52:45-20:24:14Z exit=0 self-stop zero idle burn; artefacts fetched billing-logged window 21:09:39-21:10:58Z; held-out top-1 ResBot 0.5394 / nanomena 0.5245 beats legal-uniform by ~0.50 margin but below majority-pass 0.701/0.710 (predeclared rule requires strictly above BOTH on >=1 player) -> NOT VIABLE at corpus scale; legal share 1.0 all splits; phase profile 0.408/0.638/0.579/0.386; train 0.970 overfitting gap recorded; checkpoint never enters funnel; run record run#bc-a-full-r1-execution#19a7e28f03f1 + experiment verdict registered",
+   "STAGE5 T2 K1 gameplay arbiter EXECUTED + ADJUDICATED this tick (EV-0058): sanity probe PASS pre-game; 36/36 draws zero faults both candidates; CS lower -0.573; NO_PROMOTION both seeds vs matched control 36/36 draws (EV-0054); draw wall persists through first OPEN capacity axis; candidate + evaluation records registered",
    "SESSION TAKEOVER HANDOVER reconciled + recorded this tick (EV-0055, commit f8963d7): lease transferred operator-authorized to qoder-standalone-takeover-20260816-session2; scheduled task f5733a0c preserved (16 fires); live state zero-drift vs ACTIVE_STATE; suspected duplicate trainer/retry pairs resolved as parent-child; one accidental duplicate retry loop killed on detection",
    "STAGE5 T2 K1 ROUND LAUNCHED this tick on fresh A40 fallback pod 0ea2tby1ujpk8z (EV-0056, commit c609066+): yanhy83zocslwp resume HOST_FULL 34+ min -> cancel marker 12:54Z (retry loop CANCELLED 12:56Z, zero double-start) -> podFindAndDeployOnDemand EU-SE-1 0.44/hr billing-logged -> bootstrap verified (clone c609066, submodule 9e3b9d1, Python 3.12.14 EV-0047 guard, JAX 0.11.0 CUDA) + ckpt_baseline_v0 35MB uploaded -> round start 13:02:16Z, GPU 100%/38971MiB verified, self-stop armed; est end 13:25-13:45Z",
    "ELITE DATASET V02 expansion FETCHED + acceptance PASS this tick (EV-0052): 95 new sealed replays (3 snapshots 2026-08-16 V01/V02/V03) across 20 distinct players; late-game coverage achieved - 82/95 at 400+ turns, 19 at 800+ incl. full 1200-turn games (deathtouch-phase exposure now exists); union dedupe-by-match-id recorded as BC builder requirement; clears the BC-A scale-up data dependency (EV-0050 consumption)",
@@ -373,7 +373,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#stage5-capacity-value-r1#f1dc01ccc86f: T2 K1 screening round COMPLETE + ADJUDICATED (EV-0057): both seeds ADVANCE TELEMETRY-GRADE ONLY (vloss-reduction 0.0110/0.0109 vs control 0.0066/0.0064, validity 1.0, entropy rising); predeclared gameplay arbiter NEXT (serving export + sanity probe first). experiment#bc-a-full-r1#abcfcd746ac7: training executing (feature walk 60/81, healthy).",
+ "CURRENT_EXPERIMENT": "experiment#stage5-capacity-value-r1#f1dc01ccc86f: CLOSED NO_PROMOTION (EV-0057/EV-0058). experiment#bc-a-full-r1#abcfcd746ac7: CLOSED VALID_NEGATIVE (EV-0060; run#bc-a-full-r1-execution#19a7e28f03f1). NEXT experiment: to be PREDECLARED (next Stage-5 axis per NEXT_SAFE_ACTION).",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -393,7 +393,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) BC-A-FULL-R1 A40 fallback completion: retry loop resumes 5pxc0rnfy34nal (expires ~15:15Z; if exhausted -> fresh pod + re-upload raw datasets 112MB); on RUNNING: forensics (/workspace/bc_a_full_r1.done + bc_a_full_round.log) to classify launch#2 death (crash vs ssh-detach kill); relaunch wrapper using the PROVEN T2 detach pattern if detach-related; verify trainer alive past feature-phase start; on round end (self-stop): billing-logged fetch window -> results JSON + artefacts to var/marathon_takeover/bc_a_full/ -> STOP pod -> adjudicate per bc_a_full_round_1_plan.yaml predeclared pass criteria (held-out-player top-1 strictly above BOTH legal-uniform and majority-pass on >=1 holdout player; phase-stratified; legal share 1.0; no relaxation) -> registry + EV + consumption-gate routing. (B) Stage 5 continuation after T2 closure: predeclare the next ladder axis honestly given EV-0058 (plan later_arms T3/T4; T4 'around any winner' premise lost; EV-0054 capacity/representation/value-structure escalation class still governs) - NEW round plan required before any launch. (C) Zero-idle-burn: every pod window billing-logged; no RUNNING pod without verified workload.",
+ "NEXT_SAFE_ACTION": "(A) Predeclare the next Stage-5 research axis (NEW round plan file + registry pre-launch) against the accumulated draw-wall evidence: T2 k1 history closed NO_PROMOTION (EV-0058); BC lane closed NOT VIABLE at corpus scale (EV-0060); historical 7.59M reference draws (EV-0019/0021); evaluator proves wins are producible (EV-0053); terminal signal near-zero at 2M screening (EV-0049+). Candidate hypothesis classes per plan later_arms + EV-0054 escalation: (i) SCALE/duration of the canonical lineage past the screening funnel budget (cheap at ~5500 tps on A40: 8M ~ 25 min), testing whether win behaviour EMERGES with transitions when the historical reference at 7.59M was never arbiter-tested as a trained-from-scratch line of THIS lineage; (ii) alternate critic/value parameterisation (T3 class); (iii) decisive-signal density interventions under UNCHANGED action semantics. Predeclare ONE bounded axis with gameplay arbiter as the gate; register pre-launch; then execute. (B) All RunPod pods EXITED; zero-idle-burn intact; BC pod ledger updated. (C) Dependency-safe lanes available if the predeclaration needs GPU time: Stage 4B silent-pass measurement (EV-0048 unblocked) remains open.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
