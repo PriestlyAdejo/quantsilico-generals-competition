@@ -1,0 +1,81 @@
+kind: MARATHON_STAGE5_ROUND_PLAN
+plan_id: STAGE5_CAPACITY_VALUE_R1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T10:20:00Z"
+stage: STAGE_5
+ppo_semantics: UNCHANGED  # architecture research on the canonical learner; action-selection semantics unchanged
+authority: >-
+  CROSS_REGIME_BRIDGE_V1 escalation_rule_predeclared, triggered by EV-0054
+  (RWB1 LAND gameplay arbiter: zero wins in 36 LAND games, controls all-draw,
+  draw wall persists after B1+B2 with validated full-phase coverage). The
+  triggering evidence is the B2 round outcome + its gameplay evaluation -
+  exactly as predeclared, not future discretion.
+
+question: >-
+  Under the canonical PERSISTENT_EPISODE_REGIME_V1 at the canonical screening
+  geometry, does isolating the ARCHITECTURE dimension (EXECUTION_PLAN §11 T1:
+  patch transformer, same observation, same scalar critic) produce external
+  gameplay strength (win conversion) where every small-knob and reward-shaping
+  intervention to date has produced only draws or losses?
+
+background_constraints: >-
+  Accumulated draw-wall evidence EV-0019/0035/0038/0039/0043/0053/0054: no
+  trained candidate has converted wins against even legal_random. Calibration
+  (EV-0053) proved the evaluator produces wins (official hunter 4/4). Value
+  telemetry improvements (EV-0051) did not transfer. The binding constraint is
+  therefore hypothesised to be representation/capacity, not optimiser knobs.
+
+arms_predeclared:
+  - arm: T0_CONTROL_EXISTING
+    content: >-
+      existing CNN architecture, existing observation, scalar critic, reward
+      none, persistent regime. SATISFIED PRE-EXISTING: the RWB1-A0-CONTROL-S1/S2
+      runs (240 updates, matched geometry, EV-0051/EV-0054) serve as T0; no
+      recompute unless integrity flags appear.
+  - arm: T1_PATCH_TRANSFORMER
+    content: >-
+      patch-transformer policy + scalar critic on the SAME canonical
+      observation tensors (spatial[8,21,21] + global[8]); patchify spatial
+      planes into tokens, position encoding, fixed layer/width budget declared
+      at implementation time BEFORE training (no architecture shopping);
+      legal-masked action head unchanged (3970-dim codec); param count
+      recorded and reported against T0.
+  - later_arms_not_in_R1: [T2 history features, T3 critic changes, T4 scaling]
+    note: each requires its own round plan building on R1 outcomes
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049)
+  geometry: canonical screening geometry 256 envs x 32 rollout, 240 updates
+  seeds: [20260905, 20260907]
+  funnel: >-
+    PREDECLARE -> REGISTER -> SMOKE (2 updates) -> LEARNER HEALTH ->
+    MATCHED_SCREENING (240 updates, same advancement rules as prior rounds -
+    vloss reduction, validity, entropy non-collapse) -> GAMEPLAY ARBITER for
+    any advancer
+  gameplay_arbiter: >-
+    identical fixed opponent set and protocol to the RWB1 arbiter
+    (legal_random, heuristic_v0, heuristic_v1; 3 seat-swapped pairs each;
+    1200-turn horizon UNCHANGED; serving sanity probe pre-game; reward-hack
+    surveillance); the same adjudication logic applies - strength requires
+    statistically above matched control AND above zero with the harness CS
+  compute: local CPU first; if throughput is insufficient for the transformer
+    at screening geometry, one bounded RunPod A40 round via the remote
+    self-stop wrapper (prepaid credits only; RUNPOD-SPEND-2026-08-15 policy)
+
+metrics_predeclared:
+  - screening: vloss reduction vs T0 matched window, valid_share, entropy
+  - decisive_share under persistent regime (terminal signal availability)
+  - gameplay: win rate + CS per opponent, draw share, faults (must be ZERO)
+
+adjudication_predeclared:
+  - T1 advances ONLY through the gameplay arbiter; telemetry never promotes
+  - a draw-wall repeat at T1 (zero wins, all draws) is recorded and triggers
+    the NEXT predeclared step (T2 history features) - not ad-hoc knob turning
+  - a T1 regression vs T0 is REJECTED with preserved artefacts
+  - no post-hoc rule relaxation
+
+parallel_lanes_unaffected:
+  - BC-A-FULL-R1 (OFF_POLICY_AUXILIARY, experiment#bc-a-full-r1#abcfcd746ac7)
+  - Stage 4B platform work (dependency-safe)
+
+evidence_links: [EV-0049, EV-0051, EV-0053, EV-0054]

@@ -1,0 +1,15 @@
+{
+  "CHECKPOINT_ID": "checkpoint#rwb1-a0-control-s1-terminal#de73c1d79cc9",
+  "EVIDENCE_LINKS": [
+    "EV-0034",
+    "EV-0049",
+    "EV-0051"
+  ],
+  "ID": "candidate#rwb1_control_s1#f07236fc7ee7",
+  "KIND": "candidate",
+  "PARITY_PROOF": "tests/competition_native_jax/test_long_horizon_engine_parity.py",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "baselines/rwb1_control_s1/main.py",
+  "RECORDED_AT_UTC": "2026-08-16T10:06:50Z",
+  "SCHEMA_VERSION": "1.0.0"
+}

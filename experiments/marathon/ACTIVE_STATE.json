@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T09:50:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T10:25:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_4A_RWB1_LAND_GAMEPLAY_ARBITER_EVAL_EXECUTING_LOCAL_CPU",
- "CURRENT_TASK": "MONITOR_ADJUDICATE_RWB1_LAND_GAMEPLAY_ARBITER_THEN_BRIDGE_DECISION + BC-A-FULL-R1 UNION SHARD BUILD EXECUTING",
+ "CURRENT_STAGE": "STAGE_5_ENTRY_PREDECLARED_RWB1_ARBITER_ADJUDICATED_EV0054",
+ "CURRENT_TASK": "STAGE5_CAPACITY_VALUE_R1 T1 PATCH-TRANSFORMER IMPLEMENTATION (SMOKE NEXT) + BC-A-FULL-R1 SHARD BUILD EXECUTING",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -236,10 +236,9 @@
  ],
  "ACTIVE_LOCAL_PROCESSES": {
   "AUDIT_STATUS": "AUDITED",
-  "AUDITED_AT_UTC": "2026-08-16T09:50:00Z",
+  "AUDITED_AT_UTC": "2026-08-16T10:25:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "LOCAL CPU: RWB1 LAND gameplay arbiter candidate 3/4 (rwb1_land_s1) executing since 09:32:32Z; controls done exit=0",
-   "LOCAL CPU: BC-A-FULL-R1 union shard build (background bd1agg52d, 5/81 replays at 09:50Z, ~3158 labels kept so far)"
+   "LOCAL CPU: BC-A-FULL-R1 union shard build (background bd1agg52d, 55/81 replays at 10:03Z); RWB1 arbiter FINISHED all four exit=0"
   ],
   "COMPLETED_THIS_SESSION": [
    "ELITE DATASET V02 expansion FETCHED + acceptance PASS this tick (EV-0052): 95 new sealed replays (3 snapshots 2026-08-16 V01/V02/V03) across 20 distinct players; late-game coverage achieved - 82/95 at 400+ turns, 19 at 800+ incl. full 1200-turn games (deathtouch-phase exposure now exists); union dedupe-by-match-id recorded as BC builder requirement; clears the BC-A scale-up data dependency (EV-0050 consumption)",
@@ -362,7 +361,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#rwb1-land-gameplay-arbiter#a45f4ba5a2d6 EXECUTING (candidate 3/4 land_s1 since 09:32:32Z); experiment#bc-a-full-r1#abcfcd746ac7 PREDECLARED+REGISTERED, union shard build EXECUTING (5/81 replays at 09:50Z)",
+ "CURRENT_EXPERIMENT": "experiment#rwb1-land-gameplay-arbiter#a45f4ba5a2d6 ADJUDICATED EV-0054 (LAND FAILS: 0 wins, 2 losses/seed vs heuristic_v1, controls all-draw; draw wall persists -> Stage 5 escalation); experiment#stage5-capacity-value-r1#8d538430c6a8 PREDECLARED+REGISTERED; experiment#bc-a-full-r1#abcfcd746ac7 shard build executing",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -382,7 +381,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "TWO concurrent tracks. (A) RWB1 LAND GAMEPLAY ARBITER: land_s1 executing (est finish ~10:20Z), land_s2 last; when ALL four finish -> adjudicate ONLY per rwb1_land_gameplay_eval_plan.yaml predeclared rules; register eval records + EV entry; BRIDGE DECISION. (B) BC-A-FULL-R1 union shard build (background, experiments/datasets/bc/DATASET-BC-DERIVED-UNION-A2/build.log, ~1h): when done verify manifest counters/splits (holdouts ResBot + nanomena), run leak-guard suite, then train seed 20260831 per bc_a_full_round_1_plan.yaml. Pre-launch correction committed: union = 81 unique games (100->81 arithmetic fix, no rule relaxation).",
+ "NEXT_SAFE_ACTION": "(A) STAGE5 R1: implement T1 patch-transformer arm (fixed layer/width budget declared before training; same canonical observation tensors + 3970 legal-masked head; persistent regime), SMOKE 2 updates, learner health, matched 240-update screening x seeds 20260905/20260907, then identical-opponent gameplay arbiter for any advancer. T0 pre-satisfied by RWB1 controls. (B) BC-A-FULL-R1: shard build ~55/81 at 10:03Z; when done verify manifest, leak-guard suite, train seed 20260831, adjudicate per bc_a_full_round_1_plan.yaml.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
