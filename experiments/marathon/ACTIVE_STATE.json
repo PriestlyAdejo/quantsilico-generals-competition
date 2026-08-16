@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T13:07:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T13:40:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_5_T2_K1_MATCHED_SCREENING_ROUND_EXECUTING_ON_A40_FALLBACK_POD",
- "CURRENT_TASK": "T2 round RUNNING on 0ea2tby1ujpk8z (arm 1/2 started 13:02:16Z, self-stop armed, est end ~13:25-13:45Z); BC-A-FULL training locally in parallel (50/81 features)",
+ "CURRENT_STAGE": "STAGE_5_T2_K1_ADJUDICATED_TELEMETRY_ADVANCE_GAMEPLAY_ARBITER_SETUP",
+ "CURRENT_TASK": "T2 K1 gameplay arbiter prep: serving export of both terminal checkpoints via JaxTransformerHistoryPolicy (EVAL_ONLY, k1-aware) + sanity probe (EV-0034), then RWB1-protocol arbiter vs legal_random/heuristic_v0/heuristic_v1 (control gameplay already exists, EV-0054); BC-A-FULL 60/81 locally in parallel",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -295,17 +295,24 @@
  },
  "ACTIVE_REMOTE_PROCESSES": {
   "AUDIT_STATUS": "AUDITED_API_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-16T13:07:00Z",
+  "AUDITED_AT_UTC": "2026-08-16T13:40:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "RUNNING: 0ea2tby1ujpk8z (quantisilico_stage5_t2_r1_a40, EU-SE-1, 0.44/hr) - STAGE5 T2 K1 round arm 1/2, GPU 100%/38971MiB verified 13:04Z, self-stop armed; all other 9 pods EXITED"
+   "NONE_RUNNING: all 10 pods EXITED (watchdog 13:33:57Z); 0ea2tby1ujpk8z stopped after billing-logged fetch window 13:32:45-13:33:54Z; round artefacts fetched 53MB"
   ],
   "OBSERVED_RESOURCES": [
    {
     "PROVIDER": "RUNPOD",
     "RESOURCE_TYPE": "POD",
+    "RESOURCE_ID": "0ea2tby1ujpk8z",
+    "NAME": "quantisilico_stage5_t2_r1_a40",
+    "STATE": "EXITED_STOPPED_AFTER_T2_ARTEFACT_FETCH_13:33Z (round complete 13:17:38Z self-stop; ledger experiments/marathon/runpod_resources.json)"
+   },
+   {
+    "PROVIDER": "RUNPOD",
+    "RESOURCE_TYPE": "POD",
     "RESOURCE_ID": "yanhy83zocslwp",
     "NAME": "quantisilico_rshaping_r2_a40",
-    "STATE": "EXITED_STOPPED_AFTER_RWB1_EVIDENCE_FETCH_08:49Z",
+    "STATE": "EXITED_SUPERSEDED_HOST_CONGESTED_RETAINS_VOLUME",
     "LEDGER": "experiments/marathon/runpod_resources.json"
    },
    {
@@ -365,7 +372,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#bc-a-full-r1#abcfcd746ac7 training executing (feature walk 20/81, process HEALTHY advancing ~0.3 cores - unjitted observe-per-tick walk, ETA ~60 min, within predeclared 2h CPU budget); experiment#stage5-capacity-value-r1#f1dc01ccc86f: T2 screening runs REGISTERED PRE-LAUNCH (run#s5-t2-k1-s1#47d1e62130d8 seed 20260905, run#s5-t2-k1-s2#6eac713a3ba6 seed 20260907); geo smoke solo retry gated on trainer completion (RAM contention root cause)",
+ "CURRENT_EXPERIMENT": "experiment#stage5-capacity-value-r1#f1dc01ccc86f: T2 K1 screening round COMPLETE + ADJUDICATED (EV-0057): both seeds ADVANCE TELEMETRY-GRADE ONLY (vloss-reduction 0.0110/0.0109 vs control 0.0066/0.0064, validity 1.0, entropy rising); predeclared gameplay arbiter NEXT (serving export + sanity probe first). experiment#bc-a-full-r1#abcfcd746ac7: training executing (feature walk 60/81, healthy).",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -385,7 +392,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) T2 round completion on 0ea2tby1ujpk8z (est 13:25-13:45Z): watchdog confirms pod SELF-STOPPED (zero idle burn) -> brief resume for artefact fetch (scp /workspace/screening_runs_stage5_t2_r1 + round log to experiments/marathon/screening_runs/STAGE5-T2-R1/, port may rotate) -> integrity verify (2/2 arms 240/240) -> STOP pod -> adjudicate per stage5_capacity_value_r1_plan.yaml predeclared rules vs T0=RWB1-A0-CONTROL matched window (vloss reduction, valid_share, entropy non-collapse) -> registry records -> EV entry; any advancer routes to the predeclared gameplay arbiter (RWB1 protocol: legal_random/heuristic_v0/heuristic_v1, 3 seat-swapped pairs, 1200-turn horizon, serving sanity probe first per EV-0034, reward-hack surveillance). (B) BC-A-FULL training continues locally (~50/81 features; adjudication on completion per predeclaration). (C) Do NOT relaunch anything on yanhy83zocslwp (superseded, EXITED, retains volume).",
+ "NEXT_SAFE_ACTION": "(A) Execute the predeclared T2 K1 gameplay arbiter (stage5_capacity_value_r1_plan.yaml gameplay_arbiter, EV-0057): (1) export serving agents for checkpoint#s5-t2-k1-s1/s2-terminal via the k1-aware JaxTransformerHistoryPolicy adapter (EVAL_ONLY) into baselines/s5_t2_k1_s1|s2/main.py pattern per RWB1 precedent; (2) serving sanity probe BEFORE any games (EV-0034 precedent - weights load and matter, well-formed legal actions, deterministic); (3) run_marathon_paired_eval vs legal_random/heuristic_v0/heuristic_v1, 3 seat-swapped pairs each, 1200-turn horizon, competition mode; (4) adjudicate: strength requires statistically above matched control (RWB1-A0-CONTROL arbiter results EV-0054) AND above zero via harness CS; reward-hack surveillance (zero faults, no degenerate wins); (5) candidate + evaluation registry records + EV entry; PROMOTE/REJECT/UNRESOLVED per predeclared rules only. (B) BC-A-FULL training continues locally (60/81 features); adjudicate on completion per bc_a_full_round_1_plan.yaml. (C) No pods may be left RUNNING; T2 round pod stopped + billing-logged.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

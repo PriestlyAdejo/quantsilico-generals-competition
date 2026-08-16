@@ -2,20 +2,25 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T13:06:00Z",
+  "updated_at_utc": "2026-08-16T13:40:00Z",
   "resources": [
     {
       "pod_id": "0ea2tby1ujpk8z",
       "name": "quantisilico_stage5_t2_r1_a40",
-      "status": "RUNNING_T2_ROUND_STARTED_2026-08-16T13:02:16Z",
+      "status": "EXITED_STOPPED_AFTER_T2_ARTEFACT_FETCH_2026-08-16T13:33:54Z",
       "owner_run": "experiment#stage5-capacity-value-r1#f1dc01ccc86f (run#s5-t2-k1-s1#47d1e62130d8, run#s5-t2-k1-s2#6eac713a3ba6)",
       "expected_workload": "remote_stage5_t2_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (2 T2-K1 arms sequential, 240 updates each @256x32 persistent, wall cap 90 min/arm; pod SELF-STOPS after round exit)",
       "rate_usd_per_hr": 0.44,
       "data_center": "EU-SE-1",
       "machine_id": "guah2ylm86w1",
-      "ssh": "root@194.68.245.1 -p 22011",
+      "ssh": "root@194.68.245.1 -p 22011 (round), 22141 (fetch window; rotates on resume)",
       "started_at_utc": "2026-08-16T12:54:45Z",
+      "round_start_utc": "2026-08-16T13:02:16Z",
+      "round_end_utc": "2026-08-16T13:17:38Z (2/2 arms exit=0, ~7.6 min/arm)",
+      "self_stop_confirmed": "watchdog NO_RUNNING_PODS 13:20:59Z - zero idle burn",
+      "fetch_status": "host HOST_FULL on first fetch attempt; retry loop (12x90s, cancel-marker cleared) STARTED 13:32:44Z; artefacts fetched 53MB; pod STOPPED 13:33:54Z (window 1.15 min, billing-logged POD_START/POD_STOP)",
       "verified_active": "2026-08-16T13:04Z GPU 100%/38971MiB, wrapper + trainer PIDs present, round log arm 1 started at commit c609066",
+      "disposition": "retain EXITED volume (T2 artefacts + env) until arbiter export complete; adjudication EV-0057 ADVANCES_TELEMETRY_GRADE_ONLY",
       "provision_note": "FRESH-POD FALLBACK (predeclared EV-0044-precedent, plan compute clause, RUNPOD-SPEND-2026-08-15 prepaid credits; billing-logged POD_CREATE): yanhy83zocslwp host 5yue4r7xuzpm HOST_FULL 34+ min (tries 1-15), cancel marker var/marathon_takeover/stop_pod_retries set 12:54:43Z, retry loop exited CANCELLED 12:56Z (zero double-start risk). Setup: remote_curr1_setup.sh (clone c609066 depth1 + submodule 9e3b9d1 + uv venv .venv312 Python 3.12.14 verified pre-launch per EV-0047 guard + jax[cuda12]==0.11.0 GPU backend verified); ckpt_baseline_v0 uploaded 35MB from local reference ckpt_final_u482_t7593984 (7 artefacts + COMPLETE)."
     },
     {
@@ -141,11 +146,5 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": [
-    {
-      "pod_id": "0ea2tby1ujpk8z",
-      "verified_at_utc": "2026-08-16T13:04:00Z",
-      "evidence": "GPU 100%/38971MiB; wrapper + run_sh_r1_arm PIDs alive; round log arm S5-T2-K1-S1 started 13:02:16Z commit c609066"
-    }
-  ]
+  "active_workloads": []
 }
