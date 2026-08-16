@@ -66,6 +66,43 @@ def load_jax_checkpoint(raw_npz: Path, template: dict) -> dict:
     return load_tree(raw_npz, template)
 
 
+class JaxTransformerHistoryPolicy(JaxTransformerPolicy):
+    """STAGE5 T2 serving variant: k1 legal temporal history (EVAL_ONLY).
+
+    Appends the previous tick's LEGAL spatial observation as planes 8-16,
+    exactly matching the training rollout convention (zero history at game
+    start and after every episode boundary). Only the observation width seen
+    by the frozen weights changes; action selection semantics are unchanged.
+    """
+
+    policy_id = "marathon_jax_t2_history"
+
+    def reset(self, height: int, width: int) -> None:
+        super().reset(height, width)
+        from generals_bot.competition_native_jax.constants import MAX_HW
+        from generals_bot.competition_native_jax.obs_memory import N_SPATIAL
+
+        self._prev_spatial = np.zeros((N_SPATIAL, MAX_HW, MAX_HW), dtype=np.float32)
+
+    def act(self, observation: Observation, *, deterministic: bool = True) -> Action:
+        spatial, global_vec = encode_observation(observation, self.memory)
+        spatial_hist = np.concatenate([spatial, self._prev_spatial], axis=0)
+        self._prev_spatial = np.asarray(spatial, dtype=np.float32)
+        mask = legal_mask_from_observation(observation)
+        key = None
+        if not deterministic:
+            self._key = jax.random.fold_in(self._key, int(observation.turn))
+            key = self._key
+        idx, _logp, _out = _jit_infer(
+            self.params,
+            jnp.asarray(spatial_hist),
+            jnp.asarray(global_vec),
+            jnp.asarray(mask),
+            key,
+        )
+        return index_to_action(int(np.asarray(idx)))
+
+
 class JaxTransformerProtocolPolicy:
     """Protocol adapter so the frozen JAX policy can run under run_agent.
 
