@@ -1,0 +1,66 @@
+kind: MARATHON_GAMEPLAY_EVALUATION_PLAN
+plan_id: RWB1_LAND_GAMEPLAY_ARBITER_PLAN
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T09:00:00Z"
+authority: REWARD_BRIDGE_ROUND_1_PLAN consumption gate (EV-0051); reward-hack
+  surveillance predeclared in reward_shaping_round_1_plan.yaml and carried
+  through R2/bridge plans
+
+question: >
+  Does LAND-POTENTIAL shaping under PERSISTENT_EPISODE_REGIME_V1 convert into
+  external gameplay strength (win conversion) versus fixed opponents and the
+  matched reset-free controls? Stage-2 gameplay evaluation is the promotion
+  arbiter; telemetry never promotes.
+
+candidates:
+  - {candidate_id: rwb1_land_s1,    checkpoint: RWB1-A1-LAND-S1 terminal raw.npz,    serving: baselines/rwb1_a1_land_s1/main.py}
+  - {candidate_id: rwb1_land_s2,    checkpoint: RWB1-A1-LAND-S2 terminal raw.npz,    serving: baselines/rwb1_a1_land_s2/main.py}
+  - {candidate_id: rwb1_control_s1, checkpoint: RWB1-A0-CONTROL-S1 terminal raw.npz, serving: baselines/rwb1_a0_control_s1/main.py}
+  - {candidate_id: rwb1_control_s2, checkpoint: RWB1-A0-CONTROL-S2 terminal raw.npz, serving: baselines/rwb1_a0_control_s2/main.py}
+
+opponents:
+  - legal_random (baselines/legal_random/main.py)
+  - heuristic_v0 (baselines/heuristic_v0/main.py)
+  - heuristic_v1 (baselines/heuristic_v1/main.py)
+
+protocol:
+  harness: scripts/evaluation/run_marathon_paired_eval.py (marathon-eval-v1 namespace)
+  mode: competition
+  pairs_per_opponent: 3  # seat-swapped -> 6 games per candidate per opponent
+  max_turns: 1200  # canonical promotion horizon UNCHANGED (never relaxed)
+  serving_weights: raw (EMA comparison is B4 scope, not this eval)
+  pre_game_gate: serving sanity probe (protocol handshake well-formed +
+    deterministic per candidate; EV-0034 precedent) BEFORE any games
+
+metrics_predeclared:
+  - win rate per candidate per opponent with anytime-valid CS (existing harness)
+  - draw-at-truncation share (NEVER counted as wins)
+  - agent fault counts (must be ZERO for valid adjudication)
+  - decisive (general-capture) game share per candidate
+
+reward_hack_surveillance_predeclared:
+  - advancing candidates must show wins achieved by legal general captures
+    with ZERO agent faults
+  - degenerate win patterns (fault-driven outcomes, protocol anomalies)
+    invalidate the CANDIDATE, not the family
+  - if a candidate wins without decisive captures (e.g. opponent forfeit or
+    fault exploitation), those games are excluded and flagged, never counted
+    as strength
+
+adjudication_rules_predeclared:
+  - a LAND candidate DEMONSTRATES STRENGTH only if its win rate against the
+    fixed opponent set is statistically above the matched control candidates'
+    win rates (same opponents, same pair budget) AND above zero with the
+    harness confidence sequence
+  - all-draw outcomes (the draw wall) are NOT wins; they trigger the
+    predeclared escalation in cross_regime_bridge_plan.yaml (Stage 5
+    capacity/value research), not more small-knob rounds
+  - no post-hoc rule changes; a modified eval requires a NEW plan
+
+consumption_gate: >
+  Results feed the CROSS_REGIME_BRIDGE decision: strength demonstrated ->
+  LAND-POTENTIAL becomes the regime's reward default and the programme
+  continues bridge step B3/B4; draw wall persists -> Stage 5 predeclaration.
+  PPO_SEMANTICS for all candidates: EVAL_ONLY.
+
+evidence_links: [EV-0019, EV-0034, EV-0035, EV-0047, EV-0049, EV-0051]
