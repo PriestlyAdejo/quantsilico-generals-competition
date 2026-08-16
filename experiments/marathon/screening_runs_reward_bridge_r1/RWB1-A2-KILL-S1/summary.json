@@ -1,0 +1,45 @@
+{
+  "actual_transitions": 1966080,
+  "arm_id": "RWB1-A2-KILL-S1",
+  "budget_transitions": 1966080,
+  "eliminated": true,
+  "elimination": [
+    "NO_VLOSS_REDUCTION"
+  ],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-16T08:37:44Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1863868236541748,
+    "ENTROPY_LAST": 5.694293975830078,
+    "PG_FIRST": -0.0005840893718414009,
+    "PG_LAST": -0.005484432447701693,
+    "RATIO_FIRST": 1.0000033378601074,
+    "RATIO_LAST": 0.9999991655349731,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3577911853790283,
+    "VLOSS_LAST": 2.5180039405822754,
+    "VLOSS_REDUCTION_OVER_ROUND": -0.16021275520324707
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "kill_delta",
+  "reward_shape_beta": 0.01,
+  "seed": 20260901,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 20785.11414421007,
+    "collect_wall_s": 94.59077233634889,
+    "end_to_end_tps": 5225.04487625451,
+    "reset_pool_build_s": 120.55895040743053,
+    "total_wall_s": 382.5591130964458,
+    "update_wall_s": 281.68924947455525
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 240
+}

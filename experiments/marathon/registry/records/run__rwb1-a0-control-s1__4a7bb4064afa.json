@@ -1,0 +1,57 @@
+{
+  "ACTUAL_TRANSITIONS": 1966080,
+  "ARTEFACT_HASHES": {
+    "summary.json": "b808cd1909c6a04c90640fd22f10eef1c7612cba0a3d99a538eb6c07f642540e",
+    "telemetry.jsonl": "65b3c4c81b3a1b454f9c66d8e1e9150f0488c99e8e902d792784a343f284457e"
+  },
+  "ARTEFACT_LOCATIONS": [
+    "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/marathon/screening_runs_reward_bridge_r1/RWB1-A0-CONTROL-S1/summary.json",
+    "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/marathon/screening_runs_reward_bridge_r1/RWB1-A0-CONTROL-S1/telemetry.jsonl"
+  ],
+  "BUDGET": "1966080 transitions / 240 updates",
+  "COMMAND": "remote_reward_bridge_r1_orchestrator.sh -> run_sh_r1_arm.py --arm-id RWB1-A0-CONTROL-S1 --budget-transitions 1966080 --seed 20260901 --reward-shape none --reward-shape-beta 0.0 --episode-carry persistent (self-stop wrapper)",
+  "ENVIRONMENT": {
+    "jax": "0.11.0+cuda12",
+    "python": "3.12.14"
+  },
+  "EPISODE_CARRY": "persistent",
+  "EXPERIMENT_ID": "experiment#reward-bridge-r1#a2b8ec6f32b8",
+  "GEOMETRY": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "HARDWARE": {
+    "cloud_type": "SECURE",
+    "data_center": "EU-SE-1",
+    "gpu": "NVIDIA A40",
+    "pod_id": "yanhy83zocslwp",
+    "provider": "runpod",
+    "rate_usd_per_hr": 0.44
+  },
+  "ID": "run#rwb1-a0-control-s1#4a7bb4064afa",
+  "KIND": "run",
+  "LINEAGE": {
+    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+    "LINEAGE_HASHES": {
+      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
+    },
+    "NAME": "competition_native_jax_v1"
+  },
+  "NAME": "RWB1-A0-CONTROL-S1",
+  "PPO_SEMANTICS": "UNCHANGED",
+  "RECORDED_AT_UTC": "2026-08-16T08:49:56Z",
+  "RESULT": "CONTROL_SURVIVED under PERSISTENT_EPISODE_REGIME_V1 (valid share 1.0); 1 decisive tick - terminal signal present in the corrected regime; VLOSS_REDUCTION_0.00656 VALID_SHARE_1.000 ENTROPY_LAST_5.9103",
+  "REWARD_SHAPE": "none",
+  "REWARD_SHAPE_BETA": 0.0,
+  "SCHEMA_VERSION": "1.0.0",
+  "SEEDS": [
+    20260901
+  ],
+  "SOURCE_COMMIT": "ff59974",
+  "STOP_REASON": "BUDGET_REACHED",
+  "TRAINING_REGIME": "PERSISTENT_EPISODE_REGIME_V1"
+}

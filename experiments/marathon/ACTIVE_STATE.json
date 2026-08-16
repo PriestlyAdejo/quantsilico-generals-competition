@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-16T07:56:00Z",
+  "UPDATED_AT_UTC": "2026-08-16T08:52:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_CROSS_REGIME_BRIDGE_B2_REWARD_BRIDGE_R1_GPU_ROUND_EXECUTING",
-  "CURRENT_TASK": "MONITOR_FETCH_ADJUDICATE_REWARD_BRIDGE_R1_THEN_GAMEPLAY_ARBITER",
+  "CURRENT_STAGE": "STAGE_4A_CROSS_REGIME_BRIDGE_B2_ADJUDICATED_LAND_GAMEPLAY_ARBITER_NEXT",
+  "CURRENT_TASK": "PREDECLARE_REGISTER_RUN_LAND_PERSISTENT_GAMEPLAY_EVAL_WITH_REWARD_HACK_SURVEILLANCE",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -242,6 +242,7 @@
       "DURABLE LOOP ACTIVE: Qoder CLI cron job f5733a0c (every 30 min, /marathon-exec, persisted, permanent) EV-0041; ALL sentinel text loops remain DEPRECATED (operator ruling, EV-0036 class)"
     ],
     "COMPLETED_THIS_SESSION": [
+      "REWARD-BRIDGE-R1 executed + adjudicated this tick (EV-0051): 6/6 arms ran to budget (07:49:55Z-08:46:56Z, self-stop, zero idle burn, artefacts fetched port 22141->22148, pod stopped); control survived both seeds (valid share 1.0); LAND-POTENTIAL ADVANCES TELEMETRY-GRADE ONLY for the second regime in a row (vloss reduction 3.067/3.033 vs control 0.00656/0.00638, no sign flip); KILL-DELTA REJECTED in BOTH seeds by the predeclared NO_VLOSS_REDUCTION rule (vloss rose -0.16): with combat reachable in the persistent regime kill_delta churn destabilises value learning - clean negative preserved, regime-labelled; decisive ticks: 1 (control-S1) + 1 (kill-S1) - terminal signal present but still rare at 2M/seed; 12 registry records TRAINING_REGIME=PERSISTENT_EPISODE_REGIME_V1; NEXT canonical step: predeclare Stage-2 gameplay eval of LAND persistent candidates with reward-hack surveillance (serving export from terminal checkpoints + sanity probe first, EV-0034 precedent)",
       "BC-A pilot EXECUTED + adjudicated VALID NEGATIVE AS SCREENING this tick (EV-0050): pipeline VALIDATED (leak-guard 2/2 PASS - hidden enemy perturbations leave observation bit-identical; legal-action share 1.000; engine-verified labels only, zero silent-pass) but held-out-player top-1 7.5% beats legal-uniform (2.2%) yet falls far short of majority-pass (64.8%); held-out-replay 4.6%; train 95.1% (overfitting gap recorded; 800 training samples / 3 players); no post-hoc relaxation; pilot checkpoint never enters funnel; consumption gate routes to dataset V02 (stratified, more players, late-game/deathtouch) + full BC-A predeclaration at scale. Builder scripts/data/bc_a_build_shards.py (2876 labels, splits train 800/holdout-player 932/holdout-replay 1144, provenance-sealed); trainer scripts/training/bc_a_train_pilot.py (small CNN on canonical legal obs, 40 epochs, seed 20260831, CPU 737.8s); result var/marathon_takeover/bc_a_pilot/bc_a_pilot_result.json",
       "REWARD-BRIDGE-R1 PREDECLARED + REGISTERED + LAUNCHED this tick (CROSS_REGIME_BRIDGE_V1 step B2; experiment#reward-bridge-r1#a2b8ec6f32b8): 6 arms CONTROL(none)/LAND-POTENTIAL(1.0)/KILL-DELTA(0.01, R1-vacuous knob retested now that combat is reachable) x seeds {20260901,20260903}, ALL --episode-carry persistent (canonical regime EV-0049), 240 updates @256x32, same pod, self-stop armed; round start 07:49:55Z commit ff59974, GPU 78% verified; advancement rules mirror reward_shaping_round_2_plan.yaml; gameplay arbiter + reward-hack surveillance predeclared for any advancer; est end ~08:50Z",
       "EPISODE_CONTINUITY_R1 executed + adjudicated this tick (EV-0049): 4/4 arms exit=0 (06:52:00Z-07:29:45Z, self-stop, zero idle burn, artefacts fetched port 22065->22144, pod stopped); PERSISTENT_EPISODE_REGIME_V1 ADOPTED as canonical screening regime (both persistent seeds valid share 1.0, finite, entropy rising not collapsing); reset controls survived reproducing the historical baseline; FIRST-EVER terminal competition signal in screening: 2 decisive ticks in PERSIST-S2 (2880 prior reset-regime updates had exactly zero); runner default flipped --episode-carry none->persistent + 4 regression guards PASS (section-30 amendment); 8 registry records with TRAINING_REGIME tags; CROSS_REGIME_BRIDGE_V1 plan PREDECLARED (reward FIRST, then curriculum bounded check, raw-vs-EMA on corrected checkpoint only, escalation rule to Stage 5 predeclared)",
@@ -289,9 +290,9 @@
   },
   "ACTIVE_REMOTE_PROCESSES": {
     "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
-    "AUDITED_AT_UTC": "2026-08-16T07:56:00Z",
+    "AUDITED_AT_UTC": "2026-08-16T08:52:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "RUNPOD POD yanhy83zocslwp (quantisilico_rshaping_r2_a40, EU-SE-1 A40 $0.44/h, ssh -p 22141): REWARD-BRIDGE-R1 round executing since 07:49:55Z commit ff59974, arm 1/6 RWB1-A0-CONTROL-S1, GPU 78%/38971MiB verified 07:55Z, remote self-stop armed (est round end ~08:50Z); venv-interpreter guard fired + repaired on resume (EV-0047 pattern)"
+      "NONE_RUNNING: REWARD-BRIDGE-R1 completed 08:46:56Z (self-stopped), artefacts fetched port 22148, pod STOPPED ~08:49Z; zero idle burn"
     ],
     "OBSERVED_RESOURCES": [
       {
@@ -299,7 +300,7 @@
         "RESOURCE_TYPE": "POD",
         "RESOURCE_ID": "yanhy83zocslwp",
         "NAME": "quantisilico_rshaping_r2_a40",
-        "STATE": "RUNNING_RWB1_ROUND_SELF_STOP_ARMED",
+        "STATE": "EXITED_STOPPED_AFTER_RWB1_EVIDENCE_FETCH_08:49Z",
         "LEDGER": "experiments/marathon/runpod_resources.json"
       },
       {
@@ -359,7 +360,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#reward-bridge-r1#a2b8ec6f32b8 (REWARD-BRIDGE-R1 executing since 07:49:55Z on yanhy83zocslwp; CROSS_REGIME_BRIDGE_V1 B2, first round under canonical PERSISTENT_EPISODE_REGIME_V1)",
+  "CURRENT_EXPERIMENT": "LAND-PERSISTENT-GAMEPLAY-EVAL (predeclare + register + run next tick; Stage-2 arbiter for RWB1 LAND advancers with predeclared reward-hack surveillance); REWARD-BRIDGE-R1 closed EV-0051: LAND advances telemetry-grade, KILL rejected both seeds",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -373,7 +374,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "REWARD-BRIDGE-R1 EXECUTING on yanhy83zocslwp (round start 07:49:55Z, 6 arms x ~9.5 min, est end ~08:50Z = 09:50 BST, self-stop armed). Next tick: (1) RunPod FIRST - if self-stopped, resume (port rotates; venv guard: uv python install 3.12 + verify .venv312/bin/python, EV-0047); (2) SSH-fetch /workspace/screening_runs_reward_bridge_r1 + reward_bridge_r1_round.log + wrapper.log + marker; verify integrity (6/6 arms 240/240 updates, exit codes); (3) stop pod after fetch; (4) adjudicate ONLY per reward_bridge_round_1_plan.yaml predeclared rules (variant advances iff both seeds survive integrity + mean vloss-reduction beats control mean + no sign flip; TELEMETRY-GRADE ONLY; same-pod paired frame); KILL-DELTA signal density recorded (vacuous-or-not in persistent regime); (5) register runs/checkpoints TRAINING_REGIME=PERSISTENT_EPISODE_REGIME_V1 + EV. POST-ROUND: any advancer -> predeclare Stage-2 gameplay eval with reward-hack surveillance under persistent regime; no advancer -> bridge continues per cross_regime_bridge_plan.yaml (B3/B4 conditional, escalation rule predeclared). PARALLEL DEPENDENCY-SAFE meanwhile: BC-A pilot implementation (experiment#bc-a-pilot-r1#57aaa6f2b530; interfaces mapped: derive_tick engine-verified labels + replay_legal_pov HARD-gate features + oracle silent-pass exclusion + 3970-dim codec inverse idx=1+cell*9+dir*2+split / build=local8 / pass=0), dataset V02 stratified expansion, evaluator win-conversion calibration suite. Continuation: durable cron f5733a0c (30 min /marathon-exec); zero-idle-burn permanent; RUNPOD FIRST on every resume.",
+  "NEXT_SAFE_ACTION": "PREDECLARE + RUN the Stage-2 GAMEPLAY ARBITER for the RWB1 LAND-POTENTIAL persistent-regime advancers (EV-0051 consumption gate; reward-hack surveillance predeclared: wins must come by legal captures with zero agent faults, degenerate patterns invalidate the candidate not the family). Sequence: (1) terminal checkpoints already local (experiments/marathon/screening_runs_reward_bridge_r1/RWB1-A1-LAND-S{1,2}/raw.npz+ema.npz, hashes registered); (2) serving export to a baselines-style main.py candidate (EMA weights, competition protocol) + serving sanity probe BEFORE any games (EV-0034 precedent); (3) predeclare the eval plan (opponents: legal_random + heuristic_v0/v1 + the RWB1 control checkpoints; seat-swapped pairs; anytime-valid CS; 1200-turn horizon UNCHANGED; draw-at-truncation never counts as win); (4) register eval experiment pre-run; (5) run CPU paired eval; (6) adjudicate + reward-hack surveillance (legal capture wins only) + EV. If still draw-wall -> predeclared escalation (cross_regime_bridge_plan.yaml) advances Stage 5 capacity/value research. PARALLEL DEPENDENCY-SAFE meanwhile: dataset expansion V02 (stratified: more players, late-game/deathtouch per EV-0048 section 26) via fetch_elite_replays.py, evaluator win-conversion calibration suite (diagnostic), BC-A full predeclaration after V02. Continuation: durable cron f5733a0c (30 min /marathon-exec); zero-idle-burn permanent; RUNPOD FIRST on every resume.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

@@ -1,0 +1,43 @@
+{
+  "actual_transitions": 1966080,
+  "arm_id": "RWB1-A1-LAND-S2",
+  "budget_transitions": 1966080,
+  "eliminated": false,
+  "elimination": [],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-16T08:28:54Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1914647817611694,
+    "ENTROPY_LAST": 5.618224143981934,
+    "PG_FIRST": 0.0008786655962467194,
+    "PG_LAST": -0.0033553745597600937,
+    "RATIO_FIRST": 1.0000028610229492,
+    "RATIO_LAST": 1.0000035762786865,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 5.519762992858887,
+    "VLOSS_LAST": 2.4868698120117188,
+    "VLOSS_REDUCTION_OVER_ROUND": 3.032893180847168
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "land_potential",
+  "reward_shape_beta": 1.0,
+  "seed": 20260903,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 19919.40468741255,
+    "collect_wall_s": 98.70174489915371,
+    "end_to_end_tps": 4824.161368427575,
+    "reset_pool_build_s": 117.78419438377023,
+    "total_wall_s": 416.4598830193281,
+    "update_wall_s": 308.8468111809343
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 240
+}
