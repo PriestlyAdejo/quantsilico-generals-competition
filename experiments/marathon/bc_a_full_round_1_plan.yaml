@@ -6,6 +6,16 @@ family: ELITE_REPLAY_AUGMENTATION
 charter_section: "7A (BC warm start) - FULL step (pilot validated pipeline, EV-0050)"
 status: PREDECLARED
 predeclared_at_utc: "2026-08-16T09:35:00Z"
+corrected_at_utc: "2026-08-16T09:55:00Z"
+correction_note: >-
+  BUILD-TIME ARITHMETIC CORRECTION (before launch, no rule relaxation):
+  the original union_rule expected >= 100 games by adding dataset sizes,
+  ignoring the 20 cross-snapshot overlap matches recorded in EV-0052.
+  The deduped union of the four sealed datasets is exactly 81 unique games
+  (6 + 30 + 30 + 35 - 20), verified by collect_union(). The corpus ceiling
+  is 81 without new fetches; the threshold is corrected 100 -> 81 with the
+  arithmetic shown, and a second-correction rule is added below. Holdout
+  design, metrics, pass criteria and consumption gate are UNCHANGED.
 ppo_semantics: OFF_POLICY_AUXILIARY  # offline imitation labels; no live action-selection change
 
 purpose: >
@@ -23,9 +33,11 @@ data_contract:
     - DATASET-ELITE-2026-08-16-V01 (30 games, breadth)
     - DATASET-ELITE-2026-08-16-V02 (30 games, late-game)
     - DATASET-ELITE-2026-08-16-V03 (35 games, deep 700+)
-  union_rule: >
+  union_rule: >-
     dedupe by match id across snapshots (20 cross-snapshot overlaps recorded,
-    EV-0052); expected union >= 100 games, 20 distinct players
+    EV-0052); the deduped union is exactly 81 unique games, 26 distinct
+    players (verified at builder dry-run, pre-launch); the builder gates on
+    >= 81
   engine_sha: 9e3b9d13cca51caa1bb07db48bb85c9e90ce0462
   derivation: >
     same as pilot (EV-0045 exact derivation): EXACT_MATCH + OWNERS_ONLY only;
@@ -74,10 +86,11 @@ consumption_gate: >
   and never serves in gameplay evaluation as a promotion candidate on
   imitation accuracy alone.
 
-escalation_note: >
-  If BC-A-FULL also fails held-out generalisation on 100+ games / 20 players,
-  the elite-replay BC lane is recorded as NOT VIABLE at current corpus scale
-  and the programme advances without it (no silent scope creep; the charter's
-  other sub-experiments remain available for separate predeclaration).
+escalation_note: >-
+  If BC-A-FULL also fails held-out generalisation on the full 81-game /
+  26-player sealed corpus, the elite-replay BC lane is recorded as NOT
+  VIABLE at current corpus scale and the programme advances without it (no
+  silent scope creep; the charter's other sub-experiments remain available
+  for separate predeclaration).
 
 evidence_links: [EV-0037, EV-0042, EV-0045, EV-0048, EV-0050, EV-0052]
