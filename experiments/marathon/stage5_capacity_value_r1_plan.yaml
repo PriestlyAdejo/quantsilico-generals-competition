@@ -2,6 +2,18 @@ kind: MARATHON_STAGE5_ROUND_PLAN
 plan_id: STAGE5_CAPACITY_VALUE_R1
 status: PREDECLARED
 predeclared_at_utc: "2026-08-16T10:20:00Z"
+corrected_at_utc: "2026-08-16T10:35:00Z"
+correction_note: >-
+  PRE-IMPLEMENTATION BASELINE RECONCILIATION (PLAN_CONFLICT surfaced and
+  resolved honestly, no silent redesign): the EXECUTION_PLAN §11 ladder was
+  authored assuming a CNN-era baseline, but the canonical competition_native_jax
+  learner IS ALREADY a patch transformer (transformer_jax.py: 49 patches of
+  3x3 + CLS + global token, 4 layers, emb 192, 4 heads, HL-Gauss 128-bin
+  critic; lineage since commits 44bfc53/0dc8a57; every marathon screening
+  and bridge run used it). T1 therefore needs no implementation - it is
+  PRE-SATISFIED by the existing lineage, exactly like T0. The first OPEN
+  ladder axis is T2 (legal temporal/global history features). R1 scope is
+  corrected to T0+T1 pre-satisfied + T2 as the experimental arm.
 stage: STAGE_5
 ppo_semantics: UNCHANGED  # architecture research on the canonical learner; action-selection semantics unchanged
 authority: >-
@@ -13,10 +25,11 @@ authority: >-
 
 question: >-
   Under the canonical PERSISTENT_EPISODE_REGIME_V1 at the canonical screening
-  geometry, does isolating the ARCHITECTURE dimension (EXECUTION_PLAN §11 T1:
-  patch transformer, same observation, same scalar critic) produce external
-  gameplay strength (win conversion) where every small-knob and reward-shaping
-  intervention to date has produced only draws or losses?
+  geometry, does isolating the first OPEN EXECUTION_PLAN §11 axis - T2 legal
+  temporal history features (previous-step legal observation channels; the
+  transformer itself is already the lineage baseline, correction_note) -
+  produce external gameplay strength (win conversion) where every small-knob
+  and reward-shaping intervention to date has produced only draws or losses?
 
 background_constraints: >-
   Accumulated draw-wall evidence EV-0019/0035/0038/0039/0043/0053/0054: no
@@ -28,19 +41,29 @@ background_constraints: >-
 arms_predeclared:
   - arm: T0_CONTROL_EXISTING
     content: >-
-      existing CNN architecture, existing observation, scalar critic, reward
-      none, persistent regime. SATISFIED PRE-EXISTING: the RWB1-A0-CONTROL-S1/S2
-      runs (240 updates, matched geometry, EV-0051/EV-0054) serve as T0; no
-      recompute unless integrity flags appear.
+      existing patch-transformer architecture, existing observation, HL-Gauss
+      critic, reward none, persistent regime. SATISFIED PRE-EXISTING: the
+      RWB1-A0-CONTROL-S1/S2 runs (240 updates, matched geometry,
+      EV-0051/EV-0054) serve as T0; no recompute unless integrity flags.
   - arm: T1_PATCH_TRANSFORMER
     content: >-
-      patch-transformer policy + scalar critic on the SAME canonical
-      observation tensors (spatial[8,21,21] + global[8]); patchify spatial
-      planes into tokens, position encoding, fixed layer/width budget declared
-      at implementation time BEFORE training (no architecture shopping);
-      legal-masked action head unchanged (3970-dim codec); param count
-      recorded and reported against T0.
-  - later_arms_not_in_R1: [T2 history features, T3 critic changes, T4 scaling]
+      PRE-SATISFIED by the canonical lineage (correction_note): the learner
+      already is the patch transformer of EXECUTION_PLAN §11 T1. Recorded,
+      not re-run.
+  - arm: T2_LEGAL_TEMPORAL_HISTORY
+    content: >-
+      the first OPEN ladder axis. Minimal isolated difference: append the
+      PREVIOUS step's legal spatial observation as extra input channels
+      (spatial 8 -> 16 planes; patch_proj input width doubles; ALL other
+      architecture, heads, critic, masking, codec UNCHANGED). History lives
+      in the rollout carry per environment, zeroed on reset/bootstraps;
+      features are histories OF LEGAL OBSERVATIONS ONLY, so the fog-of-war
+      legality gate (EV-0037) holds structurally; leak-guard suite extended
+      with a history fixture. K=1 frame in R1 (K>1 is a later round, never
+      bundled).
+  - later_arms_not_in_R1: [T3 critic changes (scalar vs distributional is
+      MOOT - lineage already uses HL-Gauss; T3 becomes alternate critic
+      parameterisations), T4 capacity scaling around any winner]
     note: each requires its own round plan building on R1 outcomes
 
 protocol:

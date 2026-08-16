@@ -41,7 +41,8 @@ def main() -> int:
             "plan_id": "STAGE5_CAPACITY_VALUE_R1",
             "status": "PREDECLARED",
             "arms": ["T0_CONTROL_EXISTING (pre-satisfied by RWB1-A0-CONTROL-S1/S2)",
-                     "T1_PATCH_TRANSFORMER"],
+                     "T1_PATCH_TRANSFORMER (pre-satisfied: lineage already patch transformer)",
+                     "T2_LEGAL_TEMPORAL_HISTORY (experimental arm)"],
             "training_regime": "PERSISTENT_EPISODE_REGIME_V1",
         },
         "LINEAGE": {
