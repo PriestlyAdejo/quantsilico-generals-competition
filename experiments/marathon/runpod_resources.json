@@ -7,15 +7,16 @@
     {
       "pod_id": "5pxc0rnfy34nal",
       "name": "quantisilico_bc_a_full_r1_a40",
-      "status": "EXITED_RESUME_RETRYING_HOST_CONGESTED_2026-08-16T14:52Z",
+      "status": "RUNNING_BC_ROUND_STARTED_2026-08-16T14:52:45Z",
       "owner_run": "experiment#bc-a-full-r1#abcfcd746ac7 (BC-A-FULL-R1 A40 fallback, predeclared budget clause, EV-0059)",
       "expected_workload": "remote_bc_a_full_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (40 epochs same seed 20260831; pod SELF-STOPS after exit)",
       "rate_usd_per_hr": 0.44,
       "data_center": "EU-SE-1",
       "machine_id": "5yue4r7xuzpm",
-      "ssh": "root@194.68.245.20 -p ROTATES_ON_RESUME (last 22154)",
+      "ssh": "root@194.68.245.20 -p 22070 (rotates on resume)",
       "started_at_utc": "2026-08-16T14:24:37Z",
-      "provision_note": "FRESH fallback (billing-logged POD_CREATE; CA-MTL-1 no resources -> EU-SE-1). Bootstrap remote_curr1_setup.sh PASS (JAX 0.11.0 gpu, py3.12.14). Shards 22MB + 4 raw replay datasets 101 files 112MB uploaded. Launch#1 14:31Z crashed FileNotFoundError (raw datasets absent on volume - root-caused + fixed); launch#2 ~14:47Z died within 100s (forensics pending). Resume blocked HOST_FULL on this machine since ~14:40Z; bounded retry loop 15x90s armed 14:52Z."
+      "verified_active": "2026-08-16T14:55Z wrapper + bc_a_train_full PIDs alive, round log start 14:52:45Z commit e3a4627, no done marker",
+      "provision_note": "FRESH fallback (billing-logged POD_CREATE; CA-MTL-1 no resources -> EU-SE-1). Bootstrap remote_curr1_setup.sh PASS (JAX 0.11.0 gpu, py3.12.14). Shards 22MB + 4 raw replay datasets 101 files 112MB uploaded. Launch#1 14:31Z crashed FileNotFoundError (raw datasets absent on volume - root-caused + fixed by upload). Launch#2 14:37Z exit=127: EV-0047 venv-interpreter regression REPRODUCED on resume (container disk /root/uv python wiped on stop; volume venv symlink dangling) - root-caused, setup re-run repaired, .venv312/bin/python + jax gpu VERIFIED pre-launch per EV-0047 guard. Launch#3 14:52:45Z RUNNING. ETA: feature walk ~2-4h wall (single-threaded) + epochs; self-stop after round exit."
     },
     {
       "pod_id": "0ea2tby1ujpk8z",
@@ -159,5 +160,11 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": []
+  "active_workloads": [
+    {
+      "pod_id": "5pxc0rnfy34nal",
+      "verified_at_utc": "2026-08-16T14:55:00Z",
+      "evidence": "wrapper + bc_a_train_full PIDs alive; round log start 14:52:45Z commit e3a4627 (feature phase, GPU engaged at epoch phase)"
+    }
+  ]
 }
