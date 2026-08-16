@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-16T08:52:00Z",
+  "UPDATED_AT_UTC": "2026-08-16T09:05:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_CROSS_REGIME_BRIDGE_B2_ADJUDICATED_LAND_GAMEPLAY_ARBITER_NEXT",
-  "CURRENT_TASK": "PREDECLARE_REGISTER_RUN_LAND_PERSISTENT_GAMEPLAY_EVAL_WITH_REWARD_HACK_SURVEILLANCE",
+  "CURRENT_STAGE": "STAGE_4A_RWB1_LAND_GAMEPLAY_ARBITER_EVAL_EXECUTING_LOCAL_CPU",
+  "CURRENT_TASK": "MONITOR_ADJUDICATE_RWB1_LAND_GAMEPLAY_ARBITER_THEN_BRIDGE_DECISION",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -236,9 +236,9 @@
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-16T06:50:00Z",
+    "AUDITED_AT_UTC": "2026-08-16T09:05:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "No active local training workloads (audit probes completed in-process; CPU JAX installed in user python for diagnostics)",
+      "LOCAL CPU: RWB1 LAND gameplay arbiter executing since 09:01:07Z (72 games: 4 candidates x {legal_random, heuristic_v0, heuristic_v1} x 3 seat-swapped pairs, 1200-turn horizon; run dir experiments/marathon/paired_eval_runs/rwb1_land_arbiter/, round.log; serving sanity probe PASS pre-game)",
       "DURABLE LOOP ACTIVE: Qoder CLI cron job f5733a0c (every 30 min, /marathon-exec, persisted, permanent) EV-0041; ALL sentinel text loops remain DEPRECATED (operator ruling, EV-0036 class)"
     ],
     "COMPLETED_THIS_SESSION": [
@@ -250,11 +250,11 @@
       "LEARNING-PATH-INTEGRITY & EPISODE-CONTINUITY AUDIT completed (operator amendment, EV-0048): reset-per-update screening regime PROVEN empirically (continuity + coverage probes) and archaeologically (verdict A+C: persistence repaired twice historically, baseline trained WITH carry, screening runner de27575 diverged); regime named EARLY_WINDOW_RESET_REGIME_V1; all historical results preserved and re-labelled VALID_IN_RESET_REGIME; shaping truncation flaw fixed (Ng-1999 correction now at any episode end, 16/16 tests); long-horizon JAX-vs-pinned-engine parity suite 14/14 PASS (no mid/endgame divergence); runner gained --episode-carry {none,persistent} knob (default none = bit-compatible with registered runs) CPU-smoked both modes; EPISODE_CONTINUITY_R1 PREDECLARED + REGISTERED (experiment#episode-continuity-r1#d59d66093f59)",
       "REWARD-SHAPING-R2 adjudicated this tick (EV-0047): 4/4 arms exit=0 (05:30:08Z-06:10:12Z, self-stop confirmed, zero idle burn); control survival met; LAND-POTENTIAL ADVANCES TELEMETRY-GRADE ONLY (vloss reduction 2.27/2.10 vs control 0.0064/0.0065, no sign flip); gameplay arbiter DEFERRED to corrected regime per audit amendment; cross-pod bit-exact control check recorded as INTEGRITY FLAG attributed to GPU nondeterminism (update-0 identical to ~1e-7); 8 registry records (all tagged TRAINING_REGIME); launch forensics: CRLF + venv-interpreter-on-container-disk regressions root-caused with regression-guard notes",
       "REWARD-SHAPING-R1 round closed VOID_SIGNAL_VACUOUS this tick (EV-0046): all arms ran clean (6/6, 240/240, self-stop zero idle burn, artefacts fetched) but variants bit-exact control-identical - army-total shaping provably zero-signal in fresh-32-tick self-play windows; 12 registry records preserved; land_potential fix implemented + verified (42% signal ticks, 12 tests PASS); REWARD-SHAPING-R2 predeclared + registered (experiment#reward-shaping-r2#9172336619e7, CONTROL vs LAND-POTENTIAL x 2 seeds)",
-      "BC-A-PILOT-R1 predeclared + registered (experiment#bc-a-pilot-r1#57aaa6f2b530): charter §7A pilot step, engine-verified labels only (EV-0045), silent-pass excluded, player-disjoint holdout (ResBot), leak-guard gated; pilot checkpoint never enters funnel",
+      "BC-A-PILOT-R1 predeclared + registered (experiment#bc-a-pilot-r1#57aaa6f2b530): charter \u00a77A pilot step, engine-verified labels only (EV-0045), silent-pass excluded, player-disjoint holdout (ResBot), leak-guard gated; pilot checkpoint never enters funnel",
       "Replay EXACT ACTION DERIVATION milestone DONE this tick (scripts/data/replay_action_derivation.py, EV-0045): 1904/1921 ticks engine-verified action pairs (ownership 99.1% exact); army residual root-caused to source-site general-move semantics vs competition static-general tiles (reported, not papered over); BC labels will use OWNERS_ONLY-verified pairs per predeclared handling direction",
       "REWARD-SHAPING-R1 PREDECLARED + REGISTERED + IMPLEMENTED + SMOKED + LAUNCHED this tick (EV-0044): knob none/kill_delta/potential (training-reward only, PPO_SEMANTICS UNCHANGED), 10 unit tests + rollout regression 5/5 + 3 CPU smokes PASS (smoke caught a batched-ownership layout defect pre-GPU); original TOPADV host GPU-congested (7 bounded free start attempts) -> fresh A40 kkmqdgqbw3wgph provisioned + bootstrapped + checkpoint re-transferred; round start 03:01:55Z commit 49e5976, self-stop armed",
       "TOPADV-R1 FULLY CLOSED this pass (EV-0043): round completed 01:38:37Z, pod SELF-STOPPED (zero idle burn), artefacts fetched on brief resume (port rotated 22049->22072) + integrity-verified (6/6 arms 240/240), pod stopped after fetch, adjudicated CLEAN NEGATIVE per predeclared rules (all six survive; TOP-50 0.000% margin + sign flip, TOP-25 +0.0018% + sign flip -> neither advances), 12 registry records; fifth 2M line at parity; win-conversion constraint intact",
-      "REPLAY AUTHORITY CORRECTION executed (operator amendment, EV-0042): competition engine oracle (replay_engine_oracle.py) + 23 differential parity tests PASS vs pinned engine 9e3b9d1 + timing-alignment trace PROVEN (owners 99.06% exact, even-tick growth phase confirmed, cell parity 99.0-99.4%); EV-0041 generic-legality framing SUPERSEDED as authority, module marked superseded, unaffected evidence preserved; charter §0 + replay skill codified; RunPod key rotation rescinded by operator; TOPADV-R1 GPU path untouched",
+      "REPLAY AUTHORITY CORRECTION executed (operator amendment, EV-0042): competition engine oracle (replay_engine_oracle.py) + 23 differential parity tests PASS vs pinned engine 9e3b9d1 + timing-alignment trace PROVEN (owners 99.06% exact, even-tick growth phase confirmed, cell parity 99.0-99.4%); EV-0041 generic-legality framing SUPERSEDED as authority, module marked superseded, unaffected evidence preserved; charter \u00a70 + replay skill codified; RunPod key rotation rescinded by operator; TOPADV-R1 GPU path untouched",
       "Replay action LEGALITY CHECK milestone DONE (scripts/data/replay_action_legality.py, 8 tests, real probe: 1440/1443 legal, 3 adjacent-only flags, zero rule violations) EV-0041 - framing superseded by EV-0042; module retained but not authoritative",
       "Durable Qoder CLI /loop commissioned (cron f5733a0c); lease reacquired by continuing executor identity with recorded handover EV-0041",
       "CURR1 gameplay eval on-disk reconciliation vs EV-0038: no drift (24/24 pairs per variant, ALL DRAW, NO_PROMOTION, 4 registry records present)",
@@ -360,7 +360,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "LAND-PERSISTENT-GAMEPLAY-EVAL (predeclare + register + run next tick; Stage-2 arbiter for RWB1 LAND advancers with predeclared reward-hack surveillance); REWARD-BRIDGE-R1 closed EV-0051: LAND advances telemetry-grade, KILL rejected both seeds",
+  "CURRENT_EXPERIMENT": "experiment#rwb1-land-gameplay-arbiter#a45f4ba5a2d6 EXECUTING (Stage-2 arbiter for RWB1 LAND advancers; reward-hack surveillance predeclared; REWARD-BRIDGE-R1 closed EV-0051)",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -371,10 +371,16 @@
     },
     "OTHER_DISCOVERED_CHECKPOINTS": {
       "STATUS": "KEEP_STRENGTH_UNKNOWN",
-      "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
+      "APPROXIMATE_TRANSITIONS": [
+        10002432,
+        14966784,
+        19357696,
+        25010176,
+        50520064
+      ]
     }
   },
-  "NEXT_SAFE_ACTION": "PREDECLARE + RUN the Stage-2 GAMEPLAY ARBITER for the RWB1 LAND-POTENTIAL persistent-regime advancers (EV-0051 consumption gate; reward-hack surveillance predeclared: wins must come by legal captures with zero agent faults, degenerate patterns invalidate the candidate not the family). Sequence: (1) terminal checkpoints already local (experiments/marathon/screening_runs_reward_bridge_r1/RWB1-A1-LAND-S{1,2}/raw.npz+ema.npz, hashes registered); (2) serving export to a baselines-style main.py candidate (EMA weights, competition protocol) + serving sanity probe BEFORE any games (EV-0034 precedent); (3) predeclare the eval plan (opponents: legal_random + heuristic_v0/v1 + the RWB1 control checkpoints; seat-swapped pairs; anytime-valid CS; 1200-turn horizon UNCHANGED; draw-at-truncation never counts as win); (4) register eval experiment pre-run; (5) run CPU paired eval; (6) adjudicate + reward-hack surveillance (legal capture wins only) + EV. If still draw-wall -> predeclared escalation (cross_regime_bridge_plan.yaml) advances Stage 5 capacity/value research. PARALLEL DEPENDENCY-SAFE meanwhile: dataset expansion V02 (stratified: more players, late-game/deathtouch per EV-0048 section 26) via fetch_elite_replays.py, evaluator win-conversion calibration suite (diagnostic), BC-A full predeclaration after V02. Continuation: durable cron f5733a0c (30 min /marathon-exec); zero-idle-burn permanent; RUNPOD FIRST on every resume.",
+  "NEXT_SAFE_ACTION": "RWB1 LAND GAMEPLAY ARBITER EXECUTING locally (started 09:01:07Z; 72 games sequential, 1200-turn horizon; round.log + per-candidate run dirs under experiments/marathon/paired_eval_runs/rwb1_land_arbiter/). Next tick: (1) check round.log for completed candidates; when ALL four finish -> adjudicate ONLY per rwb1_land_gameplay_eval_plan.yaml predeclared rules (win rate vs fixed opponents compared against matched controls with the harness anytime-valid CS; draws never wins; ZERO agent faults required; reward-hack surveillance: wins must be legal general captures, degenerate patterns invalidate the candidate not the family); (2) register evaluation records + EV entry; (3) BRIDGE DECISION: LAND demonstrates strength -> LAND-POTENTIAL becomes the regime reward default, continue bridge B3/B4; draw wall persists -> predeclared ESCALATION: Stage 5 capacity/value research predeclaration (teacher capacity, patch-transformer, richer legal temporal history, critic/value architecture incl. scalar-vs-distributional), not more small knobs. PARALLEL DEPENDENCY-SAFE meanwhile (CPU-permitting - do NOT contend with the arbiter): dataset expansion V02 planning (fetch_elite_replays.py stratification), BC-A full predeclaration draft after V02. Continuation: durable cron f5733a0c (30 min /marathon-exec); zero-idle-burn permanent; RUNPOD FIRST on every resume.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
