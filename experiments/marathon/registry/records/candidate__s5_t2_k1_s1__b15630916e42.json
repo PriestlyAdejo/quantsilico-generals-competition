@@ -1,0 +1,17 @@
+{
+  "CHECKPOINT_ID": "checkpoint#s5-t2-k1-s1-terminal#577f90f241cc",
+  "EVIDENCE_LINKS": [
+    "EV-0034",
+    "EV-0049",
+    "EV-0057"
+  ],
+  "ID": "candidate#s5_t2_k1_s1#b15630916e42",
+  "KIND": "candidate",
+  "PARITY_PROOF": "tests/competition_native_jax/test_long_horizon_engine_parity.py",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "baselines/s5_t2_k1_s1/main.py",
+  "RECORDED_AT_UTC": "2026-08-16T14:30:01Z",
+  "SANITY_PROBE": "scripts/analysis/serving_sanity_probe_t2.py PASS pre-game (EV-0034 precedent)",
+  "SCHEMA_VERSION": "1.0.0",
+  "SERVING_ADAPTER": "baselines/s5_t2_serving_common.py (JaxTransformerHistoryPolicy k1, 16-plane)"
+}
