@@ -2,7 +2,7 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T00:45:00Z",
+  "updated_at_utc": "2026-08-16T01:18:00Z",
   "resources": [
     {
       "pod_id": "zu2pvculot0yhp",
@@ -17,7 +17,7 @@
       "started_at_utc": "2026-08-16T00:26:09Z",
       "round_start_utc": "2026-08-16T00:39:53Z",
       "gpu_smoke": "PASS ratio ~1.0000 valid_share 1.0 (TOPADV-GPU-SMOKE, fraction 0.5, 2 updates)",
-      "verified_active": "2026-08-16T00:45Z GPU 96%/38891MiB, arm TOPADV-A0-CONTROL-S1 running, wrapper+orchestrator PIDs present",
+      "verified_active": "2026-08-16T01:03Z watchdog ACTIVE_WORKLOAD_VERIFIED (trainer pid alive, 38889 MiB); round log arms 1-2 COMPLETE, arm 3/6 TOPADV-A1-TOP50-S1 started 00:59:32Z (EV-0041)",
       "security_note": "RUNPOD API key briefly visible in remote ps listing at launch (EV-0040); OPERATOR MUST ROTATE the key after TOPADV-R1 completes (self-stop depends on it until then)"
     },
     {
