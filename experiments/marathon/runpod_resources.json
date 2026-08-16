@@ -2,12 +2,26 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T03:00:00Z",
+  "updated_at_utc": "2026-08-16T06:50:00Z",
   "resources": [
+    {
+      "pod_id": "yanhy83zocslwp",
+      "name": "quantisilico_rshaping_r2_a40",
+      "status": "EXITED_SELF_STOPPED_AFTER_R2_ROUND_06:10Z_EVIDENCE_FETCHED_06:25Z_THEN_STOPPED",
+      "owner_run": "experiment#reward-shaping-r2#9172336619e7",
+      "expected_workload": "remote_reward_shaping_r2_orchestrator.sh via remote_orchestrator_with_stop.sh (4 arms sequential, 240 updates each, wall cap 90 min/arm; pod SELF-STOPS after round exit)",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "machine_id": "5yue4r7xuzpm",
+      "ssh": "root@194.68.245.20 -p ROTATES_ON_RESUME (last 22089)",
+      "started_at_utc": "2026-08-16T05:13:55Z",
+      "provision_note": "FRESH on-demand pod (runpod_pod_create.py, billing-logged): kkmqdgqbw3wgph's host congested continuously 03:43-05:13Z (15+ start attempts, all 'not enough free GPUs'); kkmq retained EXITED with R1 volume (EV-0046)",
+      "completion_note": "R2 round 4/4 arms exit=0 (EV-0047); venv-interpreter regression found+repaired (EV-0047 guard note); pod stopped after fetch"
+    },
     {
       "pod_id": "kkmqdgqbw3wgph",
       "name": "quantisilico_rshaping_r1_a40",
-      "status": "EXITED_R2_LAUNCH_PENDING_HOST_CONGESTION",
+      "status": "EXITED_RETAINS_R1_VOLUME_SUPERSEDED_BY_yanhy83zocslwp",
       "owner_run": "experiment#reward-shaping-r2#9172336619e7 (R1 completed VOID EV-0046; same pod reused for R2)",
       "expected_workload": "remote_reward_shaping_r2_orchestrator.sh via remote_orchestrator_with_stop.sh (4 arms sequential, 240 updates each, wall cap 90 min/arm; pod SELF-STOPS after round exit)",
       "rate_usd_per_hr": 0.44,
@@ -19,7 +33,7 @@
       "round_end_utc": "2026-08-16T03:39:29Z (round log; 6/6 arms exit=0, ~6 min/arm)",
       "self_stop_confirmed": "watchdog NO_RUNNING_PODS by 03:43:20Z - zero idle burn (EV-0044 pattern)",
       "fetch_status": "R1 artefacts FETCHED 04:07Z then pod STOPPED (idle window 03:43-04:07Z bounded by host GPU congestion retries, logged)",
-      "r2_launch_status": "PENDING: host congested again (bounded 15x2min retry loop armed 04:52Z); launch sequence = repo update to land_potential commit + R2 orchestrator transfer + wrapper launch (EV-0046)",
+      "r2_launch_status": "SUPERSEDED: R2 moved to fresh pod yanhy83zocslwp after 2h15m+ continuous host congestion (15+ failed free starts); volume retained with R1 env",
       "verified_active": "2026-08-16T03:03Z GPU 82%/41562MiB, arm RSH-A0-CONTROL-S1 running, wrapper+orchestrator PIDs present (EV-0044)",
       "provision_note": "FRESH fallback pod (runpod_pod_create.py, billing-logged): original TOPADV host jttzxgrlso5d had no free GPUs (7 start attempts 02:37-02:52Z); zu2pvculot0yhp retained EXITED with its volume (EV-0044)"
     },
@@ -114,7 +128,5 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": [
-    "zu2pvculot0yhp: TOPADV-R1 screening round (6 arms, est. round end ~2026-08-16T01:50Z; remote self-stop armed)"
-  ]
+  "active_workloads": []
 }

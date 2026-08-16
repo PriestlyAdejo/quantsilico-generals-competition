@@ -30,11 +30,11 @@ Modes (applied ONLY to the trained seat's reward stream):
                every game, so this mode carries real signal in the screening
                regime (EV-0046 probe: 42% nonzero ticks).
 
-All potential modes: alive ticks get Phi(s') - Phi(s); terminal ticks get
--Phi(s) (Phi(terminal) := 0), return-invariant at gamma = 1.0.
-Terminal/truncation ticks keep the ENGINE reward untouched otherwise
-(post-terminal ownership transfer would contaminate deltas), and the
-1200-turn draw cap boundary stays signal-free by predeclaration.
+All potential modes: alive ticks get Phi(s') - Phi(s); episode-end ticks
+(win/loss AND the 1200-turn hard draw) get -Phi(s) (Phi(terminal) := 0),
+return-invariant at gamma = 1.0. Terminal/truncation ticks keep the ENGINE
+reward untouched otherwise (post-terminal ownership transfer would
+contaminate deltas).
 """
 
 from __future__ import annotations
@@ -113,6 +113,10 @@ def shape_step_rewards(
         # := 0). The correction is applied OUTSIDE the alive mask by design.
         phi = _land_potential if mode == MODE_LAND_POTENTIAL else _potential
         increment = beta * (phi(next_states) - phi(states))
-        terminal_correction = -beta * phi(states) * terminated.astype(jnp.float32)
+        # Correction at ANY true episode end (win/loss AND the 1200-turn hard
+        # draw): both are genuine terminations, so the shaped return must
+        # telescope to the engine return in both cases (Ng et al. 1999).
+        episode_end = (terminated.astype(bool) | truncated.astype(bool)).astype(jnp.float32)
+        terminal_correction = -beta * phi(states) * episode_end
         return terminal_rewards + alive * increment + terminal_correction
     raise ValueError(f"unknown reward shaping mode: {mode!r}")

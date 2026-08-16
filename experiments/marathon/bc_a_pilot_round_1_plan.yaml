@@ -1,0 +1,86 @@
+schema_version: "1.0.0"
+kind: MARATHON_REPLAY_SUBEXPERIMENT_PLAN
+subexperiment_id: BC-A-PILOT-R1
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+family: ELITE_REPLAY_AUGMENTATION
+charter_section: "7A (BC warm start) - PILOT step only"
+status: PREDECLARED
+ppo_semantics: OFF_POLICY_AUXILIARY  # offline imitation labels; no live action-selection change
+
+purpose: >
+  Pilot step of charter §7A: prove the behavioural-cloning pipeline can learn
+  from ENGINE-VERIFIED elite replay labels under the competition authority
+  (EV-0042) without information leakage, and produce a measurable held-out
+  accuracy. This pilot does NOT include the PPO-continuation comparison -
+  that full BC warm-start experiment is predeclared separately AFTER the
+  pilot passes and the dataset is expanded.
+
+data_contract:
+  source_dataset: DATASET-ELITE-2026-08-15-V01 (6 replays, 3 players, sha256-sealed)
+  engine_sha: 9e3b9d13cca51caa1bb07db48bb85c9e90ce0462
+  derivation: >
+    labels come ONLY from the engine-verified derivation (EV-0045):
+    EXACT_MATCH and OWNERS_ONLY ticks (1904/1921); NO_MATCH ticks (17) are
+    EXCLUDED. Ownership-matched pairs supply both players' actions; the
+    trained seat is p0 (perspective-relative encoding via the canonical
+    observation path, never raw absolute indices).
+  known_divergence_handling: >
+    ticks where the army residual is the source-site general-move pattern
+    (EV-0045 diagnostic) are FLAGGED in the shard manifest; army-count
+    features are supplied ONLY through replay_legal_pov views; labels are
+    unaffected (ownership-verified). No silent correction.
+  silent_pass_rule_predeclared: >
+    derived actions that the pinned engine classifies as ENGINE_SILENT_PASS
+    at their tick (per replay_engine_oracle classification) are EXCLUDED
+    from BC labels in the pilot. Silent-pass expert actions are investigated
+    later as a separate predeclared question (charter §0), never mixed into
+    the pilot corpus.
+  observation_legality: >
+    every training sample's features come from replay_legal_pov at that tick
+    for that player (HARD gate, EV-0037); leak-guard tests run on the shard
+    builder. Full state never enters features.
+
+splits_predeclared:
+  player_disjoint: >
+    HOLDOUT player: ResBot (fully absent from training). TRAIN players:
+    Kubic + FreeLunch. This is the charter-mandated player-disjoint split;
+    with only 3 players it is coarse - a recorded limitation, remedied by
+    dataset expansion V02 before any promotion-track use.
+  time_disjoint: within each training player, the LAST replay is held out.
+  no_row_random_splits: true
+
+pilot_protocol:
+  seed: 20260831
+  model: >
+    the canonical competition policy head frozen-features probe is NOT the
+    pilot target; the pilot trains a SMALL standalone policy (fresh init,
+    same canonical observation encoder interface) on BC cross-entropy over
+    the 3970-dim competition action space, legal-masked.
+  budget: <= 30 minutes laptop CPU; no paid compute.
+  metrics_predeclared:
+    - TRAIN top-1 action accuracy on training shards
+    - HELD-OUT-PLAYER top-1 accuracy (ResBot) - the pilot's screening metric
+    - HELD-OUT-REPLAY accuracy (time-disjoint)
+    - legal-action share of predictions (must be 1.0 under the mask)
+    - "leakage probe: held-in-state features must never contain hidden values
+      (fixture test, not a runtime metric)"
+  pass_criteria_predeclared:
+    - pipeline completes with zero leak-guard failures
+    - held-out-player accuracy strictly above the legal-uniform baseline and
+      above majority-class (pass) prediction; margin recorded honestly
+    - no post-hoc threshold relaxation; a failed pilot is a valid negative
+
+consumption_gate: >
+  The pilot checkpoint NEVER enters the training funnel or any gameplay
+  evaluation as a candidate. Its only outputs are: pipeline validation,
+  accuracy numbers, and the shard/label design for the full BC-A
+  predeclaration. BC accuracy NEVER promotes; gameplay is the authority.
+
+dependency_gates:
+  - replay_legal_pov HARD gate (EV-0037) + leak-guard tests green
+  - exact derivation report present (EV-0045) with engine SHA recorded
+  - shard builder registers a DERIVED dataset identity with full provenance
+    (charter §3 + §0 provenance list) BEFORE training
+
+evidence_links: [EV-0037, EV-0042, EV-0045]

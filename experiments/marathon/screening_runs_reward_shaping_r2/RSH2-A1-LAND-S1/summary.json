@@ -1,0 +1,42 @@
+{
+  "actual_transitions": 1966080,
+  "arm_id": "RSH2-A1-LAND-S1",
+  "budget_transitions": 1966080,
+  "eliminated": false,
+  "elimination": [],
+  "finished_at_utc": "2026-08-16T05:59:53Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1993377208709717,
+    "ENTROPY_LAST": 1.5540339946746826,
+    "PG_FIRST": 0.0008388562127947807,
+    "PG_LAST": -0.0019901946652680635,
+    "RATIO_FIRST": 1.000002384185791,
+    "RATIO_LAST": 1.0000017881393433,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 5.567291259765625,
+    "VLOSS_LAST": 3.2937588691711426,
+    "VLOSS_REDUCTION_OVER_ROUND": 2.2735323905944824
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "land_potential",
+  "reward_shape_beta": 1.0,
+  "seed": 20260825,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 17778.47991472862,
+    "collect_wall_s": 110.58763231895864,
+    "end_to_end_tps": 4827.959864744391,
+    "reset_pool_build_s": 108.98271219059825,
+    "total_wall_s": 415.83587446063757,
+    "update_wall_s": 296.6402765866369
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 240
+}

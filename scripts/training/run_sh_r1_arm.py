@@ -110,6 +110,16 @@ def main() -> int:
         default=0.0,
         help="REWARD-SHAPING-R1 shaping coefficient (0.0 = identity)",
     )
+    parser.add_argument(
+        "--episode-carry",
+        default="none",
+        choices=["none", "persistent"],
+        help="EPISODE_CONTINUITY knob (LEARNING-PATH-INTEGRITY audit): none = "
+        "historical reset-per-update screening semantics (EARLY_WINDOW_RESET_REGIME_V1, "
+        "bit-compatible with all registered screening runs); persistent = thread the "
+        "RolloutCarry across PPO updates so live games continue until true competition "
+        "terminal/reset (canonical baseline regime). PPO_SEMANTICS UNCHANGED.",
+    )
     args = parser.parse_args()
 
     set_active_shaping(args.reward_shape, args.reward_shape_beta)
@@ -140,6 +150,7 @@ def main() -> int:
     stop_reason = "BUDGET_REACHED"
     collect_wall = 0.0
     update_wall = 0.0
+    rollout_carry = None  # EPISODE_CONTINUITY knob: threaded only when persistent
     # Build the reset pool ONCE and reuse it across updates (ladder pattern,
     # EV-0029): reconstructing boards per collect dominated wall-time.
     # Environment initialisation only; PPO_SEMANTICS unchanged.
@@ -156,14 +167,26 @@ def main() -> int:
     try:
         for index in range(n_updates):
             collect_started = time.perf_counter()
-            batch = collect_selfplay_batch(
-                params,
-                num_envs=args.num_envs,
-                rollout_len=args.rollout_len,
-                seed=args.seed + index,
-                reset_pool_size=RESET_POOL_SIZE,
-                pool=reset_pool,
-            )
+            if args.episode_carry == "persistent":
+                batch, rollout_carry = collect_selfplay_batch(
+                    params,
+                    num_envs=args.num_envs,
+                    rollout_len=args.rollout_len,
+                    seed=args.seed,
+                    reset_pool_size=RESET_POOL_SIZE,
+                    pool=reset_pool,
+                    carry=rollout_carry,
+                    return_carry=True,
+                )
+            else:
+                batch = collect_selfplay_batch(
+                    params,
+                    num_envs=args.num_envs,
+                    rollout_len=args.rollout_len,
+                    seed=args.seed + index,
+                    reset_pool_size=RESET_POOL_SIZE,
+                    pool=reset_pool,
+                )
             jax.block_until_ready(jax.tree_util.tree_leaves(batch["actions"]))
             collect_wall += time.perf_counter() - collect_started
             flat = flatten_batch(batch)
@@ -220,6 +243,7 @@ def main() -> int:
         "top_advantage_fraction": args.top_advantage_fraction,
         "reward_shape": args.reward_shape,
         "reward_shape_beta": args.reward_shape_beta,
+        "episode_carry": args.episode_carry,
         "budget_transitions": args.budget_transitions,
         "actual_transitions": transitions,
         "updates": len(records),

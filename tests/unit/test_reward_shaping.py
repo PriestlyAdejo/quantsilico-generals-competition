@@ -137,6 +137,32 @@ def test_land_potential_zero_when_land_unchanged():
     assert bool(jnp.allclose(out, ZEROS, atol=1e-6))
 
 
+def test_potential_truncation_correction_return_invariance():
+    # The 1200-turn hard draw is a genuine episode end (engine reward 0):
+    # the shaped return must still telescope to the unshaped return.
+    base = s([10, 10], [10, 10])  # Phi(s0)=0
+    own_more = SimpleNamespace(
+        armies=base.armies,
+        ownership=jnp.concatenate(
+            [
+                jnp.ones((base.armies.shape[0], 1, 1, 2), dtype=bool),
+                base.ownership[:, 1:, :, :],
+            ],
+            axis=1,
+        ),
+    )  # Phi(s1) > 0
+    r_alive = shape_step_rewards(base, own_more, ZEROS, ZEROS, ZEROS, "land_potential", 1.0)
+    draw_reward = jnp.zeros(B)
+    r_end = shape_step_rewards(
+        own_more, own_more, draw_reward, ZEROS, ONES, "land_potential", 1.0
+    )
+    # unshaped return = 0 (draw); shaped return must equal it at gamma = 1
+    assert abs(float(r_alive[0]) + float(r_end[0])) < 1e-4
+    # correction at truncation is -Phi(s) (negative here), engine reward kept
+    assert float(r_end[0]) < 0.0
+    assert bool(jnp.all(jnp.isfinite(r_end)))
+
+
 def test_invalid_mode_and_negative_beta_rejected():
     with pytest.raises(ValueError):
         set_active_shaping("bogus", 0.1)

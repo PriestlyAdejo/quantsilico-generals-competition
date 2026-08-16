@@ -1,0 +1,42 @@
+{
+  "actual_transitions": 1966080,
+  "arm_id": "RSH2-A0-CONTROL-S2",
+  "budget_transitions": 1966080,
+  "eliminated": false,
+  "elimination": [],
+  "finished_at_utc": "2026-08-16T05:50:02Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1871352195739746,
+    "ENTROPY_LAST": 2.099990129470825,
+    "PG_FIRST": -0.0006291100289672613,
+    "PG_LAST": 1.106809031625744e-05,
+    "RATIO_FIRST": 1.000009298324585,
+    "RATIO_LAST": 0.9999968409538269,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.357700824737549,
+    "VLOSS_LAST": 2.351172685623169,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.006528139114379883
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "seed": 20260827,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 17390.957451068614,
+    "collect_wall_s": 113.05185499601066,
+    "end_to_end_tps": 4731.004739279206,
+    "reset_pool_build_s": 110.12342267483473,
+    "total_wall_s": 425.6776002161205,
+    "update_wall_s": 302.5216031484306
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 240
+}

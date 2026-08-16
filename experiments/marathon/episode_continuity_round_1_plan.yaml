@@ -1,0 +1,87 @@
+kind: MARATHON_SCREENING_ROUND_PLAN
+plan_id: EPISODE_CONTINUITY_ROUND_1_PLAN
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T06:40:00Z"
+authority: LEARNING_PATH_INTEGRITY_AND_EPISODE_CONTINUITY_AUDIT (operator amendment 2026-08-16)
+
+question: >
+  Under a matched transition budget, does restoring canonical episode
+  continuity (games persist across PPO updates until true competition
+  terminal/reset) change the training state distribution, terminal-reward
+  exposure and learner health relative to the historical reset-per-update
+  screening regime?
+
+regime_identity:
+  control: EARLY_WINDOW_RESET_REGIME_V1 (--episode-carry none; the exact
+    semantics of ALL registered Stage-4A screening runs SH-R1..R4, CURR1,
+    RAW-VS-EMA-R1, TOPADV-R1, REWARD-SHAPING-R1/R2)
+  variant: PERSISTENT_EPISODE_REGIME_V1 (--episode-carry persistent;
+    the regime MARATHON_BASELINE_V0 was trained under - rollout_carry.npz,
+    EV-0002/EV-0010; canonical trainer scripts/cloud_gpu_last_push.py)
+
+background_findings_predeclared_from:
+  - "audit probe A (scripts/analysis/audit_episode_continuity_probe.py): no-carry restarts all envs at turn 0 every update; carry continues (state-hash verified, turns 0->24 over 3 updates)"
+  - "audit probe B (scripts/analysis/audit_state_coverage_probe.py): no-carry coverage confined to turns [0, rollout_len); carry reaches turn 320+ in the same window budget"
+  - "decisive_share == 0.0 for every update of REWARD-SHAPING-R1 and R2 (12 arms, 240 updates each): zero terminal game experience in the reset regime"
+  - "git archaeology verdict A+C: persistence was repaired as a defect (torch PersistentActor ab7c9c0; JAX RolloutCarry c672d4c) and the screening runner (de27575, 2026-08-15) diverged by never threading carry"
+
+arms:
+  # matched geometry/budget/checkpoint/seeds; ONLY episode_carry differs
+  - {arm_id: EPC1-A0-RESET-S1,   episode_carry: none,       seed: 20260901}
+  - {arm_id: EPC1-A0-RESET-S2,   episode_carry: none,       seed: 20260903}
+  - {arm_id: EPC1-A1-PERSIST-S1, episode_carry: persistent, seed: 20260901}
+  - {arm_id: EPC1-A1-PERSIST-S2, episode_carry: persistent, seed: 20260903}
+
+protocol:
+  geometry: {num_envs: 256, rollout_len: 32}
+  budget_transitions: 1966080   # 240 updates per arm (matched Stage-4A funnel)
+  checkpoint: MARATHON_BASELINE_V0 (hash-verified, EV-0013/EV-0015)
+  min_generals_distance: 17
+  reward_shape: none            # identity reward for ALL arms; shaping x regime
+                                # interaction is a CROSS_REGIME_BRIDGE successor,
+                                # NOT this round
+  top_advantage_fraction: 1.0
+  compute: RunPod A40, remote self-stop wrapper
+  integrity_stops: any non-finite metric or ratio outside [0.5, 2.0] -> INTEGRITY_FAILURE
+
+metrics_predeclared:
+  # screening telemetry (existing)
+  - vloss first/last/reduction, pg, entropy, ratio, valid learning share
+  # regime diagnostics (mechanism ONLY, never advancement criteria)
+  - DECISIVE_SHARE (terminal ticks) per update and round max
+  - "state-age/turn coverage: max turn reached, turn-bucket histogram
+    (0-31 / 32-99 / 100-199 / 200-399 / 400-799 / 800-999 / 1000-1199)"
+  - episode completions (wins/losses/draws) per million transitions
+  - PPO health under persistent fragments (ratio/entropy stability)
+
+advancement_rules_predeclared:
+  - >-
+    this round ANSWERS A REGIME QUESTION, not a knob question: the persistent
+    arms are expected to differ from reset arms in state distribution BY
+    CONSTRUCTION; the recorded question is whether learner health survives and
+    whether terminal experience becomes nonzero
+  - >-
+    PERSISTENT ADVANCES as the new canonical screening regime only if BOTH
+    seeds survive integrity (valid learning share >= 0.9, no entropy collapse,
+    finite metrics)
+  - >-
+    if persistent arms fail integrity, the regime correction is NOT adopted;
+    root-cause and predeclare a successor (no silent fallback claims)
+  - sub-1% telemetry margins remain TELEMETRY-GRADE ONLY (EV-0036 precedent)
+  - "advancement NEVER promotes: Stage-2 gameplay evaluation remains arbiter"
+  - >-
+    control arms are NOT expected to reproduce R1/R2 controls bit-exactly
+    across pods (cross-pod GPU nondeterminism flag, EV-0047); same-pod
+    paired comparison is the valid frame for this round
+  - "no post-hoc rule changes: a modified round requires a NEW plan"
+
+consumption_gate: >
+  If PERSISTENT_EPISODE_REGIME_V1 advances, it becomes the canonical regime
+  for all subsequent Stage-4A screening. Historical family conclusions are
+  re-labelled VALID_IN_RESET_REGIME (not deleted); targeted CROSS_REGIME_BRIDGE
+  re-runs happen ONLY for families with plausible state-continuity interaction
+  (reward FIRST, then curriculum; top-advantage and horizon bounded checks if
+  justified; raw-vs-EMA evaluated on a corrected-regime checkpoint, never as a
+  full family recreation).
+
+evidence_links: [EV-0002, EV-0010, EV-0013, EV-0015, EV-0035, EV-0036, EV-0038, EV-0039, EV-0043, EV-0044, EV-0046, EV-0047, EV-0048]

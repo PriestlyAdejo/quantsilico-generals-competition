@@ -1,0 +1,28 @@
+{
+  "ARTEFACT_HASHES": {
+    "raw.npz": "30645efbcc900d017df5d5c892700cd57c830b4a66744ffe3e60e3238752c235"
+  },
+  "ARTEFACT_LOCATIONS": [
+    "C:/Users/pries/Documents/Projects/quantsilico-generals-competition/experiments/marathon/screening_runs_reward_shaping_r2/RSH2-A1-LAND-S2/raw.npz (npz gitignored)"
+  ],
+  "ID": "checkpoint#rsh2-a1-land-s2-terminal#078cef6b8627",
+  "KIND": "checkpoint",
+  "LINEAGE": {
+    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+    "LINEAGE_HASHES": {
+      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
+    },
+    "NAME": "competition_native_jax_v1"
+  },
+  "NAME": "RSH2-A1-LAND-S2-TERMINAL",
+  "PPO_SEMANTICS": "UNCHANGED",
+  "RECORDED_AT_UTC": "2026-08-16T06:26:47Z",
+  "RUN_ID": "run#rsh2-a1-land-s2#f4030e214e93",
+  "SCHEMA_VERSION": "1.0.0",
+  "TRAINING_REGIME": "EARLY_WINDOW_RESET_REGIME_V1",
+  "TRANSITIONS": 1966080
+}

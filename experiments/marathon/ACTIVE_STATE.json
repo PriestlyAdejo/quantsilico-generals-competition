@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-16T04:40:00Z",
+  "UPDATED_AT_UTC": "2026-08-16T06:50:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_REWARD_SHAPING_R2_GPU_ROUND_LAUNCHING",
-  "CURRENT_TASK": "LAUNCH_REWARD_SHAPING_R2_THEN_MONITOR_FETCH_ADJUDICATE",
+  "CURRENT_STAGE": "STAGE_4A_LEARNING_PATH_INTEGRITY_AUDIT_COMPLETE_EPISODE_CONTINUITY_R1_PREDECLARED",
+  "CURRENT_TASK": "LAUNCH_EPISODE_CONTINUITY_R1_THEN_MONITOR_FETCH_ADJUDICATE",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -229,18 +229,21 @@
     "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
     "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
     "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon.",
-    "REWARD-SHAPING-R1 completion (~04:05Z est.): SSH-fetch screening_runs_reward_shaping_r1 + reward_shaping_r1_round.log from kkmqdgqbw3wgph (194.68.245.108:22070), verify integrity, confirm pod self-stopped (else stop + billing-log idle), adjudicate per reward_shaping_round_1_plan.yaml predeclared rules, back-register runs/checkpoints, EV.",
-    "After REWARD-SHAPING-R1 adjudication: advancing variants -> predeclare gameplay eval (with predeclared reward-hack surveillance); clean negative -> predeclare the explicit Stage-5 budget/capacity transition (never drift). Replay lane (EV-0042/0045): exact derivation DONE; next = BC-A predeclaration (labels from OWNERS_ONLY-verified pairs; army features via legal-POV only; general-move-divergence ticks flagged) and dataset expansion V02 (dependency-safe CPU/network).",
-    "Replay lane standing rules (EV-0042): competition engine semantics only (charter §0); no single legal/illegal boolean; silent-pass actions never auto-labelled; runner faults not reconstructable from replays; engine SHA in all derived datasets."
+    "EPISODE_CONTINUITY_R1 launch (experiment#episode-continuity-r1#d59d66093f59): resume/provision A40 pod -> bootstrap (clone/pull repo at the episode-carry commit, submodule, uv+venv REPAIR STEP: uv python install 3.12 then verify .venv312/bin/python --version BEFORE wrapper launch, EV-0047 venv regression) -> transfer LF-checked orchestrator (bash -n on pod) -> launch via self-stop wrapper -> verify launch + GPU; on completion: fetch artefacts, adjudicate per episode_continuity_round_1_plan.yaml (regime question; persistent adopted iff both seeds survive integrity), register, EV. SAME-POD paired controls only (no cross-pod bit-exact expectations, EV-0047).",
+    "After EPISODE_CONTINUITY_R1: persistent advances -> it becomes canonical screening regime (flip runner default + regression guards per amendment section 30) -> CROSS_REGIME_BRIDGE plan (reward family FIRST, then curriculum; raw-vs-EMA on corrected-regime checkpoint only) -> REWARD-SHAPING LAND-POTENTIAL gameplay arbiter runs under the corrected regime; persistent fails -> root-cause + predeclare successor. No further GPU spend on reset-regime knobs.",
+    "Stage-4B follow-ups unblocked by EV-0048: evaluator win-conversion calibration suite (passive/vulnerable scripted opponents vs heuristic/scripted attackers; diagnostic only, promotion criteria unchanged), silent-pass rate measurement for training+eval candidates via pinned-engine classification, BC dataset V02 stratified toward late-game/deathtouch examples.",
+    "Replay lane standing rules (EV-0042): competition engine semantics only (charter section 0); no single legal/illegal boolean; silent-pass actions never auto-labelled; runner faults not reconstructable from replays; engine SHA in all derived datasets."
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-16T03:08:00Z",
+    "AUDITED_AT_UTC": "2026-08-16T06:50:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "REWARD-SHAPING-R2 launch PENDING on kkmqdgqbw3wgph (host yxpifxzxhiee GPU-congested; bounded 15x2min retry armed 04:52Z; EXITED pod costs no compute; launch sequence scripted in NEXT_SAFE_ACTION)",
+      "No active local training workloads (audit probes completed in-process; CPU JAX installed in user python for diagnostics)",
       "DURABLE LOOP ACTIVE: Qoder CLI cron job f5733a0c (every 30 min, /marathon-exec, persisted, permanent) EV-0041; ALL sentinel text loops remain DEPRECATED (operator ruling, EV-0036 class)"
     ],
     "COMPLETED_THIS_SESSION": [
+      "LEARNING-PATH-INTEGRITY & EPISODE-CONTINUITY AUDIT completed (operator amendment, EV-0048): reset-per-update screening regime PROVEN empirically (continuity + coverage probes) and archaeologically (verdict A+C: persistence repaired twice historically, baseline trained WITH carry, screening runner de27575 diverged); regime named EARLY_WINDOW_RESET_REGIME_V1; all historical results preserved and re-labelled VALID_IN_RESET_REGIME; shaping truncation flaw fixed (Ng-1999 correction now at any episode end, 16/16 tests); long-horizon JAX-vs-pinned-engine parity suite 14/14 PASS (no mid/endgame divergence); runner gained --episode-carry {none,persistent} knob (default none = bit-compatible with registered runs) CPU-smoked both modes; EPISODE_CONTINUITY_R1 PREDECLARED + REGISTERED (experiment#episode-continuity-r1#d59d66093f59)",
+      "REWARD-SHAPING-R2 adjudicated this tick (EV-0047): 4/4 arms exit=0 (05:30:08Z-06:10:12Z, self-stop confirmed, zero idle burn); control survival met; LAND-POTENTIAL ADVANCES TELEMETRY-GRADE ONLY (vloss reduction 2.27/2.10 vs control 0.0064/0.0065, no sign flip); gameplay arbiter DEFERRED to corrected regime per audit amendment; cross-pod bit-exact control check recorded as INTEGRITY FLAG attributed to GPU nondeterminism (update-0 identical to ~1e-7); 8 registry records (all tagged TRAINING_REGIME); launch forensics: CRLF + venv-interpreter-on-container-disk regressions root-caused with regression-guard notes",
       "REWARD-SHAPING-R1 round closed VOID_SIGNAL_VACUOUS this tick (EV-0046): all arms ran clean (6/6, 240/240, self-stop zero idle burn, artefacts fetched) but variants bit-exact control-identical - army-total shaping provably zero-signal in fresh-32-tick self-play windows; 12 registry records preserved; land_potential fix implemented + verified (42% signal ticks, 12 tests PASS); REWARD-SHAPING-R2 predeclared + registered (experiment#reward-shaping-r2#9172336619e7, CONTROL vs LAND-POTENTIAL x 2 seeds)",
       "BC-A-PILOT-R1 predeclared + registered (experiment#bc-a-pilot-r1#57aaa6f2b530): charter §7A pilot step, engine-verified labels only (EV-0045), silent-pass excluded, player-disjoint holdout (ResBot), leak-guard gated; pilot checkpoint never enters funnel",
       "Replay EXACT ACTION DERIVATION milestone DONE this tick (scripts/data/replay_action_derivation.py, EV-0045): 1904/1921 ticks engine-verified action pairs (ownership 99.1% exact); army residual root-caused to source-site general-move semantics vs competition static-general tiles (reported, not papered over); BC labels will use OWNERS_ONLY-verified pairs per predeclared handling direction",
@@ -282,11 +285,33 @@
   },
   "ACTIVE_REMOTE_PROCESSES": {
     "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
-    "AUDITED_AT_UTC": "2026-08-16T03:08:00Z",
+    "AUDITED_AT_UTC": "2026-08-16T06:50:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "RUNPOD POD kkmqdgqbw3wgph (quantisilico_rshaping_r1_a40, EU-SE-1 A40 $0.44/h): REWARD-SHAPING-R1 round executing, arm 1/6, GPU 82%/41562MiB verified 03:03Z, remote self-stop armed (EV-0044)"
+      "NONE_RUNNING: REWARD-SHAPING-R2 round completed 06:10:12Z and self-stopped yanhy83zocslwp (EV-0047); all other pods EXITED; zero idle burn"
     ],
     "OBSERVED_RESOURCES": [
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "yanhy83zocslwp",
+        "NAME": "quantisilico_rshaping_r2_a40",
+        "STATE": "EXITED_STOPPED_AFTER_R2_EVIDENCE_FETCH_06:30Z",
+        "LEDGER": "experiments/marathon/runpod_resources.json"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "kkmqdgqbw3wgph",
+        "NAME": "quantisilico_rshaping_r1_a40",
+        "STATE": "EXITED_RETAINS_R1_VOLUME_SUPERSEDED_HOST_CONGESTED"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "zu2pvculot0yhp",
+        "NAME": "quantisilico_topadv_r1_a40",
+        "STATE": "EXITED_RETAINS_VOLUME_HOST_CONGESTED"
+      },
       {
         "PROVIDER": "RUNPOD",
         "RESOURCE_TYPE": "POD",
@@ -330,7 +355,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#reward-shaping-r2#9172336619e7 (REWARD-SHAPING-R2 launching; R1 closed VOID_SIGNAL_VACUOUS EV-0046 with 12 preserved records)",
+  "CURRENT_EXPERIMENT": "experiment#episode-continuity-r1#d59d66093f59 (EPISODE_CONTINUITY_R1 predeclared + registered; REWARD-SHAPING-R2 closed EV-0047 with LAND-POTENTIAL advancing TELEMETRY-GRADE ONLY, gameplay arbiter deferred to corrected regime)",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -344,7 +369,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "REWARD-SHAPING-R2 LAUNCHING on kkmqdgqbw3wgph (resume pod -> update repo to land_potential commit -> transfer remote_reward_shaping_r2_orchestrator.sh -> launch via wrapper; 4 arms CONTROL/LAND-POTENTIAL x 2 seeds, ~6-7 min/arm, est end ~30 min after launch; self-stop armed). Next bounded actions: (1) verify launch + GPU active; (2) on completion (later tick): SSH-fetch screening_runs_reward_shaping_r2 + round log, verify integrity incl. CONTROL-MUST-REPRODUCE-R1-BIT-EXACT check, confirm self-stop, adjudicate per reward_shaping_round_2_plan.yaml, back-register, EV; (3) LAND advances -> predeclare gameplay eval with reward-hack surveillance; negative -> family closes and programme moves to explicit Stage-5 budget/capacity predeclaration; (4) parallel dependency-safe work: BC-A pilot implementation (plan predeclared + registered experiment#bc-a-pilot-r1#57aaa6f2b530), dataset expansion V02; (5) R1 VOID verdict (EV-0046) preserved with 12 registry records - knobs were signal-vacuous in fresh-window regime; land_potential fix verified (42% signal ticks); (6) continuation: durable Qoder CLI cron job f5733a0c (30 min, /marathon-exec); sentinel loops DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "LAUNCH EPISODE_CONTINUITY_R1 (audit-mandated regime correction; the ONLY GPU experiment authorised until it resolves, per LEARNING-PATH-INTEGRITY amendment: no further reset-regime knob rounds). Sequence: (1) resume yanhy83zocslwp (volume has repo@pre-audit commit + baseline ckpt + repaired venv) OR provision fresh A40 if host-congested; (2) git pull to the episode-carry commit, verify .venv312/bin/python --version (venv-interpreter regression guard, EV-0047), JAX GPU probe; (3) write + LF-normalise + bash -n the remote_episode_continuity_r1_orchestrator.sh (4 arms EPC1-A0-RESET-S1/S2 --episode-carry none, EPC1-A1-PERSIST-S1/S2 --episode-carry persistent, seeds 20260901/20260903, 240 updates @256x32, identity reward, same pod for all arms); (4) launch via self-stop wrapper, verify GPU active; (5) on completion: fetch artefacts, adjudicate per episode_continuity_round_1_plan.yaml (persistent adopted iff BOTH seeds survive integrity; regime question, not knob question), register runs/checkpoints with TRAINING_REGIME tags, EV. POST-ROUND: persistent advances -> flip runner default + add amendment-section-30 regression guards -> CROSS_REGIME_BRIDGE plan (reward FIRST incl. deferred LAND-POTENTIAL gameplay arbiter under corrected regime); parallel dependency-safe work meanwhile: BC-A pilot implementation, dataset V02 stratified expansion, evaluator win-conversion calibration suite, silent-pass measurement. Continuation: durable cron f5733a0c (30 min /marathon-exec); zero-idle-burn permanent; RUNPOD FIRST on every resume.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
@@ -398,6 +423,11 @@
       "ID": "ELITE-REPLAY-INTELLIGENCE-DURABLE-CONTINUATION-2026-08-15",
       "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
       "SUMMARY": "Adds ELITE_REPLAY_AUGMENTATION as a new evidence-gated Stage-4A research family (additive, not a replacement): bounded replay-data plane with immutable provenance, fog-of-war legal-POV parity gate, player/time/seed/style-disjoint anti-overfit splits, per-player caps, sub-experiments BC warm start / auxiliary replay loss / elite opponent clones / scenario curriculum / disagreement mining, multi-metric generalisation report before any scalar, external leaderboard telemetry as supplement not authority. Also mandates durable continuation: inspect installed Qoder /loop capability, persist the marathon loop prompt + execution lease in-repo, ~30 min default cadence, loop may only terminate at canonical completion or ALL-scope hard blocker. Horizon family verdict handling: EV-0033 contaminated by serving defect (EV-0034); rerun under unchanged predeclared rules decides the family; no SH-R5 merely because SH-R4 failed."
+    },
+    {
+      "ID": "LEARNING-PATH-INTEGRITY-AND-EPISODE-CONTINUITY-AUDIT-2026-08-16",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT_EXECUTED_THIS_TICK",
+      "SUMMARY": "High-priority scientific-integrity amendment (not a replacement programme): determine whether a systemic training-state-distribution defect prevents the PPO learner from receiving midgame/endgame/win-conversion experience. Mandates: prove-or-falsify from runtime code (no inference from names); preserve ALL prior experiments (regime-labelling, never deletion); git archaeology for prior reset regressions; map the real collection path; measure turn-bucket state coverage; audit episode continuity, partial-reset semantics, GAE/bootstrap/terminal masks, reward propagation, potential-shaping math incl. truncation, observation memory, policy freshness, PRNG independence, opponent distribution, silent-pass rates (pinned engine authority), mask parity, long-horizon JAX-vs-engine parity, terminal conditions incl. forced-win fixture, evaluator win-conversion calibration (diagnostic only, 1200-turn horizon unchanged); predeclare EPISODE_CONTINUITY_R1 (reset vs persistent, matched variables) if the defect is proven; CROSS_REGIME_BRIDGE policy (never blindly rerun all families; reward most likely interaction); regime labels VALID_IN_RESET_REGIME / VOID_SIGNAL_VACUOUS / SUPERSEDED_BY_ENGINEERING_FIX; continue BC-A + dependency-safe work in parallel; do not start expensive new GPU families on the suspect regime until resolved; regression guards become part of the trainer gate; produce a 17-question evidence-backed diagnosis and then CONTINUE the marathon through Stages 5-7 to canonical completion. EXECUTED this tick as EV-0047/EV-0048: defect PROVEN (EARLY_WINDOW_RESET_REGIME_V1), correction knob implemented + smoked, EPISODE_CONTINUITY_R1 predeclared + registered."
     }
   ]
 }
