@@ -30,6 +30,7 @@ from generals_bot.competition_native_jax.transformer_jax import init_params  # n
 from train.competition_native_jax.ema_jax import ema_update  # noqa: E402
 from train.competition_native_jax.gae_jax import gae_advantages_batch_jit  # noqa: E402
 from train.competition_native_jax.ppo_jax import make_optimizer, ppo_update  # noqa: E402
+from train.competition_native_jax.reward_shaping_jax import set_active_shaping  # noqa: E402
 from train.competition_native_jax.rollout_selfplay_jax import (  # noqa: E402
     collect_selfplay_batch,
 )
@@ -96,7 +97,22 @@ def main() -> int:
         help="TOPADV knob: keep PG signal on top fraction of |advantage| transitions "
         "(1.0 = identity/default; PPO_SEMANTICS UNCHANGED for serving)",
     )
+    parser.add_argument(
+        "--reward-shape",
+        default="none",
+        choices=["none", "kill_delta", "potential"],
+        help="REWARD-SHAPING-R1 knob (EV-0044): bounded progress signal on non-terminal "
+        "ticks (none = identity/control; PPO_SEMANTICS UNCHANGED for serving)",
+    )
+    parser.add_argument(
+        "--reward-shape-beta",
+        type=float,
+        default=0.0,
+        help="REWARD-SHAPING-R1 shaping coefficient (0.0 = identity)",
+    )
     args = parser.parse_args()
+
+    set_active_shaping(args.reward_shape, args.reward_shape_beta)
 
     out_dir = args.out_dir or REPO / f"experiments/marathon/screening_runs/{args.arm_id}"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -165,6 +181,7 @@ def main() -> int:
                 "transitions": (index + 1) * per_update,
                 "collect_s": collect_wall,
                 "update_s": update_wall,
+                "decisive_share": float(jnp.mean(batch["terminals"])),
                 **{key: float(value) for key, value in metrics.items()},
             }
             record["healthy"] = healthy(metrics)
@@ -201,6 +218,8 @@ def main() -> int:
         "seed": args.seed,
         "min_generals_distance": args.min_generals_distance,
         "top_advantage_fraction": args.top_advantage_fraction,
+        "reward_shape": args.reward_shape,
+        "reward_shape_beta": args.reward_shape_beta,
         "budget_transitions": args.budget_transitions,
         "actual_transitions": transitions,
         "updates": len(records),
@@ -220,6 +239,8 @@ def main() -> int:
             "PG_LAST": finite_last.get("pg"),
             "RATIO_FIRST": first.get("ratio"),
             "RATIO_LAST": last.get("ratio"),
+            "DECISIVE_SHARE_FIRST": finite_first.get("decisive_share"),
+            "DECISIVE_SHARE_LAST": finite_last.get("decisive_share"),
         },
         "throughput": {
             "reset_pool_build_s": pool_wall,

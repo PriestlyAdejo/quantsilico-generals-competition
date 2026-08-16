@@ -29,6 +29,7 @@ from generals_bot.competition_native_jax.competition_env_jax import (
 )
 from generals_bot.competition_native_jax.inference_jax import sample_action
 from generals_bot.competition_native_jax.transformer_jax import forward_batch
+from train.competition_native_jax.reward_shaping_jax import active_shaping, shape_step_rewards
 
 sample_action_batch = jax.jit(jax.vmap(sample_action, in_axes=(0, 0, 0)))
 
@@ -111,6 +112,13 @@ def rollout_step(carry: RolloutCarry, _):
     next_states, rewards, terminated, truncated, _info = step_batch_jax(states, joint)
     done = terminated | truncated
     rewards0 = rewards[:, 0]
+    # REWARD-SHAPING-R1 (EV-0044): training-reward shaping for the trained seat
+    # only. PPO_SEMANTICS UNCHANGED - identity at mode "none" (control path).
+    _shape_mode, _shape_beta = active_shaping()
+    if _shape_mode != "none" and _shape_beta > 0.0:
+        rewards0 = shape_step_rewards(
+            states, next_states, rewards0, terminated, truncated, _shape_mode, _shape_beta
+        )
 
     next_states, pool_cursor = auto_reset_from_pool(
         next_states, terminated, truncated, pool, pool_cursor
@@ -137,6 +145,7 @@ def rollout_step(carry: RolloutCarry, _):
         "values": v0,
         "rewards": rewards0,
         "dones": done.astype(jnp.float32),
+        "terminals": terminated.astype(jnp.float32),  # decisive-game diagnostic (EV-0044)
     }
     return RolloutCarry(next_states, mem0, mem1, key, params, pool, pool_cursor), traj
 
