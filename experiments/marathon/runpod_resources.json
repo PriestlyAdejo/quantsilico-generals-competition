@@ -2,8 +2,23 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T02:36:00Z",
+  "updated_at_utc": "2026-08-16T03:00:00Z",
   "resources": [
+    {
+      "pod_id": "kkmqdgqbw3wgph",
+      "name": "quantisilico_rshaping_r1_a40",
+      "status": "RUNNING_REWARD_SHAPING_R1_ROUND",
+      "owner_run": "experiment#reward-shaping-r1#39ce1360218e",
+      "expected_workload": "remote_reward_shaping_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (6 arms sequential, 240 updates each, wall cap 90 min/arm; pod SELF-STOPS after round exit)",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "machine_id": "yxpifxzxhiee",
+      "ssh": "root@194.68.245.108 -p 22070",
+      "started_at_utc": "2026-08-16T02:54:51Z",
+      "round_start_utc": "2026-08-16T03:01:55Z",
+      "verified_active": "2026-08-16T03:03Z GPU 82%/41562MiB, arm RSH-A0-CONTROL-S1 running, wrapper+orchestrator PIDs present (EV-0044)",
+      "provision_note": "FRESH fallback pod (runpod_pod_create.py, billing-logged): original TOPADV host jttzxgrlso5d had no free GPUs (7 start attempts 02:37-02:52Z); zu2pvculot0yhp retained EXITED with its volume (EV-0044)"
+    },
     {
       "pod_id": "zu2pvculot0yhp",
       "name": "quantisilico_topadv_r1_a40",

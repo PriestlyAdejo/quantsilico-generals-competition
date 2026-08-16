@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-16T02:35:00Z",
+  "UPDATED_AT_UTC": "2026-08-16T03:08:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_TOPADV_CLOSED_NEXT_FAMILY_PREDECLARATION",
-  "CURRENT_TASK": "PREDECLARE_REGISTER_THEN_LAUNCH_REWARD_INTEGRITY_R1",
+  "CURRENT_STAGE": "STAGE_4A_REWARD_SHAPING_R1_GPU_ROUND_EXECUTING",
+  "CURRENT_TASK": "MONITOR_REWARD_SHAPING_R1_THEN_FETCH_ADJUDICATE_REGISTER",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -137,6 +137,18 @@
       "RESULT": "PASS_12_RECORDS_REGISTERED_6_RUN_6_CHECKPOINT EV-0043"
     },
     {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_reward_shaping.py tests/competition_native_jax/test_v4_2_reset_pool.py -q",
+      "RESULT": "PASS_10_SHAPING_TESTS_PLUS_5_ROLLOUT_REGRESSION EV-0044"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. CPU smokes: run_sh_r1_arm.py --max-updates 2 with reward-shape none/kill_delta(0.01)/potential(1.0)",
+      "RESULT": "PASS_ALL_THREE_RATIO_1.0_FINITE_EXPECTED_2UPDATE_NO_VLOSS_FLAG_CAUGHT_AND_FIXED_BATCHED_OWNERSHIP_LAYOUT_DEFECT_PRE_GPU EV-0044"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_reward_shaping_r1.py",
+      "RESULT": "PASS_EXPERIMENT_REGISTERED_PRE_LAUNCH experiment#reward-shaping-r1#39ce1360218e EV-0044"
+    },
+    {
       "COMMAND": "control match heuristic_v1 vs heuristic_v0 seed=55 via run_python_agent_match",
       "RESULT": "DRAW_AT_TRUNCATION_1200_ZERO_FAULTS_CONFIRMS_ENVIRONMENT_LEVEL_PROPERTY EV-0021"
     },
@@ -213,18 +225,19 @@
     "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
     "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
     "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon.",
-    "TOPADV-R1 completion (~01:50-02:00Z est.): SSH-fetch screening_runs_topadv_r1 + topadv_r1_round.log, verify integrity, confirm pod self-stopped (else stop + billing-log idle), adjudicate per topadv_round_1_plan.yaml predeclared rules, back-register runs/checkpoints, EV.",
-    "After TOPADV-R1 adjudication: advancing variants -> predeclare gameplay eval; clean negative -> predeclare reward-integrity/progress-pressure family. Replay lane (EV-0042): next milestone = exact action derivation via state-diff + engine oracle (replaces heuristic candidates), then competition-semantic audit, derived shards, split, bounded BC pilot. BC-A predeclaration follows; GPU scheduling after TOPADV. Dataset expansion (V02) remains dependency-safe CPU/network work.",
+    "REWARD-SHAPING-R1 completion (~04:05Z est.): SSH-fetch screening_runs_reward_shaping_r1 + reward_shaping_r1_round.log from kkmqdgqbw3wgph (194.68.245.108:22070), verify integrity, confirm pod self-stopped (else stop + billing-log idle), adjudicate per reward_shaping_round_1_plan.yaml predeclared rules, back-register runs/checkpoints, EV.",
+    "After REWARD-SHAPING-R1 adjudication: advancing variants -> predeclare gameplay eval (with predeclared reward-hack surveillance); clean negative -> predeclare the explicit Stage-5 budget/capacity transition (never drift). Replay lane (EV-0042): exact action derivation via state-diff + engine oracle, then competition-semantic audit, derived shards, split, bounded BC pilot. Dataset expansion (V02) remains dependency-safe CPU/network work.",
     "Replay lane standing rules (EV-0042): competition engine semantics only (charter §0); no single legal/illegal boolean; silent-pass actions never auto-labelled; runner faults not reconstructable from replays; engine SHA in all derived datasets."
   ],
   "ACTIVE_LOCAL_PROCESSES": {
     "AUDIT_STATUS": "AUDITED",
-    "AUDITED_AT_UTC": "2026-08-16T02:35:00Z",
+    "AUDITED_AT_UTC": "2026-08-16T03:08:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "NONE RUNNING (TOPADV-R1 round COMPLETE 01:38:37Z; pod self-stopped; fetch window 01:41-02:05Z then STOPPED - all paid resources EXITED)",
+      "REWARD-SHAPING-R1 GPU round on kkmqdgqbw3wgph (monitored remotely; arm 1/6 started 03:01:55Z, GPU 82%, self-stop armed, est end ~04:05Z)",
       "DURABLE LOOP ACTIVE: Qoder CLI cron job f5733a0c (every 30 min, /marathon-exec, persisted, permanent) EV-0041; ALL sentinel text loops remain DEPRECATED (operator ruling, EV-0036 class)"
     ],
     "COMPLETED_THIS_SESSION": [
+      "REWARD-SHAPING-R1 PREDECLARED + REGISTERED + IMPLEMENTED + SMOKED + LAUNCHED this tick (EV-0044): knob none/kill_delta/potential (training-reward only, PPO_SEMANTICS UNCHANGED), 10 unit tests + rollout regression 5/5 + 3 CPU smokes PASS (smoke caught a batched-ownership layout defect pre-GPU); original TOPADV host GPU-congested (7 bounded free start attempts) -> fresh A40 kkmqdgqbw3wgph provisioned + bootstrapped + checkpoint re-transferred; round start 03:01:55Z commit 49e5976, self-stop armed",
       "TOPADV-R1 FULLY CLOSED this pass (EV-0043): round completed 01:38:37Z, pod SELF-STOPPED (zero idle burn), artefacts fetched on brief resume (port rotated 22049->22072) + integrity-verified (6/6 arms 240/240), pod stopped after fetch, adjudicated CLEAN NEGATIVE per predeclared rules (all six survive; TOP-50 0.000% margin + sign flip, TOP-25 +0.0018% + sign flip -> neither advances), 12 registry records; fifth 2M line at parity; win-conversion constraint intact",
       "REPLAY AUTHORITY CORRECTION executed (operator amendment, EV-0042): competition engine oracle (replay_engine_oracle.py) + 23 differential parity tests PASS vs pinned engine 9e3b9d1 + timing-alignment trace PROVEN (owners 99.06% exact, even-tick growth phase confirmed, cell parity 99.0-99.4%); EV-0041 generic-legality framing SUPERSEDED as authority, module marked superseded, unaffected evidence preserved; charter §0 + replay skill codified; RunPod key rotation rescinded by operator; TOPADV-R1 GPU path untouched",
       "Replay action LEGALITY CHECK milestone DONE (scripts/data/replay_action_legality.py, 8 tests, real probe: 1440/1443 legal, 3 adjacent-only flags, zero rule violations) EV-0041 - framing superseded by EV-0042; module retained but not authoritative",
@@ -262,8 +275,10 @@
   },
   "ACTIVE_REMOTE_PROCESSES": {
     "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
-    "AUDITED_AT_UTC": "2026-08-15T21:10:00Z",
-    "ACTIVE_PROJECT_WORKLOADS": [],
+    "AUDITED_AT_UTC": "2026-08-16T03:08:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [
+      "RUNPOD POD kkmqdgqbw3wgph (quantisilico_rshaping_r1_a40, EU-SE-1 A40 $0.44/h): REWARD-SHAPING-R1 round executing, arm 1/6, GPU 82%/41562MiB verified 03:03Z, remote self-stop armed (EV-0044)"
+    ],
     "OBSERVED_RESOURCES": [
       {
         "PROVIDER": "RUNPOD",
@@ -308,7 +323,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "TOPADV-R1 CLOSED clean negative (EV-0043); next = REWARD-INTEGRITY/PROGRESS-PRESSURE-R1 predeclaration",
+  "CURRENT_EXPERIMENT": "experiment#reward-shaping-r1#39ce1360218e (REWARD-SHAPING-R1 GPU round executing on kkmqdgqbw3wgph, arm 1/6 at 03:01:55Z)",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -322,7 +337,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "TOPADV-R1 CLOSED clean negative (EV-0043); ALL paid resources EXITED. Next bounded actions: (1) PREDECLARE + REGISTER REWARD-INTEGRITY/PROGRESS-PRESSURE-R1 (last screening-side lever class for the win-conversion constraint: reward shaping for progress/kill pressure; PPO_SEMANTICS declaration required; plan yaml -> knob implementation -> unit tests -> CPU smoke -> registry record BEFORE launch), then LAUNCH on fresh A40 via remote self-stop wrapper; (2) parallel dependency-safe work while GPU busy: replay lane exact action derivation via state-diff + engine oracle (EV-0042 milestone), dataset expansion V02, leaderboard snapshot cadence, 4B polish; (3) if reward family closes negative too, the programme-level question moves to budget/capacity (Stage 5) - predeclare that transition explicitly, never drift; (4) RunPod key rotation RESCINDED by operator (EV-0042); (5) continuation: durable Qoder CLI cron job f5733a0c (30 min, /marathon-exec); sentinel loops DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "REWARD-SHAPING-R1 EXECUTING on kkmqdgqbw3wgph (EU-SE-1 A40, 194.68.245.108:22070; round start 2026-08-16T03:01:55Z commit 49e5976; 6 arms sequential ~10 min/arm; remote self-stop armed; est end ~04:05Z). Next bounded actions: (1) on durable-loop tick after ~04:05Z: check round log; on completion SSH-fetch artefacts (screening_runs_reward_shaping_r1 + reward_shaping_r1_round.log), verify integrity, confirm pod self-stopped (else stop + billing-log idle); (2) adjudicate per reward_shaping_round_1_plan.yaml predeclared rules (both seeds survive + beat control mean, no sign flip; sub-1% margins telemetry-grade only; DECISIVE_SHARE diagnostic only); back-register runs/checkpoints; record EV; (3) advancing variants -> predeclare gameplay eval WITH predeclared reward-hack surveillance; clean negative -> predeclare the explicit Stage-5 budget/capacity transition (never drift); (4) parallel dependency-safe work while GPU busy: replay lane exact action derivation via state-diff + engine oracle (EV-0042), dataset expansion V02, 4B polish; (5) zu2pvculot0yhp retained EXITED (host GPU-congested at restart time) - stop/retain decision at next boundary; its volume holds prior TOPADV env; (6) continuation: durable Qoder CLI cron job f5733a0c (30 min, /marathon-exec); sentinel loops DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
