@@ -1,0 +1,43 @@
+{
+  "actual_transitions": 1966080,
+  "arm_id": "EPC1-A1-PERSIST-S2",
+  "budget_transitions": 1966080,
+  "eliminated": false,
+  "elimination": [],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-16T07:29:39Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.191464900970459,
+    "ENTROPY_LAST": 5.695435523986816,
+    "PG_FIRST": -0.0005258751916699111,
+    "PG_LAST": 5.723515641875565e-06,
+    "RATIO_FIRST": 1.0000028610229492,
+    "RATIO_LAST": 1.0000017881393433,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3575994968414307,
+    "VLOSS_LAST": 2.3512260913848877,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.006373405456542969
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "seed": 20260903,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 20986.458784704,
+    "collect_wall_s": 93.68326596543193,
+    "end_to_end_tps": 5010.954635068693,
+    "reset_pool_build_s": 105.90747109614313,
+    "total_wall_s": 402.25868415646255,
+    "update_wall_s": 298.67310985177755
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 240
+}

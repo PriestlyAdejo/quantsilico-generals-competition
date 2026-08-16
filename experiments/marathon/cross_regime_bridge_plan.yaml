@@ -1,0 +1,63 @@
+kind: MARATHON_CROSS_REGIME_BRIDGE_PLAN
+plan_id: CROSS_REGIME_BRIDGE_V1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T07:40:00Z"
+authority: LEARNING_PATH_INTEGRITY_AND_EPISODE_CONTINUITY_AUDIT + EPISODE_CONTINUITY_R1 consumption gate (EV-0048/EV-0049)
+
+purpose: >
+  Establish the corrected-regime (PERSISTENT_EPISODE_REGIME_V1, now canonical)
+  baseline and selectively reopen prior Stage-4A dimensions ONLY where a
+  plausible interaction with state continuity exists. Never blindly rerun
+  every family; old IDs and results are preserved as VALID_IN_RESET_REGIME.
+
+bridge_steps_predeclared:
+  - step: B1_CORRECTED_REGIME_BASELINE
+    content: >
+      multi-seed persistent-regime control line (reward none, carry persistent)
+      from MARATHON_BASELINE_V0 at the canonical screening geometry (256x32,
+      240 updates) x seeds {20260901, 20260903, plus one additional seed if
+      either shows integrity flags}; establishes the regime's own control
+      distribution (EPC1's two persistent arms already provide the first pair).
+    status: PARTIALLY_SATISFIED_BY_EPC1 (two seeds already run + survived;
+      third seed optional, decided at consumption, never post-hoc relaxing)
+  - step: B2_REWARD_BRIDGE
+    content: >
+      REWARD family reopened FIRST under the corrected regime (audit: very
+      likely interaction - kill/combat/terminal signals become available).
+      Arms: CONTROL(none) vs LAND-POTENTIAL(beta 1.0) (telemetry-grade advance
+      already earned under reset regime, EV-0047, gameplay arbiter deferred)
+      vs KILL-DELTA(beta 0.01) - the R1-vacuous knob retested now that combat
+      is reachable. Matched geometry/budget/seeds; same advancement rules as
+      reward_shaping_round_2_plan.yaml; gameplay eval with predeclared
+      reward-hack surveillance follows for any advancer.
+  - step: B3_CURRICULUM_CHECK
+    content: >
+      bounded curriculum interaction check (spawn-distance knob) under the
+      corrected regime ONLY IF B2 shows regime-sensitive signal structure;
+      otherwise deferred (recorded).
+  - step: B4_RAW_VS_EMA_ON_CORRECTED_CHECKPOINT
+    content: >
+      raw vs EMA serving comparison evaluated on a strong corrected-regime
+      checkpoint (EVAL_ONLY); the old family is NOT recreated.
+  - step: B5_TOPADV_AND_HORIZON
+    content: >
+      bounded interaction checks ONLY if justified by B1-B4 evidence; default
+      is DEFER (recorded). No automatic reruns.
+
+escalation_rule_predeclared: >
+  If, after B1+B2 complete with validated full-phase state coverage, direct
+  win-conversion experiments (including gameplay evaluation of any B2
+  advancer) still produce zero meaningful external strength and the draw wall
+  persists, the programme advances to STAGE 5 capacity/value research
+  (teacher capacity, patch-transformer, richer legal temporal history,
+  critic/value architecture incl. scalar-vs-distributional) rather than
+  spending further budgets on small optimiser knobs. The triggering evidence
+  is the B2 round outcome + its gameplay evaluation, not future discretion.
+
+constraints:
+  - all bridge runs declare TRAINING_REGIME=PERSISTENT_EPISODE_REGIME_V1 in registry records
+  - gameplay evaluation remains the promotion arbiter; telemetry never promotes
+  - no post-hoc rule changes; any modification requires a NEW plan
+  - zero-idle-burn + self-stop wrapper + predeclare/register BEFORE launch
+
+evidence_links: [EV-0035, EV-0036, EV-0038, EV-0039, EV-0043, EV-0046, EV-0047, EV-0048, EV-0049]

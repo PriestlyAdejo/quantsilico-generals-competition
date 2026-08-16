@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-16T07:00:00Z",
+  "UPDATED_AT_UTC": "2026-08-16T07:42:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_EPISODE_CONTINUITY_R1_GPU_ROUND_EXECUTING",
-  "CURRENT_TASK": "MONITOR_FETCH_ADJUDICATE_EPISODE_CONTINUITY_R1",
+  "CURRENT_STAGE": "STAGE_4A_PERSISTENT_REGIME_ADOPTED_CROSS_REGIME_BRIDGE_B2_REWARD_NEXT",
+  "CURRENT_TASK": "PREDECLARE_REGISTER_LAUNCH_REWARD_BRIDGE_R1_UNDER_PERSISTENT_REGIME",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -242,6 +242,7 @@
       "DURABLE LOOP ACTIVE: Qoder CLI cron job f5733a0c (every 30 min, /marathon-exec, persisted, permanent) EV-0041; ALL sentinel text loops remain DEPRECATED (operator ruling, EV-0036 class)"
     ],
     "COMPLETED_THIS_SESSION": [
+      "EPISODE_CONTINUITY_R1 executed + adjudicated this tick (EV-0049): 4/4 arms exit=0 (06:52:00Z-07:29:45Z, self-stop, zero idle burn, artefacts fetched port 22065->22144, pod stopped); PERSISTENT_EPISODE_REGIME_V1 ADOPTED as canonical screening regime (both persistent seeds valid share 1.0, finite, entropy rising not collapsing); reset controls survived reproducing the historical baseline; FIRST-EVER terminal competition signal in screening: 2 decisive ticks in PERSIST-S2 (2880 prior reset-regime updates had exactly zero); runner default flipped --episode-carry none->persistent + 4 regression guards PASS (section-30 amendment); 8 registry records with TRAINING_REGIME tags; CROSS_REGIME_BRIDGE_V1 plan PREDECLARED (reward FIRST, then curriculum bounded check, raw-vs-EMA on corrected checkpoint only, escalation rule to Stage 5 predeclared)",
       "EPISODE_CONTINUITY_R1 LAUNCHED this tick on yanhy83zocslwp (round start 06:52:00Z, commit bd2cf36, GPU 96% verified): 4 arms EPC1-A0-RESET-S1/S2 (--episode-carry none) vs EPC1-A1-PERSIST-S1/S2 (--episode-carry persistent), seeds 20260901/20260903, 240 updates @256x32 identity reward, same pod; venv-interpreter regression recurred on resume and was repaired (EV-0047 guard note validated: verify .venv312/bin/python before wrapper launch); self-stop armed; est end ~07:40Z",
       "LEARNING-PATH-INTEGRITY & EPISODE-CONTINUITY AUDIT completed (operator amendment, EV-0048): reset-per-update screening regime PROVEN empirically (continuity + coverage probes) and archaeologically (verdict A+C: persistence repaired twice historically, baseline trained WITH carry, screening runner de27575 diverged); regime named EARLY_WINDOW_RESET_REGIME_V1; all historical results preserved and re-labelled VALID_IN_RESET_REGIME; shaping truncation flaw fixed (Ng-1999 correction now at any episode end, 16/16 tests); long-horizon JAX-vs-pinned-engine parity suite 14/14 PASS (no mid/endgame divergence); runner gained --episode-carry {none,persistent} knob (default none = bit-compatible with registered runs) CPU-smoked both modes; EPISODE_CONTINUITY_R1 PREDECLARED + REGISTERED (experiment#episode-continuity-r1#d59d66093f59)",
       "REWARD-SHAPING-R2 adjudicated this tick (EV-0047): 4/4 arms exit=0 (05:30:08Z-06:10:12Z, self-stop confirmed, zero idle burn); control survival met; LAND-POTENTIAL ADVANCES TELEMETRY-GRADE ONLY (vloss reduction 2.27/2.10 vs control 0.0064/0.0065, no sign flip); gameplay arbiter DEFERRED to corrected regime per audit amendment; cross-pod bit-exact control check recorded as INTEGRITY FLAG attributed to GPU nondeterminism (update-0 identical to ~1e-7); 8 registry records (all tagged TRAINING_REGIME); launch forensics: CRLF + venv-interpreter-on-container-disk regressions root-caused with regression-guard notes",
@@ -286,9 +287,9 @@
   },
   "ACTIVE_REMOTE_PROCESSES": {
     "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
-    "AUDITED_AT_UTC": "2026-08-16T07:00:00Z",
+    "AUDITED_AT_UTC": "2026-08-16T07:42:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "RUNPOD POD yanhy83zocslwp (quantisilico_rshaping_r2_a40, EU-SE-1 A40 $0.44/h, ssh -p 22065): EPISODE_CONTINUITY_R1 round executing since 06:52:00Z commit bd2cf36, arm 1/4 EPC1-A0-RESET-S1, GPU 96%/38971MiB verified 06:58Z, remote self-stop armed (est round end ~07:40Z); venv-interpreter regression recurred on resume and was repaired per EV-0047 guard note"
+      "NONE_RUNNING: EPISODE_CONTINUITY_R1 completed 07:29:45Z, artefacts fetched, yanhy83zocslwp STOPPED ~07:35Z; zero idle burn"
     ],
     "OBSERVED_RESOURCES": [
       {
@@ -296,7 +297,7 @@
         "RESOURCE_TYPE": "POD",
         "RESOURCE_ID": "yanhy83zocslwp",
         "NAME": "quantisilico_rshaping_r2_a40",
-        "STATE": "RUNNING_EPC1_ROUND_SELF_STOP_ARMED",
+        "STATE": "EXITED_STOPPED_AFTER_EPC1_EVIDENCE_FETCH_07:35Z",
         "LEDGER": "experiments/marathon/runpod_resources.json"
       },
       {
@@ -356,7 +357,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#episode-continuity-r1#d59d66093f59 (EPISODE_CONTINUITY_R1 predeclared + registered; REWARD-SHAPING-R2 closed EV-0047 with LAND-POTENTIAL advancing TELEMETRY-GRADE ONLY, gameplay arbiter deferred to corrected regime)",
+  "CURRENT_EXPERIMENT": "CROSS_REGIME_BRIDGE_V1 step B2_REWARD_BRIDGE (REWARD-BRIDGE-R1 to be predeclared + registered + launched next tick under PERSISTENT_EPISODE_REGIME_V1); EPISODE_CONTINUITY_R1 closed EV-0049 with regime ADOPTED",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -370,7 +371,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "EPISODE_CONTINUITY_R1 EXECUTING on yanhy83zocslwp (round start 06:52:00Z, 4 arms x ~10-15 min, est end ~07:40-08:00Z, self-stop armed). Next tick: (1) RunPod FIRST - if pod self-stopped, resume (SSH port rotates; venv repair step: uv python install 3.12 then verify .venv312/bin/python, EV-0047); (2) SSH-fetch /workspace/screening_runs_episode_continuity_r1 + episode_continuity_r1_round.log + wrapper.log + marker, verify integrity (4/4 arms 240/240 updates, exit codes); (3) stop pod after fetch; (4) adjudicate ONLY per experiments/marathon/episode_continuity_round_1_plan.yaml predeclared rules (regime question: persistent adopted iff BOTH seeds survive integrity - valid share >= 0.9, no entropy collapse, finite; record decisive_share, turn coverage, terminal counts as diagnostics); same-pod paired frame only; (5) register runs/checkpoints with TRAINING_REGIME tags + EV entry. POST-ROUND: persistent advances -> flip runner default to persistent + add amendment-section-30 regression guards (turn counters increase across updates, only done envs reset, bootstrap at fragment boundary, terminal mask only at true ends) -> CROSS_REGIME_BRIDGE plan (reward family FIRST incl. deferred LAND-POTENTIAL gameplay arbiter under corrected regime); persistent fails -> root-cause + predeclare successor (no silent fallback). PARALLEL DEPENDENCY-SAFE meanwhile: BC-A pilot implementation (experiment#bc-a-pilot-r1#57aaa6f2b530), dataset V02 stratified expansion, evaluator win-conversion calibration suite, silent-pass measurement. Continuation: durable cron f5733a0c (30 min /marathon-exec); zero-idle-burn permanent; RUNPOD FIRST on every resume.",
+  "NEXT_SAFE_ACTION": "PREDECLARE + REGISTER + LAUNCH REWARD-BRIDGE-R1 (CROSS_REGIME_BRIDGE_V1 step B2, first GPU round under canonical PERSISTENT_EPISODE_REGIME_V1): arms CONTROL(none) vs LAND-POTENTIAL(beta 1.0) vs KILL-DELTA(beta 0.01, R1-vacuous knob retested now that combat is reachable) x seeds {20260901, 20260903}, matched 240 updates @256x32, ALL --episode-carry persistent (runner default), same pod, self-stop wrapper; advancement rules mirror reward_shaping_round_2_plan.yaml; gameplay eval with predeclared reward-hack surveillance follows any advancer. Launch sequence: resume yanhy83zocslwp -> git pull -> venv guard (uv python install 3.12, EV-0047) -> LF-normalised orchestrator + bash -n -> key transfer -> launch -> verify GPU. ON COMPLETION: fetch, adjudicate (same-pod paired frame), register with TRAINING_REGIME=PERSISTENT_EPISODE_REGIME_V1, EV; escalation rule predeclared in cross_regime_bridge_plan.yaml (B2 + gameplay still draw-wall -> Stage 5). PARALLEL DEPENDENCY-SAFE meanwhile: BC-A pilot implementation (experiment#bc-a-pilot-r1#57aaa6f2b530; shard builder interfaces mapped: derive_tick labels + replay_legal_pov features + oracle silent-pass exclusion + 3970-dim codec inverse), dataset V02 stratified expansion, evaluator win-conversion calibration suite. Continuation: durable cron f5733a0c (30 min /marathon-exec); zero-idle-burn permanent; RUNPOD FIRST on every resume.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

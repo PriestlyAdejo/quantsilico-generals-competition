@@ -112,13 +112,14 @@ def main() -> int:
     )
     parser.add_argument(
         "--episode-carry",
-        default="none",
+        default="persistent",
         choices=["none", "persistent"],
-        help="EPISODE_CONTINUITY knob (LEARNING-PATH-INTEGRITY audit): none = "
-        "historical reset-per-update screening semantics (EARLY_WINDOW_RESET_REGIME_V1, "
-        "bit-compatible with all registered screening runs); persistent = thread the "
-        "RolloutCarry across PPO updates so live games continue until true competition "
-        "terminal/reset (canonical baseline regime). PPO_SEMANTICS UNCHANGED.",
+        help="EPISODE_CONTINUITY knob (LEARNING-PATH-INTEGRITY audit, EV-0048/0049): "
+        "persistent = CANONICAL regime (PERSISTENT_EPISODE_REGIME_V1, adopted by "
+        "EPISODE_CONTINUITY_R1): thread the RolloutCarry across PPO updates so live "
+        "games continue until true competition terminal/reset. none = historical "
+        "EARLY_WINDOW_RESET_REGIME_V1 retained ONLY for exact reproduction of "
+        "registered reset-regime runs. PPO_SEMANTICS UNCHANGED.",
     )
     args = parser.parse_args()
 
