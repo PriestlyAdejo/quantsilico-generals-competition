@@ -1,7 +1,7 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T11:30:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T11:45:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
  "STATUS": "PARTIAL",
  "CURRENT_STAGE": "STAGE_5_T2_IMPLEMENTED_TESTS_EXECUTING_AND_BC_A_FULL_TRAINING_EXECUTING_LOCAL_CPU",
@@ -361,7 +361,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#bc-a-full-r1#abcfcd746ac7 training executing (features 20/81); experiment#stage5-capacity-value-r1#f1dc01ccc86f: T2 geo smoke OOMed TWICE under memory contention with the BC trainer (15.8GB box, ~7GB free concurrently; JAX RESOURCE_EXHAUSTED in ppo vmap + scatter) - NOT yet valid evidence of CPU insufficiency; solo retry queued after training completes",
+ "CURRENT_EXPERIMENT": "experiment#bc-a-full-r1#abcfcd746ac7 training executing (feature walk 20/81, process HEALTHY advancing ~0.3 cores - unjitted observe-per-tick walk, ETA ~60 min, within predeclared 2h CPU budget); experiment#stage5-capacity-value-r1#f1dc01ccc86f: T2 screening runs REGISTERED PRE-LAUNCH (run#s5-t2-k1-s1#47d1e62130d8 seed 20260905, run#s5-t2-k1-s2#6eac713a3ba6 seed 20260907); geo smoke solo retry gated on trainer completion (RAM contention root cause)",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
