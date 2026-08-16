@@ -1,0 +1,61 @@
+kind: MARATHON_SCREENING_ROUND_PLAN
+plan_id: REWARD_BRIDGE_ROUND_1_PLAN
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T07:46:00Z"
+authority: CROSS_REGIME_BRIDGE_V1 step B2_REWARD_BRIDGE (cross_regime_bridge_plan.yaml, EV-0049)
+
+question: >
+  Under the canonical PERSISTENT_EPISODE_REGIME_V1 (games survive PPO update
+  boundaries; terminal/combat signals now reachable - EV-0049 recorded the
+  first-ever decisive ticks), does bounded progress-pressure reward shaping
+  improve learner outcomes versus the identity control? This reopens the
+  reward family on the corrected state distribution; reset-regime reward
+  results remain VALID_IN_RESET_REGIME (R1 VOID_SIGNAL_VACUOUS preserved,
+  R2 LAND advance re-tested here under the new regime).
+
+regime: PERSISTENT_EPISODE_REGIME_V1  # --episode-carry persistent, runner default (EV-0049)
+ppo_semantics: UNCHANGED  # training-reward ablation only; serving/action selection untouched
+
+arms:
+  - {arm_id: RWB1-A0-CONTROL-S1, reward_shape: none,         reward_shape_beta: 0.0,  seed: 20260901}
+  - {arm_id: RWB1-A0-CONTROL-S2, reward_shape: none,         reward_shape_beta: 0.0,  seed: 20260903}
+  - {arm_id: RWB1-A1-LAND-S1,    reward_shape: land_potential, reward_shape_beta: 1.0, seed: 20260901}
+  - {arm_id: RWB1-A1-LAND-S2,    reward_shape: land_potential, reward_shape_beta: 1.0, seed: 20260903}
+  - {arm_id: RWB1-A2-KILL-S1,    reward_shape: kill_delta,   reward_shape_beta: 0.01, seed: 20260901}
+  - {arm_id: RWB1-A2-KILL-S2,    reward_shape: kill_delta,   reward_shape_beta: 0.01, seed: 20260903}
+
+protocol:
+  geometry: {num_envs: 256, rollout_len: 32}
+  budget_transitions: 1966080   # 240 updates per arm (matched canonical funnel)
+  checkpoint: MARATHON_BASELINE_V0 (hash-verified, EV-0013/EV-0015)
+  min_generals_distance: 17
+  episode_carry: persistent     # ALL arms; the regime under test is shared
+  top_advantage_fraction: 1.0
+  compute: RunPod A40, remote self-stop wrapper, ALL ARMS SAME POD (paired frame, EV-0047)
+  integrity_stops: any non-finite metric or ratio outside [0.5, 2.0] -> INTEGRITY_FAILURE
+
+metrics_predeclared:
+  - vloss first/last/reduction, pg, entropy, ratio, valid learning share
+  - "DECISIVE_SHARE per update and round max (mechanism diagnostic ONLY, never an advancement criterion)"
+  - kill/combat signal density for the KILL arms (diagnostic: the R1-vacuous knob must now show nonzero increments or be declared vacuous in BOTH regimes)
+
+advancement_rules_predeclared:
+  - a variant ADVANCES only if BOTH seeds survive integrity AND its mean
+    vloss-reduction beats the control mean with no sign flip across seeds
+  - "control survival is REQUIRED; if the control fails, the round is VOID for advancement and re-run is predeclared"
+  - cross-arm vloss magnitude remains regime-confounded (shaped rewards change
+    value-target scale); advancement is TELEMETRY-GRADE ONLY - gameplay
+    evaluation is the promotion arbiter
+  - sub-1% margins are recorded as TELEMETRY-GRADE ONLY (EV-0036 precedent)
+  - "reward-hack surveillance predeclared at gameplay eval: advancing candidates must show wins achieved by legal captures with zero agent faults; degenerate win patterns invalidate the candidate, not the family"
+  - same-pod paired frame; NO cross-pod bit-exact control expectations (EV-0047)
+  - "no post-hoc rule changes: a modified round requires a NEW plan"
+
+consumption_gate: >
+  Any advancer proceeds to Stage-2 gameplay evaluation under the persistent
+  regime with reward-hack surveillance. If B2 plus its gameplay evaluation
+  still yield zero meaningful external strength and the draw wall persists,
+  the predeclared escalation (cross_regime_bridge_plan.yaml) advances Stage 5
+  capacity/value research instead of further small-knob rounds.
+
+evidence_links: [EV-0035, EV-0044, EV-0046, EV-0047, EV-0048, EV-0049]
