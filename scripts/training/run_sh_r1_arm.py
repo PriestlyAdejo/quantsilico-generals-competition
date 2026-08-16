@@ -34,6 +34,9 @@ from train.competition_native_jax.reward_shaping_jax import set_active_shaping  
 from train.competition_native_jax.rollout_selfplay_jax import (  # noqa: E402
     collect_selfplay_batch,
 )
+from train.competition_native_jax.temporal_history_jax import (  # noqa: E402
+    set_temporal_history_mode,
+)
 from train.competition_native_jax.top_advantage_jax import top_advantage_mask  # noqa: E402
 from train.competition_native_jax.train_jax import load_tree, save_tree  # noqa: E402
 
@@ -121,9 +124,20 @@ def main() -> int:
         "EARLY_WINDOW_RESET_REGIME_V1 retained ONLY for exact reproduction of "
         "registered reset-regime runs. PPO_SEMANTICS UNCHANGED.",
     )
+    parser.add_argument(
+        "--temporal-history",
+        default="off",
+        choices=["off", "k1"],
+        help="STAGE5 T2 knob (stage5_capacity_value_r1_plan.yaml): k1 appends the "
+        "previous tick's LEGAL spatial observation as extra input planes "
+        "(spatial 8 -> 16; shared layers warm-started from the checkpoint, "
+        "patch_proj fresh - shape-forced). off = canonical 8-plane path. "
+        "PPO_SEMANTICS UNCHANGED for serving.",
+    )
     args = parser.parse_args()
 
     set_active_shaping(args.reward_shape, args.reward_shape_beta)
+    set_temporal_history_mode(args.temporal_history)
 
     out_dir = args.out_dir or REPO / f"experiments/marathon/screening_runs/{args.arm_id}"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -132,12 +146,22 @@ def main() -> int:
         print(f"refusing to overwrite existing telemetry: {telemetry_path}", file=sys.stderr)
         return 2
 
-    params_like = init_params(jax.random.PRNGKey(0))
     optimizer = make_optimizer(LR)
-    opt_like = optimizer.init(params_like)
-    params = load_tree(args.checkpoint / "raw.npz", params_like)
-    ema = load_tree(args.checkpoint / "ema.npz", params_like)
-    opt_state = load_tree(args.checkpoint / "opt_state.npz", opt_like)
+    if args.temporal_history == "k1":
+        # STAGE5 T2: shared layers warm-started from the checkpoint; patch_proj
+        # is shape-forced fresh (8 -> 16 input planes); opt/EMA re-initialised.
+        params_like = init_params(jax.random.PRNGKey(0), spatial_planes=16)
+        base_like = init_params(jax.random.PRNGKey(0))
+        base_params = load_tree(args.checkpoint / "raw.npz", base_like)
+        params = {**base_params, "patch_proj": params_like["patch_proj"]}
+        opt_state = optimizer.init(params)
+        ema = jax.tree_util.tree_map(jnp.asarray, params)
+    else:
+        params_like = init_params(jax.random.PRNGKey(0))
+        opt_like = optimizer.init(params_like)
+        params = load_tree(args.checkpoint / "raw.npz", params_like)
+        ema = load_tree(args.checkpoint / "ema.npz", params_like)
+        opt_state = load_tree(args.checkpoint / "opt_state.npz", opt_like)
 
     per_update = args.num_envs * args.rollout_len
     n_updates = args.budget_transitions // per_update
@@ -245,6 +269,7 @@ def main() -> int:
         "reward_shape": args.reward_shape,
         "reward_shape_beta": args.reward_shape_beta,
         "episode_carry": args.episode_carry,
+        "temporal_history": args.temporal_history,
         "budget_transitions": args.budget_transitions,
         "actual_transitions": transitions,
         "updates": len(records),

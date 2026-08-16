@@ -27,9 +27,12 @@ from generals_bot.competition_native_jax.competition_env_jax import (
     observe_batch_p1,
     step_batch_jax,
 )
+from generals_bot.competition_native_jax.constants import MAX_HW
 from generals_bot.competition_native_jax.inference_jax import sample_action
+from generals_bot.competition_native_jax.obs_memory import N_SPATIAL
 from generals_bot.competition_native_jax.transformer_jax import forward_batch
 from train.competition_native_jax.reward_shaping_jax import active_shaping, shape_step_rewards
+from train.competition_native_jax.temporal_history_jax import active_temporal_history
 
 sample_action_batch = jax.jit(jax.vmap(sample_action, in_axes=(0, 0, 0)))
 
@@ -46,6 +49,10 @@ class RolloutCarry(NamedTuple):
     params: dict
     pool: Any
     pool_cursor: jax.Array
+    # STAGE5 T2 (k1): previous tick's LEGAL spatial obs per seat; zeros when
+    # temporal history mode is off (bit-inert) and at episode boundaries.
+    prev_sp0: jax.Array
+    prev_sp1: jax.Array
 
 
 def initialise_rollout_carry(
@@ -69,7 +76,8 @@ def initialise_rollout_carry(
     pool_cursor = jnp.full((num_envs,), num_envs, dtype=jnp.int32)
     mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
     mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
-    return RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor)
+    prev = jnp.zeros((num_envs, N_SPATIAL, MAX_HW, MAX_HW), dtype=jnp.float32)
+    return RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor, prev, prev)
 
 
 @partial(jax.jit, static_argnames=("rollout_len",))
@@ -84,7 +92,7 @@ def _value_from_logits(value_logits: jax.Array) -> jax.Array:
 
 def rollout_step(carry: RolloutCarry, _):
     """One fused self-play step (both seats); scanned over time."""
-    states, mem0, mem1, key, params, pool, pool_cursor = carry
+    (states, mem0, mem1, key, params, pool, pool_cursor, prev_sp0, prev_sp1) = carry
     key, k0, _k1 = jax.random.split(key, 3)
 
     sp0, gv0, mem0 = observe_batch_p0(states, mem0)
@@ -92,9 +100,17 @@ def rollout_step(carry: RolloutCarry, _):
     m0 = legal_mask_batch_p0(states)
     m1 = legal_mask_batch_p1(states)
 
+    # STAGE5 T2: k1 appends the previous tick's LEGAL spatial obs (zeroed at
+    # episode boundaries). Mode "off" keeps the canonical 8-plane path exact.
+    if active_temporal_history() == "k1":
+        in0 = jnp.concatenate([sp0, prev_sp0], axis=1)
+        in1 = jnp.concatenate([sp1, prev_sp1], axis=1)
+    else:
+        in0, in1 = sp0, sp1
+
     # Concatenate both seats into one native batch forward [2N, ...]
     n = sp0.shape[0]
-    spatial = jnp.concatenate([sp0, sp1], axis=0)
+    spatial = jnp.concatenate([in0, in1], axis=0)
     global_vec = jnp.concatenate([gv0, gv1], axis=0)
     masks = jnp.concatenate([m0, m1], axis=0)
     out = forward_batch(params, spatial, global_vec)
@@ -136,8 +152,13 @@ def rollout_step(carry: RolloutCarry, _):
         last_army=jnp.where(done_m, z, mem1.last_army),
     )
 
+    # STAGE5 T2: advance history; zero the carried frame for envs that ended.
+    done_sp = done.reshape((-1,) + (1,) * (sp0.ndim - 1))
+    prev_sp0 = jnp.where(done_sp, jnp.zeros_like(sp0), sp0)
+    prev_sp1 = jnp.where(done_sp, jnp.zeros_like(sp1), sp1)
+
     traj = {
-        "spatial": sp0,
+        "spatial": in0,
         "global": gv0,
         "mask": m0,
         "actions": a0,
@@ -147,7 +168,12 @@ def rollout_step(carry: RolloutCarry, _):
         "dones": done.astype(jnp.float32),
         "terminals": terminated.astype(jnp.float32),  # decisive-game diagnostic (EV-0044)
     }
-    return RolloutCarry(next_states, mem0, mem1, key, params, pool, pool_cursor), traj
+    return (
+        RolloutCarry(
+            next_states, mem0, mem1, key, params, pool, pool_cursor, prev_sp0, prev_sp1
+        ),
+        traj,
+    )
 
 
 def collect_selfplay_batch(
@@ -181,6 +207,8 @@ def collect_selfplay_batch(
     jax.block_until_ready(traj["rewards"])
     # Bootstrap value from post-scan p0 observation (device-side; no host traj rebuild)
     sp_b, gv_b, _ = observe_batch_p0(final_carry.states, final_carry.mem0)
+    if active_temporal_history() == "k1":
+        sp_b = jnp.concatenate([sp_b, final_carry.prev_sp0], axis=1)
     out_b = forward_batch(params, sp_b, gv_b)
     bootstrap = _value_from_logits(out_b["value_logits"])
     jax.block_until_ready(bootstrap)

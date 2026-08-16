@@ -60,7 +60,12 @@ arms_predeclared:
       features are histories OF LEGAL OBSERVATIONS ONLY, so the fog-of-war
       legality gate (EV-0037) holds structurally; leak-guard suite extended
       with a history fixture. K=1 frame in R1 (K>1 is a later round, never
-      bundled).
+      bundled). Initialisation (declared BEFORE training): all shared layers
+      warm-started from MARATHON_BASELINE_V0 exactly as T0; patch_proj is
+      SHAPE-FORCED fresh (input width 8 -> 16 planes makes byte-identical
+      warm start impossible); optimizer state and EMA re-initialised. This is
+      the one recorded asymmetry vs T0; screening geometry/budget/seeds stay
+      matched, and gameplay remains the arbiter.
   - later_arms_not_in_R1: [T3 critic changes (scalar vs distributional is
       MOOT - lineage already uses HL-Gauss; T3 becomes alternate critic
       parameterisations), T4 capacity scaling around any winner]
