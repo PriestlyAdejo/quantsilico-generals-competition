@@ -1,0 +1,80 @@
+kind: MARATHON_STAGE5_ROUND_PLAN
+plan_id: STAGE5_SCALE_R2
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T23:45:00Z"
+stage: STAGE_5
+ppo_semantics: UNCHANGED
+authority: >-
+  Successor axis after STAGE5_SCALE_R1 closure (EV-0061): scale to 8M
+  produced the FIRST genuine trained-candidate arbiter win (S1 vs
+  legal_random, zero faults) but NO_PROMOTION under the predeclared
+  statistics (1 win + 1 paired loss; S2 winless). The two remaining scale
+  questions are predeclared here as ONE bounded round; no launch without
+  registration; no post-hoc rule changes.
+
+question: >-
+  Does scale-driven win emergence REPLICATE across seeds at 8M, and does
+  deeper scale (16M) grow win conversion? R1 moved the system from zero
+  wins (every 2M candidate, and both 8M R1 seeds' aggregate vs the wall)
+  to occasional wins; this round distinguishes noise from lever.
+
+arms_predeclared:
+  - arm: SCALE-B0-8M-S3
+    content: >-
+      canonical learner, persistent regime, identity reward, 256x32,
+      seed 20260915, budget 8388608 transitions (~1024 updates), warm
+      start from MARATHON_BASELINE_V0 (identical recipe to SCALE-R1).
+  - arm: SCALE-B0-8M-S4
+    content: identical, seed 20260917.
+  - arm: SCALE-B1-16M-S1
+    content: >-
+      identical recipe, seed 20260915, budget 16777216 transitions
+      (~2048 updates). Deeper-scale probe; wall cap doubled for this arm.
+  matched_controls_existing: >-
+    2M controls (EV-0054, 0 wins/36 games) and 8M R1 results (EV-0061,
+    1 win/36 games, NO_PROMOTION) serve as the matched comparisons; no
+    recompute.
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049)
+  geometry: canonical screening geometry 256 envs x 32 rollout
+  seeds: [20260915, 20260917, 20260915]
+  compute: >-
+    one bounded RunPod A40 round via remote self-stop wrapper (prepaid
+    credits; RUNPOD-SPEND-2026-08-15 policy). Measured throughput R1:
+    8M ~ 20 min/arm; 16M est ~40 min. Round wall cap 60 min/arm.
+    Estimated GPU ~80 min total, cost < $0.70.
+  funnel: >-
+    PREDECLARE -> REGISTER -> LAUNCH -> LEARNER HEALTH (valid_share,
+    ratio, entropy non-collapse, finite) -> GAMEPLAY ARBITER for ALL
+    arms that complete integrity (telemetry diagnostic ONLY, declared
+    upfront - vloss demonstrably saturates by 2M, EV-0061).
+
+gameplay_arbiter: >-
+  identical fixed opponent set and protocol to R1 (legal_random,
+  heuristic_v0, heuristic_v1; 3 seat-swapped pairs each; 1200-turn horizon
+  UNCHANGED; serving sanity probe pre-game per EV-0034; reward-hack
+  surveillance; canonical 8-plane serving).
+
+adjudication_predeclared:
+  - per-seed promotion unchanged: strength iff win rate statistically
+    above matched controls (EV-0054/EV-0061 aggregate) AND above zero with
+    the harness CS; draws at truncation UNRESOLVED/not wins; zero faults
+    required
+  - family-level reading (recorded, drives the NEXT predeclaration, never
+    retroactively changes this round's rules): (a) wins in BOTH new 8M
+    seeds -> win emergence at 8M REPLICATES; scale is a real lever and the
+    successor is a predeclared scaling-up round (32M) or population
+    scaling per EXECUTION_PLAN Stage 7; (b) wins in 0-1 of the new 8M seeds
+    -> R1's win stands as rare noise; scale axis CLOSED after one bounded
+    successor attempt is exhausted, programme advances to
+    objective/value-structure interventions (Stage-6 class with declared
+    semantics); (c) 16M arm wins decisively (above CS) while 8M seeds do
+    not -> scale threshold effect; successor predeclares the depth at
+    which wins become consistent
+  - no post-hoc relaxation; negatives preserved
+
+parallel_lanes_unaffected:
+  - Stage 4B silent-pass measurement (EV-0048 unblocked, diagnostic)
+
+evidence_links: [EV-0054, EV-0058, EV-0060, EV-0061]
