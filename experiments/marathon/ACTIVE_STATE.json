@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T21:16:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T21:28:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_5_BC_A_FULL_CLOSED_VALID_NEGATIVE_NEXT_AXIS_PREDECLARATION",
- "CURRENT_TASK": "BC-A-FULL-R1 fully closed (EV-0060 VALID_NEGATIVE: beats legal-uniform, below majority-pass both holdout players; lane NOT VIABLE at corpus scale). T2 also closed NO_PROMOTION (EV-0058). NEXT: predeclare the next Stage-5 capacity/representation/value axis honestly against the full draw-wall evidence, then execute per funnel",
+ "CURRENT_STAGE": "STAGE_5_SCALE_R1_ROUND_EXECUTING_ON_A40",
+ "CURRENT_TASK": "STAGE5_SCALE_R1 RUNNING on 6b65w6q02z7g6m (arm 1/2 started 21:24:01Z, GPU 93%, self-stop armed, est end ~22:20-22:30Z): is transition scale the binding constraint on win conversion (2 x 8M canonical-lineage arms; gameplay arbiter is the ONLY gate per predeclaration)",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -296,9 +296,9 @@
  },
  "ACTIVE_REMOTE_PROCESSES": {
   "AUDIT_STATUS": "AUDITED_API_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-16T13:40:00Z",
+  "AUDITED_AT_UTC": "2026-08-16T21:28:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE_RUNNING: all 10 pods EXITED (watchdog 13:33:57Z); 0ea2tby1ujpk8z stopped after billing-logged fetch window 13:32:45-13:33:54Z; round artefacts fetched 53MB"
+   "RUNNING: 6b65w6q02z7g6m (quantisilico_stage5_scale_r1_a40, EU-SE-1, 0.44/hr) - STAGE5_SCALE_R1 arm 1/2, GPU 93%/38971MiB verified 21:26Z, self-stop armed; all other 11 pods EXITED"
   ],
   "OBSERVED_RESOURCES": [
    {
@@ -373,7 +373,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#stage5-capacity-value-r1#f1dc01ccc86f: CLOSED NO_PROMOTION (EV-0057/EV-0058). experiment#bc-a-full-r1#abcfcd746ac7: CLOSED VALID_NEGATIVE (EV-0060; run#bc-a-full-r1-execution#19a7e28f03f1). NEXT experiment: to be PREDECLARED (next Stage-5 axis per NEXT_SAFE_ACTION).",
+ "CURRENT_EXPERIMENT": "experiment#stage5-scale-r1#600fdb29e986 EXECUTING (run#scale-a0-8m-s1#62285c0c59e1 running; run#scale-a0-8m-s2#e7ec639079d9 queued). Closed: experiment#stage5-capacity-value-r1#f1dc01ccc86f NO_PROMOTION (EV-0057/EV-0058); experiment#bc-a-full-r1#abcfcd746ac7 VALID_NEGATIVE (EV-0060).",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -393,7 +393,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) Predeclare the next Stage-5 research axis (NEW round plan file + registry pre-launch) against the accumulated draw-wall evidence: T2 k1 history closed NO_PROMOTION (EV-0058); BC lane closed NOT VIABLE at corpus scale (EV-0060); historical 7.59M reference draws (EV-0019/0021); evaluator proves wins are producible (EV-0053); terminal signal near-zero at 2M screening (EV-0049+). Candidate hypothesis classes per plan later_arms + EV-0054 escalation: (i) SCALE/duration of the canonical lineage past the screening funnel budget (cheap at ~5500 tps on A40: 8M ~ 25 min), testing whether win behaviour EMERGES with transitions when the historical reference at 7.59M was never arbiter-tested as a trained-from-scratch line of THIS lineage; (ii) alternate critic/value parameterisation (T3 class); (iii) decisive-signal density interventions under UNCHANGED action semantics. Predeclare ONE bounded axis with gameplay arbiter as the gate; register pre-launch; then execute. (B) All RunPod pods EXITED; zero-idle-burn intact; BC pod ledger updated. (C) Dependency-safe lanes available if the predeclaration needs GPU time: Stage 4B silent-pass measurement (EV-0048 unblocked) remains open.",
+ "NEXT_SAFE_ACTION": "(A) STAGE5_SCALE_R1 completion on 6b65w6q02z7g6m (est ~22:20-22:30Z): watchdog confirms SELF-STOP (zero idle burn) -> billing-logged fetch window (scp /workspace/screening_runs_stage5_scale_r1 + round log; port rotates) -> integrity (2/2 arms 8388608 transitions, exit codes, valid_share/ratio/entropy finite) -> STOP pod -> GAMEPLAY ARBITER for ALL integrity-passing arms per stage5_scale_r1_plan.yaml (serving via canonical 8-plane policy - NO history planes; sanity probe first EV-0034; legal_random/heuristic_v0/heuristic_v1 x 3 seat-swapped pairs, 1200-turn horizon; telemetry diagnostic ONLY): strength iff win rate statistically above EV-0054 matched 2M control results AND above zero with harness CS; zero faults required; both-draw -> scale not binding, advance to next predeclared axis; split verdict -> one predeclared replication. Registry + EV entries. (B) All other pods EXITED; zero-idle-burn intact.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
