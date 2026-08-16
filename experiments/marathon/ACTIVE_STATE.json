@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T10:55:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T11:30:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
  "STATUS": "PARTIAL",
  "CURRENT_STAGE": "STAGE_5_T2_IMPLEMENTED_TESTS_EXECUTING_AND_BC_A_FULL_TRAINING_EXECUTING_LOCAL_CPU",
- "CURRENT_TASK": "T2 CANONICAL-GEOMETRY SMOKE EXECUTING (throughput gate) + BC-A-FULL TRAINING EXECUTING",
+ "CURRENT_TASK": "BC-A-FULL TRAINING FIRST (RAM gate) THEN T2 GEO SMOKE SOLO RETRY",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -236,10 +236,9 @@
  ],
  "ACTIVE_LOCAL_PROCESSES": {
   "AUDIT_STATUS": "AUDITED",
-  "AUDITED_AT_UTC": "2026-08-16T10:55:00Z",
+  "AUDITED_AT_UTC": "2026-08-16T11:30:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "LOCAL CPU: T2 canonical-geometry smoke (b9e0hm2z4, 2 updates at 256x32)",
-   "LOCAL CPU: BC-A-FULL-R1 training (b6xh1r8zf, feature walk phase)"
+   "LOCAL CPU: BC-A-FULL-R1 training (b6xh1r8zf, feature walk 20/81)"
   ],
   "COMPLETED_THIS_SESSION": [
    "ELITE DATASET V02 expansion FETCHED + acceptance PASS this tick (EV-0052): 95 new sealed replays (3 snapshots 2026-08-16 V01/V02/V03) across 20 distinct players; late-game coverage achieved - 82/95 at 400+ turns, 19 at 800+ incl. full 1200-turn games (deathtouch-phase exposure now exists); union dedupe-by-match-id recorded as BC builder requirement; clears the BC-A scale-up data dependency (EV-0050 consumption)",
@@ -362,7 +361,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#stage5-capacity-value-r1#f1dc01ccc86f: T2 guards 8/8 PASS; small smoke PASS (2 updates, all finite, valid_share 1.0, entropy rising, temporal_history recorded; NO_VLOSS_REDUCTION at 2 updates is the standing smoke behaviour, not a defect); canonical-geometry throughput smoke executing (b9e0hm2z4); serving adapter committed; experiment#bc-a-full-r1#abcfcd746ac7 training executing (feature walk)",
+ "CURRENT_EXPERIMENT": "experiment#bc-a-full-r1#abcfcd746ac7 training executing (features 20/81); experiment#stage5-capacity-value-r1#f1dc01ccc86f: T2 geo smoke OOMed TWICE under memory contention with the BC trainer (15.8GB box, ~7GB free concurrently; JAX RESOURCE_EXHAUSTED in ppo vmap + scatter) - NOT yet valid evidence of CPU insufficiency; solo retry queued after training completes",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -382,7 +381,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) T2: read T2-SMOKE-GEO summary throughput at 256x32; if local CPU end-to-end tps makes 240 updates impractical (>~8h per seed), invoke the plan's predeclared bounded-A40 fallback (self-stop wrapper, prepaid credits); otherwise register T2 screening runs PRE-LAUNCH and launch seeds 20260905/20260907 persistent-regime 240 updates locally. Advancement rules per plan; gameplay arbiter with the T2 serving adapter for any advancer. (B) BC-A-FULL-R1: when training finishes, adjudicate per bc_a_full_round_1_plan.yaml.",
+ "NEXT_SAFE_ACTION": "(A) wait for BC-A-FULL training completion (b6xh1r8zf) -> adjudicate per bc_a_full_round_1_plan.yaml. (B) then rerun T2-SMOKE-GEO SOLO (256x32, 2 updates): PASS with sane throughput -> register T2 screening runs pre-launch and launch seeds locally IF 240-update wall-time is practical (<= ~8h/seed); OOM or impractical alone -> execute plan's PREDECLARED bounded-A40 fallback (self-stop wrapper, prepaid credits, RUNPOD-SPEND-2026-08-15). (C) do NOT relaunch geo smoke while the trainer is alive (memory contention root cause confirmed: 15.8GB box).",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
