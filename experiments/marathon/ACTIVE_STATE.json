@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T10:25:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T10:55:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_5_ENTRY_PREDECLARED_RWB1_ARBITER_ADJUDICATED_EV0054",
- "CURRENT_TASK": "STAGE5_CAPACITY_VALUE_R1 T1 PATCH-TRANSFORMER IMPLEMENTATION (SMOKE NEXT) + BC-A-FULL-R1 SHARD BUILD EXECUTING",
+ "CURRENT_STAGE": "STAGE_5_ENTRY_AND_BC_A_FULL_TRAINING_EXECUTING_LOCAL_CPU",
+ "CURRENT_TASK": "BC-A-FULL-R1 TRAINING EXECUTING + STAGE5 R1 T2 IMPLEMENTATION NEXT",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -236,9 +236,9 @@
  ],
  "ACTIVE_LOCAL_PROCESSES": {
   "AUDIT_STATUS": "AUDITED",
-  "AUDITED_AT_UTC": "2026-08-16T10:25:00Z",
+  "AUDITED_AT_UTC": "2026-08-16T10:55:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "LOCAL CPU: BC-A-FULL-R1 union shard build (background bd1agg52d, 55/81 replays at 10:03Z); RWB1 arbiter FINISHED all four exit=0"
+   "LOCAL CPU: BC-A-FULL-R1 training (background b6xh1r8zf; feature walk 81 replays then 40 epochs; PID 36792 verified alive)"
   ],
   "COMPLETED_THIS_SESSION": [
    "ELITE DATASET V02 expansion FETCHED + acceptance PASS this tick (EV-0052): 95 new sealed replays (3 snapshots 2026-08-16 V01/V02/V03) across 20 distinct players; late-game coverage achieved - 82/95 at 400+ turns, 19 at 800+ incl. full 1200-turn games (deathtouch-phase exposure now exists); union dedupe-by-match-id recorded as BC builder requirement; clears the BC-A scale-up data dependency (EV-0050 consumption)",
@@ -361,7 +361,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#rwb1-land-gameplay-arbiter#a45f4ba5a2d6 ADJUDICATED EV-0054 (LAND FAILS: 0 wins, 2 losses/seed vs heuristic_v1, controls all-draw; draw wall persists -> Stage 5 escalation); experiment#stage5-capacity-value-r1#8d538430c6a8 PREDECLARED+REGISTERED; experiment#bc-a-full-r1#abcfcd746ac7 shard build executing",
+ "CURRENT_EXPERIMENT": "experiment#bc-a-full-r1#abcfcd746ac7: union shards BUILT (81 games, 97220 labels, derivation rate 99.0%, 0 silent-pass, splits train 43244 / holdout_player 26415 / holdout_replay 27561; phases 31764/28628/31780/5048; leak-guard 2/2 PASS), training executing seed 20260831; experiment#stage5-capacity-value-r1#e3765bca81c5 PREDECLARED+REGISTERED (T2 arm)",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -381,7 +381,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) STAGE5 R1: implement T1 patch-transformer arm (fixed layer/width budget declared before training; same canonical observation tensors + 3970 legal-masked head; persistent regime), SMOKE 2 updates, learner health, matched 240-update screening x seeds 20260905/20260907, then identical-opponent gameplay arbiter for any advancer. T0 pre-satisfied by RWB1 controls. (B) BC-A-FULL-R1: shard build ~55/81 at 10:03Z; when done verify manifest, leak-guard suite, train seed 20260831, adjudicate per bc_a_full_round_1_plan.yaml.",
+ "NEXT_SAFE_ACTION": "(A) BC-A-FULL-R1 training (background b6xh1r8zf, log var/marathon_takeover/bc_a_full_train.log): when done adjudicate per bc_a_full_round_1_plan.yaml pass criteria (held-out-player accuracy strictly above legal-uniform AND majority-pass on at least one holdout player), registry RESULT + EV entry. (B) STAGE5 R1 T2: implement K=1 legal temporal history (spatial 8->16 planes, patch_proj width doubles, carry holds prev legal obs zeroed on reset, leak-guard history fixture), SMOKE -> learner health -> matched screening seeds 20260905/20260907 -> identical-opponent gameplay arbiter for any advancer.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
