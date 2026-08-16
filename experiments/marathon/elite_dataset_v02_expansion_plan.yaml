@@ -1,0 +1,42 @@
+kind: MARATHON_REPLAY_DATASET_EXPANSION_PLAN
+plan_id: ELITE_DATASET_V02_EXPANSION_PLAN
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T09:12:00Z"
+authority: ELITE_REPLAY_AUGMENTATION charter + LEARNING-PATH-INTEGRITY audit
+  section 26 (BC state-coverage audit; EV-0048/EV-0050 consumption)
+
+motivation: >
+  DATASET-ELITE-2026-08-15-V01 = 6 games, 3 players, turns 150-485: all
+  decisive, none past turn 485, zero 800+ (deathtouch) exposure. The BC-A
+  pilot (EV-0050) validated the pipeline but its negative screening result is
+  confounded by tiny data (800 train samples) and a coarse 3-player disjoint
+  split. V02 expands breadth (players) and phase coverage (late game) BEFORE
+  any full BC-A experiment is predeclared.
+
+fetch_spec_predeclared:
+  tool: scripts/data/fetch_elite_replays.py (immutable-provenance snapshots)
+  passes:
+    - {name: V02-BREADTH, args: "--top 10 --per-player 3 --min-turns 40", purpose: player breadth for disjoint splits}
+    - {name: V02-LATE,    args: "--top 10 --per-player 3 --min-turns 400", purpose: midgame/late-game phase density}
+    - {name: V02-DEEP,    args: "--top 20 --per-player 2 --min-turns 700", purpose: 700+ turn games incl. possible deathtouch exposure; best-effort (leaderboard availability limits this - recorded honestly if empty)
+      }
+  constraints:
+    - raw payloads immutable; manifest + sha256 + dataset id per snapshot
+    - per-player caps enforced by the fetcher (no single-player dominance)
+    - dedup: seed + sorted player pair (seat-order collapse), same as V01
+
+acceptance_metrics_predeclared:
+  - total games >= 30 (recorded honestly if leaderboard supply is lower)
+  - distinct players >= 8
+  - turn distribution reported in buckets (0-199 / 200-399 / 400-799 / 800+)
+    with the 400+ share recorded as the late-game coverage metric
+  - zero duplicate seed+pair entries
+
+consumption_gate: >
+  V02 feeds: (1) the full BC-A predeclaration at scale (splits become
+  player-disjoint with >= 2 holdout players + time-disjoint per player);
+  (2) BC state-coverage re-audit per amendment section 26. V02 does NOT
+  change any existing registered result; the pilot stays a valid negative
+  under V01.
+
+evidence_links: [EV-0037, EV-0042, EV-0045, EV-0048, EV-0050]
