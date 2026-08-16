@@ -1,0 +1,96 @@
+kind: MARATHON_STAGE5_ROUND_PLAN
+plan_id: STAGE5_SCALE_R1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T21:20:00Z"
+stage: STAGE_5
+ppo_semantics: UNCHANGED  # duration/scale of canonical training only; action-selection semantics unchanged
+authority: >-
+  STAGE5_CAPACITY_VALUE_R1 escalation continuation (EV-0054 class:
+  capacity/representation/value-structure), sharpened by the closures
+  EV-0057/EV-0058 (T2 k1 history NO_PROMOTION) and EV-0060 (BC lane NOT
+  VIABLE at corpus scale). Predeclared before any launch; register before
+  launch; no post-hoc rule changes.
+
+question: >-
+  Is TRANSITION SCALE the binding constraint on win conversion? No canonical
+  lineage run under PERSISTENT_EPISODE_REGIME_V1 has ever exceeded the ~2M
+  screening budget, and every one of them draws in gameplay (EV-0019/0035/
+  0038/0039/0043/0053/0054/0058). The historical 7.59M reference also draws,
+  but it predates the corrected regime/lineage reconciliation (EV-0048/0049).
+  SCALE-R1 trains the CANONICAL learner (patch transformer, persistent
+  regime, identity reward, 256x32 geometry) from MARATHON_BASELINE_V0
+  warm-start to 8M transitions per seed and lets the canonical gameplay
+  arbiter decide - telemetry is diagnostic only (it has repeatedly failed
+  to predict gameplay, EV-0051/0054/0057).
+
+background_constraints: >-
+  Draw wall accumulation EV-0019/0035/0038/0039/0043/0053/0054/0058; terminal
+  signal density near-zero at 2M (EV-0049+): 1-2 decisive ticks per 2M. Scale
+  may or may not raise decisive-signal exposure; this round measures that
+  directly (decisive_share is recorded, diagnostic only).
+
+arms_predeclared:
+  - arm: SCALE-A0-8M-S1
+    content: >-
+      canonical learner, --episode-carry persistent, --reward-shape none,
+      256 envs x 32 rollout, seed 20260911, budget 8388608 transitions
+      (~1024 updates), warm start from MARATHON_BASELINE_V0 exactly as all
+      screening arms.
+  - arm: SCALE-A0-8M-S2
+    content: identical, seed 20260913.
+  matched_baseline_existing: >-
+    the 2M matched controls are ALREADY evaluated in gameplay under the
+    identical arbiter protocol (RWB1-A0-CONTROL-S1/S2, EV-0054: 36/36 draws).
+    No recompute; the scale question is answered by SCALE arms vs that
+    pre-existing control evaluation + the absolute win test.
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049)
+  geometry: canonical screening geometry 256 envs x 32 rollout
+  seeds: [20260911, 20260913]
+  compute: >-
+    one bounded RunPod A40 round via remote self-stop wrapper (prepaid
+    credits; RUNPOD-SPEND-2026-08-15 policy). Measured throughput ~5500 tps
+    end-to-end at this geometry (EV-0056 round): 8M ~ 25 min/arm; round wall
+    cap 60 min/arm. Estimated total cost < $0.60.
+  funnel: >-
+    PREDECLARE -> REGISTER -> LAUNCH (smoke not required: identical runner/
+    geometry/regime to 6+ prior rounds on the same code path; any launch
+    fault is an engineering repair, not a rule change) -> LEARNER HEALTH
+    (valid_share, ratio, entropy non-collapse, finite) -> GAMEPLAY ARBITER
+    for ALL arms that complete integrity (telemetry never gates this round -
+    declared upfront, because screening telemetry has been proven
+    non-predictive).
+
+gameplay_arbiter: >-
+  identical fixed opponent set and protocol to the RWB1/T2 arbiters
+  (legal_random, heuristic_v0, heuristic_v1; 3 seat-swapped pairs each;
+  1200-turn horizon UNCHANGED; serving sanity probe pre-game per EV-0034;
+  reward-hack surveillance; serving via the canonical 8-plane policy -
+  NO temporal history planes in this round).
+
+metrics_predeclared:
+  - screening (DIAGNOSTIC ONLY): vloss reduction, valid_share, entropy,
+    decisive_share per update and round max
+  - gameplay (AUTHORITY): win rate per opponent with anytime-valid CS,
+    draw share, faults (must be ZERO), matchup score
+
+adjudication_predeclared:
+  - a SCALE arm DEMONSTRATES STRENGTH iff its win rate is statistically
+    above the matched 2M control results (EV-0054) AND above zero with the
+    harness CS; draws at truncation are UNRESOLVED/not wins
+  - both seeds draw again -> scale alone is NOT the binding constraint at
+    8M; RECORDED, and the programme advances to the next predeclared axis
+    (objective/value-structure interventions with declared semantics, or
+    teacher/population per EXECUTION_PLAN Stage 6/7) - no ad-hoc knob turning
+  - one seed wins and one draws -> UNRESOLVED; predeclared successor:
+    replicate the winning seed's arm once (same budget), adjudicate the pair
+  - zero faults required; any fault-driven outcome invalidates that game
+    (reward-hack surveillance)
+  - no post-hoc rule relaxation; negative/draw results preserved
+
+parallel_lanes_unaffected:
+  - Stage 4B silent-pass measurement (EV-0048 unblocked, diagnostic)
+  - replay data plane preserved for other charter sub-experiments (EV-0060)
+
+evidence_links: [EV-0019, EV-0035, EV-0049, EV-0053, EV-0054, EV-0057, EV-0058, EV-0060]
