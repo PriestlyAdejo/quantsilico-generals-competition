@@ -2,8 +2,24 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-15T21:05:00Z",
+  "updated_at_utc": "2026-08-16T00:45:00Z",
   "resources": [
+    {
+      "pod_id": "zu2pvculot0yhp",
+      "name": "quantisilico_topadv_r1_a40",
+      "status": "RUNNING_TOPADV_R1_ROUND",
+      "owner_run": "experiment#top-advantage-fractions-r1#5166e1a5d9db",
+      "expected_workload": "remote_topadv_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (6 arms sequential, 240 updates each, wall cap 90 min/arm; pod SELF-STOPS after round exit)",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "machine_id": "jttzxgrlso5d",
+      "ssh": "root@194.68.245.137 -p 22049",
+      "started_at_utc": "2026-08-16T00:26:09Z",
+      "round_start_utc": "2026-08-16T00:39:53Z",
+      "gpu_smoke": "PASS ratio ~1.0000 valid_share 1.0 (TOPADV-GPU-SMOKE, fraction 0.5, 2 updates)",
+      "verified_active": "2026-08-16T00:45Z GPU 96%/38891MiB, arm TOPADV-A0-CONTROL-S1 running, wrapper+orchestrator PIDs present",
+      "security_note": "RUNPOD API key briefly visible in remote ps listing at launch (EV-0040); OPERATOR MUST ROTATE the key after TOPADV-R1 completes (self-stop depends on it until then)"
+    },
     {
       "pod_id": "z7zutn5ui0yo41",
       "name": "quantisilico_curr1_a40",
@@ -75,5 +91,7 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": []
+  "active_workloads": [
+    "zu2pvculot0yhp: TOPADV-R1 screening round (6 arms, est. round end ~2026-08-16T01:50Z; remote self-stop armed)"
+  ]
 }

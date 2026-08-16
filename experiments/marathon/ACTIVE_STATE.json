@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-16T00:40:00Z",
+  "UPDATED_AT_UTC": "2026-08-16T00:50:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_RAW_VS_EMA_CLOSED_UNRESOLVED_TOPADV_R1_LAUNCHING",
-  "CURRENT_TASK": "TOPADV_R1_GPU_ROUND_PROVISION_SETUP_LAUNCH_THEN_MONITOR",
+  "CURRENT_STAGE": "STAGE_4A_TOPADV_R1_GPU_ROUND_EXECUTING",
+  "CURRENT_TASK": "MONITOR_TOPADV_R1_THEN_FETCH_ADJUDICATE_REGISTER",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -204,6 +204,7 @@
       "Project command /marathon-exec created (.qoder/commands/marathon-exec.md, state-discovering executor; convention verified against qodercli project-commands loader) EV-0040",
       "TOP-ADVANTAGE-FRACTIONS knob implemented (top_advantage_jax.py, additive, identity at 1.0) + 6 tests + CPU smoke PASS; TOPADV-R1 predeclared + registered experiment#top-advantage-fractions-r1#5166e1a5d9db EV-0040",
       "Operator correction applied: AGENT_LOOP_TICK_* sentinel loops DEPRECATED (not Qoder /loop); no new terminal loops; operator will register the real CLI /loop",
+      "TOPADV-R1 PROVISIONED+SETUP+SMOKED+LAUNCHED end-to-end this pass (zu2pvculot0yhp, round start 00:39:53Z, GPU 96%, self-stop armed); replay action-extraction milestone DONE (replay_action_extraction.py, 5 tests + real-data probe: 150 events/player, 1 non-adjacent flag) EV-0040",
       "RAW-VS-EMA-R1 PREDECLARED + LAUNCHED (CPU-only, same-run matched; EMA wrapper serves distinct actions from raw; plan raw_vs_ema_r1_plan.yaml)",
       "Replay legal-POV reconstruction HARD GATE implemented + proven (scripts/data/replay_legal_pov.py, 6 fixture tests incl. leak guard, real-data probe on DATASET-ELITE-2026-08-15-V01) EV-0037",
       "Durable /loop commissioned + executor prompt versioned (docs/marathon/MARATHON_DURABLE_EXECUTOR_PROMPT.md) EV-0037",
@@ -291,7 +292,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "TOPADV-R1 launching on RunPod A40 via remote self-stop wrapper (plan topadv_round_1_plan.yaml; orchestrator scripts/dev/remote_topadv_r1_orchestrator.sh; setup scripts/dev/remote_curr1_setup.sh reusable; experiment registered). Next bounded actions: (1) provision A40 (runpod_pod_create.py), scp baseline checkpoint, setup, GPU smoke, launch wrapped orchestrator; record pod in runpod_resources.json; (2) on round completion: fetch artefacts, verify integrity, adjudicate per predeclared rules (telemetry-grade only; gameplay arbiter later), back-register runs/checkpoints, record EV; (3) if TOPADV variants advance: predeclare gameplay eval as for CURR1; if clean negative: next family candidate = reward-integrity/progress-pressure (predeclare first); (4) parallel dependency-safe work: replay action-extraction milestone (legal-POV gate DONE, EV-0037), leaderboard snapshot cadence, 4B polish; (5) continuation: operator-owned Qoder CLI /loop invoking /marathon-exec; AGENT_LOOP_TICK_* sentinels DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "TOPADV-R1 EXECUTING on zu2pvculot0yhp (EU-SE-1 A40; round start 2026-08-16T00:39:53Z commit 70d4669; 6 arms sequential ~70-75 min; remote self-stop armed - pod stops itself after round exit; est. end ~01:50Z). Next bounded actions: (1) reconcile RunPod FIRST; on round completion SSH-fetch artefacts (screening_runs_topadv_r1 + topadv_r1_round.log), verify integrity, confirm pod self-stopped (else stop + billing-log idle); (2) adjudicate per topadv_round_1_plan.yaml predeclared rules (both seeds survive + beat control mean, no sign flip; sub-1% margins telemetry-grade only); back-register runs/checkpoints; record EV; (3) advancing variants -> predeclare gameplay eval; clean negative -> next family = reward-integrity/progress-pressure (predeclare first); (4) parallel dependency-safe work while GPU busy: replay BC-prep milestone (action extraction DONE EV-0040 probe), leaderboard snapshot cadence, 4B polish; (5) SECURITY: operator must ROTATE the RunPod API key after this round (briefly visible in remote ps during launch verification, EV-0040); (6) continuation: operator-owned Qoder CLI /loop invoking /marathon-exec; AGENT_LOOP_TICK_* sentinels DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
