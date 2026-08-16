@@ -1,0 +1,39 @@
+kind: MARATHON_EVALUATOR_CALIBRATION_PLAN
+plan_id: EVAL_WIN_CONVERSION_CALIBRATION_V1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T09:07:00Z"
+authority: LEARNING_PATH_INTEGRITY_AND_EPISODE_CONTINUITY_AUDIT amendment
+  section 20 (evaluator win-conversion calibration)
+
+question: >
+  Can the canonical paired evaluator distinguish a competent scripted/heuristic
+  attacker from a passive opponent with actual WINS inside the 1200-turn
+  horizon? If even a heuristic attacker cannot beat an always-pass opponent,
+  engine/evaluator/gameplay semantics must be investigated before attributing
+  draw-heavy candidate results to policy weakness.
+
+design:
+  attackers: [heuristic_v1, heuristic_aggressive]
+  defenders: [pass_bot]  # always-pass: maximally passive, general exposed to pressure
+  pairs_per_opponent: 2  # seat-swapped -> 4 games per attacker
+  max_turns: 1200  # canonical horizon UNCHANGED
+  mode: competition
+  harness: scripts/evaluation/run_marathon_paired_eval.py
+
+pass_criteria_predeclared:
+  - >-
+    at least one attacker records >= 1 decisive WIN (general capture) against
+    pass_bot with ZERO agent faults
+  - >-
+    if no attacker wins within 1200 turns against an always-pass opponent, the
+    finding is ESCALATED as an engine/evaluator-semantics investigation item
+    (amendment section 20) - candidate draw-heavy results are NOT interpreted
+    as policy weakness until resolved
+
+scope_limits:
+  - >-
+    DIAGNOSTIC ONLY: results never change promotion criteria or the 1200-turn
+    horizon; they calibrate interpretation of draw-heavy evaluations
+  - "no registry promotion records: calibration records only"
+
+evidence_links: [EV-0017, EV-0021, EV-0035, EV-0048]
