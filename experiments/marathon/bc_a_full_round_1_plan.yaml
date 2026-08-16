@@ -1,0 +1,83 @@
+kind: MARATHON_REPLAY_SUBEXPERIMENT_PLAN
+subexperiment_id: BC-A-FULL-R1
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+family: ELITE_REPLAY_AUGMENTATION
+charter_section: "7A (BC warm start) - FULL step (pilot validated pipeline, EV-0050)"
+status: PREDECLARED
+predeclared_at_utc: "2026-08-16T09:35:00Z"
+ppo_semantics: OFF_POLICY_AUXILIARY  # offline imitation labels; no live action-selection change
+
+purpose: >
+  Full-scale BC-A experiment on the expanded elite corpus (EV-0052): prove
+  whether engine-verified elite imitation generalises across players and
+  phases once data size and phase coverage stop binding. The pilot (EV-0050)
+  VALIDATED the pipeline (leak-guard green, legal share 1.0) but failed the
+  screening metric under 800 training samples and a coarse 3-player split -
+  both confounds are removed here. BC accuracy NEVER promotes; gameplay
+  evaluation remains the authority for anything entering the funnel.
+
+data_contract:
+  source_union:
+    - DATASET-ELITE-2026-08-15-V01 (6 games, 3 players)
+    - DATASET-ELITE-2026-08-16-V01 (30 games, breadth)
+    - DATASET-ELITE-2026-08-16-V02 (30 games, late-game)
+    - DATASET-ELITE-2026-08-16-V03 (35 games, deep 700+)
+  union_rule: >
+    dedupe by match id across snapshots (20 cross-snapshot overlaps recorded,
+    EV-0052); expected union >= 100 games, 20 distinct players
+  engine_sha: 9e3b9d13cca51caa1bb07db48bb85c9e90ce0462
+  derivation: >
+    same as pilot (EV-0045 exact derivation): EXACT_MATCH + OWNERS_ONLY only;
+    NO_MATCH excluded; ENGINE_SILENT_PASS labels excluded per pinned-engine
+    classification; source-site general-move ticks FLAGGED, labels unaffected
+  observation_legality: >
+    canonical legal observation path only (state_from_tick + observe_one_jax
+    with per-seat fog memory); leak-guard fixture tests gate the build
+    (EV-0050 suite)
+
+splits_predeclared:
+  holdout_players: [ResBot, plus the single highest-volume remaining player by
+    match count at shard-build time - name recorded in the shard manifest,
+    chosen BEFORE training, never post-hoc]
+  time_disjoint: within each training player, the LAST replay held out
+  no_row_random_splits: true
+
+protocol:
+  seed: 20260831
+  model: >
+    same small standalone architecture family as the pilot (canonical
+    observation tensors in, 3970-dim legal-masked logits out); width/depth
+    may be modestly scaled but the ARCHITECTURE CLASS is fixed pre-training
+    (no post-hoc architecture shopping); fresh init
+  budget: <= 2 hours laptop CPU OR one bounded A40 GPU round if CPU throughput
+    proves insufficient at scale (recorded honestly; spend policy
+    RUNPOD-SPEND-2026-08-15)
+  metrics_predeclared:
+    - TRAIN top-1 accuracy
+    - HELD-OUT-PLAYERS top-1 accuracy (both holdout players, separately)
+    - HELD-OUT-REPLAY accuracy (time-disjoint)
+    - PHASE-STRATIFIED accuracy (0-199 / 200-399 / 400-799 / 800+)
+    - legal-action share of predictions (must be 1.0 under the mask)
+    - baselines: legal-uniform + majority-pass per split
+  pass_criteria_predeclared:
+    - pipeline completes with zero leak-guard failures
+    - held-out-player accuracy STRICTLY above BOTH the legal-uniform and the
+      majority-pass baselines on at least one holdout player; margins recorded
+      honestly on all splits
+    - no post-hoc threshold relaxation; a failed experiment is a valid negative
+
+consumption_gate: >
+  A passing BC-A-FULL checkpoint becomes eligible ONLY as a warm-start /
+  auxiliary-loss input for a SEPARATELY predeclared PPO-continuation
+  sub-experiment (charter 7A full step). It never enters the funnel directly
+  and never serves in gameplay evaluation as a promotion candidate on
+  imitation accuracy alone.
+
+escalation_note: >
+  If BC-A-FULL also fails held-out generalisation on 100+ games / 20 players,
+  the elite-replay BC lane is recorded as NOT VIABLE at current corpus scale
+  and the programme advances without it (no silent scope creep; the charter's
+  other sub-experiments remain available for separate predeclaration).
+
+evidence_links: [EV-0037, EV-0042, EV-0045, EV-0048, EV-0050, EV-0052]
