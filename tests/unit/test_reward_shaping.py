@@ -109,6 +109,34 @@ def test_kill_delta_bounded_on_one_step():
     assert bool(jnp.all(jnp.abs(out) <= 1.0))
 
 
+def test_land_potential_signal_on_capture_and_return_invariance():
+    # land changes break the army-total symmetry: owner swap of one tile
+    base = s([10, 10], [10, 10])
+    own_more = SimpleNamespace(
+        armies=base.armies,
+        ownership=jnp.concatenate(
+            [
+                jnp.ones((base.armies.shape[0], 1, 1, 2), dtype=bool),
+                base.ownership[:, 1:, :, :],
+            ],
+            axis=1,
+        ),
+    )
+    out = shape_step_rewards(base, own_more, ZEROS, ZEROS, ZEROS, "land_potential", 1.0)
+    assert bool(jnp.all(out > 0))  # own land grew -> positive increment
+    # return invariance at gamma=1: alive increment + terminal correction cancel
+    r_alive = shape_step_rewards(base, own_more, ZEROS, ZEROS, ZEROS, "land_potential", 1.0)
+    terminal = jnp.array([1.0, 1.0])
+    r_end = shape_step_rewards(own_more, own_more, terminal, ONES, ZEROS, "land_potential", 1.0)
+    assert abs(float(r_alive[0]) + float(r_end[0]) - 1.0) < 1e-4
+
+
+def test_land_potential_zero_when_land_unchanged():
+    base = s([10, 10], [10, 10])
+    out = shape_step_rewards(base, base, ZEROS, ZEROS, ZEROS, "land_potential", 1.0)
+    assert bool(jnp.allclose(out, ZEROS, atol=1e-6))
+
+
 def test_invalid_mode_and_negative_beta_rejected():
     with pytest.raises(ValueError):
         set_active_shaping("bogus", 0.1)

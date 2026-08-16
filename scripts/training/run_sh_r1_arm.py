@@ -100,7 +100,7 @@ def main() -> int:
     parser.add_argument(
         "--reward-shape",
         default="none",
-        choices=["none", "kill_delta", "potential"],
+        choices=["none", "kill_delta", "potential", "land_potential"],
         help="REWARD-SHAPING-R1 knob (EV-0044): bounded progress signal on non-terminal "
         "ticks (none = identity/control; PPO_SEMANTICS UNCHANGED for serving)",
     )

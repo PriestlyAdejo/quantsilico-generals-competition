@@ -1,0 +1,42 @@
+{
+  "actual_transitions": 1966080,
+  "arm_id": "RSH-A2-POTENTIAL-S2",
+  "budget_transitions": 1966080,
+  "eliminated": false,
+  "elimination": [],
+  "finished_at_utc": "2026-08-16T03:39:26Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1871352195739746,
+    "ENTROPY_LAST": 2.099853515625,
+    "PG_FIRST": -0.0006291100289672613,
+    "PG_LAST": 1.1254042874497827e-05,
+    "RATIO_FIRST": 1.000009298324585,
+    "RATIO_LAST": 0.9999992847442627,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.357700824737549,
+    "VLOSS_LAST": 2.351172924041748,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.006527900695800781
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "potential",
+  "reward_shape_beta": 1.0,
+  "seed": 20260827,
+  "stop_reason": "BUDGET_REACHED",
+  "throughput": {
+    "collect_tps": 24719.648291762656,
+    "collect_wall_s": 79.53511218260974,
+    "end_to_end_tps": 6752.979206467975,
+    "reset_pool_build_s": 46.507489040959626,
+    "total_wall_s": 294.1801031078212,
+    "update_wall_s": 211.60749908396974
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 240
+}

@@ -1,11 +1,11 @@
 {
   "SCHEMA_VERSION": "1.2.0",
   "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
-  "UPDATED_AT_UTC": "2026-08-16T03:25:00Z",
+  "UPDATED_AT_UTC": "2026-08-16T04:40:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_4A_REWARD_SHAPING_R1_GPU_ROUND_EXECUTING",
-  "CURRENT_TASK": "MONITOR_REWARD_SHAPING_R1_THEN_FETCH_ADJUDICATE_REGISTER",
+  "CURRENT_STAGE": "STAGE_4A_REWARD_SHAPING_R2_GPU_ROUND_LAUNCHING",
+  "CURRENT_TASK": "LAUNCH_REWARD_SHAPING_R2_THEN_MONITOR_FETCH_ADJUDICATE",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -241,6 +241,8 @@
       "DURABLE LOOP ACTIVE: Qoder CLI cron job f5733a0c (every 30 min, /marathon-exec, persisted, permanent) EV-0041; ALL sentinel text loops remain DEPRECATED (operator ruling, EV-0036 class)"
     ],
     "COMPLETED_THIS_SESSION": [
+      "REWARD-SHAPING-R1 round closed VOID_SIGNAL_VACUOUS this tick (EV-0046): all arms ran clean (6/6, 240/240, self-stop zero idle burn, artefacts fetched) but variants bit-exact control-identical - army-total shaping provably zero-signal in fresh-32-tick self-play windows; 12 registry records preserved; land_potential fix implemented + verified (42% signal ticks, 12 tests PASS); REWARD-SHAPING-R2 predeclared + registered (experiment#reward-shaping-r2#9172336619e7, CONTROL vs LAND-POTENTIAL x 2 seeds)",
+      "BC-A-PILOT-R1 predeclared + registered (experiment#bc-a-pilot-r1#57aaa6f2b530): charter §7A pilot step, engine-verified labels only (EV-0045), silent-pass excluded, player-disjoint holdout (ResBot), leak-guard gated; pilot checkpoint never enters funnel",
       "Replay EXACT ACTION DERIVATION milestone DONE this tick (scripts/data/replay_action_derivation.py, EV-0045): 1904/1921 ticks engine-verified action pairs (ownership 99.1% exact); army residual root-caused to source-site general-move semantics vs competition static-general tiles (reported, not papered over); BC labels will use OWNERS_ONLY-verified pairs per predeclared handling direction",
       "REWARD-SHAPING-R1 PREDECLARED + REGISTERED + IMPLEMENTED + SMOKED + LAUNCHED this tick (EV-0044): knob none/kill_delta/potential (training-reward only, PPO_SEMANTICS UNCHANGED), 10 unit tests + rollout regression 5/5 + 3 CPU smokes PASS (smoke caught a batched-ownership layout defect pre-GPU); original TOPADV host GPU-congested (7 bounded free start attempts) -> fresh A40 kkmqdgqbw3wgph provisioned + bootstrapped + checkpoint re-transferred; round start 03:01:55Z commit 49e5976, self-stop armed",
       "TOPADV-R1 FULLY CLOSED this pass (EV-0043): round completed 01:38:37Z, pod SELF-STOPPED (zero idle burn), artefacts fetched on brief resume (port rotated 22049->22072) + integrity-verified (6/6 arms 240/240), pod stopped after fetch, adjudicated CLEAN NEGATIVE per predeclared rules (all six survive; TOP-50 0.000% margin + sign flip, TOP-25 +0.0018% + sign flip -> neither advances), 12 registry records; fifth 2M line at parity; win-conversion constraint intact",
@@ -328,7 +330,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#reward-shaping-r1#39ce1360218e (REWARD-SHAPING-R1 GPU round executing on kkmqdgqbw3wgph, arm 1/6 at 03:01:55Z)",
+  "CURRENT_EXPERIMENT": "experiment#reward-shaping-r2#9172336619e7 (REWARD-SHAPING-R2 launching; R1 closed VOID_SIGNAL_VACUOUS EV-0046 with 12 preserved records)",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -342,7 +344,7 @@
       "APPROXIMATE_TRANSITIONS": [10002432, 14966784, 19357696, 25010176, 50520064]
     }
   },
-  "NEXT_SAFE_ACTION": "REWARD-SHAPING-R1 EXECUTING on kkmqdgqbw3wgph (EU-SE-1 A40, 194.68.245.108:22070; round start 2026-08-16T03:01:55Z commit 49e5976; 6 arms sequential ~10 min/arm; remote self-stop armed; est end ~04:05Z). Next bounded actions: (1) on durable-loop tick after ~04:05Z: check round log; on completion SSH-fetch artefacts (screening_runs_reward_shaping_r1 + reward_shaping_r1_round.log), verify integrity, confirm pod self-stopped (else stop + billing-log idle); (2) adjudicate per reward_shaping_round_1_plan.yaml predeclared rules (both seeds survive + beat control mean, no sign flip; sub-1% margins telemetry-grade only; DECISIVE_SHARE diagnostic only); back-register runs/checkpoints; record EV; (3) advancing variants -> predeclare gameplay eval WITH predeclared reward-hack surveillance; clean negative -> predeclare the explicit Stage-5 budget/capacity transition (never drift); (4) parallel dependency-safe work while GPU busy: replay lane exact action derivation via state-diff + engine oracle (EV-0042), dataset expansion V02, 4B polish; (5) zu2pvculot0yhp retained EXITED (host GPU-congested at restart time) - stop/retain decision at next boundary; its volume holds prior TOPADV env; (6) continuation: durable Qoder CLI cron job f5733a0c (30 min, /marathon-exec); sentinel loops DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
+  "NEXT_SAFE_ACTION": "REWARD-SHAPING-R2 LAUNCHING on kkmqdgqbw3wgph (resume pod -> update repo to land_potential commit -> transfer remote_reward_shaping_r2_orchestrator.sh -> launch via wrapper; 4 arms CONTROL/LAND-POTENTIAL x 2 seeds, ~6-7 min/arm, est end ~30 min after launch; self-stop armed). Next bounded actions: (1) verify launch + GPU active; (2) on completion (later tick): SSH-fetch screening_runs_reward_shaping_r2 + round log, verify integrity incl. CONTROL-MUST-REPRODUCE-R1-BIT-EXACT check, confirm self-stop, adjudicate per reward_shaping_round_2_plan.yaml, back-register, EV; (3) LAND advances -> predeclare gameplay eval with reward-hack surveillance; negative -> family closes and programme moves to explicit Stage-5 budget/capacity predeclaration; (4) parallel dependency-safe work: BC-A pilot implementation (plan predeclared + registered experiment#bc-a-pilot-r1#57aaa6f2b530), dataset expansion V02; (5) R1 VOID verdict (EV-0046) preserved with 12 registry records - knobs were signal-vacuous in fresh-window regime; land_potential fix verified (42% signal ticks); (6) continuation: durable Qoder CLI cron job f5733a0c (30 min, /marathon-exec); sentinel loops DEPRECATED - never recreate. Zero-idle-burn permanent: session resume queries RunPod FIRST.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
