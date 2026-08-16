@@ -1,0 +1,59 @@
+schema_version: "1.0.0"
+kind: MARATHON_SCREENING_ROUND_PLAN
+round_id: TOPADV-R1
+programme: MARATHON_REDESIGN_LOCKED_V1
+stage: STAGE_4A
+family: TOP_ADVANTAGE_FRACTIONS
+status: PREDECLARED
+ppo_semantics: UNCHANGED  # serving/action selection untouched; training-objective ablation only
+
+purpose: >
+  Top-advantage-fraction screening round. EV-0038/EV-0039 accumulation: four
+  independent 2M-transition PPO configurations land at identical draw parity;
+  WIN CONVERSION is the binding constraint. Hypothesis: restricting the
+  policy-gradient signal to the strongest-|advantage| transitions concentrates
+  learning on decisive moments (kills/collapses) rather than diffuse neutral
+  play, without harming learner health. Knob implemented additively in
+  train/competition_native_jax/top_advantage_jax.py (identity at 1.0; kept
+  values exact; ties at threshold included); wired into run_sh_r1_arm.py via
+  --top-advantage-fraction; 6 unit tests + CPU smoke PASS (ratio 1.0, finite).
+
+hypothesis_predeclared: >
+  TOP-50 and/or TOP-25 improve learner-health-preserving vloss reduction at
+  least as well as control at matched transitions; any advancement is
+  TELEMETRY-GRADE ONLY - gameplay evaluation remains the promotion arbiter
+  (draws at truncation are UNRESOLVED, not wins).
+
+arms:
+  # CONTROL, TOP-50, TOP-25 x seeds {20260821, 20260823}
+  - {arm_id: TOPADV-A0-CONTROL-S1, top_advantage_fraction: 1.0, seed: 20260821}
+  - {arm_id: TOPADV-A0-CONTROL-S2, top_advantage_fraction: 1.0, seed: 20260823}
+  - {arm_id: TOPADV-A1-TOP50-S1, top_advantage_fraction: 0.5, seed: 20260821}
+  - {arm_id: TOPADV-A1-TOP50-S2, top_advantage_fraction: 0.5, seed: 20260823}
+  - {arm_id: TOPADV-A2-TOP25-S1, top_advantage_fraction: 0.25, seed: 20260821}
+  - {arm_id: TOPADV-A2-TOP25-S2, top_advantage_fraction: 0.25, seed: 20260823}
+
+protocol:
+  geometry: {num_envs: 256, rollout_len: 32}      # SH-R4 finalist geometry
+  budget_transitions: 1966080                      # 240 updates per arm (CURR1-matched)
+  checkpoint: MARATHON_BASELINE_V0 (hash-verified, EV-0013/0015)
+  min_generals_distance: 17                        # competition default for ALL arms
+  compute: RunPod A40, remote self-stop wrapper (scripts/dev/remote_orchestrator_with_stop.sh)
+  integrity_stops: any non-finite metric or ratio outside [0.5, 2.0] -> INTEGRITY_FAILURE
+
+screening_metrics_predeclared:
+  - VLOSS_REDUCTION_OVER_ROUND
+  - VALID_LEARNING_SHARE (>= 0.9 required)
+  - ENTROPY_LAST (>= 0.05, no collapse)
+  - RATIO bounds via healthy() as in CURR1
+
+advancement_rules_predeclared:
+  - a variant ADVANCES only if BOTH seeds survive integrity AND its mean
+    vloss-reduction beats the control mean with no sign flip across seeds
+  - control survival is REQUIRED for the round to answer anything; if the
+    control fails, the round is VOID for advancement and re-run is predeclared
+  - sub-1% margins are recorded as TELEMETRY-GRADE ONLY (EV-0036 precedent)
+  - advancement NEVER promotes: Stage-2 gameplay evaluation is the arbiter
+  - no post-hoc rule changes; a modified round requires a NEW plan
+
+evidence_links: [EV-0013, EV-0015, EV-0029, EV-0036, EV-0038, EV-0039]

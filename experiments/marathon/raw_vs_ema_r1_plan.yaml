@@ -4,7 +4,7 @@ eval_id: RAW-VS-EMA-R1
 programme: MARATHON_REDESIGN_LOCKED_V1
 stage: STAGE_4A
 family: RAW_VS_EMA
-status: PREDECLARED
+status: EXECUTED_UNRESOLVED_EMA_REMAINS_SERVING_DEFAULT_EV_0039
 
 purpose: >
   First round of the raw-vs-EMA family (EXECUTION_PLAN 9.3: "evaluate raw and

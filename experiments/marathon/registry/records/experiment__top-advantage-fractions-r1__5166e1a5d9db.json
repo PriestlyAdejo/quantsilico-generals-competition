@@ -1,0 +1,48 @@
+{
+  "ARMS": [
+    "TOPADV-A0-CONTROL-S1",
+    "TOPADV-A0-CONTROL-S2",
+    "TOPADV-A1-TOP50-S1",
+    "TOPADV-A1-TOP50-S2",
+    "TOPADV-A2-TOP25-S1",
+    "TOPADV-A2-TOP25-S2"
+  ],
+  "BUDGET_PER_ARM_TRANSITIONS": 1966080,
+  "BUDGET_PER_ARM_UPDATES": 240,
+  "CONFIG_IDENTITY": {
+    "compute_class": "GPU_RUNPOD_A40",
+    "knob": "train/competition_native_jax/top_advantage_jax.py (additive; identity at 1.0)",
+    "plan": "experiments/marathon/topadv_round_1_plan.yaml",
+    "plan_kind": "MARATHON_SCREENING_ROUND_PLAN",
+    "status": "PREDECLARED"
+  },
+  "EVIDENCE_LINKS": [
+    "EV-0013",
+    "EV-0015",
+    "EV-0029",
+    "EV-0036",
+    "EV-0038",
+    "EV-0039"
+  ],
+  "ID": "experiment#top-advantage-fractions-r1#5166e1a5d9db",
+  "KIND": "experiment",
+  "LINEAGE": {
+    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+    "LINEAGE_HASHES": {
+      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
+    },
+    "NAME": "competition_native_jax_v1"
+  },
+  "NAME": "TOP-ADVANTAGE-FRACTIONS-R1",
+  "PPO_SEMANTICS": "UNCHANGED",
+  "RECORDED_AT_UTC": "2026-08-16T00:24:03Z",
+  "SCHEMA_VERSION": "1.0.0",
+  "SEEDS": [
+    20260821,
+    20260823
+  ]
+}

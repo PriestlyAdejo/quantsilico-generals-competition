@@ -33,6 +33,7 @@ from train.competition_native_jax.ppo_jax import make_optimizer, ppo_update  # n
 from train.competition_native_jax.rollout_selfplay_jax import (  # noqa: E402
     collect_selfplay_batch,
 )
+from train.competition_native_jax.top_advantage_jax import top_advantage_mask  # noqa: E402
 from train.competition_native_jax.train_jax import load_tree, save_tree  # noqa: E402
 
 DEFAULT_CHECKPOINT = (
@@ -87,6 +88,13 @@ def main() -> int:
         type=int,
         default=17,
         help="spawn-distance curriculum knob (map generation only; PPO_SEMANTICS UNCHANGED)",
+    )
+    parser.add_argument(
+        "--top-advantage-fraction",
+        type=float,
+        default=1.0,
+        help="TOPADV knob: keep PG signal on top fraction of |advantage| transitions "
+        "(1.0 = identity/default; PPO_SEMANTICS UNCHANGED for serving)",
     )
     args = parser.parse_args()
 
@@ -143,6 +151,10 @@ def main() -> int:
             jax.block_until_ready(jax.tree_util.tree_leaves(batch["actions"]))
             collect_wall += time.perf_counter() - collect_started
             flat = flatten_batch(batch)
+            if args.top_advantage_fraction < 1.0:
+                flat["advantages"] = top_advantage_mask(
+                    flat["advantages"], args.top_advantage_fraction
+                )
             update_started = time.perf_counter()
             params, opt_state, metrics = ppo_update(params, opt_state, optimizer, flat)
             jax.block_until_ready(jax.tree_util.tree_leaves(params))
@@ -188,6 +200,7 @@ def main() -> int:
         "geometry": {"num_envs": args.num_envs, "rollout_len": args.rollout_len},
         "seed": args.seed,
         "min_generals_distance": args.min_generals_distance,
+        "top_advantage_fraction": args.top_advantage_fraction,
         "budget_transitions": args.budget_transitions,
         "actual_transitions": transitions,
         "updates": len(records),
