@@ -1,10 +1,10 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T11:45:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T12:25:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_5_T2_IMPLEMENTED_TESTS_EXECUTING_AND_BC_A_FULL_TRAINING_EXECUTING_LOCAL_CPU",
+ "CURRENT_STAGE": "STAGE_5_T2_SCREENING_LAUNCH_SEQUENCE_A40_FALLBACK_POD_RESUME_BLOCKED_HOST_CONGESTED",
  "CURRENT_TASK": "BC-A-FULL TRAINING FIRST (RAM gate) THEN T2 GEO SMOKE SOLO RETRY",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
@@ -236,9 +236,10 @@
  ],
  "ACTIVE_LOCAL_PROCESSES": {
   "AUDIT_STATUS": "AUDITED",
-  "AUDITED_AT_UTC": "2026-08-16T11:30:00Z",
+  "AUDITED_AT_UTC": "2026-08-16T12:25:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "LOCAL CPU: BC-A-FULL-R1 training (b6xh1r8zf, feature walk 20/81)"
+   "LOCAL CPU: BC-A-FULL-R1 training (b6xh1r8zf, feature walk ~40/81)",
+   "LOCAL: pod start retry loop b4rneythx (no burn while EXITED)"
   ],
   "COMPLETED_THIS_SESSION": [
    "ELITE DATASET V02 expansion FETCHED + acceptance PASS this tick (EV-0052): 95 new sealed replays (3 snapshots 2026-08-16 V01/V02/V03) across 20 distinct players; late-game coverage achieved - 82/95 at 400+ turns, 19 at 800+ incl. full 1200-turn games (deathtouch-phase exposure now exists); union dedupe-by-match-id recorded as BC builder requirement; clears the BC-A scale-up data dependency (EV-0050 consumption)",
@@ -290,10 +291,10 @@
   ]
  },
  "ACTIVE_REMOTE_PROCESSES": {
-  "AUDIT_STATUS": "AUDITED_WATCHDOG_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-16T08:52:00Z",
+  "AUDIT_STATUS": "AUDITED_API_VERIFIED",
+  "AUDITED_AT_UTC": "2026-08-16T12:25:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE_RUNNING: REWARD-BRIDGE-R1 completed 08:46:56Z (self-stopped), artefacts fetched port 22148, pod STOPPED ~08:49Z; zero idle burn"
+   "NONE_RUNNING: all 9 pods EXITED (API verified 12:22Z); yanhy83zocslwp resume attempting for STAGE5 T2 (host congested)"
   ],
   "OBSERVED_RESOURCES": [
    {
@@ -381,7 +382,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) wait for BC-A-FULL training completion (b6xh1r8zf) -> adjudicate per bc_a_full_round_1_plan.yaml. (B) then rerun T2-SMOKE-GEO SOLO (256x32, 2 updates): PASS with sane throughput -> register T2 screening runs pre-launch and launch seeds locally IF 240-update wall-time is practical (<= ~8h/seed); OOM or impractical alone -> execute plan's PREDECLARED bounded-A40 fallback (self-stop wrapper, prepaid credits, RUNPOD-SPEND-2026-08-15). (C) do NOT relaunch geo smoke while the trainer is alive (memory contention root cause confirmed: 15.8GB box).",
+ "NEXT_SAFE_ACTION": "(A) T2 pod launch: bounded retry loop b4rneythx resuming yanhy83zocslwp (host congested since 12:20Z); on RUNNING: verify .venv312/bin/python (EV-0047 guard; uv repair if broken), git pull to T2 commit, verify /workspace/ckpt_baseline_v0, launch remote_stage5_t2_r1_orchestrator.sh via self-stop wrapper, verify round log + trainer pid, ledger + billing log. If window closes blocked -> fresh A40 pod on available host (EV-0052 precedent). (B) BC-A-FULL training continues locally (40/81 features at 12:03Z).",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
