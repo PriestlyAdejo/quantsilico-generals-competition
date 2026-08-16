@@ -2,8 +2,21 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T13:40:00Z",
+  "updated_at_utc": "2026-08-16T14:55:00Z",
   "resources": [
+    {
+      "pod_id": "5pxc0rnfy34nal",
+      "name": "quantisilico_bc_a_full_r1_a40",
+      "status": "EXITED_RESUME_RETRYING_HOST_CONGESTED_2026-08-16T14:52Z",
+      "owner_run": "experiment#bc-a-full-r1#abcfcd746ac7 (BC-A-FULL-R1 A40 fallback, predeclared budget clause, EV-0059)",
+      "expected_workload": "remote_bc_a_full_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (40 epochs same seed 20260831; pod SELF-STOPS after exit)",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "machine_id": "5yue4r7xuzpm",
+      "ssh": "root@194.68.245.20 -p ROTATES_ON_RESUME (last 22154)",
+      "started_at_utc": "2026-08-16T14:24:37Z",
+      "provision_note": "FRESH fallback (billing-logged POD_CREATE; CA-MTL-1 no resources -> EU-SE-1). Bootstrap remote_curr1_setup.sh PASS (JAX 0.11.0 gpu, py3.12.14). Shards 22MB + 4 raw replay datasets 101 files 112MB uploaded. Launch#1 14:31Z crashed FileNotFoundError (raw datasets absent on volume - root-caused + fixed); launch#2 ~14:47Z died within 100s (forensics pending). Resume blocked HOST_FULL on this machine since ~14:40Z; bounded retry loop 15x90s armed 14:52Z."
+    },
     {
       "pod_id": "0ea2tby1ujpk8z",
       "name": "quantisilico_stage5_t2_r1_a40",

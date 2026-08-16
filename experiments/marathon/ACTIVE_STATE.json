@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T13:48:00Z",
+ "UPDATED_AT_UTC": "2026-08-16T14:55:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_5_T2_K1_ADJUDICATED_TELEMETRY_ADVANCE_GAMEPLAY_ARBITER_SETUP",
- "CURRENT_TASK": "T2 K1 gameplay arbiter prep: serving export of both terminal checkpoints via JaxTransformerHistoryPolicy (EVAL_ONLY, k1-aware) + sanity probe (EV-0034), then RWB1-protocol arbiter vs legal_random/heuristic_v0/heuristic_v1 (control gameplay already exists, EV-0054); BC-A-FULL 60/81 locally in parallel",
+ "CURRENT_STAGE": "STAGE_5_T2_CLOSED_NO_PROMOTION_BC_A_FULL_A40_FALLBACK_RESUMING",
+ "CURRENT_TASK": "T2 K1 fully closed (screening ADVANCED telemetry-grade EV-0057; gameplay arbiter NO_PROMOTION both seeds EV-0058 - draw wall persists). BC-A-FULL-R1 A40 fallback (EV-0059): pod 5pxc0rnfy34nal resume retry loop (15x90s from 14:52Z, host 5yue4r7xuzpm congested); raw datasets uploaded 101/101; launch#1 crashed FileNotFoundError (raw not on pod volume - fixed), launch#2 died within 100s (crash-vs-detach forensics pending on resume); on RUNNING: read done marker/round log, relaunch via proven T2 detach pattern if needed",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -393,7 +393,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) Execute the predeclared T2 K1 gameplay arbiter (stage5_capacity_value_r1_plan.yaml gameplay_arbiter, EV-0057): (1) export serving agents for checkpoint#s5-t2-k1-s1/s2-terminal via the k1-aware JaxTransformerHistoryPolicy adapter (EVAL_ONLY) into baselines/s5_t2_k1_s1|s2/main.py pattern per RWB1 precedent; (2) serving sanity probe BEFORE any games (EV-0034 precedent - weights load and matter, well-formed legal actions, deterministic); (3) run_marathon_paired_eval vs legal_random/heuristic_v0/heuristic_v1, 3 seat-swapped pairs each, 1200-turn horizon, competition mode; (4) adjudicate: strength requires statistically above matched control (RWB1-A0-CONTROL arbiter results EV-0054) AND above zero via harness CS; reward-hack surveillance (zero faults, no degenerate wins); (5) candidate + evaluation registry records + EV entry; PROMOTE/REJECT/UNRESOLVED per predeclared rules only. (B) BC-A-FULL training continues locally (60/81 features); adjudicate on completion per bc_a_full_round_1_plan.yaml. (C) No pods may be left RUNNING; T2 round pod stopped + billing-logged.",
+ "NEXT_SAFE_ACTION": "(A) BC-A-FULL-R1 A40 fallback completion: retry loop resumes 5pxc0rnfy34nal (expires ~15:15Z; if exhausted -> fresh pod + re-upload raw datasets 112MB); on RUNNING: forensics (/workspace/bc_a_full_r1.done + bc_a_full_round.log) to classify launch#2 death (crash vs ssh-detach kill); relaunch wrapper using the PROVEN T2 detach pattern if detach-related; verify trainer alive past feature-phase start; on round end (self-stop): billing-logged fetch window -> results JSON + artefacts to var/marathon_takeover/bc_a_full/ -> STOP pod -> adjudicate per bc_a_full_round_1_plan.yaml predeclared pass criteria (held-out-player top-1 strictly above BOTH legal-uniform and majority-pass on >=1 holdout player; phase-stratified; legal share 1.0; no relaxation) -> registry + EV + consumption-gate routing. (B) Stage 5 continuation after T2 closure: predeclare the next ladder axis honestly given EV-0058 (plan later_arms T3/T4; T4 'around any winner' premise lost; EV-0054 capacity/representation/value-structure escalation class still governs) - NEW round plan required before any launch. (C) Zero-idle-burn: every pod window billing-logged; no RUNNING pod without verified workload.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
