@@ -237,7 +237,7 @@
     "AUDIT_STATUS": "AUDITED",
     "AUDITED_AT_UTC": "2026-08-16T03:08:00Z",
     "ACTIVE_PROJECT_WORKLOADS": [
-      "REWARD-SHAPING-R1 GPU round on kkmqdgqbw3wgph (monitored remotely; arm 2/6 at 03:12Z, ~7 min/arm pace, self-stop armed, est end ~03:45Z)",
+      "REWARD-SHAPING-R2 launch PENDING on kkmqdgqbw3wgph (host yxpifxzxhiee GPU-congested; bounded 15x2min retry armed 04:52Z; EXITED pod costs no compute; launch sequence scripted in NEXT_SAFE_ACTION)",
       "DURABLE LOOP ACTIVE: Qoder CLI cron job f5733a0c (every 30 min, /marathon-exec, persisted, permanent) EV-0041; ALL sentinel text loops remain DEPRECATED (operator ruling, EV-0036 class)"
     ],
     "COMPLETED_THIS_SESSION": [
