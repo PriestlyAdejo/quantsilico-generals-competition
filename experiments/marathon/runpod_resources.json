@@ -2,12 +2,26 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T12:25:00Z",
+  "updated_at_utc": "2026-08-16T13:06:00Z",
   "resources": [
+    {
+      "pod_id": "0ea2tby1ujpk8z",
+      "name": "quantisilico_stage5_t2_r1_a40",
+      "status": "RUNNING_T2_ROUND_STARTED_2026-08-16T13:02:16Z",
+      "owner_run": "experiment#stage5-capacity-value-r1#f1dc01ccc86f (run#s5-t2-k1-s1#47d1e62130d8, run#s5-t2-k1-s2#6eac713a3ba6)",
+      "expected_workload": "remote_stage5_t2_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (2 T2-K1 arms sequential, 240 updates each @256x32 persistent, wall cap 90 min/arm; pod SELF-STOPS after round exit)",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "machine_id": "guah2ylm86w1",
+      "ssh": "root@194.68.245.1 -p 22011",
+      "started_at_utc": "2026-08-16T12:54:45Z",
+      "verified_active": "2026-08-16T13:04Z GPU 100%/38971MiB, wrapper + trainer PIDs present, round log arm 1 started at commit c609066",
+      "provision_note": "FRESH-POD FALLBACK (predeclared EV-0044-precedent, plan compute clause, RUNPOD-SPEND-2026-08-15 prepaid credits; billing-logged POD_CREATE): yanhy83zocslwp host 5yue4r7xuzpm HOST_FULL 34+ min (tries 1-15), cancel marker var/marathon_takeover/stop_pod_retries set 12:54:43Z, retry loop exited CANCELLED 12:56Z (zero double-start risk). Setup: remote_curr1_setup.sh (clone c609066 depth1 + submodule 9e3b9d1 + uv venv .venv312 Python 3.12.14 verified pre-launch per EV-0047 guard + jax[cuda12]==0.11.0 GPU backend verified); ckpt_baseline_v0 uploaded 35MB from local reference ckpt_final_u482_t7593984 (7 artefacts + COMPLETE)."
+    },
     {
       "pod_id": "yanhy83zocslwp",
       "name": "quantisilico_rshaping_r2_a40",
-      "status": "RESUME_ATTEMPTING_HOST_CONGESTED_2026-08-16T12:20Z",
+      "status": "SUPERSEDED_BY_0ea2tby1ujpk8z_HOST_CONGESTED_EXITED_RETAINS_VOLUME",
       "owner_run": "experiment#stage5-capacity-value-r1#f1dc01ccc86f",
       "expected_workload": "remote_stage5_t2_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (2 T2-K1 arms sequential, 240 updates each, wall cap 90 min/arm; pod SELF-STOPS after round exit)",
       "rate_usd_per_hr": 0.44,
@@ -15,7 +29,7 @@
       "machine_id": "5yue4r7xuzpm",
       "ssh": "root@194.68.245.20 -p ROTATES_ON_RESUME (last 22148)",
       "started_at_utc": "2026-08-16T05:13:55Z",
-      "provision_note": "RESUME for STAGE5 T2 (predeclared CPU-insufficiency fallback satisfied: 256x32 OOM on 15.8GB box; 128x32 solo probe 4.9GB working set + >17min no telemetry). Start attempts blocked 'not enough free GPUs' on host 5yue4r7xuzpm since 12:20Z; bounded retry loop b4rneythx (20 tries / 90s). Fresh-pod fallback on another host if window closes (EV-0052 precedent, predeclared spend policy RUNPOD-SPEND-2026-08-15, prepaid credits)."
+      "provision_note": "T2 resume blocked 'not enough free GPUs' on host 5yue4r7xuzpm 12:20Z+; bounded retry loops (original 20-try PID 39532; takeover duplicate killed on detection) ran until cancel marker set 12:54:43Z -> loop exited CANCELLED 12:56Z per RUNPOD-ZERO-IDLE-BURN section 8. Fresh pod 0ea2tby1ujpk8z owns the workload; this pod remains EXITED (no burn) retaining its RWB1-era volume."
     },
     {
       "pod_id": "kkmqdgqbw3wgph",
@@ -127,5 +141,11 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": []
+  "active_workloads": [
+    {
+      "pod_id": "0ea2tby1ujpk8z",
+      "verified_at_utc": "2026-08-16T13:04:00Z",
+      "evidence": "GPU 100%/38971MiB; wrapper + run_sh_r1_arm PIDs alive; round log arm S5-T2-K1-S1 started 13:02:16Z commit c609066"
+    }
+  ]
 }
