@@ -2,21 +2,20 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T06:50:00Z",
+  "updated_at_utc": "2026-08-16T07:00:00Z",
   "resources": [
     {
       "pod_id": "yanhy83zocslwp",
       "name": "quantisilico_rshaping_r2_a40",
-      "status": "EXITED_SELF_STOPPED_AFTER_R2_ROUND_06:10Z_EVIDENCE_FETCHED_06:25Z_THEN_STOPPED",
-      "owner_run": "experiment#reward-shaping-r2#9172336619e7",
-      "expected_workload": "remote_reward_shaping_r2_orchestrator.sh via remote_orchestrator_with_stop.sh (4 arms sequential, 240 updates each, wall cap 90 min/arm; pod SELF-STOPS after round exit)",
+      "status": "RUNNING_EPC1_ROUND",
+      "owner_run": "experiment#episode-continuity-r1#d59d66093f59",
+      "expected_workload": "remote_episode_continuity_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (4 arms sequential, 240 updates each; pod SELF-STOPS after round exit); round start 2026-08-16T06:52:00Z commit bd2cf36; GPU 96% verified",
       "rate_usd_per_hr": 0.44,
       "data_center": "EU-SE-1",
       "machine_id": "5yue4r7xuzpm",
-      "ssh": "root@194.68.245.20 -p ROTATES_ON_RESUME (last 22089)",
+      "ssh": "root@194.68.245.20 -p 22065 (rotates on resume)",
       "started_at_utc": "2026-08-16T05:13:55Z",
-      "provision_note": "FRESH on-demand pod (runpod_pod_create.py, billing-logged): kkmqdgqbw3wgph's host congested continuously 03:43-05:13Z (15+ start attempts, all 'not enough free GPUs'); kkmq retained EXITED with R1 volume (EV-0046)",
-      "completion_note": "R2 round 4/4 arms exit=0 (EV-0047); venv-interpreter regression found+repaired (EV-0047 guard note); pod stopped after fetch"
+      "provision_note": "FRESH on-demand pod (runpod_pod_create.py, billing-logged): kkmqdgqbw3wgph's host congested continuously 03:43-05:13Z (15+ start attempts, all 'not enough free GPUs'); kkmq retained EXITED with R1 volume (EV-0046)"
     },
     {
       "pod_id": "kkmqdgqbw3wgph",
@@ -128,5 +127,7 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": []
+  "active_workloads": [
+    "yanhy83zocslwp: EPISODE_CONTINUITY_R1 screening round (4 arms, est end ~07:40Z; remote self-stop armed)"
+  ]
 }
