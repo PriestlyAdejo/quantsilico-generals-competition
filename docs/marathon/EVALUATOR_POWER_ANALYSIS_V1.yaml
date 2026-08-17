@@ -57,6 +57,14 @@ tier_design_predeclared:
   tier_b_shipping_smoke:
     purpose: "reject catastrophically broken candidates; prove legal play;
       smaller than final promotion"
+    instantiation_frozen:
+      mechanism: "serving sanity probe (EV-0034 lineage: L1 weights-load-and-
+        matter + L2 protocol behaviour) PLUS a 4-game legal-play smoke
+        (2 vs legal_random, 2 vs pass_bot; seat-swapped; 1200-turn horizon)"
+      pass_criteria: "probe PASS + zero faults + all actions well-formed and
+        legal + no crashes/timeouts; results NOT scored for strength"
+      semantics: "gate ONLY for shipping/package candidates (EXPERIMENTAL_
+        UPLOAD_READY path); never substitutes tier-C for scientific promotion"
   tier_c_canonical_promotion:
     purpose: "the existing paired frozen arbiter, RETAINED as promotion
       authority, with predeclared sample sizes large enough for real power:
