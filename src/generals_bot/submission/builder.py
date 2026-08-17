@@ -437,7 +437,193 @@ def build_hybrid_bc_package(
         raise
 
 
-def promote_package_to_submission(candidate_id: str, zip_path: Path | str) -> dict:
+def build_learned_jax_package(
+    checkpoint_dir: Path | str,
+    *,
+    candidate_id: str,
+    obs_version: str = "v1",
+    weights: str = "raw",
+    staging_root: Path | None = None,
+    promote: bool = True,
+) -> PackageReport:
+    """Build a learned-JAX-checkpoint ZIP under ``submission/staging``.
+
+    Serves a marathon JAX training checkpoint (npz weights from the canonical
+    schema-v2 save_tree lineage) through the parity-proven serving path:
+    obs_version v1 = canonical 8-plane JaxTransformerPolicy; v2 = OBS-V2
+    14-plane/12-global JaxTransformerObsV2Policy (obs_v2_r1_plan.yaml). The
+    package is self-contained (no train/ imports; load_params_npz) and runs on
+    the sandbox's pinned jax==0.11.0.
+    """
+    if obs_version not in ("v1", "v2"):
+        raise ValueError(f"unknown obs_version: {obs_version}")
+    checkpoint_dir = Path(checkpoint_dir)
+    weights_src = checkpoint_dir / f"{weights}.npz"
+    if not weights_src.is_file():
+        raise FileNotFoundError(f"checkpoint weights missing: {weights_src}")
+
+    bot_commit = _git_rev(REPO_ROOT)
+    engine_commit = _git_rev(ENGINE_SUBMODULE)
+    staging_root = staging_root or (REPO_ROOT / "submission" / "staging")
+    staging_root.mkdir(parents=True, exist_ok=True)
+    work = Path(tempfile.mkdtemp(prefix="learned_jax_", dir=str(staging_root)))
+    try:
+        pkg_root = work / "pkg"
+        pkg_root.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(
+            REPO_ROOT / "src" / "generals_bot",
+            pkg_root / "generals_bot",
+            dirs_exist_ok=True,
+            ignore=shutil.ignore_patterns(*IGNORE_PACKAGE_DIRS),
+        )
+        weights_dir = pkg_root / "weights"
+        weights_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(weights_src, weights_dir / "checkpoint.npz")
+
+        if obs_version == "v2":
+            template_expr = (
+                "init_params(jax.random.PRNGKey(0), spatial_planes=14, global_dim=12)"
+            )
+            policy_ctor = "JaxTransformerObsV2Policy(params)"
+            policy_import = (
+                "from generals_bot.competition_native_jax.jax_baseline_policy import (\n"
+                "    JaxTransformerObsV2Policy,\n"
+                "    load_params_npz,\n"
+                ")"
+            )
+        else:
+            template_expr = "init_params(jax.random.PRNGKey(0))"
+            policy_ctor = "JaxTransformerPolicy(params)"
+            policy_import = (
+                "from generals_bot.competition_native_jax.jax_baseline_policy import (\n"
+                "    JaxTransformerPolicy,\n"
+                "    load_params_npz,\n"
+                ")"
+            )
+        _write_lf(
+            pkg_root / "main.py",
+            "from pathlib import Path\n\n"
+            "import jax\n\n"
+            "from generals_bot.agent import run_agent\n"
+            f"{policy_import}\n"
+            "from generals_bot.competition_native_jax.transformer_jax import init_params\n"
+            "from generals_bot.policies.base import ActionDecision, PolicyState\n\n\n"
+            "class _Served:\n"
+            "    def __init__(self, inner, policy_id):\n"
+            "        self.inner = inner\n"
+            "        self.policy_id = policy_id\n\n"
+            "    def initial_state(self, context):\n"
+            "        self.inner.reset(context.height, context.width)\n"
+            "        return PolicyState(data={'player_id': context.player_id})\n\n"
+            "    def act(self, observation, state, *, deterministic, trace, deadline):\n"
+            "        action = self.inner.act(observation, deterministic=deterministic)\n"
+            "        return ActionDecision(\n"
+            "            action=action,\n"
+            "            new_state=state,\n"
+            "            policy_id=self.policy_id,\n"
+            "            strategic_option='LEARNED',\n"
+            "        )\n\n\n"
+            "def main():\n"
+            "    ckpt = Path(__file__).resolve().parent / 'weights' / 'checkpoint.npz'\n"
+            f"    template = {template_expr}\n"
+            "    params = load_params_npz(ckpt, template)\n"
+            f"    run_agent(_Served({policy_ctor}, {candidate_id!r}), deterministic=True)\n\n\n"
+            "if __name__ == '__main__':\n"
+            "    main()\n",
+        )
+        _write_lf(
+            pkg_root / "run.sh",
+            "#!/usr/bin/env bash\nset -euo pipefail\nexec python -u main.py\n",
+        )
+        _write_lf(
+            pkg_root / "NOTICE.txt",
+            "QuantSilico Generals competition submission package.\n"
+            "Proprietary — All Rights Reserved.\n"
+            f"candidate_id: {candidate_id}\n"
+            f"architecture: learned_jax (obs_version {obs_version})\n"
+            f"bot_commit: {bot_commit}\n"
+            f"engine_commit: {engine_commit}\n",
+        )
+        _write_lf(
+            pkg_root / "package_manifest.json",
+            json.dumps(
+                {
+                    "candidate_id": candidate_id,
+                    "architecture": "learned_jax",
+                    "obs_version": obs_version,
+                    "weights": weights,
+                    "checkpoint_source": str(weights_src.as_posix()),
+                    "bot_commit": bot_commit,
+                    "engine_commit": engine_commit,
+                },
+                indent=2,
+            )
+            + "\n",
+        )
+        run_sh = pkg_root / "run.sh"
+        run_sh.chmod(run_sh.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+        staging_zip = work / "package.zip"
+        _zip_package_tree(pkg_root, staging_zip)
+        status, limit_notes, file_count, unpacked, run_present = _validate_zip_limits(staging_zip)
+        digest = _sha256_file(staging_zip)
+        notes = [
+            f"learned JAX package (obs_version {obs_version}) built under submission/staging",
+            "Linux parity required for UPLOAD_READY",
+        ] + limit_notes
+
+        report = PackageReport(
+            candidate=candidate_id,
+            package_path=str(staging_zip),
+            sha256=digest,
+            zip_size=staging_zip.stat().st_size,
+            unpacked_size=unpacked,
+            file_count=file_count,
+            run_sh_present=run_present,
+            status=status,
+            notes=notes,
+            bot_commit=bot_commit,
+            engine_commit=engine_commit,
+            windows_validation="PENDING",
+            linux_parity="NOT_RUN",
+            upload_ready=False,
+            extra={
+                "architecture": "learned_jax",
+                "obs_version": obs_version,
+                "weights": weights,
+                "staging_dir": str(work),
+            },
+        )
+        _write_report(work, "learned_jax", report)
+
+        if promote and status == "PACKAGED":
+            promoted = promote_package_to_submission(
+                candidate_id, staging_zip, architecture="learned_jax"
+            )
+            report.package_path = str(promoted["package_path"])
+            report.extra = {
+                **report.extra,
+                "build_hash": promoted["build_hash"],
+                "promoted": True,
+                "canonical_path": promoted["package_path"],
+            }
+            report.notes = list(report.notes) + [
+                f"promoted to {promoted['package_path']}",
+            ]
+            _write_report(
+                Path(promoted["package_path"]).parent,
+                "learned_jax",
+                report,
+            )
+        return report
+    except Exception:
+        shutil.rmtree(work, ignore_errors=True)
+        raise
+
+
+def promote_package_to_submission(
+    candidate_id: str, zip_path: Path | str, *, architecture: str = "hybrid_bc"
+) -> dict:
     """Validate, hash, and atomically promote a ZIP into ``submission/packages``.
 
     Layout: ``submission/packages/<CANDIDATE_ID>/<build_hash>/package.zip`` plus
@@ -474,7 +660,7 @@ def promote_package_to_submission(candidate_id: str, zip_path: Path | str) -> di
             "sha256": digest,
             "package_file": "package.zip",
             "canonical_archive_path": rel,
-            "architecture": "hybrid_bc",
+            "architecture": architecture,
         },
     )
     (dest_dir / "sha256.txt").write_text(digest + "\n", encoding="utf-8")

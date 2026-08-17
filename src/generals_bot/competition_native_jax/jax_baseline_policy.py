@@ -71,6 +71,21 @@ def load_jax_checkpoint(raw_npz: Path, template: dict) -> dict:
     return load_tree(raw_npz, template)
 
 
+def load_params_npz(raw_npz: Path, template: dict) -> dict:
+    """Self-contained npz -> params loader for submission packages.
+
+    Byte-compatible with train_jax.load_tree (same save_tree key layout) but
+    imports nothing outside generals_bot, so it works inside a packaged ZIP.
+    """
+    data = np.load(raw_npz, allow_pickle=False)
+    flat_like, treedef = jax.tree_util.tree_flatten_with_path(template)
+    leaves = []
+    for key_path, leaf in flat_like:
+        arr = data[str(key_path)]
+        leaves.append(jnp.asarray(arr, dtype=getattr(leaf, "dtype", arr.dtype)))
+    return jax.tree_util.tree_unflatten(treedef, leaves)
+
+
 class JaxTransformerHistoryPolicy(JaxTransformerPolicy):
     """STAGE5 T2 serving variant: k1 legal temporal history (EVAL_ONLY).
 
