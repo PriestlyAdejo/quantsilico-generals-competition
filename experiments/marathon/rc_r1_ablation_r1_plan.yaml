@@ -1,0 +1,79 @@
+kind: MARATHON_RC_ABLATION_PLAN
+plan_id: RC_R1_ABLATION_R1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-17T18:25:00Z"
+stage: RC_LADDER (predeclared successor of RC_R1_BRIDGE per its branch (b); EV-0072)
+ppo_semantics: UNCHANGED
+authority: >-
+  rc_r1_bridge_plan.yaml adjudication_predeclared branch (b): wins in 0-1
+  seeds -> the successor predeclares ONE bounded ablation round
+  (fragment-only and curriculum-only arms) BEFORE any further
+  interpretation. RC-R1 adjudicated 2026-08-17 with 0 wins in both seeds
+  (EV-0072): s1 16D+2L cs lower -0.628, s2 17D+1L cs lower -0.601, zero
+  faults, curriculum never advanced (S1 2W/57L, S2 0W/42L greedy vs
+  legal_random at 8M). This plan is that predeclared round. It does NOT
+  rewrite any prior verdict; all results remain OBSERVATION_SCOPED (OBS-V1)
+  per amendment #2 sec 7.
+
+question: >-
+  Of the four frozen RC-R1 deltas, do D1 (128-fragment) or D2
+  (competence spawn-distance curriculum) ALONE produce a materially
+  different learning signal than the matched baseline recipe at screening
+  scale? (Attribution of the insufficient combination.)
+
+arms_predeclared:
+  - arm: RC-AB1-FRAG-S1
+    content: D1 only - rollout-len 128 with --accumulate-minibatches 8
+      (launch-1 OOM repair, unchanged semantics); NO curriculum
+      (spawn-distance default), top-advantage 1.0, NO schedules (constant
+      ent_coef/lr as in the canonical recipe); persistent regime; 256 envs;
+      MARATHON_BASELINE_V0 raw/ema/opt warm start; seed 20260927; budget
+      8,388,608 transitions (256 updates)
+  - arm: RC-AB2-CURR-S1
+    content: D2 only - competence spawn-distance curriculum stages [8, 17]
+      with the RC-R1 advancement rule (greedy-vs-legal_random >= 0.6 over
+      64 games every 32 updates); rollout-len 32, top-advantage 1.0, NO
+      schedules; persistent regime; 256 envs; same warm start; seed
+      20260927; budget 8,388,608 transitions
+  matched_control_existing: >-
+    SCALE 8M persistent baseline-warm-start arms (EV-0061) and RC-R1's own
+    telemetry: control differs from each ablation arm ONLY in the isolated
+    delta. No recompute.
+
+excluded_from_this_round: [D3 topadv alone, D4 schedules alone, any
+  combination, capacity, observation, reward shaping - branch (b) mandates
+  exactly ONE bounded round on D1/D2; further ablations require a new
+  predeclaration]
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049)
+  seeds: [20260927]
+  compute: >-
+    One bounded RunPod A40 round AFTER OBS-V2-R1 adjudication (same-pod
+    reuse where possible; RUNPOD-SPEND-2026-08-15; EV-0047+psutil guard +
+    import-chain guard before wrapper launch; self-stop wrapper; est < 45
+    min GPU total at RC-R1 measured TPS, cost < $0.40).
+  funnel: >-
+    PREDECLARE -> REGISTER -> LAUNCH (implementation already exists and is
+    CPU-smoked from RC-R1; no new code) -> LEARNER HEALTH -> telemetry
+    adjudication ONLY.
+
+adjudication_predeclared:
+  - telemetry-grade ONLY this round (screening funnel): an arm ADVANCES iff
+    learner health is clean AND it shows a qualitatively new signal vs the
+    matched control with no sign flip - either sustained vloss reduction
+    beyond control noise, decisive_share materially above control, or
+    curriculum advancement (RC-AB2 only, the competence threshold actually
+    reached). Otherwise REJECT/SURVIVE as the data show.
+  - NO gameplay arbiter this round unless an arm advances; an advancer gets
+    the fixed arbiter protocol (legal_random/heuristic_v0/heuristic_v1, 3
+    seat-swapped pairs each, 1200-turn horizon, competition mode, probe
+    PASS pre-game EV-0034, zero faults) BEFORE any promotion reading.
+  - draws at truncation UNRESOLVED/not wins; zero faults required; no
+    post-hoc relaxation; negatives preserved.
+  - family reading: if BOTH ablations are signal-flat, the RC-R1
+    combination failure is attributable to scale/observation gaps rather
+    than any single training delta (EV-0069 MATERIAL_GAPS_REMAIN stands);
+    the OBS-V2 ladder remains the primary learner axis.
+
+evidence_links: [EV-0072, EV-0069, EV-0061, EV-0049, rc_r1_bridge_plan.yaml]
