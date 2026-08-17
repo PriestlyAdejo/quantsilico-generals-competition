@@ -1,0 +1,17 @@
+{
+  "CHECKPOINT_ID": "checkpoint#teacher-r2-bc-s1#f79f55d62a05",
+  "EVIDENCE_LINKS": [
+    "EV-0034",
+    "EV-0060",
+    "EV-0064"
+  ],
+  "ID": "candidate#teacher_r2_bc_s1#1e9b119ee9b7",
+  "KIND": "candidate",
+  "PARITY_PROOF": "canonical legal-obs path (obs_memory.encode_observation + enumerate_legal_actions masked argmax; BC-A trainer parity EV-0050/EV-0060)",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "baselines/teacher_r2_bc_s1/main.py",
+  "RECORDED_AT_UTC": "2026-08-17T06:21:14Z",
+  "SANITY_PROBE": "scripts/analysis/serving_sanity_probe_teacher_r2.py PASS pre-game (EV-0034 precedent)",
+  "SCHEMA_VERSION": "1.0.0",
+  "SERVING_ADAPTER": "baselines/teacher_r2_serving_common.py (small_policy CNN, 3970 canonical action layout)"
+}

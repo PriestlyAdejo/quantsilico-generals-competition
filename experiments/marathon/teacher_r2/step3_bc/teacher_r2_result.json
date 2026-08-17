@@ -1,0 +1,83 @@
+{
+ "kind": "STAGE5_TEACHER_R2_BC_RESULT",
+ "plan": "experiments/marathon/stage5_teacher_r2_plan.yaml",
+ "experiment_id": "experiment#stage5-teacher-r2#8ab7def9c575",
+ "seed": 20260915,
+ "epochs": 40,
+ "lr": 0.003,
+ "batch_size": 64,
+ "step1_games": 20,
+ "decisive_games": 16,
+ "decisive_seeds": [
+  20260901,
+  20260902,
+  20260903,
+  20260905,
+  20260906,
+  20260907,
+  20260908,
+  20260909,
+  20260911,
+  20260913,
+  20260915,
+  20260916,
+  20260917,
+  20260918,
+  20260919,
+  20260920
+ ],
+ "splits": {
+  "train": [
+   20260901,
+   20260902,
+   20260903,
+   20260905,
+   20260906,
+   20260907,
+   20260908,
+   20260909,
+   20260911,
+   20260913,
+   20260915,
+   20260916,
+   20260917,
+   20260918
+  ],
+  "holdout_games": [
+   20260919,
+   20260920
+  ],
+  "holdout_maps": []
+ },
+ "silent_pass_excluded": 0,
+ "train_seconds": 712.6,
+ "final_loss": 0.07429223750552638,
+ "train": {
+  "top1_accuracy": 0.98352,
+  "legal_action_share": 1.0,
+  "legal_uniform_baseline": 0.038994,
+  "majority_pass_baseline": 0.053559,
+  "n": 14806,
+  "split": "train"
+ },
+ "finished_at_utc": "2026-08-17T06:14:16Z",
+ "holdout_games": {
+  "top1_accuracy": 0.187243,
+  "legal_action_share": 1.0,
+  "legal_uniform_baseline": 0.073976,
+  "majority_pass_baseline": 0.148148,
+  "n": 486,
+  "split": "holdout_games"
+ },
+ "holdout_maps": {
+  "split": "holdout_maps",
+  "n": 0,
+  "note": "EMPTY_SPLIT_no_deterministic_seeds_assigned"
+ },
+ "screening_gate": {
+  "rule": "top1 strictly above BOTH legal_uniform AND majority_pass on >=1 holdout split (EV-0060-identical)",
+  "holdout_games_pass": true,
+  "holdout_maps_pass": false,
+  "verdict": "PASS_GATE"
+ }
+}

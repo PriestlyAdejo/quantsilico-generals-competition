@@ -2,7 +2,7 @@
   "held": true,
   "owner": "qoder-standalone-takeover-20260816-session2",
   "acquired_at_utc": "2026-08-16T12:35:00Z",
-  "heartbeat_utc": "2026-08-17T05:48:46Z",
+  "heartbeat_utc": "2026-08-17T06:23:19Z",
   "host": "PriestlyRig",
   "stale_takeover_from": "qoder-quest-979999d1 (OPERATOR-AUTHORIZED SESSION HANDOVER 2026-08-16T12:35Z: retiring session quiet since ~12:25Z state update; detached workloads BC-A trainer + bounded pod retry loop verified independent; no active fire mid-action)",
   "stale_after_s": 5400
