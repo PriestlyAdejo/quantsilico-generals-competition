@@ -1,50 +1,50 @@
 {
-  "ARTEFACT_LOCATIONS": [
-    "experiments/marathon/obs_v2_r1/OBS-V2-R1-S2/ (planned)"
-  ],
-  "BUDGET": "declared by predeclared rule at launch (RC-R1 TPS -> ~25M target, 90-min/arm GPU cap)",
-  "COMMAND": "run_sh_r1_arm.py --arm-id OBS-V2-R1-S2 --num-envs 256 --rollout-len 128 --seed 20260925 --episode-carry persistent --reward-shape none --top-advantage-fraction 0.25 --curriculum competence-spawn --schedules rc1 --accumulate-minibatches 8 --obs-version v2 (init: warm-start MARATHON_BASELINE_V0 with declared shape surgery)",
-  "CURRICULUM": "competence-spawn [8,17] (RC-R1 rule)",
-  "ENVIRONMENT": {
-    "jax": "A40 (predeclared bounded round)",
-    "python": "3.12"
+ "ARTEFACT_LOCATIONS": [
+  "experiments/marathon/obs_v2_r1/OBS-V2-R1-S2/ (planned)"
+ ],
+ "BUDGET": "FROZEN 18612224 transitions (568 updates x 32768) = largest whole-update budget within 90-min cap at measured min RC-R1 TPS 3446.76 (est 5399.9s); 95-min wall cap backstop; frozen 2026-08-17T17:20Z per obs_v2_r1_plan.yaml budget_rule_predeclared",
+ "COMMAND": "run_sh_r1_arm.py --arm-id OBS-V2-R1-S2 --num-envs 256 --rollout-len 128 --seed 20260925 --episode-carry persistent --reward-shape none --top-advantage-fraction 0.25 --curriculum competence-spawn --schedules rc1 --accumulate-minibatches 8 --obs-version v2 (init: warm-start MARATHON_BASELINE_V0 with declared shape surgery)",
+ "CURRICULUM": "competence-spawn [8,17] (RC-R1 rule)",
+ "ENVIRONMENT": {
+  "jax": "A40 (predeclared bounded round)",
+  "python": "3.12"
+ },
+ "EPISODE_CARRY": "persistent",
+ "EVIDENCE_LINKS": [
+  "EV-0071",
+  "EV-0049"
+ ],
+ "EXPERIMENT_ID": "experiment#obs-v2-r1#97f257dd096e",
+ "GEOMETRY": {
+  "num_envs": 256,
+  "rollout_len": 128
+ },
+ "ID": "run#obs-v2-r1-s2#b8814d3240c9",
+ "KIND": "run",
+ "LINEAGE": {
+  "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+  "LINEAGE_HASHES": {
+   "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+   "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+   "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+   "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+   "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
   },
-  "EPISODE_CARRY": "persistent",
-  "EVIDENCE_LINKS": [
-    "EV-0071",
-    "EV-0049"
-  ],
-  "EXPERIMENT_ID": "experiment#obs-v2-r1#97f257dd096e",
-  "GEOMETRY": {
-    "num_envs": 256,
-    "rollout_len": 128
-  },
-  "ID": "run#obs-v2-r1-s2#b8814d3240c9",
-  "KIND": "run",
-  "LINEAGE": {
-    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
-    "LINEAGE_HASHES": {
-      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
-      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
-      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
-      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
-      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
-    },
-    "NAME": "competition_native_jax_v1"
-  },
-  "NAME": "OBS-V2-R1-S2",
-  "OBS_VERSION": "v2",
-  "PPO_SEMANTICS": "UNCHANGED",
-  "RECORDED_AT_UTC": "2026-08-17T14:45:22Z",
-  "RESULT": "REGISTERED_PRE_LAUNCH",
-  "REWARD_SHAPE": "none",
-  "SCHEDULES": "rc1",
-  "SCHEMA_VERSION": "1.0.0",
-  "SEEDS": [
-    20260925
-  ],
-  "STATUS": "REGISTERED_PRE_LAUNCH",
-  "STOP_REASON": "NOT_STARTED_PRE_LAUNCH_REGISTRATION",
-  "TOP_ADVANTAGE_FRACTION": 0.25,
-  "TRAINING_REGIME": "PERSISTENT_EPISODE_REGIME_V1"
+  "NAME": "competition_native_jax_v1"
+ },
+ "NAME": "OBS-V2-R1-S2",
+ "OBS_VERSION": "v2",
+ "PPO_SEMANTICS": "UNCHANGED",
+ "RECORDED_AT_UTC": "2026-08-17T17:16:50Z",
+ "RESULT": "REGISTERED_PRE_LAUNCH",
+ "REWARD_SHAPE": "none",
+ "SCHEDULES": "rc1",
+ "SCHEMA_VERSION": "1.0.0",
+ "SEEDS": [
+  20260925
+ ],
+ "STATUS": "REGISTERED_PRE_LAUNCH",
+ "STOP_REASON": "NOT_STARTED_PRE_LAUNCH_REGISTRATION",
+ "TOP_ADVANTAGE_FRACTION": 0.25,
+ "TRAINING_REGIME": "PERSISTENT_EPISODE_REGIME_V1"
 }
