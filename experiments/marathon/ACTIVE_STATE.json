@@ -4,8 +4,8 @@
   "UPDATED_AT_UTC": "2026-08-17T09:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ADJUDICATED_RC_R1_BRIDGE_LAUNCHING",
-  "CURRENT_TASK": "STAGE6_OPPDIST_R1 ADJUDICATED (EV-0070): branch (b) fires - both arms winless (s1 16D+2L, s2 18D, zero faults, CS -0.628/-0.573) -> programme-level escalation review RECORDED (docs/marathon/PROGRAMME_ESCALATION_REVIEW_V1.yaml, gate-informed recipe-scoped). Registry: 2 checkpoint + 2 candidate + 2 evaluation records + experiment verdict. NEXT per escalation review ranked options: RC_R1_BRIDGE launching on 5p0udi7ouvs139 (venv repair + pull + guards + self-stop wrapper).",
+  "CURRENT_STAGE": "RC_R1_BRIDGE_ROUND_EXECUTING",
+  "CURRENT_TASK": "RC_R1_BRIDGE bounded A40 round EXECUTING on fresh pod b6bqvrxqga9vp4 (EU-SE-1; started 14:08:12Z commit 2b9393c; arm S1 256x128 seed 20260919 topadv 0.25 curriculum competence-spawn schedules rc1; self-stop wrapper armed, marker /workspace/rc_r1_bridge.done). All prelaunch guards PASS: bootstrap clone + pinned submodule 9e3b9d1 + venv repair + IMPORT_CHAIN_OK + baseline shas match. Est round end ~15:25Z (<$0.60).",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -450,7 +450,7 @@
       ]
     }
   },
-  "NEXT_SAFE_ACTION": "(A) Launch RC-R1 bridge round: resume pod -> venv repair -> git pull -> import-chain guard -> checkpoint verify -> self-stop wrapper with remote_rc_r1_bridge_orchestrator.sh (2 x 8M seeds 20260919/20260921, 256x128, topadv 0.25, competence curriculum, rc1 schedules; est <70 min GPU <$0.55). (B) On completion: fetch -> integrity + learner health + curriculum telemetry (stage transitions, greedy-vs-random win rates) -> stop pod -> serving probe -> 36-game arbiter -> adjudicate per rc_r1_bridge_plan.yaml branches (a) bridge works -> attribution ablations + RC-R2 predeclare + earned budget escalation / (b) winless -> ONE bounded ablation round predeclared. (C) Dependency-safe gaps: canonicalisation plan, Stage-6 family classification, population design.",
+  "NEXT_SAFE_ACTION": "(A) Monitor round: verify first telemetry (ratio ~1.0, finite, ent_coef schedule values, curriculum eval at update 31/63/...). (B) On ROUND_COMPLETE: resume pod briefly -> fetch round log/summaries/telemetry/checkpoints -> verify integrity + learner health + curriculum stage transitions -> stop pod (zero idle burn; TERMINATE fresh pod to avoid recurring charges once artefacts secured). (C) Serving probe -> 36-game arbiter -> adjudicate per rc_r1_bridge_plan.yaml branches (a) bridge works -> attribution ablations + RC-R2 + earned scale / (b) winless -> ONE bounded ablation round. (D) Dependency-safe gaps: canonicalisation plan, Stage-6 family classification, population design.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
