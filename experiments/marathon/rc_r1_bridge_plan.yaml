@@ -1,0 +1,105 @@
+kind: MARATHON_RC_ROUND_PLAN
+plan_id: RC_R1_BRIDGE
+status: PREDECLARED
+predeclared_at_utc: "2026-08-17T11:55:00Z"
+stage: RC_LADDER (KNOWN_WORKING_RECIPE_COMPATIBILITY follow-up; additive amendment)
+ppo_semantics: UNCHANGED
+authority: >-
+  KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1 verdict MATERIAL_GAPS_REMAIN
+  (docs/marathon/KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1.yaml). The 2026
+  superhuman reference (AverageJoe @ 2516387) demonstrates mirror self-play PPO
+  reaches superhuman strength on standard Generals with: 512-step fragments,
+  competence-based spawn-distance curriculum, top-advantage 0.25, power-law
+  entropy and LR schedules, 38-channel obs + 512-step temporal encoder, depth-7
+  width-448 net, ~3e10 transitions. Our draw-wall evidence (EV-0061/63/68) tests
+  ONLY the current small recipe. This round asks the single bridge question;
+  it does NOT rewrite any prior verdict and does NOT touch OPPDIST-R1.
+
+question: >-
+  Does a coherent known-working-style bridge recipe (longer fragments +
+  competence spawn-distance curriculum + top-advantage 0.25 + entropy/LR
+  schedules), trained under the canonical persistent competition regime from the
+  same MARATHON_BASELINE_V0 warm start, escape the draw wall (produce arbiter
+  wins above matched controls)?
+
+hypothesis_class: RC_WORKING_RECIPE_BRIDGE_V1 (single coherent combination; ONE
+  treatment vs ONE matched control; attribution ablations are predeclared
+  successors only if the combination shows signal)
+
+treatment_definition_frozen:
+  base: current canonical recipe (persistent regime, 256 envs, identity sparse
+    terminal reward, gamma 1.0, GAE lambda 0.9, clip 0.2, HL-Gauss critic,
+    EMA 0.999, MARATHON_BASELINE_V0 raw/ema/opt warm start)
+  deltas_exactly_four:
+    - "D1 FRAGMENT: rollout-len 32 -> 128 (4x; memory-bounded choice, declared)"
+    - "D2 CURRICULUM: competence-based spawn-distance stages [8, 17]; start stage 8; advance to 17 when greedy-vs-legal_random win rate >= 0.6 over 64 games checked every 32 updates; reset pool regenerated per stage; capped at stage 17 this round"
+    - "D3 TOPADV: top-advantage-fraction 1.0 -> 0.25 (externally supported region)"
+    - "D4 SCHEDULES: ent_coef_t = max(0.05/(t+1)^0.2, 0.001); lr_t = clip(4.5e-3/(t+1)^1.1, 5e-6, 1e-4) (reference power-law shape, amplitude matched so terminal LR ~1e-5 at 256 updates; reference's reverse-KL magnet prior is EXCLUDED - separate ingredient, separate successor)"
+  excluded_from_this_round: [reverse-KL magnet prior, >128 fragments, history
+    plane changes, capacity changes, population, reward shaping, opponent
+    asymmetry - each is a separate predeclared successor if justified]
+
+arms_predeclared:
+  - arm: RC-R1-BRIDGE-S1
+    content: treatment as frozen above, seed 20260919, budget 8,388,608
+      transitions (256 envs x 128 = 32,768/update -> 256 updates)
+  - arm: RC-R1-BRIDGE-S2
+    content: identical, seed 20260921.
+  matched_control_existing: >-
+    SCALE 8M baseline-warm-start persistent arms (EV-0061: 1 arbiter win / 90
+    games across scale programme) serve as the matched control; no recompute.
+    Control differs from treatment ONLY in D1-D4 (same warm start, regime,
+    geometry class, budget).
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049)
+  geometry: 256 envs x 128 rollout (treatment); control historical 256x32
+  seeds: [20260919, 20260921]
+  compute: >-
+    One bounded RunPod A40 round after OPPDIST-R1 completes (same pod reuse;
+    RUNPOD-SPEND-2026-08-15 policy; EV-0047+psutil guard + import-chain guard
+    before wrapper launch; self-stop wrapper; est ~25-30 min per arm at 4x
+    fragment -> round est < 70 min GPU, cost < $0.55).
+  funnel: >-
+    PREDECLARE -> REGISTER -> IMPLEMENT (knobs + competence curriculum module,
+    CPU smoke first: 2 updates, ratio 1.0, finite, curriculum check fires,
+    schedules produce declared values at t=0 and t=last) -> LAUNCH -> LEARNER
+    HEALTH (valid_share, ratio, entropy non-collapse, finite; predeclared
+    telemetry: decisive_share trajectory, curriculum_stage transitions,
+    greedy_vs_random_win_rate at each check) -> GAMEPLAY ARBITER for all arms
+    completing integrity (telemetry diagnostic ONLY, declared upfront).
+
+implementation_constraints_predeclared:
+  - trained-seat action selection, legal mask, sampling and serving untouched
+    (PPO_SEMANTICS UNCHANGED); all deltas are training-time optimisation/
+    environment-schedule changes
+  - schedules and curriculum are deterministic functions of update index t and
+    recorded in telemetry (reproducible)
+  - curriculum evaluation games use greedy argmax over legal mask vs the
+    baselines/legal_random agent IN-JAX (no serving dependency); results are
+    screening diagnostics, not promotion evidence
+
+gameplay_arbiter: >-
+  Identical fixed protocol to every prior arbiter: opponents legal_random,
+  heuristic_v0, heuristic_v1; 3 seat-swapped pairs each (18 games per
+  candidate); 1200-turn horizon UNCHANGED; competition mode; serving sanity
+  probe PASS pre-game (EV-0034 precedent); reward-hack surveillance; zero
+  faults required. Serving: canonical 8-plane JaxTransformerPolicy from the
+  terminal checkpoints.
+
+adjudication_predeclared:
+  - promotion unchanged: strength iff win rate statistically above matched
+    controls AND above zero with the harness CS; draws at truncation
+    UNRESOLVED/not wins; zero faults required
+  - family reading (drives NEXT predeclaration, never retroactive):
+    (a) wins in BOTH seeds above controls -> bridge recipe WORKS at screening
+    scale; successor predeclares attribution ablations (each delta alone) +
+    RC-R2 capacity/history teacher + earned budget escalation slope
+    (b) wins in 0-1 seeds -> combination insufficient; successor predeclares
+    ONE bounded ablation round (fragment-only and curriculum-only arms) before
+    any further interpretation; no exhaustion claim while gate gaps remain
+  - no post-hoc relaxation; negatives preserved
+
+evidence_links: [EV-0049, EV-0061, EV-0063, EV-0068,
+  KNOWN_WORKING_RECIPE_GAP_AUDIT_V1, KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1,
+  "AverageJoe pin 25163875a3354a913fcee2139c1c4294e59335f7"]

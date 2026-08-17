@@ -4,8 +4,8 @@
   "UPDATED_AT_UTC": "2026-08-17T09:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ROUND_EXECUTING_PLUS_CONVERGENCE_AUDIT_LANES",
-  "CURRENT_TASK": "OPPDIST-R1 round EXECUTING unchanged (started 11:08:53Z, arm S1 ~30%, healthy). ADDITIVE amendment KNOWN_WORKING_REFERENCE_AND_WORKING_BOT_CONVERGENCE_AUDIT accepted dependency-safely: (1) external reference audits (AverageJoe arXiv:2606.23348, AGI arXiv:2507.06825) running as background research agents; (2) regime-reinterpretation audit over registry/plans/ledger running; (3) local facts gathered: policy 1,834,944 params, 4-layer w192 patch transformer, 8-plane obs + fog memory, k1 history tested only, 256x32 persistent geometry, <=16M tested. OPPDIST verdict will NOT be generalized to 'self-play does not work' (amendment sec 4); compatibility gate must precede any exhaustion claim.",
+  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ROUND_EXECUTING_PLUS_CONVERGENCE_AUDIT_COMPLETE_RC_R1_PREDECLARED",
+  "CURRENT_TASK": "CONVERGENCE_AUDIT COMPLETE (EV-0069): external refs pinned (AverageJoe @ 2516387, arXiv:2507.06825), gap audit + regime reinterpretation table + compatibility gate MATERIAL_GAPS_REMAIN committed; RC_R1_BRIDGE PREDECLARED + REGISTERED pre-launch (experiment#rc-r1-bridge#60729d9ef92f + 2 runs; exactly four frozen deltas: fragment 128, competence curriculum [8,17], topadv 0.25, entropy/LR schedules) - executes after OPPDIST adjudication. OPPDIST-R1 round still executing unchanged (arm S1 exit=0 1024/1024; S2 ~33% at 11:41Z).",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -430,7 +430,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#stage6-oppdist-r1#c0103074d017 REGISTERED_PRE_LAUNCH (OPPDIST-B0-TEACHOPP-S1/S2). Closed this session: experiment#stage6-distill-ppo-r1#543924456945 ADJUDICATED NO_PROMOTION EXPERT_INIT_LANE_CLOSED (EV-0068); experiment#stage5-teacher-r2#8ab7def9c575 ADJUDICATED NO_PROMOTION TEACHER_LANE_CLOSED (EV-0065); experiment#stage5-teacher-r1#153b464617b7 ADJUDICATED VALID_NEGATIVE STEP1_GATE_FAIL (EV-0064); experiment#stage5-scale-r2#7a383bb25e4f ADJUDICATED SCALE_AXIS_CLOSED (EV-0063); experiment#stage5-scale-r1#600fdb29e986 NO_PROMOTION + FIRST WIN (EV-0061); experiment#bc-a-full-r1#abcfcd746ac7 VALID_NEGATIVE (EV-0060).",
+  "CURRENT_EXPERIMENT": "experiment#stage6-oppdist-r1#c0103074d017 EXECUTING; experiment#rc-r1-bridge#60729d9ef92f REGISTERED_PRE_LAUNCH",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -450,7 +450,7 @@
       ]
     }
   },
-  "NEXT_SAFE_ACTION": "(A) OPPDIST round: monitor -> fetch (var/marathon_takeover/fetch_oppdist_r1.sh) -> learner health + opponent-hash invariance -> stop pod -> serving probe -> 36-game arbiter -> adjudicate per predeclared branches (unchanged). (B) When audit agents report: assemble docs/marathon/KNOWN_WORKING_RECIPE_GAP_AUDIT_V1.md (matrix + regime-reinterpretation table with VALID_IN_RESET_REGIME etc labels; no historic rewrites) -> KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE verdict -> if MATERIAL_GAPS_REMAIN predeclare smallest corrected-regime RC successors (frozen hypotheses, controls, no blind scale). (C) REPOSITORY_CANONICALISATION_PLAN_V1 in dependency-safe gaps (no live-file mutations).",
+  "NEXT_SAFE_ACTION": "(A) OPPDIST: await round completion -> fetch (var/marathon_takeover/fetch_oppdist_r1.sh) -> verify integrity (opponent hash invariance per arm) + learner health -> stop pod -> serving probe -> 36-game arbiter -> predeclared adjudication. (B) Then implement RC-R1 knobs (fragment already knob; add topadv wiring exists; ADD entropy/LR schedules + competence curriculum module) -> CPU smoke -> bounded A40 round -> arbiter -> adjudicate branches. (C) Dependency-safe gaps: REPOSITORY_CANONICALISATION_PLAN_V1, Stage-6 family classification, Stage-7 population design.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

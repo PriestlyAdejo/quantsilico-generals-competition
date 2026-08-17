@@ -1,0 +1,268 @@
+kind: KNOWN_WORKING_RECIPE_GAP_AUDIT
+version: V1
+status: COMPLETE
+created_utc: "2026-08-17T11:45:00Z"
+authority_context: >-
+  Additive operator amendment KNOWN_WORKING_REFERENCE_AND_WORKING_BOT_CONVERGENCE_AUDIT
+  (2026-08-17). This artefact compares the CURRENT QuantSilico canonical training
+  recipe against external known-working Generals.io RL systems, using measured
+  repository facts and pinned primary sources. It does NOT rewrite any historic
+  verdict; it scopes regime-bounded results and identifies material gaps for the
+  KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE.
+
+external_references_pinned:
+  average_joe_2026:
+    paper: "Superhuman AI for Generals.io Using Self-Play Reinforcement Learning (arXiv:2606.23348; Straka, Lisy, Schmid)"
+    repo: "strakam/AverageJoe @ main 25163875a3354a913fcee2139c1c4294e59335f7 (2026-08-02)"
+    access_date: "2026-08-17"
+    authoritative_config: configs/custom/L_7d_gae90.yaml (README: config behind the released agent)
+    caveat: configs/L.yaml (depth 11, population keys) differs and contains keys silently dropped at this pin; treated as non-authoritative
+  agi_2025:
+    paper: "Artificial Generals Intelligence: Mastering Generals.io with Reinforcement Learning (arXiv:2507.06825; Straka, Schmid)"
+    access_date: "2026-08-17"
+    source: arxiv.org/html/2507.06825v1 (PDF binary did not parse)
+    caveat: >-
+      linked repo github.com/strakam/generals-bots is the official competition engine
+      (identical to our pinned third_party/generals-bots, pin 9e3b9d1); its RL code is a
+      4x4 toy-grid example, NOT the paper recipe. Several hyperparameters undisclosed.
+  pinned_engine:
+    path: third_party/generals-bots (pin 9e3b9d1) - environment authority, unmodified
+
+gap_matrix:
+  # axis: [external known-working, quantisilico current, evidence status, gap]
+  persistent_episodes:
+    external: "AverageJoe: episodes carry across 512-step fragments (truncation 2048), memory zeroed for done envs"
+    current: "PERSISTENT_EPISODE_REGIME_V1 canonical since EV-0049 (RolloutCarry threaded)"
+    evidence: "EV-0048/0049; run_sh_r1_arm --episode-carry persistent"
+    gap: NO
+  env_auto_reset_semantics:
+    external: "AverageJoe: auto-reset from pre-generated map pool on episode end"
+    current: "device competition reset pool, auto_reset_from_pool (EV-0029 ladder pattern)"
+    evidence: "competition_env_jax.auto_reset_from_pool"
+    gap: NO
+  rollout_fragment_length:
+    external: "AverageJoe: num_steps=512; AGI: undisclosed"
+    current: "32 steps canonical screening geometry"
+    evidence: "SH-R1..R4 (RESET regime); no persistent-regime fragment-length retest exists"
+    gap: YES_MATERIAL
+  parallel_envs:
+    external: "AverageJoe: 512 envs/device x 4 devices (pmap)"
+    current: "256 envs single device"
+    evidence: "run_sh_r1_arm canonical geometry"
+    gap: PARTIAL
+  total_training_scale:
+    external: "AverageJoe: ~30k iters x ~1.05M transitions/iter cluster = ~3.1e10 transitions, 4 days 4xH200"
+    current: "<=16.8M transitions (SCALE-R2 largest arm)"
+    evidence: "EV-0061/0063"
+    gap: YES_MATERIAL (">1800x experience volume; our 16M is a small-scale slope test, not a recipe replication - per amendment sec 7)"
+  simulator_throughput:
+    external: "AverageJoe: custom fully-vectorized JAX simulator, claimed 10M+ steps/s, ~10,000x vs python"
+    current: "official MIT JAX primitives + lax.scan fused rollout; A40 measured ~5.8k transitions/s end-to-end incl. update (SCALE round)"
+    evidence: "SCALE round throughput summaries"
+    gap: YES_MATERIAL
+  spawn_distance_curriculum:
+    external: "AverageJoe: 5 stages dist 2-6 -> 17-28, COMPETENCE-BASED advance (greedy winrate vs random >= 0.6, pool regenerated)"
+    current: "fixed min_generals_distance knob tested at {default, 8, 21} under RESET regime only; advancement rule was a fixed arm choice, not competence-based"
+    evidence: "experiment#spawn-distance-curriculum-r1#c9255f18cd8f (EV-0036/0038, RESET regime); persistent-regime bridge B3 declared VOID without running (EV-0054)"
+    gap: YES_MATERIAL
+  reward:
+    external: "AverageJoe: sparse terminal +/-1 only; AGI: potential-based 0.3 land + 0.3 army + 0.4 castle shaping critical to avoid exploitable aggression"
+    current: "identity sparse terminal canonical; REWARD-SHAPING-R1 void-identical (EV-0046), R2 land_potential telemetry-only under RESET (EV-0047)"
+    evidence: "EV-0044/46/47"
+    gap: NO (canonical matches AverageJoe primary; AGI shaping remains an open variant, regime-scoped negative)
+  terminal_reward_density:
+    external: "AverageJoe: curriculum ensures games are winnable early (competence gate) -> terminal signal dense in practice"
+    current: "persistent regime produced first terminal signal (EV-0049 persist-S2); decisive_share in SCALE/T2/DISTILL telemetry is low but nonzero; arbiter decisive games rare"
+    evidence: "EV-0049, SCALE telemetry"
+    gap: PARTIAL (density is a curriculum consequence; see curriculum gap)
+  observation_planes:
+    external: "AverageJoe: 38 augmented channels (fog memory seen/enemy-seen, accumulated cities/generals/mountains, last-enemy-army value+age, coords)"
+    current: "8 canonical planes + fog memory (seen_own, last_army) encoded in-plane"
+    evidence: "obs_memory.py N_SPATIAL=8"
+    gap: YES_MATERIAL
+  map_memory:
+    external: "AverageJoe: accumulated terrain + enemy-seen memory channels"
+    current: "seen_own + last_army fog memory (canonical legal path)"
+    evidence: "obs_memory.ObsMemory"
+    gap: PARTIAL
+  temporal_history:
+    external: "AverageJoe: 7-frame own/enemy army-delta stacks + 512-step global opponent army/land time series (TemporalEncoder, 2 tokens)"
+    current: "k1 = single previous-tick legal spatial frame (tested EV-0057/58, no promotion); NO long-horizon temporal/global history ever tested"
+    evidence: "stage5_capacity_value_r1 plans; EV-0057/0058"
+    gap: YES_MATERIAL
+  transformer_depth:
+    external: "AverageJoe released: depth 7 (depth 11 variant in non-authoritative config)"
+    current: "N_LAYERS=4"
+    evidence: "constants.py; checkpoint leaf audit"
+    gap: YES_MATERIAL
+  embedding_width:
+    external: "AverageJoe: 448 (ff x3)"
+    current: "192 (ff 768 = x4)"
+    evidence: "constants.py EMB_DIM"
+    gap: YES_MATERIAL
+  heads:
+    external: "AverageJoe: 8"
+    current: "4"
+    evidence: "constants.py N_HEADS"
+    gap: PARTIAL
+  parameter_count:
+    external: "AverageJoe: not stated in repo (analytic estimate ~16M; UNVERIFIED - do not cite as fact)"
+    current: "1,834,944 (measured from ckpt_final_u482 raw.npz leaf sizes)"
+    evidence: "checkpoint audit 2026-08-17"
+    gap: YES_MATERIAL (order-of-magnitude even on conservative reading)
+  action_representation:
+    external: "AverageJoe: flat discrete 9x24x24=5184 logits, -1e9 invalid penalty pre-sampling, categorical sampling"
+    current: "flat 3970 (pass + per-cell 8 moves + build), legal mask, categorical sampling; heads factorised by patch (move/build/pass) but action space flat"
+    evidence: "constants.py ACTION_DIM; transformer heads"
+    gap: NO (same class; factorised/candidate-rerank variants remain successor hypotheses per amendment sec 8)
+  legal_masking:
+    external: "logit penalty pre-sampling"
+    current: "legal_mask_batch pre-sampling (canonical)"
+    evidence: "rollout_selfplay_jax"
+    gap: NO
+  value_representation:
+    external: "AverageJoe: HL-Gauss categorical 128 bins [-1,1] sigma 0.04 (identical hyperparameters)"
+    current: "HL-Gauss 128 bins [-1,1] sigma 0.04 canonical"
+    evidence: "constants.py; ppo_jax.hl_gauss_target"
+    gap: NO (already canonical; Stage-5 T-axis audit confirmed no-op)
+  gamma:
+    external: "AverageJoe: 1.0; AGI: example code 0.99"
+    current: "1.0 (checkpoint meta)"
+    evidence: "ckpt meta gamma 1.0"
+    gap: NO
+  gae_lambda:
+    external: "AverageJoe: 0.9; AGI: 0.95"
+    current: "0.9 (checkpoint meta)"
+    evidence: "ckpt meta lambda 0.9"
+    gap: NO
+  ppo_clip:
+    external: "0.2"
+    current: "0.2"
+    evidence: "ppo_jax"
+    gap: NO
+  optimisation_epochs:
+    external: "AverageJoe: 1 epoch; truncated steps masked from loss; truncation-aware GAE"
+    current: "1 update per rollout; persistent regime has no truncation boundary inside updates (episodes live); truncated-at-1200 handled by engine terminal"
+    evidence: "run_sh_r1_arm loop"
+    gap: NO
+  minibatch_size:
+    external: "AverageJoe: 1024 (accumulate_minibatches available in our ppo_jax but unused at screening)"
+    current: "full-batch 8192 single step (256x32)"
+    evidence: "ppo_jax accumulate_minibatches path exists"
+    gap: PARTIAL
+  top_advantage_filtering:
+    external: "AverageJoe: keep top 25% by |advantage|"
+    current: "TOPADV {1.0, 0.5, 0.25} tested under RESET regime ONLY (EV-0043 clean negative there); never retested under persistent regime"
+    evidence: "experiment#top-advantage-fractions-r1#5166e1a5d9db; regime audit 2026-08-17"
+    gap: YES_MATERIAL (regime-scoped negative; VALID_IN_RESET_REGIME only)
+  ema:
+    external: "AverageJoe: EMA 0.999 updated every iter; DEPLOYED bot is EMA; ref-Elo evaluates EMA"
+    current: "EMA_TAU 0.999 maintained and served by default; RAW-vs-EMA gameplay comparison done only on a RESET-regime checkpoint (EV-0039 UNRESOLVED 48/48 draws)"
+    evidence: "evaluation#curr1-a0-control-s1-ema-raw-vs-ema-r1#3bb10cc39b4d; regime audit"
+    gap: PARTIAL (never evaluated on a persistent-regime trained checkpoint)
+  entropy_schedule:
+    external: "AverageJoe: decaying coefficient 0.05/(t+1)^0.2 floor 0.001 weighting a REVERSE-KL toward a heuristic expander-magnet prior (not vanilla entropy)"
+    current: "constant ent_coef 0.01; no schedule; no magnet prior"
+    evidence: "ppo_jax"
+    gap: YES_MATERIAL (two distinct ingredients: schedule + expansion prior)
+  lr_schedule:
+    external: "AverageJoe: power-law clip(0.5/iter^1.1, 5e-6, 1e-4)"
+    current: "constant 3e-4 Adam + grad-clip 1.0"
+    evidence: "run_sh_r1_arm LR"
+    gap: YES_MATERIAL
+  self_play_opponent_semantics:
+    external: "AverageJoe: PURE MIRROR SELF-PLAY (population disabled in authoritative config); AGI: last-N=3 predecessor pool with 45% promotion gate"
+    current: "mirror self-play canonical; OPPDIST-R1 testing frozen-teacher opponent (executing)"
+    evidence: "AverageJoe train/rollout_selfplay.py; configs/L.yaml population_enabled false"
+    gap: NO (our opponent-distribution probe is a bonus axis, not a gap)
+  population_league:
+    external: "AverageJoe: not used for the released agent; AGI: tiny pool (3)"
+    current: "not built; Stage-7 predeclared"
+    evidence: "audit"
+    gap: NO (complexity must earn its keep per amendment sec 10)
+  evaluation_volume:
+    external: "AverageJoe: greedy-vs-random every 50 iters (512 games), ref-Elo every 250 iters (1000 games), ladder play"
+    current: "arbiter 18-96 games per candidate at promotion gates only"
+    evidence: "arbiter records"
+    gap: PARTIAL
+  serving_policy:
+    external: "AverageJoe: EMA deterministic/greedy deployment"
+    current: "deterministic argmax serving over legal mask (canonical)"
+    evidence: "jax_baseline_policy"
+    gap: NO
+  deployment_constraints:
+    external: "AverageJoe: unrestricted research bot on generals.io ladder"
+    current: "competition package constraints (CPU, size, offline) HARD; teacher/student split allowed by amendment sec 17"
+    evidence: "competition rules"
+    gap: NOT_APPLICABLE (constraint difference by design; distillation path predeclared for Stage 7)
+
+regime_reinterpretation_table:
+  # labels per amendment sec 15; no historic verdict rewritten
+  - family: SH-R1..R4 geometry/horizon screens
+    ids: [sh-r1-cpu-pilot#796c4d71603c, sh-r2-updates-matched#653b291f0ef0, sh-r3-seeds#2a98430be4d7, sh-r4-budget-escalation#f4a79a0412e9]
+    regime: RESET
+    label: VALID_IN_RESET_REGIME
+    note: "horizon conclusions must not be read as persistent-regime conclusions; no persistent fragment-length retest exists"
+  - family: spawn-distance curriculum
+    ids: [spawn-distance-curriculum-r1#c9255f18cd8f]
+    regime: RESET
+    label: VALID_IN_RESET_REGIME
+    note: "fixed-arm comparison, not competence-based advancement; persistent bridge B3 never ran (declared VOID EV-0054, not tested)"
+  - family: TOPADV fractions
+    ids: [top-advantage-fractions-r1#5166e1a5d9db]
+    regime: RESET
+    label: VALID_IN_RESET_REGIME
+    note: "EV-0043 negative stands for the reset regime only; adv_top_frac 0.25 under persistent episodes never tested"
+  - family: RAW-vs-EMA
+    ids: [raw_vs_ema_r1 evaluation#3bb10cc39b4d]
+    regime: RESET-checkpoint EVAL_ONLY
+    label: VALID_IN_RESET_REGIME
+    note: "UNRESOLVED verdict stands; never repeated on a persistent-regime trained checkpoint"
+  - family: REWARD-SHAPING R1/R2
+    ids: [reward-shaping-r1#39ce1360218e, reward-shaping-r2#9172336619e7]
+    regime: RESET
+    label: VALID_IN_RESET_REGIME (R1 VOID_SIGNAL_VACUOUS; R2 telemetry-only)
+    note: "shaping under persistent regime untested"
+  - family: anchor/decay/KL-controller/curriculum-controller (Stage 4A)
+    ids: []
+    regime: n/a
+    label: INTERACTION_NOT_TESTED
+    note: "never executed; charter mentions only"
+  - family: EPISODE_CONTINUITY_R1
+    ids: [episode-continuity-r1#d59d66093f59]
+    regime: BOTH (the comparison)
+    label: VALID_GENERAL_RESULT
+    note: "EV-0049 persistent adopted; first terminal signal observed"
+  - family: SCALE-R1/R2
+    ids: [stage5-scale-r1#600fdb29e986, stage5-scale-r2#7a383bb25e4f]
+    regime: PERSISTENT
+    label: VALID_IN_PERSISTENT_REGIME (NO_PROMOTION stands)
+    note: "scoped per amendment sec 7: scaling the CURRENT recipe 2M->16M did not promote; not a statement about transition scale in general (reference runs ~1800x more experience)"
+  - family: STAGE5 T2 k1 history
+    ids: [stage5-capacity-value-r1 runs s5-t2-k1-s1/s2]
+    regime: PERSISTENT
+    label: VALID_IN_PERSISTENT_REGIME (T2 REJECTED stands)
+    note: "tests only K=1 previous-frame; NOT a test of long-horizon temporal/global history"
+  - family: TEACHER-R1/R2, DISTILL-PPO
+    ids: [stage5-teacher-r1#153b464617b7, stage5-teacher-r2#8ab7def9c575, stage6-distill-ppo-r1#543924456945]
+    regime: PERSISTENT (PPO phases)
+    label: VALID_GENERAL_RESULT
+    note: "EV-0064/65/67/68 stand; representational capacity to ABSORB expert signal proven (D0 0.333) - separated from maintain-under-RL per amendment sec 8"
+  - family: ELITE_REPLAY_AUGMENTATION
+    ids: [bc-a-full-r1#51d45f39efd2]
+    regime: n/a (off-policy BC)
+    label: VALID_GENERAL_RESULT (NOT VIABLE at corpus scale)
+    note: "data plane retained"
+
+scale_interpretation_statement: >-
+  The SCALE programme conclusion is scoped to: "scaling the CURRENT recipe from ~2M
+  through tested 8M/16M budgets did not yield reproducible promotion." The external
+  2026 reference operates at roughly three orders of magnitude more experience with a
+  materially larger network and competence curriculum; our 16M bound is a small-scale
+  slope test of the current recipe, not a refutation of scale. Large-scale runs must
+  still be earned by a working-recipe proof first (amendment sec 16).
+
+policy_capability_separation_amendment_sec8:
+  CAN_REPRESENT_EXPERT_ACTIONS: "YES (proven) - D0 transformer BC top-1 0.333 vs CNN 0.187, EV-0067; BC screening PASS EV-0060"
+  CAN_MAINTAIN_IMPROVE_UNDER_RL: "NOT YET DEMONSTRATED - every on-policy continuation reverts to draw-wall behaviour (EV-0061/63/68); OPPDIST-R1 executing"
+  HAS_ENOUGH_MEMORY_CAPACITY_FOR_STRATEGIC_PLAY: "UNTESTED - 1.83M params / 4 layers / 8 planes / k1 history vs reference ~order-larger net with 38 channels + 512-step temporal encoder; network family name is not a capacity experiment"

@@ -1,0 +1,41 @@
+kind: KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE
+version: V1
+status: ADJUDICATED
+adjudicated_utc: "2026-08-17T11:50:00Z"
+question: >-
+  Has QuantSilico actually tested a scientifically credible competition-compatible
+  approximation of the current known-working Generals.io recipe under corrected
+  training semantics (persistent episodes, adequate horizon, competence curriculum,
+  adequate history/capacity, advantage filtering, schedules)?
+
+verdict: MATERIAL_GAPS_REMAIN
+
+evidence_basis:
+  - "docs/marathon/KNOWN_WORKING_RECIPE_GAP_AUDIT_V1.yaml (pinned references: AverageJoe @ 2516387, arXiv:2507.06825 HTML v1, pinned engine 9e3b9d1)"
+  - "regime reinterpretation table: horizon/curriculum/TOPADV/RAW-vs-EMA/reward-shaping conclusions are VALID_IN_RESET_REGIME only; no persistent-regime retest records exist"
+  - "persistent-regime rounds executed so far (SCALE 8M/16M, T2 k1, DISTILL-PPO) test the CURRENT recipe (32-step fragments, fixed 3e-4 LR, constant entropy 0.01, no curriculum, 8-plane obs, 1.83M params), not the reference-style combination"
+
+material_gaps_found:
+  - GAP-1 rollout fragment length 32 vs reference 512; never retested under persistent regime
+  - GAP-2 competence-based spawn-distance curriculum never run (reset-regime curriculum result stands regime-scoped)
+  - GAP-3 top-advantage 0.25 never tested under persistent regime (externally supported region)
+  - GAP-4 entropy/LR schedules absent (reference: power-law both; plus reverse-KL expansion magnet as separate untested ingredient)
+  - GAP-5 long-horizon temporal/global history never tested (k1 single-frame is NOT an equivalent test)
+  - GAP-6 capacity never tested (1.83M/4-layer/w192 vs reference depth-7/w448 order-larger net)
+  - GAP-7 total experience <=16M vs reference ~3 orders of magnitude more (scale test pending working-recipe proof; no blind high-scale runs)
+
+not_gaps_already_canonical:
+  - persistent episodes, pool auto-reset, HL-Gauss critic (identical hyperparameters), gamma 1.0, GAE lambda 0.9, clip 0.2, legal-masked flat action space, greedy deterministic serving, EMA maintenance
+
+interpretation_directive: >-
+  Per amendment sections 4 and 7: no programme claim that self-play/PPO is
+  fundamentally exhausted is permitted while this gate reads MATERIAL_GAPS_REMAIN.
+  OPPDIST-R1 (executing) adjudicates only its own predeclared question; the 2026
+  superhuman reference demonstrates pure mirror self-play CAN reach superhuman
+  strength on standard Generals at adequate scale/curriculum/history/capacity, so
+  draw-wall results so far implicate the CURRENT recipe, not the method class.
+
+successor_ladder_predeclared:
+  - "RC-R0 semantic reproduction: PRE_SATISFIED_WITH_EVIDENCE (EPC1 persist arms + all persistent rounds prove persistent episodes, partial pool resets, GAE bootstrap, legal obs path, sparse terminal; long-fragment leg folded into RC-R1)"
+  - "RC-R1 corrected working-recipe bridge: experiments/marathon/rc_r1_bridge_plan.yaml (predeclared this date; executes after OPPDIST-R1 adjudication to avoid paid-resource contention)"
+  - "RC-R2 capacity/history research teacher: CONDITIONAL on RC-R1 signal; not predeclared in detail until then"
