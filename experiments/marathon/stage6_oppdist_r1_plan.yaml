@@ -1,0 +1,111 @@
+kind: MARATHON_STAGE6_ROUND_PLAN
+plan_id: STAGE6_OPPDIST_R1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-17T10:40:00Z"
+stage: STAGE_6
+ppo_semantics: UNCHANGED
+authority: >-
+  Successor axis after EXPERT-INITIALIZATION closure (EV-0068 predeclared
+  branch (b): "successor predeclares the opponent-distribution lane
+  (asymmetric opponent pool during rollouts, Stage-6 population class) as
+  the last interactive hypothesis before programme-level escalation
+  review"). Accumulated evidence: RL self-play all scales (EV-0061/63),
+  capacity (EV-0058), elite imitation (EV-0060), win-converting-teacher
+  imitation (EV-0065), and expert initialization + on-policy continuation
+  (EV-0068) all draw; decisive ticks EXIST in telemetry but never convert
+  externally. The one variable never changed in any training line is the
+  OPPONENT: every line trained against a mirror of itself, where no line
+  can be punished for passivity. No launch without registration; no
+  post-hoc rule changes.
+
+question: >-
+  Does win conversion emerge when the learner trains against an opponent
+  that EXERCISES win-conversion pressure - a frozen hunting teacher clone
+  (DISTILL-S0, EV-0067) that targets the learner's general - instead of a
+  passive mirror? The passive-equilibrium hypothesis predicts the draw
+  wall persists regardless; the opponent-distribution hypothesis predicts
+  the learner adapts (defence, counter-hunt, commitment) and converts
+  wins externally.
+
+hypothesis_class: OPPONENT_DISTRIBUTION_ASYMMETRIC_ROLLOUT_V1 (Stage-6
+  population class, bounded first probe; training-rollout change only)
+
+arms_predeclared:
+  - arm: OPPDIST-B0-TEACHOPP-S1
+    content: >-
+      canonical learner, persistent regime, identity reward, 256x32, seed
+      20260915, budget 8388608 transitions (~1024 updates), warm start
+      from MARATHON_BASELINE_V0 (matched to SCALE controls - isolates the
+      opponent variable). Rollout asymmetry (DECLARED): seat 0 = trained
+      policy (PPO updates on its samples only); seat 1 = FROZEN DISTILL-S0
+      teacher checkpoint (checkpoint#distill-s0-transformer-bc#16a8ba80e13a),
+      sampled stochastically at temperature 1.0, no updates, its own
+      observation/memory threading. No seat swap in this round (asymmetry
+      is the intervention; seat-swap robustness deferred to a successor
+      only on promotion).
+  - arm: OPPDIST-B0-TEACHOPP-S2
+    content: identical, seed 20260917.
+  matched_controls_existing: >-
+    SCALE 8M baseline-warm-start self-play arms (EV-0061/EV-0063: 1 win /
+    90 games aggregate across the scale programme) serve as the matched
+    opponent-distribution control; no recompute.
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049)
+  geometry: canonical screening geometry 256 envs x 32 rollout
+  seeds: [20260915, 20260917]
+  compute: >-
+    One bounded RunPod A40 round (prepaid credits; RUNPOD-SPEND-2026-08-15
+    policy; EV-0047+psutil venv guard + full import-chain guard before
+    wrapper launch; self-stop wrapper; measured throughput ~20 min per 8M
+    arm -> round est < 50 min GPU, cost < $0.40).
+  funnel: >-
+    PREDECLARE -> REGISTER -> IMPLEMENT (frozen-opponent rollout mode,
+    CPU smoke first: 2 updates, ratio 1.0, finite, opponent params
+    unchanged) -> LAUNCH -> LEARNER HEALTH (valid_share, ratio, entropy
+    non-collapse, finite; ADDITIONAL predeclared telemetry checks:
+    decisive_share trajectory + teacher-opponent win rate during rollouts)
+    -> GAMEPLAY ARBITER for all arms completing integrity (telemetry
+    diagnostic ONLY, declared upfront).
+
+implementation_constraints_predeclared:
+  - the trained seat's action selection, legal mask, sampling and serving
+    are untouched (PPO_SEMANTICS UNCHANGED); the frozen opponent is
+    environment dynamics, not policy intervention
+  - opponent params are loaded ONCE and never updated; verify by hash
+    before/after the round in the smoke
+  - control path (--opponent-mode self) remains bit-identical to the
+    registered SCALE recipe
+
+gameplay_arbiter: >-
+  Identical fixed protocol to every prior arbiter: opponents legal_random,
+  heuristic_v0, heuristic_v1; 3 seat-swapped pairs each (18 games per
+  candidate); 1200-turn horizon UNCHANGED; competition mode; serving
+  sanity probe PASS pre-game (EV-0034 precedent); reward-hack surveillance
+  (general-capture attribution on any win); zero faults required. Serving:
+  canonical 8-plane JaxTransformerPolicy from the terminal checkpoints.
+
+adjudication_predeclared:
+  - per-arm promotion unchanged: strength iff win rate statistically above
+    matched controls (scale-programme aggregate) AND above zero with the
+    harness CS; draws at truncation UNRESOLVED/not wins; zero faults
+    required
+  - family-level reading (recorded, drives the NEXT predeclaration, never
+    retroactively changes this round's rules): (a) wins in BOTH seeds with
+    CS above controls -> opponent distribution IS the lever; successor
+    predeclares scaled opponent-pool training (mixed pool: teacher clone +
+    self-play fraction, seat-swap robustness, 16M); (b) wins in 0-1 seeds
+    -> the interactive hypothesis class (self-play objective, teacher
+    imitation, expert initialization, opponent distribution) is EXHAUSTED
+    at screening scale; programme enters a predeclared PROGRAMME-LEVEL
+    ESCALATION REVIEW: accumulated evidence dossier + bounded options
+    (deep scale beyond 16M with teacher-opponent mix; population/PSRO
+    lane per Stage 7; or operator decision point) - recorded before any
+    further spend
+  - no post-hoc relaxation; negatives preserved
+
+parallel_lanes_unaffected:
+  - Stage 4B silent-pass measurement (EV-0048 unblocked, diagnostic)
+
+evidence_links: [EV-0034, EV-0049, EV-0061, EV-0063, EV-0065, EV-0067,
+  EV-0068]

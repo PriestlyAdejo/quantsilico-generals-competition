@@ -1,0 +1,49 @@
+{
+  "ARTEFACT_LOCATIONS": [
+    "experiments/marathon/oppdist_r1/OPPDIST-B0-TEACHOPP-S2/ (planned)"
+  ],
+  "BUDGET": "8388608 transitions / ~1024 updates",
+  "COMMAND": "run_sh_r1_arm.py --arm-id OPPDIST-B0-TEACHOPP-S2 --num-envs 256 --rollout-len 32 --budget-transitions 8388608 --seed 20260917 --episode-carry persistent --reward-shape none --opponent-mode teacher_frozen (seat 0 trained; seat 1 = frozen DISTILL-S0 checkpoint#distill-s0-transformer-bc#16a8ba80e13a, stochastic temp 1.0; init: warm-started from MARATHON_BASELINE_V0)",
+  "ENVIRONMENT": {
+    "jax": "A40 (predeclared bounded round)",
+    "python": "3.12"
+  },
+  "EPISODE_CARRY": "persistent",
+  "EVIDENCE_LINKS": [
+    "EV-0049",
+    "EV-0061",
+    "EV-0063",
+    "EV-0067",
+    "EV-0068"
+  ],
+  "EXPERIMENT_ID": "experiment#stage6-oppdist-r1#c0103074d017",
+  "GEOMETRY": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "ID": "run#oppdist-b0-teachopp-s2#20ac28eb3eb5",
+  "KIND": "run",
+  "LINEAGE": {
+    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+    "LINEAGE_HASHES": {
+      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
+    },
+    "NAME": "competition_native_jax_v1"
+  },
+  "NAME": "OPPDIST-B0-TEACHOPP-S2",
+  "PPO_SEMANTICS": "UNCHANGED",
+  "RECORDED_AT_UTC": "2026-08-17T10:37:40Z",
+  "RESULT": "REGISTERED_PRE_LAUNCH",
+  "REWARD_SHAPE": "none",
+  "SCHEMA_VERSION": "1.0.0",
+  "SEEDS": [
+    20260917
+  ],
+  "STATUS": "REGISTERED_PRE_LAUNCH",
+  "STOP_REASON": "NOT_STARTED_PRE_LAUNCH_REGISTRATION",
+  "TRAINING_REGIME": "PERSISTENT_EPISODE_REGIME_V1"
+}
