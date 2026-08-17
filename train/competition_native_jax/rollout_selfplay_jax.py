@@ -40,6 +40,22 @@ ROLLOUT_ARCHITECTURE = "END_TO_END_COMPETITION_JAX_ROLLOUT"
 # Explicit demotion of prior host/Python-timestep path
 SUPERSEDED_COLLECTOR = "HOST_BOUND_PYTHON_TIMESTEP_COLLECTOR"
 
+# STAGE6_OPPDIST_R1: opponent-distribution knob. "self" = canonical mirror
+# self-play (bit-identical control path). "teacher_frozen" = seat 1 acts from
+# params carried in RolloutCarry.opp_params, loaded once and never updated
+# (environment dynamics; PPO_SEMANTICS UNCHANGED for the trained seat).
+_OPPONENT_STATE = {"mode": "self"}
+
+
+def set_opponent_mode(mode: str) -> None:
+    if mode not in ("self", "teacher_frozen"):
+        raise ValueError(f"unknown opponent mode: {mode}")
+    _OPPONENT_STATE["mode"] = mode
+
+
+def active_opponent_mode() -> str:
+    return _OPPONENT_STATE["mode"]
+
 
 class RolloutCarry(NamedTuple):
     states: Any
@@ -53,6 +69,9 @@ class RolloutCarry(NamedTuple):
     # temporal history mode is off (bit-inert) and at episode boundaries.
     prev_sp0: jax.Array
     prev_sp1: jax.Array
+    # STAGE6_OPPDIST_R1: frozen seat-1 params; None in mode "self" (unused by
+    # the trace, keeps the control path bit-identical).
+    opp_params: dict | None = None
 
 
 def initialise_rollout_carry(
@@ -62,6 +81,7 @@ def initialise_rollout_carry(
     seed: int,
     reset_pool_size: int = 4096,
     pool: Any | None = None,
+    opp_params: dict | None = None,
 ) -> RolloutCarry:
     """Create episode state once for a continuous sequence of PPO updates."""
     key = jax.random.PRNGKey(seed)
@@ -77,7 +97,9 @@ def initialise_rollout_carry(
     mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
     mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
     prev = jnp.zeros((num_envs, N_SPATIAL, MAX_HW, MAX_HW), dtype=jnp.float32)
-    return RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor, prev, prev)
+    if active_opponent_mode() == "teacher_frozen" and opp_params is None:
+        raise ValueError("opponent mode teacher_frozen requires opp_params at carry init")
+    return RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor, prev, prev, opp_params)
 
 
 @partial(jax.jit, static_argnames=("rollout_len",))
@@ -92,7 +114,7 @@ def _value_from_logits(value_logits: jax.Array) -> jax.Array:
 
 def rollout_step(carry: RolloutCarry, _):
     """One fused self-play step (both seats); scanned over time."""
-    (states, mem0, mem1, key, params, pool, pool_cursor, prev_sp0, prev_sp1) = carry
+    (states, mem0, mem1, key, params, pool, pool_cursor, prev_sp0, prev_sp1, opp_params) = carry
     key, k0, _k1 = jax.random.split(key, 3)
 
     sp0, gv0, mem0 = observe_batch_p0(states, mem0)
@@ -108,19 +130,29 @@ def rollout_step(carry: RolloutCarry, _):
     else:
         in0, in1 = sp0, sp1
 
-    # Concatenate both seats into one native batch forward [2N, ...]
     n = sp0.shape[0]
-    spatial = jnp.concatenate([in0, in1], axis=0)
-    global_vec = jnp.concatenate([gv0, gv1], axis=0)
-    masks = jnp.concatenate([m0, m1], axis=0)
-    out = forward_batch(params, spatial, global_vec)
-    keys = jax.random.split(k0, 2 * n)
-    actions, logps = sample_action_batch(keys, out["flat_logits"], masks)
-    values = _value_from_logits(out["value_logits"])
-
-    a0, a1 = actions[:n], actions[n:]
-    lp0 = logps[:n]
-    v0 = values[:n]
+    if active_opponent_mode() == "teacher_frozen":
+        # STAGE6_OPPDIST_R1: seat 0 = trained policy (canonical fused forward);
+        # seat 1 = frozen opponent acting from opp_params, sampled
+        # stochastically (temperature 1.0). Trained-seat action selection is
+        # untouched; the opponent is environment dynamics.
+        out0 = forward_batch(params, in0, gv0)
+        out1 = forward_batch(opp_params, in1, gv1)
+        keys = jax.random.split(k0, 2 * n)
+        a0, lp0 = sample_action_batch(keys[:n], out0["flat_logits"], m0)
+        a1, _lp1 = sample_action_batch(keys[n:], out1["flat_logits"], m1)
+        v0 = _value_from_logits(out0["value_logits"])
+    else:
+        # Concatenate both seats into one native batch forward [2N, ...]
+        spatial = jnp.concatenate([in0, in1], axis=0)
+        global_vec = jnp.concatenate([gv0, gv1], axis=0)
+        masks = jnp.concatenate([m0, m1], axis=0)
+        out = forward_batch(params, spatial, global_vec)
+        keys = jax.random.split(k0, 2 * n)
+        actions, logps = sample_action_batch(keys, out["flat_logits"], masks)
+        a0, a1 = actions[:n], actions[n:]
+        lp0 = logps[:n]
+        v0 = _value_from_logits(out["value_logits"])[:n]
     eng0 = index_to_engine_action_batch(a0)
     eng1 = index_to_engine_action_batch(a1)
     joint = jnp.stack([eng0, eng1], axis=1)
@@ -128,6 +160,7 @@ def rollout_step(carry: RolloutCarry, _):
     next_states, rewards, terminated, truncated, _info = step_batch_jax(states, joint)
     done = terminated | truncated
     rewards0 = rewards[:, 0]
+    rewards1 = rewards[:, 1]
     # REWARD-SHAPING-R1 (EV-0044): training-reward shaping for the trained seat
     # only. PPO_SEMANTICS UNCHANGED - identity at mode "none" (control path).
     _shape_mode, _shape_beta = active_shaping()
@@ -165,12 +198,13 @@ def rollout_step(carry: RolloutCarry, _):
         "old_logp": lp0,
         "values": v0,
         "rewards": rewards0,
+        "rewards1": rewards1,  # STAGE6_OPPDIST_R1: teacher-opponent outcome diagnostic
         "dones": done.astype(jnp.float32),
         "terminals": terminated.astype(jnp.float32),  # decisive-game diagnostic (EV-0044)
     }
     return (
         RolloutCarry(
-            next_states, mem0, mem1, key, params, pool, pool_cursor, prev_sp0, prev_sp1
+            next_states, mem0, mem1, key, params, pool, pool_cursor, prev_sp0, prev_sp1, opp_params
         ),
         traj,
     )
@@ -186,6 +220,7 @@ def collect_selfplay_batch(
     pool: Any | None = None,
     carry: RolloutCarry | None = None,
     return_carry: bool = False,
+    opp_params: dict | None = None,
 ) -> dict[str, Any] | tuple[dict[str, Any], RolloutCarry]:
     """Collect one rollout, optionally continuing episode state from the prior update.
 
@@ -199,6 +234,7 @@ def collect_selfplay_batch(
             seed=seed,
             reset_pool_size=reset_pool_size,
             pool=pool,
+            opp_params=opp_params,
         )
     else:
         carry = carry._replace(params=params)

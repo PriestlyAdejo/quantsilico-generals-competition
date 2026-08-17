@@ -1,514 +1,514 @@
 {
- "SCHEMA_VERSION": "1.2.0",
- "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-17T09:55:00Z",
- "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
- "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_PREDECLARED_READY_TO_IMPLEMENT",
- "CURRENT_TASK": "STAGE6_OPPDIST_R1 PREDECLARED + REGISTERED pre-launch this tick (experiment#stage6-oppdist-r1#c0103074d017 + 2 run records; stage6_oppdist_r1_plan.yaml): LAST INTERACTIVE HYPOTHESIS before programme-level escalation review - asymmetric rollout vs frozen hunting teacher clone (DISTILL-S0, EV-0067): seat 0 trained from MARATHON_BASELINE_V0 warm-start (matched SCALE controls isolate the opponent variable), seat 1 frozen DISTILL-S0 sampled temp 1.0; 2 x 8M seeds 20260915/20260917; PPO_SEMANTICS UNCHANGED (opponent = environment dynamics); branch (b) predeclares the escalation-review dossier if winless. NEXT: implement --opponent-mode teacher_frozen rollout hook (control path bit-identical), CPU smoke (2 updates + opponent-hash invariance), then bounded A40 round + arbiter",
- "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
- "HEAD_COMMIT": "SELF",
- "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
- "DIRTY_FILES": [],
- "LAST_VALIDATED_COMMIT": "SELF",
- "TESTS_COMPLETED": [
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_agentic_orchestrator_schemas.py tests/unit/test_agentic_orchestrator_subprocess.py tests/unit/test_agentic_orchestrator_workflow.py tests/unit/test_agentic_orchestrator_hardening.py -q",
-   "RESULT": "PASS_41_TESTS"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m ruff check tools/agentic_orchestrator tests/unit/test_agentic_orchestrator_schemas.py tests/unit/test_agentic_orchestrator_subprocess.py tests/unit/test_agentic_orchestrator_workflow.py tests/unit/test_agentic_orchestrator_hardening.py",
-   "RESULT": "PASS"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m compileall -q tools/agentic_orchestrator",
-   "RESULT": "PASS"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m tools.agentic_orchestrator dry-run",
-   "RESULT": "PASS_ALL_PROOFS_AND_RECOVERY_PROBES_TRUE"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m tools.agentic_orchestrator tooling",
-   "RESULT": "EXPECTED_PARTIAL_CODEX_READY_CURSOR_AGENT_UNAVAILABLE"
-  },
-  {
-   "COMMAND": "git diff --check",
-   "RESULT": "PASS"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/dev/detect_training_hardware.py",
-   "RESULT": "PASS_CPU_ONLY_JAX_RTX3070_PRESENT_NO_CUDA_TORCH var/training/hardware_report.json"
-  },
-  {
-   "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/run_competition_native_jax_smoke.py",
-   "RESULT": "PASS_DONE_COMPLETED_2_UPDATES_CPU"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/analysis/semantic_state_hash.py C:/Users/pries/quantsilico-runtime/cloud_assisted_deadline_salvage_v1_final/ckpt_final_u482_t7593984",
-   "RESULT": "PASS_FIVE_ARTEFACTS_FINGERPRINTED experiments/marathon/baseline_semantic_hashes.json"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_structural_probe.py",
-   "RESULT": "PASS_EXACT_MATCH_RAW_EMA_FROZEN_OPPONENT_OPT_STATE EV-0013"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_behaviour_fingerprint.py --num-envs 8 --rollout-len 16 --pool-size 128",
-   "RESULT": "PASS_BASELINE_RUNS_END_TO_END_CPU EV-0014"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_resume_one_update.py",
-   "RESULT": "PASS_RESUME_ONE_UPDATE_RATIO_1.0_ALL_FINITE EV-0015"
-  },
-  {
-   "COMMAND": "post-merge proof on main@983d87a: pytest 5 orchestrator+hook modules + orchestrator dry-run",
-   "RESULT": "PASS_55_TESTS_DRY_RUN_PROOFS_TRUE PR#2_MERGED"
-  },
-  {
-   "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
-   "RESULT": "PASS_AT_SELF_SUPERSEDED_BY_DIRTY_TAKEOVER_STATE"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/analysis/assemble_baseline_capsule.py",
-   "RESULT": "PASS_CAPSULE_ASSEMBLED_DETERMINISM_DEMONSTRATED_TPS_MEASURED EV-0016 experiments/marathon/baseline_capsule_v0.json"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_marathon_evaluator.py -q",
-   "RESULT": "PASS_11_TESTS_CS_COVERAGE_FIXED_AND_OPTIONAL_STOPPING EV-0017"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/integration/test_marathon_paired_evaluator_engine.py tests/integration/test_pass_match.py -q",
-   "RESULT": "PASS_4_TESTS_REAL_SEAT_SWAPPED_PAIR_ENGINE_PROTOCOL EV-0017"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id legal_random --candidate-main baselines/legal_random/main.py --opponent pass_bot=baselines/pass_bot/main.py --pairs-per-opponent 2 --max-turns 80",
-   "RESULT": "PASS_PIPELINE_SMOKE_NO_PROMOTION_AT_2_PAIRS experiments/marathon/paired_eval_runs/smoke_legal_random_vs_pass_bot EV-0017"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q",
-   "RESULT": "193_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY_REPRODUCED_IDENTICALLY_ON_MAIN_983d87a EV-0017"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_qoder_stop_gate.py tests/unit/test_qoder_hooks.py -q",
-   "RESULT": "PASS_27_TESTS_CONTINUOUS_EXECUTION_STOP_GATE EV-0018"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_baseline_agent_parity.py -q",
-   "RESULT": "PASS_4_TESTS_SERVING_TRAINING_OBSERVATION_MASK_PARITY EV-0019"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id marathon_baseline_v0 --candidate-main baselines/marathon_baseline_v0/main.py --opponent legal_random=baselines/legal_random/main.py --pairs-per-opponent 3",
-   "RESULT": "PASS_3_PAIRS_6_GAMES_ALL_DRAW_AT_TRUNCATION_NO_FAULTS experiments/marathon/paired_eval_runs/baseline_v0_vs_legal_random_cpu EV-0019"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_marathon_registry.py -q",
-   "RESULT": "PASS_8_TESTS_REGISTRY_VALIDATION EV-0020"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_marathon_baseline_v0.py",
-   "RESULT": "PASS_6_RECORDS_REGISTERED experiments/marathon/registry EV-0020"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id marathon_baseline_v0 --candidate-main baselines/marathon_baseline_v0/main.py --opponent heuristic_v0=baselines/heuristic_v0/main.py --opponent heuristic_v1=baselines/heuristic_v1/main.py --pairs-per-opponent 2",
-   "RESULT": "PASS_4_PAIRS_8_GAMES_ALL_DRAW_AT_TRUNCATION_NO_FAULTS experiments/marathon/paired_eval_runs/baseline_v0_vs_heuristics_cpu EV-0021"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_replay_action_legality.py tests/unit/test_replay_action_extraction.py tests/unit/test_replay_legal_pov.py -q",
-   "RESULT": "PASS_19_TESTS_INCL_8_NEW_LEGALITY_RULE_TESTS EV-0041"
-  },
-  {
-   "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/replay_action_legality.py --dataset-dir experiments/datasets/elite_replays/DATASET-ELITE-2026-08-15-V01 --out var/marathon_takeover/replay_action_legality_v01_probe.json",
-   "RESULT": "PASS_1440_OF_1443_MOVES_LEGAL_ALL_3_FLAGS_ADJACENT_ONLY_ZERO_RULE_VIOLATIONS EV-0041 SUPERSEDED_AS_AUTHORITY_BY_EV-0042_COMPETITION_ENGINE_FRAMING"
-  },
-  {
-   "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe -m pytest tests/unit/test_replay_engine_oracle.py -q",
-   "RESULT": "PASS_23_DIFFERENTIAL_PARITY_TESTS_VS_PINNED_ENGINE_9e3b9d1 EV-0042"
-  },
-  {
-   "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/replay_alignment_trace.py --dataset-dir experiments/datasets/elite_replays/DATASET-ELITE-2026-08-15-V01 --out var/marathon_takeover/replay_alignment_trace_v01.json",
-   "RESULT": "PASS_TIMING_PROVEN_OWNERS_EXACT_1903_OF_1921_PHASE_INVARIANT_ARMIES_PHASE_0_BEST_316_OF_1921_EVEN_GROWTH_CONFIRMED_CELL_PARITY_99.0-99.4_PERCENT EV-0042"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe var/marathon_takeover/adjudicate_topadv_r1.py (actual TOPADV-R1 artefacts, predeclared rules only)",
-   "RESULT": "PASS_ALL_SIX_SURVIVE_NO_VARIANT_ADVANCES_SIGN_FLIP_CLEAN_NEGATIVE_FAMILY_CLOSED EV-0043"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_topadv_r1_runs.py",
-   "RESULT": "PASS_12_RECORDS_REGISTERED_6_RUN_6_CHECKPOINT EV-0043"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_reward_shaping.py tests/competition_native_jax/test_v4_2_reset_pool.py -q",
-   "RESULT": "PASS_10_SHAPING_TESTS_PLUS_5_ROLLOUT_REGRESSION EV-0044"
-  },
-  {
-   "COMMAND": "PYTHONPATH=. CPU smokes: run_sh_r1_arm.py --max-updates 2 with reward-shape none/kill_delta(0.01)/potential(1.0)",
-   "RESULT": "PASS_ALL_THREE_RATIO_1.0_FINITE_EXPECTED_2UPDATE_NO_VLOSS_FLAG_CAUGHT_AND_FIXED_BATCHED_OWNERSHIP_LAYOUT_DEFECT_PRE_GPU EV-0044"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_reward_shaping_r1.py",
-   "RESULT": "PASS_EXPERIMENT_REGISTERED_PRE_LAUNCH experiment#reward-shaping-r1#39ce1360218e EV-0044"
-  },
-  {
-   "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/replay_action_derivation.py --dataset-dir experiments/datasets/elite_replays/DATASET-ELITE-2026-08-15-V01 --out var/marathon_takeover/replay_exact_derivation_v01.json",
-   "RESULT": "PASS_1904_OF_1921_TICKS_ENGINE_VERIFIED_ACTION_PAIRS_320_EXACT_1584_OWNERS_ONLY_17_NO_MATCH_ARMY_RESIDUAL_ROOT_CAUSED_TO_SOURCE_SITE_GENERAL_MOVE_SEMANTICS EV-0045"
-  },
-  {
-   "COMMAND": "control match heuristic_v1 vs heuristic_v0 seed=55 via run_python_agent_match",
-   "RESULT": "DRAW_AT_TRUNCATION_1200_ZERO_FAULTS_CONFIRMS_ENVIRONMENT_LEVEL_PROPERTY EV-0021"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q (post-Stage-3 gate)",
-   "RESULT": "218_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY EV-0021"
-  },
-  {
-   "COMMAND": "post-merge proof on main@bc6970c: pytest evaluator+stop-gate+hooks+registry+parity suites and engine integration suite",
-   "RESULT": "PASS_50_UNIT_PLUS_3_ENGINE_TESTS PR#3_MERGED"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_screening_round_1.py",
-   "RESULT": "PASS_EXPERIMENT_REGISTERED_PRE_LAUNCH experiment#sh-r1-cpu-pilot#796c4d71603c EV-0022"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/training/run_sh_r1_arm.py --arm-id smoke --num-envs 8 --rollout-len 16 --max-updates 3",
-   "RESULT": "PASS_PIPELINE_SMOKE_RATIO_1.0_VALID_SHARE_1.0_PREDECLARED_RULES_FIRE_AS_DESIGNED EV-0023"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/dev/runpod_account_probe.py",
-   "RESULT": "PASS_RUNPOD_AUTH_BALANCE_17.89_SPEND_LIMIT_80_PER_HR_POD_generals_competition_EXITED_A100_SXM_1.59_PER_HR EV-0024"
-  },
-  {
-   "COMMAND": "live-state reconciliation: runpod_pod_control status; ssh workload probes on both RUNNING pods; scp of all SH-R2 artefacts to experiments/marathon/screening_round_2_runs/; stop of ba86a74lq28t3f and wvjrnxbpcjnr8h",
-   "RESULT": "PASS_IDLE_PODS_STOPPED_EVIDENCE_PRESERVED_FIRST_BILLING_LOGGED_A100_PRIOR_STATE_INVENTORIED EV-0028"
-  },
-  {
-   "COMMAND": "SH-R2 adjudication from actual artefacts (summaries + telemetry, predeclared rules)",
-   "RESULT": "PASS_ALL_THREE_ARMS_SURVIVE_CPU_CONTROL_ALSO_SURVIVES_195_UPDATES_9_REGISTRY_RECORDS_ADDED EV-0028"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe var/marathon_takeover/reconcile_tps.py",
-   "RESULT": "PASS_TPS_DISCREPANCY_ROOT_CAUSED_RESET_POOL_REBUILD_NOT_REGRESSION_POOL_FIX_CPU_AB_273S_TO_23S EV-0029"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_qoder_stop_gate.py -q",
-   "RESULT": "PASS_15_TESTS_INCL_RUNPOD_ZERO_IDLE_BURN_STOP_GATE_CHECK"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/dev/runpod_idle_watchdog.py",
-   "RESULT": "PASS_LIVE_VERDICT_NO_RUNNING_PODS_WATCHDOG_OPERATIONAL"
-  },
-  {
-   "COMMAND": "SH-R3 GPU validation on o27sds4rsf9hjs (bootstrap.sh r3-smoke) + round launch via remote_sh_r3_orchestrator.sh",
-   "RESULT": "PASS_JAX_0.11_CUDA_A40_NO_SILENT_FALLBACK_RESUME_SMOKE_3_OF_3_ROUND_TRAINING_PID_5046_THEN_5MIN51S_PER_ARM_POOLFIX_CONFIRMED EV-0030"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_submission_outbox.py -q",
-   "RESULT": "PASS_4_TESTS_OUTBOX_ALLOCATOR_DETERMINISTIC_ATOMIC_COLLISION_REFUSAL EV-0030"
-  },
-  {
-   "COMMAND": ".venv-training/Scripts/python.exe -m pytest dashboard/backend/tests -q",
-   "RESULT": "PASS_20_TESTS_INCL_REGISTRY_BACKED_MARATHON_API_CONTRACT EV-0030"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/dev/repo_cleanup_inventory.py --out var/marathon_takeover/repo_cleanup_inventory_dry_run.json",
-   "RESULT": "PASS_DRY_RUN_23_DIST_13_EMPTY_SCAFFOLDS_2_STAGING_NO_DELETIONS EV-0030"
-  },
-  {
-   "COMMAND": "SH-R4-FINALIST-PROMOTION-EVAL via var/marathon_takeover/run_sh4_promotion_eval.ps1 (A0 36 pairs, A1 24 pairs, seat-swapped, competition mode)",
-   "RESULT": "INVALIDATED_AGENT_FAULT_72_OF_72_GAMES_SERVING_CRASH_NOT_GAMEPLAY_SEE_EV_0034"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/analysis/serving_sanity_probe.py",
-   "RESULT": "PASS_AFTER_REPAIR_L1_WEIGHTS_LOAD_AND_MATTER_L2_PROTOCOL_ACTIONS_WELLFORMED_DETERMINISTIC EV-0034"
-  },
-  {
-   "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/teacher_r1_generate.py --seeds 20260901-20260920",
-   "RESULT": "PASS_GENERATION_20GAMES_15HUNTERWINS_0FAULTS_20/20_REPLAYMATCH_TRANSCRIPT_SHA_38607e1d474d_GATE_FAIL_ON_WINCOUNT EV-0064"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe -m compileall -q scripts/training/teacher_r1_train.py scripts/data/teacher_r1_generate.py",
-   "RESULT": "PASS_COMPILE_EV-0064"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/training/teacher_r2_train.py (16 decisive self-play games; seed 20260915; 40 epochs)",
-   "RESULT": "PASS_GATE_HOLDOUT_TOP1_0.1872_ABOVE_LEGAL_UNIFORM_0.0740_AND_MAJORITY_PASS_0.1481_LEGAL_SHARE_1.0_TRAIN_0.9835 experiments/marathon/teacher_r2/step3_bc/teacher_r2_result.json"
-  },
-  {
-   "COMMAND": ".venv/Scripts/python.exe scripts/analysis/serving_sanity_probe_teacher_r2.py",
-   "RESULT": "PASS_L1_WEIGHTS_MATTER_5.33_L2_WELLFORMED_DETERMINISTIC_TEACHER_R2_BC_S1_PRE_GAME"
-  },
-  {
-   "COMMAND": "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 via var/marathon_takeover/run_sh4_promotion_eval_rerun_v2.ps1 (A0 36 pairs, A1 24 pairs, fresh run dir)",
-   "RESULT": "PASS_CLEAN_ADJUDICATION_NO_PROMOTION_BOTH_FINALISTS_120_OF_120_GAMES_DRAW_AT_TRUNCATION_ZERO_FAULTS_CS_LOWER_MINUS_0.006_AND_MINUS_0.121 EV-0035"
-  }
- ],
- "TESTS_PENDING": [
-  "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
-  "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
-  "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon.",
-  "EPISODE_CONTINUITY_R1 launch (experiment#episode-continuity-r1#d59d66093f59): resume/provision A40 pod -> bootstrap (clone/pull repo at the episode-carry commit, submodule, uv+venv REPAIR STEP: uv python install 3.12 then verify .venv312/bin/python --version BEFORE wrapper launch, EV-0047 venv regression) -> transfer LF-checked orchestrator (bash -n on pod) -> launch via self-stop wrapper -> verify launch + GPU; on completion: fetch artefacts, adjudicate per episode_continuity_round_1_plan.yaml (regime question; persistent adopted iff both seeds survive integrity), register, EV. SAME-POD paired controls only (no cross-pod bit-exact expectations, EV-0047).",
-  "After EPISODE_CONTINUITY_R1: persistent advances -> it becomes canonical screening regime (flip runner default + regression guards per amendment section 30) -> CROSS_REGIME_BRIDGE plan (reward family FIRST, then curriculum; raw-vs-EMA on corrected-regime checkpoint only) -> REWARD-SHAPING LAND-POTENTIAL gameplay arbiter runs under the corrected regime; persistent fails -> root-cause + predeclare successor. No further GPU spend on reset-regime knobs.",
-  "Stage-4B follow-ups unblocked by EV-0048: evaluator win-conversion calibration suite (passive/vulnerable scripted opponents vs heuristic/scripted attackers; diagnostic only, promotion criteria unchanged), silent-pass rate measurement for training+eval candidates via pinned-engine classification, BC dataset V02 stratified toward late-game/deathtouch examples.",
-  "Replay lane standing rules (EV-0042): competition engine semantics only (charter section 0); no single legal/illegal boolean; silent-pass actions never auto-labelled; runner faults not reconstructable from replays; engine SHA in all derived datasets."
- ],
- "ACTIVE_LOCAL_PROCESSES": {
-  "AUDIT_STATUS": "AUDITED",
-  "AUDITED_AT_UTC": "2026-08-17T09:55:00Z",
-  "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE: DISTILL-PPO arbiter complete (EV-0068); all local eval/training workloads finished"
+  "SCHEMA_VERSION": "1.2.0",
+  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
+  "UPDATED_AT_UTC": "2026-08-17T09:55:00Z",
+  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
+  "STATUS": "PARTIAL",
+  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_SMOKE_PASSED_READY_TO_LAUNCH",
+  "CURRENT_TASK": "STAGE6_OPPDIST_R1 frozen-opponent rollout IMPLEMENTED + CPU smokes PASS: (1) control-path bit-identity verified (HEAD vs new code, 2x2 updates seed 20260915 16x8: identical learning metrics, only wall-clock differs); (2) teacher_frozen smoke PASS - 2 updates, ratio 1.0, finite, opponent params sha256 invariant d929240c... before/after (never-updated invariant holds), opp_win_share telemetry live. Orchestrator scripts/dev/remote_stage6_oppdist_r1_orchestrator.sh ready; pod 5p0udi7ouvs139 RUNNING, DISTILL-S0 sha-verified on volume, baseline ckpt uploaded, venv repair in flight.",
+  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
+  "HEAD_COMMIT": "SELF",
+  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
+  "DIRTY_FILES": [],
+  "LAST_VALIDATED_COMMIT": "SELF",
+  "TESTS_COMPLETED": [
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_agentic_orchestrator_schemas.py tests/unit/test_agentic_orchestrator_subprocess.py tests/unit/test_agentic_orchestrator_workflow.py tests/unit/test_agentic_orchestrator_hardening.py -q",
+      "RESULT": "PASS_41_TESTS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m ruff check tools/agentic_orchestrator tests/unit/test_agentic_orchestrator_schemas.py tests/unit/test_agentic_orchestrator_subprocess.py tests/unit/test_agentic_orchestrator_workflow.py tests/unit/test_agentic_orchestrator_hardening.py",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m compileall -q tools/agentic_orchestrator",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m tools.agentic_orchestrator dry-run",
+      "RESULT": "PASS_ALL_PROOFS_AND_RECOVERY_PROBES_TRUE"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m tools.agentic_orchestrator tooling",
+      "RESULT": "EXPECTED_PARTIAL_CODEX_READY_CURSOR_AGENT_UNAVAILABLE"
+    },
+    {
+      "COMMAND": "git diff --check",
+      "RESULT": "PASS"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/detect_training_hardware.py",
+      "RESULT": "PASS_CPU_ONLY_JAX_RTX3070_PRESENT_NO_CUDA_TORCH var/training/hardware_report.json"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/run_competition_native_jax_smoke.py",
+      "RESULT": "PASS_DONE_COMPLETED_2_UPDATES_CPU"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/semantic_state_hash.py C:/Users/pries/quantsilico-runtime/cloud_assisted_deadline_salvage_v1_final/ckpt_final_u482_t7593984",
+      "RESULT": "PASS_FIVE_ARTEFACTS_FINGERPRINTED experiments/marathon/baseline_semantic_hashes.json"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_structural_probe.py",
+      "RESULT": "PASS_EXACT_MATCH_RAW_EMA_FROZEN_OPPONENT_OPT_STATE EV-0013"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_behaviour_fingerprint.py --num-envs 8 --rollout-len 16 --pool-size 128",
+      "RESULT": "PASS_BASELINE_RUNS_END_TO_END_CPU EV-0014"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/baseline_resume_one_update.py",
+      "RESULT": "PASS_RESUME_ONE_UPDATE_RATIO_1.0_ALL_FINITE EV-0015"
+    },
+    {
+      "COMMAND": "post-merge proof on main@983d87a: pytest 5 orchestrator+hook modules + orchestrator dry-run",
+      "RESULT": "PASS_55_TESTS_DRY_RUN_PROOFS_TRUE PR#2_MERGED"
+    },
+    {
+      "COMMAND": "python scripts/dev/verify_repository.py --require-clean",
+      "RESULT": "PASS_AT_SELF_SUPERSEDED_BY_DIRTY_TAKEOVER_STATE"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/assemble_baseline_capsule.py",
+      "RESULT": "PASS_CAPSULE_ASSEMBLED_DETERMINISM_DEMONSTRATED_TPS_MEASURED EV-0016 experiments/marathon/baseline_capsule_v0.json"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_marathon_evaluator.py -q",
+      "RESULT": "PASS_11_TESTS_CS_COVERAGE_FIXED_AND_OPTIONAL_STOPPING EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/integration/test_marathon_paired_evaluator_engine.py tests/integration/test_pass_match.py -q",
+      "RESULT": "PASS_4_TESTS_REAL_SEAT_SWAPPED_PAIR_ENGINE_PROTOCOL EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id legal_random --candidate-main baselines/legal_random/main.py --opponent pass_bot=baselines/pass_bot/main.py --pairs-per-opponent 2 --max-turns 80",
+      "RESULT": "PASS_PIPELINE_SMOKE_NO_PROMOTION_AT_2_PAIRS experiments/marathon/paired_eval_runs/smoke_legal_random_vs_pass_bot EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q",
+      "RESULT": "193_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY_REPRODUCED_IDENTICALLY_ON_MAIN_983d87a EV-0017"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_qoder_stop_gate.py tests/unit/test_qoder_hooks.py -q",
+      "RESULT": "PASS_27_TESTS_CONTINUOUS_EXECUTION_STOP_GATE EV-0018"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_baseline_agent_parity.py -q",
+      "RESULT": "PASS_4_TESTS_SERVING_TRAINING_OBSERVATION_MASK_PARITY EV-0019"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id marathon_baseline_v0 --candidate-main baselines/marathon_baseline_v0/main.py --opponent legal_random=baselines/legal_random/main.py --pairs-per-opponent 3",
+      "RESULT": "PASS_3_PAIRS_6_GAMES_ALL_DRAW_AT_TRUNCATION_NO_FAULTS experiments/marathon/paired_eval_runs/baseline_v0_vs_legal_random_cpu EV-0019"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_marathon_registry.py -q",
+      "RESULT": "PASS_8_TESTS_REGISTRY_VALIDATION EV-0020"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_marathon_baseline_v0.py",
+      "RESULT": "PASS_6_RECORDS_REGISTERED experiments/marathon/registry EV-0020"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/evaluation/run_marathon_paired_eval.py --candidate-id marathon_baseline_v0 --candidate-main baselines/marathon_baseline_v0/main.py --opponent heuristic_v0=baselines/heuristic_v0/main.py --opponent heuristic_v1=baselines/heuristic_v1/main.py --pairs-per-opponent 2",
+      "RESULT": "PASS_4_PAIRS_8_GAMES_ALL_DRAW_AT_TRUNCATION_NO_FAULTS experiments/marathon/paired_eval_runs/baseline_v0_vs_heuristics_cpu EV-0021"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_replay_action_legality.py tests/unit/test_replay_action_extraction.py tests/unit/test_replay_legal_pov.py -q",
+      "RESULT": "PASS_19_TESTS_INCL_8_NEW_LEGALITY_RULE_TESTS EV-0041"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/replay_action_legality.py --dataset-dir experiments/datasets/elite_replays/DATASET-ELITE-2026-08-15-V01 --out var/marathon_takeover/replay_action_legality_v01_probe.json",
+      "RESULT": "PASS_1440_OF_1443_MOVES_LEGAL_ALL_3_FLAGS_ADJACENT_ONLY_ZERO_RULE_VIOLATIONS EV-0041 SUPERSEDED_AS_AUTHORITY_BY_EV-0042_COMPETITION_ENGINE_FRAMING"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe -m pytest tests/unit/test_replay_engine_oracle.py -q",
+      "RESULT": "PASS_23_DIFFERENTIAL_PARITY_TESTS_VS_PINNED_ENGINE_9e3b9d1 EV-0042"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/replay_alignment_trace.py --dataset-dir experiments/datasets/elite_replays/DATASET-ELITE-2026-08-15-V01 --out var/marathon_takeover/replay_alignment_trace_v01.json",
+      "RESULT": "PASS_TIMING_PROVEN_OWNERS_EXACT_1903_OF_1921_PHASE_INVARIANT_ARMIES_PHASE_0_BEST_316_OF_1921_EVEN_GROWTH_CONFIRMED_CELL_PARITY_99.0-99.4_PERCENT EV-0042"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe var/marathon_takeover/adjudicate_topadv_r1.py (actual TOPADV-R1 artefacts, predeclared rules only)",
+      "RESULT": "PASS_ALL_SIX_SURVIVE_NO_VARIANT_ADVANCES_SIGN_FLIP_CLEAN_NEGATIVE_FAMILY_CLOSED EV-0043"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_topadv_r1_runs.py",
+      "RESULT": "PASS_12_RECORDS_REGISTERED_6_RUN_6_CHECKPOINT EV-0043"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_reward_shaping.py tests/competition_native_jax/test_v4_2_reset_pool.py -q",
+      "RESULT": "PASS_10_SHAPING_TESTS_PLUS_5_ROLLOUT_REGRESSION EV-0044"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. CPU smokes: run_sh_r1_arm.py --max-updates 2 with reward-shape none/kill_delta(0.01)/potential(1.0)",
+      "RESULT": "PASS_ALL_THREE_RATIO_1.0_FINITE_EXPECTED_2UPDATE_NO_VLOSS_FLAG_CAUGHT_AND_FIXED_BATCHED_OWNERSHIP_LAYOUT_DEFECT_PRE_GPU EV-0044"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_reward_shaping_r1.py",
+      "RESULT": "PASS_EXPERIMENT_REGISTERED_PRE_LAUNCH experiment#reward-shaping-r1#39ce1360218e EV-0044"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/replay_action_derivation.py --dataset-dir experiments/datasets/elite_replays/DATASET-ELITE-2026-08-15-V01 --out var/marathon_takeover/replay_exact_derivation_v01.json",
+      "RESULT": "PASS_1904_OF_1921_TICKS_ENGINE_VERIFIED_ACTION_PAIRS_320_EXACT_1584_OWNERS_ONLY_17_NO_MATCH_ARMY_RESIDUAL_ROOT_CAUSED_TO_SOURCE_SITE_GENERAL_MOVE_SEMANTICS EV-0045"
+    },
+    {
+      "COMMAND": "control match heuristic_v1 vs heuristic_v0 seed=55 via run_python_agent_match",
+      "RESULT": "DRAW_AT_TRUNCATION_1200_ZERO_FAULTS_CONFIRMS_ENVIRONMENT_LEVEL_PROPERTY EV-0021"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit -q (post-Stage-3 gate)",
+      "RESULT": "218_PASSED_2_SKIPPED_9_KNOWN_FAILED_LEGACY_CUDA_POLICY EV-0021"
+    },
+    {
+      "COMMAND": "post-merge proof on main@bc6970c: pytest evaluator+stop-gate+hooks+registry+parity suites and engine integration suite",
+      "RESULT": "PASS_50_UNIT_PLUS_3_ENGINE_TESTS PR#3_MERGED"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/register_screening_round_1.py",
+      "RESULT": "PASS_EXPERIMENT_REGISTERED_PRE_LAUNCH experiment#sh-r1-cpu-pilot#796c4d71603c EV-0022"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/training/run_sh_r1_arm.py --arm-id smoke --num-envs 8 --rollout-len 16 --max-updates 3",
+      "RESULT": "PASS_PIPELINE_SMOKE_RATIO_1.0_VALID_SHARE_1.0_PREDECLARED_RULES_FIRE_AS_DESIGNED EV-0023"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/runpod_account_probe.py",
+      "RESULT": "PASS_RUNPOD_AUTH_BALANCE_17.89_SPEND_LIMIT_80_PER_HR_POD_generals_competition_EXITED_A100_SXM_1.59_PER_HR EV-0024"
+    },
+    {
+      "COMMAND": "live-state reconciliation: runpod_pod_control status; ssh workload probes on both RUNNING pods; scp of all SH-R2 artefacts to experiments/marathon/screening_round_2_runs/; stop of ba86a74lq28t3f and wvjrnxbpcjnr8h",
+      "RESULT": "PASS_IDLE_PODS_STOPPED_EVIDENCE_PRESERVED_FIRST_BILLING_LOGGED_A100_PRIOR_STATE_INVENTORIED EV-0028"
+    },
+    {
+      "COMMAND": "SH-R2 adjudication from actual artefacts (summaries + telemetry, predeclared rules)",
+      "RESULT": "PASS_ALL_THREE_ARMS_SURVIVE_CPU_CONTROL_ALSO_SURVIVES_195_UPDATES_9_REGISTRY_RECORDS_ADDED EV-0028"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe var/marathon_takeover/reconcile_tps.py",
+      "RESULT": "PASS_TPS_DISCREPANCY_ROOT_CAUSED_RESET_POOL_REBUILD_NOT_REGRESSION_POOL_FIX_CPU_AB_273S_TO_23S EV-0029"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_qoder_stop_gate.py -q",
+      "RESULT": "PASS_15_TESTS_INCL_RUNPOD_ZERO_IDLE_BURN_STOP_GATE_CHECK"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/runpod_idle_watchdog.py",
+      "RESULT": "PASS_LIVE_VERDICT_NO_RUNNING_PODS_WATCHDOG_OPERATIONAL"
+    },
+    {
+      "COMMAND": "SH-R3 GPU validation on o27sds4rsf9hjs (bootstrap.sh r3-smoke) + round launch via remote_sh_r3_orchestrator.sh",
+      "RESULT": "PASS_JAX_0.11_CUDA_A40_NO_SILENT_FALLBACK_RESUME_SMOKE_3_OF_3_ROUND_TRAINING_PID_5046_THEN_5MIN51S_PER_ARM_POOLFIX_CONFIRMED EV-0030"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m pytest tests/unit/test_submission_outbox.py -q",
+      "RESULT": "PASS_4_TESTS_OUTBOX_ALLOCATOR_DETERMINISTIC_ATOMIC_COLLISION_REFUSAL EV-0030"
+    },
+    {
+      "COMMAND": ".venv-training/Scripts/python.exe -m pytest dashboard/backend/tests -q",
+      "RESULT": "PASS_20_TESTS_INCL_REGISTRY_BACKED_MARATHON_API_CONTRACT EV-0030"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/dev/repo_cleanup_inventory.py --out var/marathon_takeover/repo_cleanup_inventory_dry_run.json",
+      "RESULT": "PASS_DRY_RUN_23_DIST_13_EMPTY_SCAFFOLDS_2_STAGING_NO_DELETIONS EV-0030"
+    },
+    {
+      "COMMAND": "SH-R4-FINALIST-PROMOTION-EVAL via var/marathon_takeover/run_sh4_promotion_eval.ps1 (A0 36 pairs, A1 24 pairs, seat-swapped, competition mode)",
+      "RESULT": "INVALIDATED_AGENT_FAULT_72_OF_72_GAMES_SERVING_CRASH_NOT_GAMEPLAY_SEE_EV_0034"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/serving_sanity_probe.py",
+      "RESULT": "PASS_AFTER_REPAIR_L1_WEIGHTS_LOAD_AND_MATTER_L2_PROTOCOL_ACTIONS_WELLFORMED_DETERMINISTIC EV-0034"
+    },
+    {
+      "COMMAND": "PYTHONPATH=. .venv/Scripts/python.exe scripts/data/teacher_r1_generate.py --seeds 20260901-20260920",
+      "RESULT": "PASS_GENERATION_20GAMES_15HUNTERWINS_0FAULTS_20/20_REPLAYMATCH_TRANSCRIPT_SHA_38607e1d474d_GATE_FAIL_ON_WINCOUNT EV-0064"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe -m compileall -q scripts/training/teacher_r1_train.py scripts/data/teacher_r1_generate.py",
+      "RESULT": "PASS_COMPILE_EV-0064"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/training/teacher_r2_train.py (16 decisive self-play games; seed 20260915; 40 epochs)",
+      "RESULT": "PASS_GATE_HOLDOUT_TOP1_0.1872_ABOVE_LEGAL_UNIFORM_0.0740_AND_MAJORITY_PASS_0.1481_LEGAL_SHARE_1.0_TRAIN_0.9835 experiments/marathon/teacher_r2/step3_bc/teacher_r2_result.json"
+    },
+    {
+      "COMMAND": ".venv/Scripts/python.exe scripts/analysis/serving_sanity_probe_teacher_r2.py",
+      "RESULT": "PASS_L1_WEIGHTS_MATTER_5.33_L2_WELLFORMED_DETERMINISTIC_TEACHER_R2_BC_S1_PRE_GAME"
+    },
+    {
+      "COMMAND": "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 via var/marathon_takeover/run_sh4_promotion_eval_rerun_v2.ps1 (A0 36 pairs, A1 24 pairs, fresh run dir)",
+      "RESULT": "PASS_CLEAN_ADJUDICATION_NO_PROMOTION_BOTH_FINALISTS_120_OF_120_GAMES_DRAW_AT_TRUNCATION_ZERO_FAULTS_CS_LOWER_MINUS_0.006_AND_MINUS_0.121 EV-0035"
+    }
   ],
-  "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection. 2026-08-17: teacher_r2_train.py trainer again shows TWO python PIDs (41096 .venv -> 19968 system-python child, identical CreationDate, single log stream) = parent-child pair, ONE workload; both preserved, no duplicate launch",
-  "COMPLETED_THIS_SESSION": [
-   "STAGE6_OPPDIST_R1 PREDECLARED + REGISTERED pre-launch this tick (experiment#stage6-oppdist-r1#c0103074d017 + run#oppdist-b0-teachopp-s1#b956cd1a9bea + run#oppdist-b0-teachopp-s2#20ac28eb3eb5): last interactive hypothesis before programme-level escalation review - asymmetric rollouts vs frozen hunting teacher clone (DISTILL-S0, checkpoint#distill-s0-transformer-bc#16a8ba80e13a, stochastic temp 1.0), trained seat warm-started from MARATHON_BASELINE_V0 (matched SCALE controls isolate the opponent variable), 2 x 8M seeds, PPO_SEMANTICS UNCHANGED, implementation constraints + CPU smoke + arbiter gate + branch rules all predeclared incl. escalation-review dossier on winless",
-   "STAGE6_DISTILL_PPO_R1 FULLY CLOSED this tick (EV-0068): D1 round 09:18:24-10:04:19Z both arms exit=0 self-stop zero idle burn (resume needed 2 HOST_FULL retries); learner health CLEAN (1024/1024 both, 0 unhealthy, finite, ratio 1.0; decisive ticks re-emerge: max decisive_share 0.00061/0.00024); serving probe PASS (L1 6.2/distinct 0.336, L2 deterministic); arbiter 36/36 draws zero faults both seeds (CS lower -0.5727) -> NO_PROMOTION; predeclared branch (b) fires: passive equilibrium reasserts under on-policy dynamics despite hunting expert initialization (EV-0067) - EXPERT-INITIALIZATION LANE CLOSED; 6 registry records (2 checkpoint + 2 candidate + 2 evaluation) + experiment verdict; NEXT: opponent-distribution lane (last interactive hypothesis)",
-   "STAGE6_DISTILL_PPO_R1 D1 LAUNCHED this tick: resume succeeded 09:12:20Z on retry 3 (2 HOST_FULL); EV-0047+psutil venv repair + PYTHONPATH import guard + git pull 21e47ea + D0 checkpoint files verified pre-launch; round start 09:18:24Z (DISTILL-PPO-S1 first, seed 20260915, PID 1126/1127, GPU 38965 MiB); self-stop marker /workspace/distill_d1.done; serving unit prebuilt + committed (9ddc864): distill_ppo_serving_common + distill_ppo_s1|s2 EVAL_ONLY agents + pre-game probe",
-   "STAGE6_DISTILL_PPO_R1 D0 ADJUDICATED PASS_GATE (EV-0067): bounded A40 round on 5p0udi7ouvs139 07:35:16-08:39:52Z exit=0 self-stop zero idle burn; transformer BC 40 epochs (seed 20260915) on TEACHER-R2 both-seat labels: holdout_games top-1 0.333333 > legal-uniform 0.073976 AND > majority-pass 0.148148, legal share 1.0, final loss 0.121, training wall 245.7s - canonical architecture absorbs the win-converting teacher distribution ~1.8x better than the screening CNN (0.333 vs 0.187); checkpoint#distill-s0-transformer-bc#16a8ba80e13a registered (raw/ema sha ca6c13112b03 on pod volume; result+meta fetched); EV-0066 launch repair preceded (psutil import-chain defect); D1 orchestrator ready; D1 launch next",
-   "STAGE6_DISTILL_PPO_R1 D0 LAUNCHED + LAUNCH DEFECT REPAIRED this tick (EV-0066): D0 distiller implemented + CPU smoke PASS (loss 3.21->2.19, top-1 0.47); launch#1 on resumed kxwtvih7ut7pj6 crashed exit=1 in 19s - psutil missing from EV-0047 venv recipe (import chain distill->teacher_r2_train->evaluation.match->runner); wrapper self-stop worked (zero idle burn); old pod resume then blocked HOST_FULL (6 bounded attempts) -> fresh A40 5p0udi7ouvs139 CA-MTL-1 billing-logged 07:21:03Z; bootstrap clone 59fe5d9 + submodule 9e3b9d1 + EV-0047 repair + psutil; IMPORT_CHAIN_OK verified pre-launch; D0 round relaunched 07:35:16Z PID+GPU verified; EV-0047 recipe amended (psutil mandatory)",
-   "STAGE6_DISTILL_PPO_R1 PREDECLARED + REGISTERED pre-launch (experiment#stage6-distill-ppo-r1#543924456945 + run#distill-s0-transformer-bc#c520c70730f7 + run#distill-ppo-s1#e119a428f740 + run#distill-ppo-s2#3ffec2d9b499): expert-initialization-continuation lane (Stage-6 Expert-Iteration class) consuming TEACHER-R2's screening-passed dataset through the BC consumption gate's predeclared warm-start path; D0 transformer distillation + EV-0060-identical gate, D1 PPO continuation 2x8M vs SCALE matched controls, arbiter-gated, bounded A40 est <$0.80; literal T3 pivot audited as NO-OP first (canonical critic ALREADY HL-Gauss distributional: transformer_jax value_head + ppo_jax hl_gauss_target CE vloss) -> EV-0065 amended with the audit finding and redirected",
-   "STAGE5_TEACHER_R2 GAMEPLAY ARBITER + FULL CLOSURE this tick (EV-0065): 18/18 games DRAW-at-truncation zero faults (legal_random 6, heuristic_v0 6, heuristic_v1 6), mean 0.500, CS lower -0.5727 vs margin 0.01 -> NO_PROMOTION; predeclared branch (b) fires: screening gate had PASSED (knowledge transferred) but win conversion did NOT - teacher-data imitation lane CLOSED after one bounded successor; evaluation record evaluation#teacher_r2_bc_s1-stage5-teacher-r2-arbiter#32e3ac00129a + experiment verdict registered; draw wall now spans RL self-play all scales, capacity T2, elite imitation BC-A, AND win-converting-teacher imitation - next axis: T3 critic (value structure)",
-   "STAGE5_TEACHER_R2 STEP2+STEP3 ADJUDICATED PASS_GATE this tick: both-seat labels from 16 decisive self-play games (train n=14806 / holdout_games n=486 (seeds 919,920) / holdout_maps n=0 per deterministic seed assignment; silent_pass_excluded 0); BC 40 epochs 712.6s CPU final loss 0.0743; holdout_games top-1 0.1872 > legal-uniform 0.0740 AND > majority-pass 0.1481 (EV-0060-identical rule) -> PASS_GATE; teacher self-play labels are ~5% pass vs ~70% elite-replay - first BC corpus escaping the majority-pass ceiling; serving adapter (canonical legal-obs path + masked argmax) + sanity probe PASS pre-game (L1 5.33 / L2 deterministic); checkpoint + candidate registered; 18-game gameplay arbiter launched detached local CPU",
-   "STAGE5_TEACHER_R2 PREDECLARED + REGISTERED + STEP1 EXECUTED this tick: plan stage5_teacher_r2_plan.yaml + experiment#stage5-teacher-r2#8ab7def9c575 + 3 run records registered pre-launch (commit 4dd1713); hunter-vs-hunter self-play generation LOCAL CPU 20 games seeds 20260901..20260920 -> GATE PASS 16/20 decisive (draws-at-truncation seeds ...904/910/912/914), zero engine faults, 20/20 deterministic replay matches, transcript sha ed6344232c1e (commit a7a187a); STEP2+STEP3 both-seat BC training launched detached (PID 1111) - self-play teacher distribution demonstrably win-converts against itself, unlike R1's regime",
-   "STAGE5_TEACHER_R1 executed + ADJUDICATED VALID NEGATIVE this tick (EV-0064): plan PREDECLARED + REGISTERED pre-launch (commit 77b50c2); STEP1 generation ran LOCAL CPU only (zero RunPod spend) - 20 games HunterAgent vs heuristic_v0 seeds 20260901..20260920, generator mirrors match.py + verifies every transcript by deterministic replay; RESULT 15 wins / 4 losses (seeds ...911-914) / 1 draw-at-truncation (seed ...918), zero engine faults, 20/20 replay_match, transcript_sha256 38607e1d474d; predeclared hard gate (>=16/20 wins) FAILED on win count -> STEP2 labels + STEP3 BC NOT executed per predeclaration; round CLOSED as TEACHER_INAPPLICABLE vs active opponents; registry verdicts updated; trainer scripts/training/teacher_r1_train.py built + preserved unrun; no rule relaxation",
-   "STAGE5_SCALE_R2 fully closed this tick (EV-0063): sanity probe PASS pre-game (3 candidates, weights-matter + determinism); 54/54 games clean zero faults; s3 16 DRAW+2 LOSS (mean 0.444, cs_lb -0.628), s4 17 DRAW+1 LOSS, 16M 17 DRAW+1 LOSS (both mean 0.472, cs_lb -0.601) -> NO_PROMOTION all three; predeclared branch (b) fires: R1's lone win stands as rare noise, SCALE AXIS CLOSED after one bounded successor attempt; aggregate 5 arms/90 games = 1 WIN 7 LOSS 82 DRAW; 9 registry records (3 checkpoint + 3 candidate + 3 evaluation) + experiment verdict registered via scripts/dev/register_stage5_scale_r2_arbiter_eval.py; EV-0062 arm-1 OSError-5 rerun preserved as telemetry_failed_ev0062.jsonl",
-   "STAGE5_SCALE_R2 arm-1 bounded rerun (EV-0062): original run hit OSError Errno 5 (network volume I/O at telemetry flush) -> identical-config rerun on same pod (stale telemetry renamed, runner overwrite-guard honoured) -> round completed clean; programme integrity preserved without rule change",
-   "STAGE5_SCALE_R1 fully closed (EV-0061): sanity probe PASS pre-game; NO_PROMOTION both seeds (CS decisive, harness cs lower -0.573/-0.601) BUT FIRST genuine trained-candidate WIN in any marathon arbiter (S1 vs legal_random, zero faults, paired loss); S2 17 draws + 1 loss; draw wall cracked not broken; 6 registry records + experiment verdict registered; SCALE-R2 predeclared + registered pre-launch (experiment#stage5-scale-r2#7a383bb25e4f)",
-   "BC-A-FULL-R1 EXECUTED on A40 fallback + ADJUDICATED VALID NEGATIVE this tick (EV-0059/EV-0060): round 14:52:45-20:24:14Z exit=0 self-stop zero idle burn; artefacts fetched billing-logged window 21:09:39-21:10:58Z; held-out top-1 ResBot 0.5394 / nanomena 0.5245 beats legal-uniform by ~0.50 margin but below majority-pass 0.701/0.710 (predeclared rule requires strictly above BOTH on >=1 player) -> NOT VIABLE at corpus scale; legal share 1.0 all splits; phase profile 0.408/0.638/0.579/0.386; train 0.970 overfitting gap recorded; checkpoint never enters funnel; run record run#bc-a-full-r1-execution#19a7e28f03f1 + experiment verdict registered",
-   "STAGE5 T2 K1 gameplay arbiter EXECUTED + ADJUDICATED this tick (EV-0058): sanity probe PASS pre-game; 36/36 draws zero faults both candidates; CS lower -0.573; NO_PROMOTION both seeds vs matched control 36/36 draws (EV-0054); draw wall persists through first OPEN capacity axis; candidate + evaluation records registered",
-   "SESSION TAKEOVER HANDOVER reconciled + recorded this tick (EV-0055, commit f8963d7): lease transferred operator-authorized to qoder-standalone-takeover-20260816-session2; scheduled task f5733a0c preserved (16 fires); live state zero-drift vs ACTIVE_STATE; suspected duplicate trainer/retry pairs resolved as parent-child; one accidental duplicate retry loop killed on detection",
-   "STAGE5 T2 K1 ROUND LAUNCHED this tick on fresh A40 fallback pod 0ea2tby1ujpk8z (EV-0056, commit c609066+): yanhy83zocslwp resume HOST_FULL 34+ min -> cancel marker 12:54Z (retry loop CANCELLED 12:56Z, zero double-start) -> podFindAndDeployOnDemand EU-SE-1 0.44/hr billing-logged -> bootstrap verified (clone c609066, submodule 9e3b9d1, Python 3.12.14 EV-0047 guard, JAX 0.11.0 CUDA) + ckpt_baseline_v0 35MB uploaded -> round start 13:02:16Z, GPU 100%/38971MiB verified, self-stop armed; est end 13:25-13:45Z",
-   "ELITE DATASET V02 expansion FETCHED + acceptance PASS this tick (EV-0052): 95 new sealed replays (3 snapshots 2026-08-16 V01/V02/V03) across 20 distinct players; late-game coverage achieved - 82/95 at 400+ turns, 19 at 800+ incl. full 1200-turn games (deathtouch-phase exposure now exists); union dedupe-by-match-id recorded as BC builder requirement; clears the BC-A scale-up data dependency (EV-0050 consumption)",
-   "EVALUATOR WIN-CONVERSION CALIBRATION RESOLVED this tick (EV-0053, amendment sections 19/20): heuristic_v1 and heuristic_aggressive BOTH draw 4/4 vs always-pass pass_bot at 1200 turns (zero faults) BUT the new forced-win fixture official_hunter (pinned-engine HunterAgent) WINS 4/4 at turns 235-368 zero faults -> evaluator + engine + 1200 horizon HAVE POWER to produce wins; heuristic draw wall is genuine policy behaviour (no general targeting), not evaluator blindness; escalation branch NOT triggered; RWB1 arbiter results will be interpretable",
-   "REWARD-BRIDGE-R1 executed + adjudicated this tick (EV-0051): 6/6 arms ran to budget (07:49:55Z-08:46:56Z, self-stop, zero idle burn, artefacts fetched port 22141->22148, pod stopped); control survived both seeds (valid share 1.0); LAND-POTENTIAL ADVANCES TELEMETRY-GRADE ONLY for the second regime in a row (vloss reduction 3.067/3.033 vs control 0.00656/0.00638, no sign flip); KILL-DELTA REJECTED in BOTH seeds by the predeclared NO_VLOSS_REDUCTION rule (vloss rose -0.16): with combat reachable in the persistent regime kill_delta churn destabilises value learning - clean negative preserved, regime-labelled; decisive ticks: 1 (control-S1) + 1 (kill-S1) - terminal signal present but still rare at 2M/seed; 12 registry records TRAINING_REGIME=PERSISTENT_EPISODE_REGIME_V1; NEXT canonical step: predeclare Stage-2 gameplay eval of LAND persistent candidates with reward-hack surveillance (serving export from terminal checkpoints + sanity probe first, EV-0034 precedent)",
-   "BC-A pilot EXECUTED + adjudicated VALID NEGATIVE AS SCREENING this tick (EV-0050): pipeline VALIDATED (leak-guard 2/2 PASS - hidden enemy perturbations leave observation bit-identical; legal-action share 1.000; engine-verified labels only, zero silent-pass) but held-out-player top-1 7.5% beats legal-uniform (2.2%) yet falls far short of majority-pass (64.8%); held-out-replay 4.6%; train 95.1% (overfitting gap recorded; 800 training samples / 3 players); no post-hoc relaxation; pilot checkpoint never enters funnel; consumption gate routes to dataset V02 (stratified, more players, late-game/deathtouch) + full BC-A predeclaration at scale. Builder scripts/data/bc_a_build_shards.py (2876 labels, splits train 800/holdout-player 932/holdout-replay 1144, provenance-sealed); trainer scripts/training/bc_a_train_pilot.py (small CNN on canonical legal obs, 40 epochs, seed 20260831, CPU 737.8s); result var/marathon_takeover/bc_a_pilot/bc_a_pilot_result.json",
-   "REWARD-BRIDGE-R1 PREDECLARED + REGISTERED + LAUNCHED this tick (CROSS_REGIME_BRIDGE_V1 step B2; experiment#reward-bridge-r1#a2b8ec6f32b8): 6 arms CONTROL(none)/LAND-POTENTIAL(1.0)/KILL-DELTA(0.01, R1-vacuous knob retested now that combat is reachable) x seeds {20260901,20260903}, ALL --episode-carry persistent (canonical regime EV-0049), 240 updates @256x32, same pod, self-stop armed; round start 07:49:55Z commit ff59974, GPU 78% verified; advancement rules mirror reward_shaping_round_2_plan.yaml; gameplay arbiter + reward-hack surveillance predeclared for any advancer; est end ~08:50Z",
-   "EPISODE_CONTINUITY_R1 executed + adjudicated this tick (EV-0049): 4/4 arms exit=0 (06:52:00Z-07:29:45Z, self-stop, zero idle burn, artefacts fetched port 22065->22144, pod stopped); PERSISTENT_EPISODE_REGIME_V1 ADOPTED as canonical screening regime (both persistent seeds valid share 1.0, finite, entropy rising not collapsing); reset controls survived reproducing the historical baseline; FIRST-EVER terminal competition signal in screening: 2 decisive ticks in PERSIST-S2 (2880 prior reset-regime updates had exactly zero); runner default flipped --episode-carry none->persistent + 4 regression guards PASS (section-30 amendment); 8 registry records with TRAINING_REGIME tags; CROSS_REGIME_BRIDGE_V1 plan PREDECLARED (reward FIRST, then curriculum bounded check, raw-vs-EMA on corrected checkpoint only, escalation rule to Stage 5 predeclared)",
-   "EPISODE_CONTINUITY_R1 LAUNCHED this tick on yanhy83zocslwp (round start 06:52:00Z, commit bd2cf36, GPU 96% verified): 4 arms EPC1-A0-RESET-S1/S2 (--episode-carry none) vs EPC1-A1-PERSIST-S1/S2 (--episode-carry persistent), seeds 20260901/20260903, 240 updates @256x32 identity reward, same pod; venv-interpreter regression recurred on resume and was repaired (EV-0047 guard note validated: verify .venv312/bin/python before wrapper launch); self-stop armed; est end ~07:40Z",
-   "LEARNING-PATH-INTEGRITY & EPISODE-CONTINUITY AUDIT completed (operator amendment, EV-0048): reset-per-update screening regime PROVEN empirically (continuity + coverage probes) and archaeologically (verdict A+C: persistence repaired twice historically, baseline trained WITH carry, screening runner de27575 diverged); regime named EARLY_WINDOW_RESET_REGIME_V1; all historical results preserved and re-labelled VALID_IN_RESET_REGIME; shaping truncation flaw fixed (Ng-1999 correction now at any episode end, 16/16 tests); long-horizon JAX-vs-pinned-engine parity suite 14/14 PASS (no mid/endgame divergence); runner gained --episode-carry {none,persistent} knob (default none = bit-compatible with registered runs) CPU-smoked both modes; EPISODE_CONTINUITY_R1 PREDECLARED + REGISTERED (experiment#episode-continuity-r1#d59d66093f59)",
-   "REWARD-SHAPING-R2 adjudicated this tick (EV-0047): 4/4 arms exit=0 (05:30:08Z-06:10:12Z, self-stop confirmed, zero idle burn); control survival met; LAND-POTENTIAL ADVANCES TELEMETRY-GRADE ONLY (vloss reduction 2.27/2.10 vs control 0.0064/0.0065, no sign flip); gameplay arbiter DEFERRED to corrected regime per audit amendment; cross-pod bit-exact control check recorded as INTEGRITY FLAG attributed to GPU nondeterminism (update-0 identical to ~1e-7); 8 registry records (all tagged TRAINING_REGIME); launch forensics: CRLF + venv-interpreter-on-container-disk regressions root-caused with regression-guard notes",
-   "REWARD-SHAPING-R1 round closed VOID_SIGNAL_VACUOUS this tick (EV-0046): all arms ran clean (6/6, 240/240, self-stop zero idle burn, artefacts fetched) but variants bit-exact control-identical - army-total shaping provably zero-signal in fresh-32-tick self-play windows; 12 registry records preserved; land_potential fix implemented + verified (42% signal ticks, 12 tests PASS); REWARD-SHAPING-R2 predeclared + registered (experiment#reward-shaping-r2#9172336619e7, CONTROL vs LAND-POTENTIAL x 2 seeds)",
-   "BC-A-PILOT-R1 predeclared + registered (experiment#bc-a-pilot-r1#57aaa6f2b530): charter \u00a77A pilot step, engine-verified labels only (EV-0045), silent-pass excluded, player-disjoint holdout (ResBot), leak-guard gated; pilot checkpoint never enters funnel",
-   "Replay EXACT ACTION DERIVATION milestone DONE this tick (scripts/data/replay_action_derivation.py, EV-0045): 1904/1921 ticks engine-verified action pairs (ownership 99.1% exact); army residual root-caused to source-site general-move semantics vs competition static-general tiles (reported, not papered over); BC labels will use OWNERS_ONLY-verified pairs per predeclared handling direction",
-   "REWARD-SHAPING-R1 PREDECLARED + REGISTERED + IMPLEMENTED + SMOKED + LAUNCHED this tick (EV-0044): knob none/kill_delta/potential (training-reward only, PPO_SEMANTICS UNCHANGED), 10 unit tests + rollout regression 5/5 + 3 CPU smokes PASS (smoke caught a batched-ownership layout defect pre-GPU); original TOPADV host GPU-congested (7 bounded free start attempts) -> fresh A40 kkmqdgqbw3wgph provisioned + bootstrapped + checkpoint re-transferred; round start 03:01:55Z commit 49e5976, self-stop armed",
-   "TOPADV-R1 FULLY CLOSED this pass (EV-0043): round completed 01:38:37Z, pod SELF-STOPPED (zero idle burn), artefacts fetched on brief resume (port rotated 22049->22072) + integrity-verified (6/6 arms 240/240), pod stopped after fetch, adjudicated CLEAN NEGATIVE per predeclared rules (all six survive; TOP-50 0.000% margin + sign flip, TOP-25 +0.0018% + sign flip -> neither advances), 12 registry records; fifth 2M line at parity; win-conversion constraint intact",
-   "REPLAY AUTHORITY CORRECTION executed (operator amendment, EV-0042): competition engine oracle (replay_engine_oracle.py) + 23 differential parity tests PASS vs pinned engine 9e3b9d1 + timing-alignment trace PROVEN (owners 99.06% exact, even-tick growth phase confirmed, cell parity 99.0-99.4%); EV-0041 generic-legality framing SUPERSEDED as authority, module marked superseded, unaffected evidence preserved; charter \u00a70 + replay skill codified; RunPod key rotation rescinded by operator; TOPADV-R1 GPU path untouched",
-   "Replay action LEGALITY CHECK milestone DONE (scripts/data/replay_action_legality.py, 8 tests, real probe: 1440/1443 legal, 3 adjacent-only flags, zero rule violations) EV-0041 - framing superseded by EV-0042; module retained but not authoritative",
-   "Durable Qoder CLI /loop commissioned (cron f5733a0c); lease reacquired by continuing executor identity with recorded handover EV-0041",
-   "CURR1 gameplay eval on-disk reconciliation vs EV-0038: no drift (24/24 pairs per variant, ALL DRAW, NO_PROMOTION, 4 registry records present)",
-   "RAW-VS-EMA-R1 adjudicated UNRESOLVED from actual artefacts (EV-0039): 48/48 draws zero faults, EMA remains serving default per predeclared rule; 2 registry records; four 2M PPO lines now at identical draw parity - win conversion is the binding constraint",
-   "Project command /marathon-exec created (.qoder/commands/marathon-exec.md, state-discovering executor; convention verified against qodercli project-commands loader) EV-0040",
-   "TOP-ADVANTAGE-FRACTIONS knob implemented (top_advantage_jax.py, additive, identity at 1.0) + 6 tests + CPU smoke PASS; TOPADV-R1 predeclared + registered experiment#top-advantage-fractions-r1#5166e1a5d9db EV-0040",
-   "Operator correction applied: AGENT_LOOP_TICK_* sentinel loops DEPRECATED (not Qoder /loop); no new terminal loops; operator will register the real CLI /loop",
-   "TOPADV-R1 PROVISIONED+SETUP+SMOKED+LAUNCHED end-to-end this pass (zu2pvculot0yhp, round start 00:39:53Z, GPU 96%, self-stop armed); replay action-extraction milestone DONE (replay_action_extraction.py, 5 tests + real-data probe: 150 events/player, 1 non-adjacent flag) EV-0040",
-   "RAW-VS-EMA-R1 PREDECLARED + LAUNCHED (CPU-only, same-run matched; EMA wrapper serves distinct actions from raw; plan raw_vs_ema_r1_plan.yaml)",
-   "Replay legal-POV reconstruction HARD GATE implemented + proven (scripts/data/replay_legal_pov.py, 6 fixture tests incl. leak guard, real-data probe on DATASET-ELITE-2026-08-15-V01) EV-0037",
-   "Durable /loop commissioned + executor prompt versioned (docs/marathon/MARATHON_DURABLE_EXECUTOR_PROMPT.md) EV-0037",
-   "RECOVERY PASS (operator intervention after laptop sleep): RunPod reconciled FIRST; CURR1 round found COMPLETE since 18:08:44Z with pod idle; artefacts fetched + integrity-verified (6/6 arms 240/240); pod STOPPED 20:51:15Z; idle interval 2.71h ~$1.19 billing-logged",
-   "CURR1 adjudicated per predeclared rules: ALL SIX SURVIVE; FAR-21 (+0.87%) and CLOSE-8 (+0.06%) advance on literal rule - telemetry-grade only, gameplay arbiter pending (EV-0036); 12 registry records",
-   "SELF-WAKE AUDIT answered with evidence (EV-0036): 11+ ticks emitted, zero agent executions; Windows sleep suspends local processes; remote_orchestrator_with_stop.sh installed as the durable fix",
-   "SPAWN-DISTANCE-CURRICULUM-R1 executed 16:58:38Z-18:08:44Z on z7zutn5ui0yo41 (70 min, commit 9f0cef8)",
-   "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 adjudicated: NO_PROMOTION both finalists, 120/120 games DRAW-at-truncation, zero faults; horizon family CLOSED on clean evidence (EV-0035); 2 rerun evaluation records registered",
-   "ELITE_REPLAY_AUGMENTATION family persisted: charter docs/marathon/ELITE_REPLAY_AUGMENTATION.md + EXECUTION_PLAN 9.5 + project skill + registry-independent dataset contract",
-   "Replay data plane pilot: scripts/data/fetch_elite_replays.py + capture_leaderboard_snapshot.py; DATASET-ELITE-2026-08-15-V01 (6 replays, 151-486 ticks, sha256-sealed manifest); 4 fixture tests PASS",
-   "Durable continuation layer: scripts/dev/marathon_execution_lease.py (mutual exclusion + stale takeover tested) + docs/marathon/MARATHON_LOOP_PROMPT.md + /loop armed 30m",
-   "SPAWN-DISTANCE-CURRICULUM-R1 predeclared (curriculum_round_1_plan.yaml) + registered; additive min_generals_distance knob with determinism/effect tests + parity suite green (6 PASS)",
-   "Stage 4B: docs/marathon/SUPPORTED_COMMANDS.md inventory",
-   "Serving sanity audit: FOUND + REPAIRED genuine serving defect (missing Policy-protocol adapter); EV-0033 invalidated (EV-0034)",
-   "SH-R4-FINALIST-PROMOTION-EVAL first execution: NO_PROMOTION verdict INVALIDATED - 72/72 games AGENT_FAULT (EV-0033 -> EV-0034)",
-   "SH-R4-BUDGET-ESCALATION round: ALL SIX ARMS SURVIVE; finalists routed per predeclared plan (EV-0032); 12 registry records",
-   "SH-R1-A0-CONTROL CPU arm completed 195/195 updates (registered)",
-   "runpod_start_retry_loop.py ended (cancelled per zero-idle-burn section 8)"
+  "TESTS_PENDING": [
+    "Install or discover the official Cursor Agent CLI without interrupting unknown WSL workloads, authenticate it, query supported models, and verify the exact requested Grok identity.",
+    "Run one tiny live architect-to-implementer-to-review task after Cursor usage is available.",
+    "Run the initial Better Harness audit at the next session boundary and classify findings (REQUIRED NOW / USEFUL DURING / AFTERWARDS / NOISY); rerun post-marathon.",
+    "EPISODE_CONTINUITY_R1 launch (experiment#episode-continuity-r1#d59d66093f59): resume/provision A40 pod -> bootstrap (clone/pull repo at the episode-carry commit, submodule, uv+venv REPAIR STEP: uv python install 3.12 then verify .venv312/bin/python --version BEFORE wrapper launch, EV-0047 venv regression) -> transfer LF-checked orchestrator (bash -n on pod) -> launch via self-stop wrapper -> verify launch + GPU; on completion: fetch artefacts, adjudicate per episode_continuity_round_1_plan.yaml (regime question; persistent adopted iff both seeds survive integrity), register, EV. SAME-POD paired controls only (no cross-pod bit-exact expectations, EV-0047).",
+    "After EPISODE_CONTINUITY_R1: persistent advances -> it becomes canonical screening regime (flip runner default + regression guards per amendment section 30) -> CROSS_REGIME_BRIDGE plan (reward family FIRST, then curriculum; raw-vs-EMA on corrected-regime checkpoint only) -> REWARD-SHAPING LAND-POTENTIAL gameplay arbiter runs under the corrected regime; persistent fails -> root-cause + predeclare successor. No further GPU spend on reset-regime knobs.",
+    "Stage-4B follow-ups unblocked by EV-0048: evaluator win-conversion calibration suite (passive/vulnerable scripted opponents vs heuristic/scripted attackers; diagnostic only, promotion criteria unchanged), silent-pass rate measurement for training+eval candidates via pinned-engine classification, BC dataset V02 stratified toward late-game/deathtouch examples.",
+    "Replay lane standing rules (EV-0042): competition engine semantics only (charter section 0); no single legal/illegal boolean; silent-pass actions never auto-labelled; runner faults not reconstructable from replays; engine SHA in all derived datasets."
   ],
-  "UNKNOWN_REASON": "",
-  "OBSERVED_INFRASTRUCTURE": [
-   "Qoder agent process for this task",
-   "vmmemWSL with workload not audited (unchanged; untouched)"
+  "ACTIVE_LOCAL_PROCESSES": {
+    "AUDIT_STATUS": "AUDITED",
+    "AUDITED_AT_UTC": "2026-08-17T09:55:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [
+      "NONE: DISTILL-PPO arbiter complete (EV-0068); all local eval/training workloads finished"
+    ],
+    "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection. 2026-08-17: teacher_r2_train.py trainer again shows TWO python PIDs (41096 .venv -> 19968 system-python child, identical CreationDate, single log stream) = parent-child pair, ONE workload; both preserved, no duplicate launch",
+    "COMPLETED_THIS_SESSION": [
+      "STAGE6_OPPDIST_R1 PREDECLARED + REGISTERED pre-launch this tick (experiment#stage6-oppdist-r1#c0103074d017 + run#oppdist-b0-teachopp-s1#b956cd1a9bea + run#oppdist-b0-teachopp-s2#20ac28eb3eb5): last interactive hypothesis before programme-level escalation review - asymmetric rollouts vs frozen hunting teacher clone (DISTILL-S0, checkpoint#distill-s0-transformer-bc#16a8ba80e13a, stochastic temp 1.0), trained seat warm-started from MARATHON_BASELINE_V0 (matched SCALE controls isolate the opponent variable), 2 x 8M seeds, PPO_SEMANTICS UNCHANGED, implementation constraints + CPU smoke + arbiter gate + branch rules all predeclared incl. escalation-review dossier on winless",
+      "STAGE6_DISTILL_PPO_R1 FULLY CLOSED this tick (EV-0068): D1 round 09:18:24-10:04:19Z both arms exit=0 self-stop zero idle burn (resume needed 2 HOST_FULL retries); learner health CLEAN (1024/1024 both, 0 unhealthy, finite, ratio 1.0; decisive ticks re-emerge: max decisive_share 0.00061/0.00024); serving probe PASS (L1 6.2/distinct 0.336, L2 deterministic); arbiter 36/36 draws zero faults both seeds (CS lower -0.5727) -> NO_PROMOTION; predeclared branch (b) fires: passive equilibrium reasserts under on-policy dynamics despite hunting expert initialization (EV-0067) - EXPERT-INITIALIZATION LANE CLOSED; 6 registry records (2 checkpoint + 2 candidate + 2 evaluation) + experiment verdict; NEXT: opponent-distribution lane (last interactive hypothesis)",
+      "STAGE6_DISTILL_PPO_R1 D1 LAUNCHED this tick: resume succeeded 09:12:20Z on retry 3 (2 HOST_FULL); EV-0047+psutil venv repair + PYTHONPATH import guard + git pull 21e47ea + D0 checkpoint files verified pre-launch; round start 09:18:24Z (DISTILL-PPO-S1 first, seed 20260915, PID 1126/1127, GPU 38965 MiB); self-stop marker /workspace/distill_d1.done; serving unit prebuilt + committed (9ddc864): distill_ppo_serving_common + distill_ppo_s1|s2 EVAL_ONLY agents + pre-game probe",
+      "STAGE6_DISTILL_PPO_R1 D0 ADJUDICATED PASS_GATE (EV-0067): bounded A40 round on 5p0udi7ouvs139 07:35:16-08:39:52Z exit=0 self-stop zero idle burn; transformer BC 40 epochs (seed 20260915) on TEACHER-R2 both-seat labels: holdout_games top-1 0.333333 > legal-uniform 0.073976 AND > majority-pass 0.148148, legal share 1.0, final loss 0.121, training wall 245.7s - canonical architecture absorbs the win-converting teacher distribution ~1.8x better than the screening CNN (0.333 vs 0.187); checkpoint#distill-s0-transformer-bc#16a8ba80e13a registered (raw/ema sha ca6c13112b03 on pod volume; result+meta fetched); EV-0066 launch repair preceded (psutil import-chain defect); D1 orchestrator ready; D1 launch next",
+      "STAGE6_DISTILL_PPO_R1 D0 LAUNCHED + LAUNCH DEFECT REPAIRED this tick (EV-0066): D0 distiller implemented + CPU smoke PASS (loss 3.21->2.19, top-1 0.47); launch#1 on resumed kxwtvih7ut7pj6 crashed exit=1 in 19s - psutil missing from EV-0047 venv recipe (import chain distill->teacher_r2_train->evaluation.match->runner); wrapper self-stop worked (zero idle burn); old pod resume then blocked HOST_FULL (6 bounded attempts) -> fresh A40 5p0udi7ouvs139 CA-MTL-1 billing-logged 07:21:03Z; bootstrap clone 59fe5d9 + submodule 9e3b9d1 + EV-0047 repair + psutil; IMPORT_CHAIN_OK verified pre-launch; D0 round relaunched 07:35:16Z PID+GPU verified; EV-0047 recipe amended (psutil mandatory)",
+      "STAGE6_DISTILL_PPO_R1 PREDECLARED + REGISTERED pre-launch (experiment#stage6-distill-ppo-r1#543924456945 + run#distill-s0-transformer-bc#c520c70730f7 + run#distill-ppo-s1#e119a428f740 + run#distill-ppo-s2#3ffec2d9b499): expert-initialization-continuation lane (Stage-6 Expert-Iteration class) consuming TEACHER-R2's screening-passed dataset through the BC consumption gate's predeclared warm-start path; D0 transformer distillation + EV-0060-identical gate, D1 PPO continuation 2x8M vs SCALE matched controls, arbiter-gated, bounded A40 est <$0.80; literal T3 pivot audited as NO-OP first (canonical critic ALREADY HL-Gauss distributional: transformer_jax value_head + ppo_jax hl_gauss_target CE vloss) -> EV-0065 amended with the audit finding and redirected",
+      "STAGE5_TEACHER_R2 GAMEPLAY ARBITER + FULL CLOSURE this tick (EV-0065): 18/18 games DRAW-at-truncation zero faults (legal_random 6, heuristic_v0 6, heuristic_v1 6), mean 0.500, CS lower -0.5727 vs margin 0.01 -> NO_PROMOTION; predeclared branch (b) fires: screening gate had PASSED (knowledge transferred) but win conversion did NOT - teacher-data imitation lane CLOSED after one bounded successor; evaluation record evaluation#teacher_r2_bc_s1-stage5-teacher-r2-arbiter#32e3ac00129a + experiment verdict registered; draw wall now spans RL self-play all scales, capacity T2, elite imitation BC-A, AND win-converting-teacher imitation - next axis: T3 critic (value structure)",
+      "STAGE5_TEACHER_R2 STEP2+STEP3 ADJUDICATED PASS_GATE this tick: both-seat labels from 16 decisive self-play games (train n=14806 / holdout_games n=486 (seeds 919,920) / holdout_maps n=0 per deterministic seed assignment; silent_pass_excluded 0); BC 40 epochs 712.6s CPU final loss 0.0743; holdout_games top-1 0.1872 > legal-uniform 0.0740 AND > majority-pass 0.1481 (EV-0060-identical rule) -> PASS_GATE; teacher self-play labels are ~5% pass vs ~70% elite-replay - first BC corpus escaping the majority-pass ceiling; serving adapter (canonical legal-obs path + masked argmax) + sanity probe PASS pre-game (L1 5.33 / L2 deterministic); checkpoint + candidate registered; 18-game gameplay arbiter launched detached local CPU",
+      "STAGE5_TEACHER_R2 PREDECLARED + REGISTERED + STEP1 EXECUTED this tick: plan stage5_teacher_r2_plan.yaml + experiment#stage5-teacher-r2#8ab7def9c575 + 3 run records registered pre-launch (commit 4dd1713); hunter-vs-hunter self-play generation LOCAL CPU 20 games seeds 20260901..20260920 -> GATE PASS 16/20 decisive (draws-at-truncation seeds ...904/910/912/914), zero engine faults, 20/20 deterministic replay matches, transcript sha ed6344232c1e (commit a7a187a); STEP2+STEP3 both-seat BC training launched detached (PID 1111) - self-play teacher distribution demonstrably win-converts against itself, unlike R1's regime",
+      "STAGE5_TEACHER_R1 executed + ADJUDICATED VALID NEGATIVE this tick (EV-0064): plan PREDECLARED + REGISTERED pre-launch (commit 77b50c2); STEP1 generation ran LOCAL CPU only (zero RunPod spend) - 20 games HunterAgent vs heuristic_v0 seeds 20260901..20260920, generator mirrors match.py + verifies every transcript by deterministic replay; RESULT 15 wins / 4 losses (seeds ...911-914) / 1 draw-at-truncation (seed ...918), zero engine faults, 20/20 replay_match, transcript_sha256 38607e1d474d; predeclared hard gate (>=16/20 wins) FAILED on win count -> STEP2 labels + STEP3 BC NOT executed per predeclaration; round CLOSED as TEACHER_INAPPLICABLE vs active opponents; registry verdicts updated; trainer scripts/training/teacher_r1_train.py built + preserved unrun; no rule relaxation",
+      "STAGE5_SCALE_R2 fully closed this tick (EV-0063): sanity probe PASS pre-game (3 candidates, weights-matter + determinism); 54/54 games clean zero faults; s3 16 DRAW+2 LOSS (mean 0.444, cs_lb -0.628), s4 17 DRAW+1 LOSS, 16M 17 DRAW+1 LOSS (both mean 0.472, cs_lb -0.601) -> NO_PROMOTION all three; predeclared branch (b) fires: R1's lone win stands as rare noise, SCALE AXIS CLOSED after one bounded successor attempt; aggregate 5 arms/90 games = 1 WIN 7 LOSS 82 DRAW; 9 registry records (3 checkpoint + 3 candidate + 3 evaluation) + experiment verdict registered via scripts/dev/register_stage5_scale_r2_arbiter_eval.py; EV-0062 arm-1 OSError-5 rerun preserved as telemetry_failed_ev0062.jsonl",
+      "STAGE5_SCALE_R2 arm-1 bounded rerun (EV-0062): original run hit OSError Errno 5 (network volume I/O at telemetry flush) -> identical-config rerun on same pod (stale telemetry renamed, runner overwrite-guard honoured) -> round completed clean; programme integrity preserved without rule change",
+      "STAGE5_SCALE_R1 fully closed (EV-0061): sanity probe PASS pre-game; NO_PROMOTION both seeds (CS decisive, harness cs lower -0.573/-0.601) BUT FIRST genuine trained-candidate WIN in any marathon arbiter (S1 vs legal_random, zero faults, paired loss); S2 17 draws + 1 loss; draw wall cracked not broken; 6 registry records + experiment verdict registered; SCALE-R2 predeclared + registered pre-launch (experiment#stage5-scale-r2#7a383bb25e4f)",
+      "BC-A-FULL-R1 EXECUTED on A40 fallback + ADJUDICATED VALID NEGATIVE this tick (EV-0059/EV-0060): round 14:52:45-20:24:14Z exit=0 self-stop zero idle burn; artefacts fetched billing-logged window 21:09:39-21:10:58Z; held-out top-1 ResBot 0.5394 / nanomena 0.5245 beats legal-uniform by ~0.50 margin but below majority-pass 0.701/0.710 (predeclared rule requires strictly above BOTH on >=1 player) -> NOT VIABLE at corpus scale; legal share 1.0 all splits; phase profile 0.408/0.638/0.579/0.386; train 0.970 overfitting gap recorded; checkpoint never enters funnel; run record run#bc-a-full-r1-execution#19a7e28f03f1 + experiment verdict registered",
+      "STAGE5 T2 K1 gameplay arbiter EXECUTED + ADJUDICATED this tick (EV-0058): sanity probe PASS pre-game; 36/36 draws zero faults both candidates; CS lower -0.573; NO_PROMOTION both seeds vs matched control 36/36 draws (EV-0054); draw wall persists through first OPEN capacity axis; candidate + evaluation records registered",
+      "SESSION TAKEOVER HANDOVER reconciled + recorded this tick (EV-0055, commit f8963d7): lease transferred operator-authorized to qoder-standalone-takeover-20260816-session2; scheduled task f5733a0c preserved (16 fires); live state zero-drift vs ACTIVE_STATE; suspected duplicate trainer/retry pairs resolved as parent-child; one accidental duplicate retry loop killed on detection",
+      "STAGE5 T2 K1 ROUND LAUNCHED this tick on fresh A40 fallback pod 0ea2tby1ujpk8z (EV-0056, commit c609066+): yanhy83zocslwp resume HOST_FULL 34+ min -> cancel marker 12:54Z (retry loop CANCELLED 12:56Z, zero double-start) -> podFindAndDeployOnDemand EU-SE-1 0.44/hr billing-logged -> bootstrap verified (clone c609066, submodule 9e3b9d1, Python 3.12.14 EV-0047 guard, JAX 0.11.0 CUDA) + ckpt_baseline_v0 35MB uploaded -> round start 13:02:16Z, GPU 100%/38971MiB verified, self-stop armed; est end 13:25-13:45Z",
+      "ELITE DATASET V02 expansion FETCHED + acceptance PASS this tick (EV-0052): 95 new sealed replays (3 snapshots 2026-08-16 V01/V02/V03) across 20 distinct players; late-game coverage achieved - 82/95 at 400+ turns, 19 at 800+ incl. full 1200-turn games (deathtouch-phase exposure now exists); union dedupe-by-match-id recorded as BC builder requirement; clears the BC-A scale-up data dependency (EV-0050 consumption)",
+      "EVALUATOR WIN-CONVERSION CALIBRATION RESOLVED this tick (EV-0053, amendment sections 19/20): heuristic_v1 and heuristic_aggressive BOTH draw 4/4 vs always-pass pass_bot at 1200 turns (zero faults) BUT the new forced-win fixture official_hunter (pinned-engine HunterAgent) WINS 4/4 at turns 235-368 zero faults -> evaluator + engine + 1200 horizon HAVE POWER to produce wins; heuristic draw wall is genuine policy behaviour (no general targeting), not evaluator blindness; escalation branch NOT triggered; RWB1 arbiter results will be interpretable",
+      "REWARD-BRIDGE-R1 executed + adjudicated this tick (EV-0051): 6/6 arms ran to budget (07:49:55Z-08:46:56Z, self-stop, zero idle burn, artefacts fetched port 22141->22148, pod stopped); control survived both seeds (valid share 1.0); LAND-POTENTIAL ADVANCES TELEMETRY-GRADE ONLY for the second regime in a row (vloss reduction 3.067/3.033 vs control 0.00656/0.00638, no sign flip); KILL-DELTA REJECTED in BOTH seeds by the predeclared NO_VLOSS_REDUCTION rule (vloss rose -0.16): with combat reachable in the persistent regime kill_delta churn destabilises value learning - clean negative preserved, regime-labelled; decisive ticks: 1 (control-S1) + 1 (kill-S1) - terminal signal present but still rare at 2M/seed; 12 registry records TRAINING_REGIME=PERSISTENT_EPISODE_REGIME_V1; NEXT canonical step: predeclare Stage-2 gameplay eval of LAND persistent candidates with reward-hack surveillance (serving export from terminal checkpoints + sanity probe first, EV-0034 precedent)",
+      "BC-A pilot EXECUTED + adjudicated VALID NEGATIVE AS SCREENING this tick (EV-0050): pipeline VALIDATED (leak-guard 2/2 PASS - hidden enemy perturbations leave observation bit-identical; legal-action share 1.000; engine-verified labels only, zero silent-pass) but held-out-player top-1 7.5% beats legal-uniform (2.2%) yet falls far short of majority-pass (64.8%); held-out-replay 4.6%; train 95.1% (overfitting gap recorded; 800 training samples / 3 players); no post-hoc relaxation; pilot checkpoint never enters funnel; consumption gate routes to dataset V02 (stratified, more players, late-game/deathtouch) + full BC-A predeclaration at scale. Builder scripts/data/bc_a_build_shards.py (2876 labels, splits train 800/holdout-player 932/holdout-replay 1144, provenance-sealed); trainer scripts/training/bc_a_train_pilot.py (small CNN on canonical legal obs, 40 epochs, seed 20260831, CPU 737.8s); result var/marathon_takeover/bc_a_pilot/bc_a_pilot_result.json",
+      "REWARD-BRIDGE-R1 PREDECLARED + REGISTERED + LAUNCHED this tick (CROSS_REGIME_BRIDGE_V1 step B2; experiment#reward-bridge-r1#a2b8ec6f32b8): 6 arms CONTROL(none)/LAND-POTENTIAL(1.0)/KILL-DELTA(0.01, R1-vacuous knob retested now that combat is reachable) x seeds {20260901,20260903}, ALL --episode-carry persistent (canonical regime EV-0049), 240 updates @256x32, same pod, self-stop armed; round start 07:49:55Z commit ff59974, GPU 78% verified; advancement rules mirror reward_shaping_round_2_plan.yaml; gameplay arbiter + reward-hack surveillance predeclared for any advancer; est end ~08:50Z",
+      "EPISODE_CONTINUITY_R1 executed + adjudicated this tick (EV-0049): 4/4 arms exit=0 (06:52:00Z-07:29:45Z, self-stop, zero idle burn, artefacts fetched port 22065->22144, pod stopped); PERSISTENT_EPISODE_REGIME_V1 ADOPTED as canonical screening regime (both persistent seeds valid share 1.0, finite, entropy rising not collapsing); reset controls survived reproducing the historical baseline; FIRST-EVER terminal competition signal in screening: 2 decisive ticks in PERSIST-S2 (2880 prior reset-regime updates had exactly zero); runner default flipped --episode-carry none->persistent + 4 regression guards PASS (section-30 amendment); 8 registry records with TRAINING_REGIME tags; CROSS_REGIME_BRIDGE_V1 plan PREDECLARED (reward FIRST, then curriculum bounded check, raw-vs-EMA on corrected checkpoint only, escalation rule to Stage 5 predeclared)",
+      "EPISODE_CONTINUITY_R1 LAUNCHED this tick on yanhy83zocslwp (round start 06:52:00Z, commit bd2cf36, GPU 96% verified): 4 arms EPC1-A0-RESET-S1/S2 (--episode-carry none) vs EPC1-A1-PERSIST-S1/S2 (--episode-carry persistent), seeds 20260901/20260903, 240 updates @256x32 identity reward, same pod; venv-interpreter regression recurred on resume and was repaired (EV-0047 guard note validated: verify .venv312/bin/python before wrapper launch); self-stop armed; est end ~07:40Z",
+      "LEARNING-PATH-INTEGRITY & EPISODE-CONTINUITY AUDIT completed (operator amendment, EV-0048): reset-per-update screening regime PROVEN empirically (continuity + coverage probes) and archaeologically (verdict A+C: persistence repaired twice historically, baseline trained WITH carry, screening runner de27575 diverged); regime named EARLY_WINDOW_RESET_REGIME_V1; all historical results preserved and re-labelled VALID_IN_RESET_REGIME; shaping truncation flaw fixed (Ng-1999 correction now at any episode end, 16/16 tests); long-horizon JAX-vs-pinned-engine parity suite 14/14 PASS (no mid/endgame divergence); runner gained --episode-carry {none,persistent} knob (default none = bit-compatible with registered runs) CPU-smoked both modes; EPISODE_CONTINUITY_R1 PREDECLARED + REGISTERED (experiment#episode-continuity-r1#d59d66093f59)",
+      "REWARD-SHAPING-R2 adjudicated this tick (EV-0047): 4/4 arms exit=0 (05:30:08Z-06:10:12Z, self-stop confirmed, zero idle burn); control survival met; LAND-POTENTIAL ADVANCES TELEMETRY-GRADE ONLY (vloss reduction 2.27/2.10 vs control 0.0064/0.0065, no sign flip); gameplay arbiter DEFERRED to corrected regime per audit amendment; cross-pod bit-exact control check recorded as INTEGRITY FLAG attributed to GPU nondeterminism (update-0 identical to ~1e-7); 8 registry records (all tagged TRAINING_REGIME); launch forensics: CRLF + venv-interpreter-on-container-disk regressions root-caused with regression-guard notes",
+      "REWARD-SHAPING-R1 round closed VOID_SIGNAL_VACUOUS this tick (EV-0046): all arms ran clean (6/6, 240/240, self-stop zero idle burn, artefacts fetched) but variants bit-exact control-identical - army-total shaping provably zero-signal in fresh-32-tick self-play windows; 12 registry records preserved; land_potential fix implemented + verified (42% signal ticks, 12 tests PASS); REWARD-SHAPING-R2 predeclared + registered (experiment#reward-shaping-r2#9172336619e7, CONTROL vs LAND-POTENTIAL x 2 seeds)",
+      "BC-A-PILOT-R1 predeclared + registered (experiment#bc-a-pilot-r1#57aaa6f2b530): charter \u00a77A pilot step, engine-verified labels only (EV-0045), silent-pass excluded, player-disjoint holdout (ResBot), leak-guard gated; pilot checkpoint never enters funnel",
+      "Replay EXACT ACTION DERIVATION milestone DONE this tick (scripts/data/replay_action_derivation.py, EV-0045): 1904/1921 ticks engine-verified action pairs (ownership 99.1% exact); army residual root-caused to source-site general-move semantics vs competition static-general tiles (reported, not papered over); BC labels will use OWNERS_ONLY-verified pairs per predeclared handling direction",
+      "REWARD-SHAPING-R1 PREDECLARED + REGISTERED + IMPLEMENTED + SMOKED + LAUNCHED this tick (EV-0044): knob none/kill_delta/potential (training-reward only, PPO_SEMANTICS UNCHANGED), 10 unit tests + rollout regression 5/5 + 3 CPU smokes PASS (smoke caught a batched-ownership layout defect pre-GPU); original TOPADV host GPU-congested (7 bounded free start attempts) -> fresh A40 kkmqdgqbw3wgph provisioned + bootstrapped + checkpoint re-transferred; round start 03:01:55Z commit 49e5976, self-stop armed",
+      "TOPADV-R1 FULLY CLOSED this pass (EV-0043): round completed 01:38:37Z, pod SELF-STOPPED (zero idle burn), artefacts fetched on brief resume (port rotated 22049->22072) + integrity-verified (6/6 arms 240/240), pod stopped after fetch, adjudicated CLEAN NEGATIVE per predeclared rules (all six survive; TOP-50 0.000% margin + sign flip, TOP-25 +0.0018% + sign flip -> neither advances), 12 registry records; fifth 2M line at parity; win-conversion constraint intact",
+      "REPLAY AUTHORITY CORRECTION executed (operator amendment, EV-0042): competition engine oracle (replay_engine_oracle.py) + 23 differential parity tests PASS vs pinned engine 9e3b9d1 + timing-alignment trace PROVEN (owners 99.06% exact, even-tick growth phase confirmed, cell parity 99.0-99.4%); EV-0041 generic-legality framing SUPERSEDED as authority, module marked superseded, unaffected evidence preserved; charter \u00a70 + replay skill codified; RunPod key rotation rescinded by operator; TOPADV-R1 GPU path untouched",
+      "Replay action LEGALITY CHECK milestone DONE (scripts/data/replay_action_legality.py, 8 tests, real probe: 1440/1443 legal, 3 adjacent-only flags, zero rule violations) EV-0041 - framing superseded by EV-0042; module retained but not authoritative",
+      "Durable Qoder CLI /loop commissioned (cron f5733a0c); lease reacquired by continuing executor identity with recorded handover EV-0041",
+      "CURR1 gameplay eval on-disk reconciliation vs EV-0038: no drift (24/24 pairs per variant, ALL DRAW, NO_PROMOTION, 4 registry records present)",
+      "RAW-VS-EMA-R1 adjudicated UNRESOLVED from actual artefacts (EV-0039): 48/48 draws zero faults, EMA remains serving default per predeclared rule; 2 registry records; four 2M PPO lines now at identical draw parity - win conversion is the binding constraint",
+      "Project command /marathon-exec created (.qoder/commands/marathon-exec.md, state-discovering executor; convention verified against qodercli project-commands loader) EV-0040",
+      "TOP-ADVANTAGE-FRACTIONS knob implemented (top_advantage_jax.py, additive, identity at 1.0) + 6 tests + CPU smoke PASS; TOPADV-R1 predeclared + registered experiment#top-advantage-fractions-r1#5166e1a5d9db EV-0040",
+      "Operator correction applied: AGENT_LOOP_TICK_* sentinel loops DEPRECATED (not Qoder /loop); no new terminal loops; operator will register the real CLI /loop",
+      "TOPADV-R1 PROVISIONED+SETUP+SMOKED+LAUNCHED end-to-end this pass (zu2pvculot0yhp, round start 00:39:53Z, GPU 96%, self-stop armed); replay action-extraction milestone DONE (replay_action_extraction.py, 5 tests + real-data probe: 150 events/player, 1 non-adjacent flag) EV-0040",
+      "RAW-VS-EMA-R1 PREDECLARED + LAUNCHED (CPU-only, same-run matched; EMA wrapper serves distinct actions from raw; plan raw_vs_ema_r1_plan.yaml)",
+      "Replay legal-POV reconstruction HARD GATE implemented + proven (scripts/data/replay_legal_pov.py, 6 fixture tests incl. leak guard, real-data probe on DATASET-ELITE-2026-08-15-V01) EV-0037",
+      "Durable /loop commissioned + executor prompt versioned (docs/marathon/MARATHON_DURABLE_EXECUTOR_PROMPT.md) EV-0037",
+      "RECOVERY PASS (operator intervention after laptop sleep): RunPod reconciled FIRST; CURR1 round found COMPLETE since 18:08:44Z with pod idle; artefacts fetched + integrity-verified (6/6 arms 240/240); pod STOPPED 20:51:15Z; idle interval 2.71h ~$1.19 billing-logged",
+      "CURR1 adjudicated per predeclared rules: ALL SIX SURVIVE; FAR-21 (+0.87%) and CLOSE-8 (+0.06%) advance on literal rule - telemetry-grade only, gameplay arbiter pending (EV-0036); 12 registry records",
+      "SELF-WAKE AUDIT answered with evidence (EV-0036): 11+ ticks emitted, zero agent executions; Windows sleep suspends local processes; remote_orchestrator_with_stop.sh installed as the durable fix",
+      "SPAWN-DISTANCE-CURRICULUM-R1 executed 16:58:38Z-18:08:44Z on z7zutn5ui0yo41 (70 min, commit 9f0cef8)",
+      "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 adjudicated: NO_PROMOTION both finalists, 120/120 games DRAW-at-truncation, zero faults; horizon family CLOSED on clean evidence (EV-0035); 2 rerun evaluation records registered",
+      "ELITE_REPLAY_AUGMENTATION family persisted: charter docs/marathon/ELITE_REPLAY_AUGMENTATION.md + EXECUTION_PLAN 9.5 + project skill + registry-independent dataset contract",
+      "Replay data plane pilot: scripts/data/fetch_elite_replays.py + capture_leaderboard_snapshot.py; DATASET-ELITE-2026-08-15-V01 (6 replays, 151-486 ticks, sha256-sealed manifest); 4 fixture tests PASS",
+      "Durable continuation layer: scripts/dev/marathon_execution_lease.py (mutual exclusion + stale takeover tested) + docs/marathon/MARATHON_LOOP_PROMPT.md + /loop armed 30m",
+      "SPAWN-DISTANCE-CURRICULUM-R1 predeclared (curriculum_round_1_plan.yaml) + registered; additive min_generals_distance knob with determinism/effect tests + parity suite green (6 PASS)",
+      "Stage 4B: docs/marathon/SUPPORTED_COMMANDS.md inventory",
+      "Serving sanity audit: FOUND + REPAIRED genuine serving defect (missing Policy-protocol adapter); EV-0033 invalidated (EV-0034)",
+      "SH-R4-FINALIST-PROMOTION-EVAL first execution: NO_PROMOTION verdict INVALIDATED - 72/72 games AGENT_FAULT (EV-0033 -> EV-0034)",
+      "SH-R4-BUDGET-ESCALATION round: ALL SIX ARMS SURVIVE; finalists routed per predeclared plan (EV-0032); 12 registry records",
+      "SH-R1-A0-CONTROL CPU arm completed 195/195 updates (registered)",
+      "runpod_start_retry_loop.py ended (cancelled per zero-idle-burn section 8)"
+    ],
+    "UNKNOWN_REASON": "",
+    "OBSERVED_INFRASTRUCTURE": [
+      "Qoder agent process for this task",
+      "vmmemWSL with workload not audited (unchanged; untouched)"
+    ]
+  },
+  "ACTIVE_REMOTE_PROCESSES": {
+    "AUDIT_STATUS": "AUDITED_API_VERIFIED",
+    "AUDITED_AT_UTC": "2026-08-17T09:55:00Z",
+    "ACTIVE_PROJECT_WORKLOADS": [
+      "NONE: all pods EXITED (5p0udi7ouvs139 stopped after D1 artefact fetch; kxwtvih7ut7pj6 EXITED resume-blocked HOST_FULL); arbiter local CPU complete"
+    ],
+    "OBSERVED_RESOURCES": [
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "5p0udi7ouvs139",
+        "NAME": "quantisilico_stage6_distill_d0_a40",
+        "STATE": "RUNNING_DISTILL_D0_ROUND (created 07:21:03Z podFindAndDeployOnDemand CA-MTL-1 machineId t9cgc3qva4dd; billing-logged; ledger experiments/marathon/runpod_resources.json)"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "kxwtvih7ut7pj6",
+        "NAME": "quantisilico_stage5_scale_r2_a40",
+        "STATE": "EXITED_RESUME_BLOCKED_HOST_FULL_SINCE_07:11Z (D0 launch#1 psutil crash forensics captured EV-0066; keep EXITED, no billing; ledger experiments/marathon/runpod_resources.json)"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "6b65w6q02z7g6m",
+        "NAME": "quantisilico_stage5_scale_r1_a40",
+        "STATE": "EXITED_STOPPED_AFTER_SCALE_R1_ARTEFACT_FETCH (EV-0061)"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "5pxc0rnfy34nal",
+        "NAME": "quantisilico_bc_a_full_r1_a40",
+        "STATE": "EXITED_STOPPED_AFTER_BC_ROUND_COMPLETE_SELF_STOP (EV-0059/EV-0060)"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "0ea2tby1ujpk8z",
+        "NAME": "quantisilico_stage5_t2_r1_a40",
+        "STATE": "EXITED_STOPPED_AFTER_T2_ARTEFACT_FETCH_13:33Z (round complete 13:17:38Z self-stop; ledger experiments/marathon/runpod_resources.json)"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "yanhy83zocslwp",
+        "NAME": "quantisilico_rshaping_r2_a40",
+        "STATE": "EXITED_SUPERSEDED_HOST_CONGESTED_RETAINS_VOLUME",
+        "LEDGER": "experiments/marathon/runpod_resources.json"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "kkmqdgqbw3wgph",
+        "NAME": "quantisilico_rshaping_r1_a40",
+        "STATE": "EXITED_RETAINS_R1_VOLUME_SUPERSEDED_HOST_CONGESTED"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "zu2pvculot0yhp",
+        "NAME": "quantisilico_topadv_r1_a40",
+        "STATE": "EXITED_RETAINS_VOLUME_HOST_CONGESTED"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "wvjrnxbpcjnr8h",
+        "NAME": "generals_competition",
+        "STATE": "EXITED_STOPPED_AFTER_IDLE_VERIFICATION",
+        "LEDGER": "experiments/marathon/runpod_resources.json"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "ba86a74lq28t3f",
+        "NAME": "quantisilico_sh_r2_a40",
+        "STATE": "EXITED_STOPPED_AFTER_EVIDENCE_FETCH"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "tinlsf21h08qd2",
+        "NAME": "quantisilico_sh_r4_a40",
+        "STATE": "EXITED_STOPPED_AFTER_SH_R4_EVIDENCE_FETCH_13:08Z"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "o27sds4rsf9hjs",
+        "NAME": "quantisilico_sh_r3_a40",
+        "STATE": "EXITED_STOPPED_AFTER_SH_R3_EVIDENCE_FETCH_HOST_FULL_ON_RESTART"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "POD",
+        "RESOURCE_ID": "tmmov7t54z5mbu",
+        "NAME": "quantisilico_sh_r1_a40",
+        "STATE": "EXITED_RETAINS_R1_ENV_VOLUME"
+      },
+      {
+        "PROVIDER": "RUNPOD",
+        "RESOURCE_TYPE": "SERVERLESS_ENDPOINTS",
+        "STATE": "NONE_FOUND"
+      }
+    ]
+  },
+  "CURRENT_EXPERIMENT": "experiment#stage6-oppdist-r1#c0103074d017 REGISTERED_PRE_LAUNCH (OPPDIST-B0-TEACHOPP-S1/S2). Closed this session: experiment#stage6-distill-ppo-r1#543924456945 ADJUDICATED NO_PROMOTION EXPERT_INIT_LANE_CLOSED (EV-0068); experiment#stage5-teacher-r2#8ab7def9c575 ADJUDICATED NO_PROMOTION TEACHER_LANE_CLOSED (EV-0065); experiment#stage5-teacher-r1#153b464617b7 ADJUDICATED VALID_NEGATIVE STEP1_GATE_FAIL (EV-0064); experiment#stage5-scale-r2#7a383bb25e4f ADJUDICATED SCALE_AXIS_CLOSED (EV-0063); experiment#stage5-scale-r1#600fdb29e986 NO_PROMOTION + FIRST WIN (EV-0061); experiment#bc-a-full-r1#abcfcd746ac7 VALID_NEGATIVE (EV-0060).",
+  "CURRENT_CHECKPOINT": {
+    "ACTIVE": null,
+    "HISTORICAL_STAGE_1_REFERENCE": {
+      "REFERENCE_ID": "SPRINT_VALID_PPO_7M59",
+      "SOURCE_NAME": "ckpt_final_u482_t7593984",
+      "PATH": "C:\\Users\\pries\\quantsilico-runtime\\cloud_assisted_deadline_salvage_v1_final\\ckpt_final_u482_t7593984",
+      "STATUS": "HASH_VERIFIED_PRESERVE_AND_REPRODUCE_DURING_STAGE_1"
+    },
+    "OTHER_DISCOVERED_CHECKPOINTS": {
+      "STATUS": "KEEP_STRENGTH_UNKNOWN",
+      "APPROXIMATE_TRANSITIONS": [
+        10002432,
+        14966784,
+        19357696,
+        25010176,
+        50520064
+      ]
+    }
+  },
+  "NEXT_SAFE_ACTION": "(A) Confirm pod venv repair + IMPORT_CHAIN_OK, git pull new commit on pod, then launch the bounded A40 round via self-stop wrapper: ROUND_MARKER + scripts/dev/remote_orchestrator_with_stop.sh scripts/dev/remote_stage6_oppdist_r1_orchestrator.sh (2 x 8M arms OPPDIST-B0-TEACHOPP-S1/S2 seeds 20260915/20260917, est <50 min GPU). (B) On completion: fetch summaries/telemetry/checkpoints, verify integrity + opponent-hash invariance, learner health (valid_share, ratio, entropy, decisive_share + opp_win_share trajectory), stop pod (zero idle burn). (C) Serving candidates + sanity probe (EV-0034) -> 36-game arbiter -> adjudicate per plan branches (a) wins both seeds -> scaled opponent-pool successor / (b) winless -> programme-level escalation review dossier.",
+  "BLOCKERS": [
+    {
+      "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
+      "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
+      "DETAIL": "No native agent/cursor-agent executable was discovered; the official Windows route is WSL and WSL inspection timed out."
+    },
+    {
+      "ID": "CURSOR_USAGE_EXHAUSTED",
+      "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
+      "DETAIL": "The human operator reports exhausted Cursor credits. This is PAUSED_USAGE, not an implementation failure."
+    }
+  ],
+  "PLAN_DEVIATIONS": [
+    {
+      "ID": "ORCH-0001",
+      "STATUS": "RESOLVED_OPERATOR_AMENDMENT",
+      "SUMMARY": "Added bounded Stage 0B local Codex/implementer/Codex orchestration. New review records use ACCEPT instead of historical SHIP and add HUMAN_BOUNDARY."
+    },
+    {
+      "ID": "QODER-AUTONOMY-2026-08-14",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Operator pre-authorised set-and-forget autonomous execution: checkpoint commits, pushes, PR/merge and main synchronisation, W4 harness creation, and continuation through canonical stages without routine approval. Retained human boundaries: cash spend beyond existing credits, visibility changes, competition uploads, destructive unique-evidence removal, force push/history rewrite, pinned-engine edits, credential operations."
+    },
+    {
+      "ID": "QODER-COMPUTE-2026-08-14",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Existing prepaid/promotional/trial compute credits are authorised for GPU training and experiments within the available balance; new cash spend, credit purchases, and payment-method changes remain human-controlled. Accelerator selection optimises validated throughput per credit with a utilisation gate before scaling."
+    },
+    {
+      "ID": "SEQUENTIAL-METHOD-2026-08-15",
+      "STATUS": "ACTIVE_DECLARED_SUBSTITUTION",
+      "SUMMARY": "programme.yaml names ANYTIME_VALID_EMPIRICAL_BERNSTEIN_CONFIDENCE_SEQUENCE; the shipped Stage 2 evaluator uses ANYTIME_VALID_BOUNDED_MIXTURE_CONFIDENCE_SEQUENCE (Hoeffding-mixture CS), a conservative valid member of the anytime-valid family permitted by EXECUTION_PLAN section 7.2, with exact martingale-inversion and Monte Carlo coverage tests. Empirical-Bernstein tightening deferred for large pair budgets. EV-0017."
+    },
+    {
+      "ID": "RUNPOD-SPEND-2026-08-15",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Supersedes the earlier existing-credits-only rule for Marathon research compute: reasonable additional cash spend on GPU/CPU compute is pre-authorised; low balance must not shrink scientifically justified budgets, truncate promising candidates, or replace appropriate GPU runs with impractical CPU runs. Optimisation target is strength per compute/dollar via the canonical funnel (pilot -> utilisation -> control -> external strength -> marginal value); failed/dominated arms receive no extra compute; reference transition points (5M..500M+) are decision points, not ceilings; official RunPod tooling preferred; RUNPOD_API_KEY never exposed/committed; no new payment methods/legal terms/ownership changes; paid accelerators stopped when idle; billing evidence recorded per run. Scientific gates (Stage 2 statistics, Stage 3 registration, controls, evaluation) are NOT weakened by spend.",
+      "OPERATIONAL_NOTES": "Credential at ~/.runpod/config.toml (KEY_SHA256 a34c0f0e...; rotate after marathon window since it transited chat). API surface verified: GraphQL api.runpod.io/graphql + REST rest.runpod.io/v1 (runpodctl 6fc6f8b5 queries). PyPI unreachable FROM THE LAPTOP; pods install fine. Balance 26.94 after operator top-up. Pod inventory: all three pods EXITED (see experiments/marathon/runpod_resources.json)."
+    },
+    {
+      "ID": "ACTIVATE-STAGE-4B-PARALLEL-LANE-2026-08-15",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Stage 4B is a genuinely concurrent platform track: dependency-safe packaging (outbox allocator), cleanup classification (dry-run), and registry-backed dashboard APIs proceed in parallel with Stage 4A GPU research. Constraints: no modification of live-training-critical files (trainer, screening runner, active experiment config, checkpoint schema, observation/action/PPO semantics, telemetry formats) during SH-R3; no destructive deletion of unique evidence; no trainer namespace migration before a safe experiment boundary with capsule parity + throughput gates; portal upload stays manual; 4B must never delay 4A; Stage 5 starts when its real gates pass, not after irrelevant polish. EV-0030."
+    },
+    {
+      "ID": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "No paid RunPod GPU may remain RUNNING without a verified active workload or bounded startup window. Implements: resource ownership ledger (experiments/marathon/runpod_resources.json), workload verification over pod status, scripts/dev/runpod_idle_watchdog.py (--stop-idle, billing-logged), completion-means-STOP ordering, duplicate-capacity prevention, fallback-retry self-cancel marker (var/marathon_takeover/stop_pod_retries), stop-gate ledger check (.qoder/hooks/marathon_stop_gate.py runpod_unexplained_running), and session-recovery-first RunPod reconciliation. Documented in docs/marathon/RUNPOD_ZERO_IDLE_BURN.md. Cost is telemetry, not the optimisation target; spend policy remains RUNPOD-SPEND-2026-08-15."
+    },
+    {
+      "ID": "ELITE-REPLAY-INTELLIGENCE-DURABLE-CONTINUATION-2026-08-15",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
+      "SUMMARY": "Adds ELITE_REPLAY_AUGMENTATION as a new evidence-gated Stage-4A research family (additive, not a replacement): bounded replay-data plane with immutable provenance, fog-of-war legal-POV parity gate, player/time/seed/style-disjoint anti-overfit splits, per-player caps, sub-experiments BC warm start / auxiliary replay loss / elite opponent clones / scenario curriculum / disagreement mining, multi-metric generalisation report before any scalar, external leaderboard telemetry as supplement not authority. Also mandates durable continuation: inspect installed Qoder /loop capability, persist the marathon loop prompt + execution lease in-repo, ~30 min default cadence, loop may only terminate at canonical completion or ALL-scope hard blocker. Horizon family verdict handling: EV-0033 contaminated by serving defect (EV-0034); rerun under unchanged predeclared rules decides the family; no SH-R5 merely because SH-R4 failed."
+    },
+    {
+      "ID": "LEARNING-PATH-INTEGRITY-AND-EPISODE-CONTINUITY-AUDIT-2026-08-16",
+      "STATUS": "ACTIVE_OPERATOR_AMENDMENT_EXECUTED_THIS_TICK",
+      "SUMMARY": "High-priority scientific-integrity amendment (not a replacement programme): determine whether a systemic training-state-distribution defect prevents the PPO learner from receiving midgame/endgame/win-conversion experience. Mandates: prove-or-falsify from runtime code (no inference from names); preserve ALL prior experiments (regime-labelling, never deletion); git archaeology for prior reset regressions; map the real collection path; measure turn-bucket state coverage; audit episode continuity, partial-reset semantics, GAE/bootstrap/terminal masks, reward propagation, potential-shaping math incl. truncation, observation memory, policy freshness, PRNG independence, opponent distribution, silent-pass rates (pinned engine authority), mask parity, long-horizon JAX-vs-engine parity, terminal conditions incl. forced-win fixture, evaluator win-conversion calibration (diagnostic only, 1200-turn horizon unchanged); predeclare EPISODE_CONTINUITY_R1 (reset vs persistent, matched variables) if the defect is proven; CROSS_REGIME_BRIDGE policy (never blindly rerun all families; reward most likely interaction); regime labels VALID_IN_RESET_REGIME / VOID_SIGNAL_VACUOUS / SUPERSEDED_BY_ENGINEERING_FIX; continue BC-A + dependency-safe work in parallel; do not start expensive new GPU families on the suspect regime until resolved; regression guards become part of the trainer gate; produce a 17-question evidence-backed diagnosis and then CONTINUE the marathon through Stages 5-7 to canonical completion. EXECUTED this tick as EV-0047/EV-0048: defect PROVEN (EARLY_WINDOW_RESET_REGIME_V1), correction knob implemented + smoked, EPISODE_CONTINUITY_R1 predeclared + registered."
+    }
   ]
- },
- "ACTIVE_REMOTE_PROCESSES": {
-  "AUDIT_STATUS": "AUDITED_API_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-17T09:55:00Z",
-  "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE: all pods EXITED (5p0udi7ouvs139 stopped after D1 artefact fetch; kxwtvih7ut7pj6 EXITED resume-blocked HOST_FULL); arbiter local CPU complete"
-  ],
-  "OBSERVED_RESOURCES": [
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "5p0udi7ouvs139",
-    "NAME": "quantisilico_stage6_distill_d0_a40",
-    "STATE": "RUNNING_DISTILL_D0_ROUND (created 07:21:03Z podFindAndDeployOnDemand CA-MTL-1 machineId t9cgc3qva4dd; billing-logged; ledger experiments/marathon/runpod_resources.json)"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "kxwtvih7ut7pj6",
-    "NAME": "quantisilico_stage5_scale_r2_a40",
-    "STATE": "EXITED_RESUME_BLOCKED_HOST_FULL_SINCE_07:11Z (D0 launch#1 psutil crash forensics captured EV-0066; keep EXITED, no billing; ledger experiments/marathon/runpod_resources.json)"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "6b65w6q02z7g6m",
-    "NAME": "quantisilico_stage5_scale_r1_a40",
-    "STATE": "EXITED_STOPPED_AFTER_SCALE_R1_ARTEFACT_FETCH (EV-0061)"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "5pxc0rnfy34nal",
-    "NAME": "quantisilico_bc_a_full_r1_a40",
-    "STATE": "EXITED_STOPPED_AFTER_BC_ROUND_COMPLETE_SELF_STOP (EV-0059/EV-0060)"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "0ea2tby1ujpk8z",
-    "NAME": "quantisilico_stage5_t2_r1_a40",
-    "STATE": "EXITED_STOPPED_AFTER_T2_ARTEFACT_FETCH_13:33Z (round complete 13:17:38Z self-stop; ledger experiments/marathon/runpod_resources.json)"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "yanhy83zocslwp",
-    "NAME": "quantisilico_rshaping_r2_a40",
-    "STATE": "EXITED_SUPERSEDED_HOST_CONGESTED_RETAINS_VOLUME",
-    "LEDGER": "experiments/marathon/runpod_resources.json"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "kkmqdgqbw3wgph",
-    "NAME": "quantisilico_rshaping_r1_a40",
-    "STATE": "EXITED_RETAINS_R1_VOLUME_SUPERSEDED_HOST_CONGESTED"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "zu2pvculot0yhp",
-    "NAME": "quantisilico_topadv_r1_a40",
-    "STATE": "EXITED_RETAINS_VOLUME_HOST_CONGESTED"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "wvjrnxbpcjnr8h",
-    "NAME": "generals_competition",
-    "STATE": "EXITED_STOPPED_AFTER_IDLE_VERIFICATION",
-    "LEDGER": "experiments/marathon/runpod_resources.json"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "ba86a74lq28t3f",
-    "NAME": "quantisilico_sh_r2_a40",
-    "STATE": "EXITED_STOPPED_AFTER_EVIDENCE_FETCH"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "tinlsf21h08qd2",
-    "NAME": "quantisilico_sh_r4_a40",
-    "STATE": "EXITED_STOPPED_AFTER_SH_R4_EVIDENCE_FETCH_13:08Z"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "o27sds4rsf9hjs",
-    "NAME": "quantisilico_sh_r3_a40",
-    "STATE": "EXITED_STOPPED_AFTER_SH_R3_EVIDENCE_FETCH_HOST_FULL_ON_RESTART"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "POD",
-    "RESOURCE_ID": "tmmov7t54z5mbu",
-    "NAME": "quantisilico_sh_r1_a40",
-    "STATE": "EXITED_RETAINS_R1_ENV_VOLUME"
-   },
-   {
-    "PROVIDER": "RUNPOD",
-    "RESOURCE_TYPE": "SERVERLESS_ENDPOINTS",
-    "STATE": "NONE_FOUND"
-   }
-  ]
- },
- "CURRENT_EXPERIMENT": "experiment#stage6-oppdist-r1#c0103074d017 REGISTERED_PRE_LAUNCH (OPPDIST-B0-TEACHOPP-S1/S2). Closed this session: experiment#stage6-distill-ppo-r1#543924456945 ADJUDICATED NO_PROMOTION EXPERT_INIT_LANE_CLOSED (EV-0068); experiment#stage5-teacher-r2#8ab7def9c575 ADJUDICATED NO_PROMOTION TEACHER_LANE_CLOSED (EV-0065); experiment#stage5-teacher-r1#153b464617b7 ADJUDICATED VALID_NEGATIVE STEP1_GATE_FAIL (EV-0064); experiment#stage5-scale-r2#7a383bb25e4f ADJUDICATED SCALE_AXIS_CLOSED (EV-0063); experiment#stage5-scale-r1#600fdb29e986 NO_PROMOTION + FIRST WIN (EV-0061); experiment#bc-a-full-r1#abcfcd746ac7 VALID_NEGATIVE (EV-0060).",
- "CURRENT_CHECKPOINT": {
-  "ACTIVE": null,
-  "HISTORICAL_STAGE_1_REFERENCE": {
-   "REFERENCE_ID": "SPRINT_VALID_PPO_7M59",
-   "SOURCE_NAME": "ckpt_final_u482_t7593984",
-   "PATH": "C:\\Users\\pries\\quantsilico-runtime\\cloud_assisted_deadline_salvage_v1_final\\ckpt_final_u482_t7593984",
-   "STATUS": "HASH_VERIFIED_PRESERVE_AND_REPRODUCE_DURING_STAGE_1"
-  },
-  "OTHER_DISCOVERED_CHECKPOINTS": {
-   "STATUS": "KEEP_STRENGTH_UNKNOWN",
-   "APPROXIMATE_TRANSITIONS": [
-    10002432,
-    14966784,
-    19357696,
-    25010176,
-    50520064
-   ]
-  }
- },
- "NEXT_SAFE_ACTION": "(A) Implement the frozen-opponent rollout mode per stage6_oppdist_r1_plan.yaml implementation constraints: add --opponent-mode {self,teacher_frozen} + --opponent-checkpoint to run_sh_r1_arm.py / rollout collection (seat 1 = frozen DISTILL-S0 params, stochastic temp 1.0, own obs/memory threading, never updated; PPO on seat-0 samples only; control path --opponent-mode self bit-identical to registered SCALE recipe). (B) CPU smoke: 2 updates, ratio 1.0, finite, opponent params hash unchanged, decisive/teacher-win telemetry fields emit. (C) Bounded A40 round (2 x 8M) with EV-0047+psutil + import-chain guards, self-stop wrapper, zero-idle-burn. (D) Learner health -> serving candidates + probe -> 36-game arbiter -> adjudicate per plan branches (a)/(b incl. escalation-review dossier).",
- "BLOCKERS": [
-  {
-   "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
-   "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
-   "DETAIL": "No native agent/cursor-agent executable was discovered; the official Windows route is WSL and WSL inspection timed out."
-  },
-  {
-   "ID": "CURSOR_USAGE_EXHAUSTED",
-   "SCOPE": "LIVE_ORCHESTRATION_ACCEPTANCE_ONLY",
-   "DETAIL": "The human operator reports exhausted Cursor credits. This is PAUSED_USAGE, not an implementation failure."
-  }
- ],
- "PLAN_DEVIATIONS": [
-  {
-   "ID": "ORCH-0001",
-   "STATUS": "RESOLVED_OPERATOR_AMENDMENT",
-   "SUMMARY": "Added bounded Stage 0B local Codex/implementer/Codex orchestration. New review records use ACCEPT instead of historical SHIP and add HUMAN_BOUNDARY."
-  },
-  {
-   "ID": "QODER-AUTONOMY-2026-08-14",
-   "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
-   "SUMMARY": "Operator pre-authorised set-and-forget autonomous execution: checkpoint commits, pushes, PR/merge and main synchronisation, W4 harness creation, and continuation through canonical stages without routine approval. Retained human boundaries: cash spend beyond existing credits, visibility changes, competition uploads, destructive unique-evidence removal, force push/history rewrite, pinned-engine edits, credential operations."
-  },
-  {
-   "ID": "QODER-COMPUTE-2026-08-14",
-   "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
-   "SUMMARY": "Existing prepaid/promotional/trial compute credits are authorised for GPU training and experiments within the available balance; new cash spend, credit purchases, and payment-method changes remain human-controlled. Accelerator selection optimises validated throughput per credit with a utilisation gate before scaling."
-  },
-  {
-   "ID": "SEQUENTIAL-METHOD-2026-08-15",
-   "STATUS": "ACTIVE_DECLARED_SUBSTITUTION",
-   "SUMMARY": "programme.yaml names ANYTIME_VALID_EMPIRICAL_BERNSTEIN_CONFIDENCE_SEQUENCE; the shipped Stage 2 evaluator uses ANYTIME_VALID_BOUNDED_MIXTURE_CONFIDENCE_SEQUENCE (Hoeffding-mixture CS), a conservative valid member of the anytime-valid family permitted by EXECUTION_PLAN section 7.2, with exact martingale-inversion and Monte Carlo coverage tests. Empirical-Bernstein tightening deferred for large pair budgets. EV-0017."
-  },
-  {
-   "ID": "RUNPOD-SPEND-2026-08-15",
-   "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
-   "SUMMARY": "Supersedes the earlier existing-credits-only rule for Marathon research compute: reasonable additional cash spend on GPU/CPU compute is pre-authorised; low balance must not shrink scientifically justified budgets, truncate promising candidates, or replace appropriate GPU runs with impractical CPU runs. Optimisation target is strength per compute/dollar via the canonical funnel (pilot -> utilisation -> control -> external strength -> marginal value); failed/dominated arms receive no extra compute; reference transition points (5M..500M+) are decision points, not ceilings; official RunPod tooling preferred; RUNPOD_API_KEY never exposed/committed; no new payment methods/legal terms/ownership changes; paid accelerators stopped when idle; billing evidence recorded per run. Scientific gates (Stage 2 statistics, Stage 3 registration, controls, evaluation) are NOT weakened by spend.",
-   "OPERATIONAL_NOTES": "Credential at ~/.runpod/config.toml (KEY_SHA256 a34c0f0e...; rotate after marathon window since it transited chat). API surface verified: GraphQL api.runpod.io/graphql + REST rest.runpod.io/v1 (runpodctl 6fc6f8b5 queries). PyPI unreachable FROM THE LAPTOP; pods install fine. Balance 26.94 after operator top-up. Pod inventory: all three pods EXITED (see experiments/marathon/runpod_resources.json)."
-  },
-  {
-   "ID": "ACTIVATE-STAGE-4B-PARALLEL-LANE-2026-08-15",
-   "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
-   "SUMMARY": "Stage 4B is a genuinely concurrent platform track: dependency-safe packaging (outbox allocator), cleanup classification (dry-run), and registry-backed dashboard APIs proceed in parallel with Stage 4A GPU research. Constraints: no modification of live-training-critical files (trainer, screening runner, active experiment config, checkpoint schema, observation/action/PPO semantics, telemetry formats) during SH-R3; no destructive deletion of unique evidence; no trainer namespace migration before a safe experiment boundary with capsule parity + throughput gates; portal upload stays manual; 4B must never delay 4A; Stage 5 starts when its real gates pass, not after irrelevant polish. EV-0030."
-  },
-  {
-   "ID": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
-   "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
-   "SUMMARY": "No paid RunPod GPU may remain RUNNING without a verified active workload or bounded startup window. Implements: resource ownership ledger (experiments/marathon/runpod_resources.json), workload verification over pod status, scripts/dev/runpod_idle_watchdog.py (--stop-idle, billing-logged), completion-means-STOP ordering, duplicate-capacity prevention, fallback-retry self-cancel marker (var/marathon_takeover/stop_pod_retries), stop-gate ledger check (.qoder/hooks/marathon_stop_gate.py runpod_unexplained_running), and session-recovery-first RunPod reconciliation. Documented in docs/marathon/RUNPOD_ZERO_IDLE_BURN.md. Cost is telemetry, not the optimisation target; spend policy remains RUNPOD-SPEND-2026-08-15."
-  },
-  {
-   "ID": "ELITE-REPLAY-INTELLIGENCE-DURABLE-CONTINUATION-2026-08-15",
-   "STATUS": "ACTIVE_OPERATOR_AMENDMENT",
-   "SUMMARY": "Adds ELITE_REPLAY_AUGMENTATION as a new evidence-gated Stage-4A research family (additive, not a replacement): bounded replay-data plane with immutable provenance, fog-of-war legal-POV parity gate, player/time/seed/style-disjoint anti-overfit splits, per-player caps, sub-experiments BC warm start / auxiliary replay loss / elite opponent clones / scenario curriculum / disagreement mining, multi-metric generalisation report before any scalar, external leaderboard telemetry as supplement not authority. Also mandates durable continuation: inspect installed Qoder /loop capability, persist the marathon loop prompt + execution lease in-repo, ~30 min default cadence, loop may only terminate at canonical completion or ALL-scope hard blocker. Horizon family verdict handling: EV-0033 contaminated by serving defect (EV-0034); rerun under unchanged predeclared rules decides the family; no SH-R5 merely because SH-R4 failed."
-  },
-  {
-   "ID": "LEARNING-PATH-INTEGRITY-AND-EPISODE-CONTINUITY-AUDIT-2026-08-16",
-   "STATUS": "ACTIVE_OPERATOR_AMENDMENT_EXECUTED_THIS_TICK",
-   "SUMMARY": "High-priority scientific-integrity amendment (not a replacement programme): determine whether a systemic training-state-distribution defect prevents the PPO learner from receiving midgame/endgame/win-conversion experience. Mandates: prove-or-falsify from runtime code (no inference from names); preserve ALL prior experiments (regime-labelling, never deletion); git archaeology for prior reset regressions; map the real collection path; measure turn-bucket state coverage; audit episode continuity, partial-reset semantics, GAE/bootstrap/terminal masks, reward propagation, potential-shaping math incl. truncation, observation memory, policy freshness, PRNG independence, opponent distribution, silent-pass rates (pinned engine authority), mask parity, long-horizon JAX-vs-engine parity, terminal conditions incl. forced-win fixture, evaluator win-conversion calibration (diagnostic only, 1200-turn horizon unchanged); predeclare EPISODE_CONTINUITY_R1 (reset vs persistent, matched variables) if the defect is proven; CROSS_REGIME_BRIDGE policy (never blindly rerun all families; reward most likely interaction); regime labels VALID_IN_RESET_REGIME / VOID_SIGNAL_VACUOUS / SUPERSEDED_BY_ENGINEERING_FIX; continue BC-A + dependency-safe work in parallel; do not start expensive new GPU families on the suspect regime until resolved; regression guards become part of the trainer gate; produce a 17-question evidence-backed diagnosis and then CONTINUE the marathon through Stages 5-7 to canonical completion. EXECUTED this tick as EV-0047/EV-0048: defect PROVEN (EARLY_WINDOW_RESET_REGIME_V1), correction knob implemented + smoked, EPISODE_CONTINUITY_R1 predeclared + registered."
-  }
- ]
 }

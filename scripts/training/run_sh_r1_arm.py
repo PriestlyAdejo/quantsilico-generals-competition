@@ -11,6 +11,7 @@ stops only (round 1): any non-finite metric halts the arm as INTEGRITY_FAILURE.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import sys
@@ -22,6 +23,7 @@ sys.path.insert(0, str(REPO))
 
 import jax  # noqa: E402
 import jax.numpy as jnp  # noqa: E402
+import numpy as np  # noqa: E402
 
 from generals_bot.competition_native_jax.competition_env_jax import (  # noqa: E402
     build_competition_reset_pool,
@@ -33,6 +35,7 @@ from train.competition_native_jax.ppo_jax import make_optimizer, ppo_update  # n
 from train.competition_native_jax.reward_shaping_jax import set_active_shaping  # noqa: E402
 from train.competition_native_jax.rollout_selfplay_jax import (  # noqa: E402
     collect_selfplay_batch,
+    set_opponent_mode,
 )
 from train.competition_native_jax.temporal_history_jax import (  # noqa: E402
     set_temporal_history_mode,
@@ -70,6 +73,14 @@ def healthy(metrics: dict) -> bool:
     if not all(math.isfinite(float(v)) for v in metrics.values()):
         return False
     return 0.5 <= float(metrics.get("ratio", 0.0)) <= 2.0
+
+
+def params_sha256(tree: dict) -> str:
+    """STAGE6_OPPDIST_R1: hash opponent param leaves (never-updated invariant)."""
+    h = hashlib.sha256()
+    for leaf in jax.tree_util.tree_leaves(tree):
+        h.update(np.ascontiguousarray(np.asarray(leaf)).view(np.uint8))
+    return h.hexdigest()
 
 
 def main() -> int:
@@ -134,10 +145,46 @@ def main() -> int:
         "patch_proj fresh - shape-forced). off = canonical 8-plane path. "
         "PPO_SEMANTICS UNCHANGED for serving.",
     )
+    parser.add_argument(
+        "--opponent-mode",
+        default="self",
+        choices=["self", "teacher_frozen"],
+        help="STAGE6_OPPDIST_R1 knob (stage6_oppdist_r1_plan.yaml): self = canonical "
+        "mirror self-play (bit-identical control path). teacher_frozen = seat 1 acts "
+        "from --opponent-checkpoint params loaded ONCE and never updated, sampled "
+        "stochastically at temperature 1.0 with its own obs/memory threading; PPO "
+        "updates apply to seat-0 samples only. The opponent is environment dynamics; "
+        "PPO_SEMANTICS UNCHANGED for the trained seat.",
+    )
+    parser.add_argument(
+        "--opponent-checkpoint",
+        type=Path,
+        default=None,
+        help="STAGE6_OPPDIST_R1: directory containing raw.npz of the frozen opponent "
+        "(required when --opponent-mode teacher_frozen).",
+    )
     args = parser.parse_args()
 
     set_active_shaping(args.reward_shape, args.reward_shape_beta)
     set_temporal_history_mode(args.temporal_history)
+    if args.opponent_mode == "teacher_frozen":
+        if args.temporal_history != "off":
+            print(
+                "teacher_frozen opponent requires the canonical 8-plane path "
+                "(--temporal-history off)",
+                file=sys.stderr,
+            )
+            return 2
+        if args.opponent_checkpoint is None:
+            print("--opponent-checkpoint is required with --opponent-mode teacher_frozen", file=sys.stderr)
+            return 2
+    set_opponent_mode(args.opponent_mode)
+    opp_params = None
+    opp_hash_before = None
+    if args.opponent_mode == "teacher_frozen":
+        opp_like = init_params(jax.random.PRNGKey(0))
+        opp_params = load_tree(args.opponent_checkpoint / "raw.npz", opp_like)
+        opp_hash_before = params_sha256(opp_params)
 
     out_dir = args.out_dir or REPO / f"experiments/marathon/screening_runs/{args.arm_id}"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -202,6 +249,7 @@ def main() -> int:
                     pool=reset_pool,
                     carry=rollout_carry,
                     return_carry=True,
+                    opp_params=opp_params,
                 )
             else:
                 batch = collect_selfplay_batch(
@@ -211,6 +259,7 @@ def main() -> int:
                     seed=args.seed + index,
                     reset_pool_size=RESET_POOL_SIZE,
                     pool=reset_pool,
+                    opp_params=opp_params,
                 )
             jax.block_until_ready(jax.tree_util.tree_leaves(batch["actions"]))
             collect_wall += time.perf_counter() - collect_started
@@ -230,6 +279,7 @@ def main() -> int:
                 "collect_s": collect_wall,
                 "update_s": update_wall,
                 "decisive_share": float(jnp.mean(batch["terminals"])),
+                "opp_win_share": float(jnp.mean((batch["rewards1"] > 0.5) * batch["terminals"])),
                 **{key: float(value) for key, value in metrics.items()},
             }
             record["healthy"] = healthy(metrics)
@@ -250,6 +300,12 @@ def main() -> int:
     finite_first = next((r for r in records if r["healthy"]), {})
     finite_last = next((r for r in reversed(records) if r["healthy"]), {})
     elimination = []
+    opp_hash_after = None
+    if opp_params is not None:
+        final_opp = rollout_carry.opp_params if rollout_carry is not None else opp_params
+        opp_hash_after = params_sha256(final_opp)
+        if opp_hash_after != opp_hash_before:
+            elimination.append("OPPONENT_PARAMS_MUTATED")
     if stop_reason == "INTEGRITY_FAILURE":
         elimination.append("INTEGRITY_FAILURE_NON_FINITE_OR_RATIO")
     if valid_share < 0.9:
@@ -270,6 +326,10 @@ def main() -> int:
         "reward_shape_beta": args.reward_shape_beta,
         "episode_carry": args.episode_carry,
         "temporal_history": args.temporal_history,
+        "opponent_mode": args.opponent_mode,
+        "opponent_checkpoint": str(args.opponent_checkpoint) if args.opponent_checkpoint else None,
+        "opponent_sha256_before": opp_hash_before,
+        "opponent_sha256_after": opp_hash_after,
         "budget_transitions": args.budget_transitions,
         "actual_transitions": transitions,
         "updates": len(records),
@@ -291,6 +351,8 @@ def main() -> int:
             "RATIO_LAST": last.get("ratio"),
             "DECISIVE_SHARE_FIRST": finite_first.get("decisive_share"),
             "DECISIVE_SHARE_LAST": finite_last.get("decisive_share"),
+            "OPP_WIN_SHARE_FIRST": finite_first.get("opp_win_share"),
+            "OPP_WIN_SHARE_LAST": finite_last.get("opp_win_share"),
         },
         "throughput": {
             "reset_pool_build_s": pool_wall,

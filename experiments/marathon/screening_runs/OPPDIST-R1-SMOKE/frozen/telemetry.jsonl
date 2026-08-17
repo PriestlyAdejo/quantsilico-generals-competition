@@ -1,0 +1,2 @@
+{"collect_s": 26.143995799997356, "decisive_share": 0.0, "entropy": 0.6059137582778931, "healthy": true, "loss": 1.172764778137207, "opp_win_share": 0.0, "pg": -0.0003925862838514149, "ratio": 1.0, "transitions": 128, "update": 0, "update_s": 48.363161300017964, "vloss": 2.3584330081939697}
+{"collect_s": 26.921733999974094, "decisive_share": 0.0, "entropy": 1.1958513259887695, "healthy": true, "loss": 1.167757511138916, "opp_win_share": 0.0, "pg": -0.0003052068059332669, "ratio": 1.0, "transitions": 256, "update": 1, "update_s": 50.63359760004096, "vloss": 2.360042095184326}
