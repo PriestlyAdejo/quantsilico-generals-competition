@@ -1,0 +1,61 @@
+kind: EVALUATOR_POWER_ANALYSIS
+version: V1
+status: RECORDED
+recorded_utc: "2026-08-17T15:05:00Z"
+authority: additive amendment #2 section 9 (computed from the actual implementation, no invented values)
+
+implementation_audited:
+  file: src/generals_bot/marathon_eval/confidence_sequence.py
+  method: ANYTIME_VALID_BOUNDED_MIXTURE_CONFIDENCE_SEQUENCE (normal-mixture
+    supermartingale on Hoeffding sub-Gaussian bound; observations shifted to
+    [0,1]; sigma^2 = 0.25; rho_squared = 1.0; alpha = 0.05; practical margin
+    0.01 on the original [-1,1] paired-difference scale)
+
+computed_power_table:
+  # CS LOWER bound on paired mean difference at true effect delta
+  rows:
+    - "delta 0.00: n=18 -0.723 | n=36 -0.506 | n=64 -0.383 | n=128 -0.276 | n=256 -0.201 | n=512 -0.146 | n=1024 -0.106"
+    - "delta 0.10: n=18 -0.623 | n=36 -0.406 | n=64 -0.283 | n=128 -0.176 | n=256 -0.101 | n=512 -0.046 | n=1024 -0.006"
+    - "delta 0.20: n=18 -0.523 | n=36 -0.306 | n=64 -0.183 | n=128 -0.076 | n=256 -0.001 | n=512 +0.054 | n=1024 +0.094"
+    - "delta 0.30: n=18 -0.423 | n=36 -0.206 | n=64 -0.083 | n=128 +0.024 | n=256 +0.099 | n=512 +0.154 | n=1024 +0.194"
+    - "delta 0.50: n=18 -0.223 | n=36 -0.006 | n=64 +0.117 | n=128 +0.224 | n=256 +0.299 | n=512 +0.354 | n=1024 +0.394"
+  n_required_for_lower_above_margin_0_01:
+    delta_0_05: "> 4096 (effectively unresolvable)"
+    delta_0_10: ">= 1474"
+    delta_0_20: ">= 289"
+    delta_0_30: ">= 116"
+    delta_0_50: ">= 39"
+
+findings:
+  - "the 18-game (9-pair) arbiter can only pass a candidate whose true paired advantage is very large (~delta 0.5); moderate real improvements (delta 0.1-0.3) are UNDETECTABLE at current N - consistent with every close call adjudicating to draws"
+  - "the CS is NOT incorrectly implemented; it is conservatively anytime-valid and correct for final qualification - the defect is sample size, not math"
+  - "tier separation is justified: tiny-N gameplay is developmental telemetry, not scientific adjudication"
+  - "no weakening of the final qualification rule is proposed or permitted"
+
+tier_design_predeclared:
+  tier_a_developmental:
+    purpose: "cheap high-N telemetry: does the model win at all / is rate
+      increasing / terminal rate / conversion / survival vs aggression"
+    semantics: "NOT a promotion gate; may guide continuation/early stopping;
+      never creates CANONICAL_CHAMPION"
+    ladder: [pass_bot, legal_random, official_expander, official_hunter,
+      heuristic_v0, heuristic_v1, frozen learned candidates]
+    note: "win-capable opponents required (hunter/expander); not only
+      draw-prone pass-family opponents (amendment sec 11)"
+    implementation: "bulk JAX evaluator where parity is proven; otherwise
+      protocol subprocess ladder at reduced turn caps for telemetry rounds"
+  tier_b_shipping_smoke:
+    purpose: "reject catastrophically broken candidates; prove legal play;
+      smaller than final promotion"
+  tier_c_canonical_promotion:
+    purpose: "the existing paired frozen arbiter, RETAINED as promotion
+      authority, with predeclared sample sizes large enough for real power:
+      >= 128 games for large effects, >= 256-512 for moderate (delta 0.2)
+      effects; seat swaps, multiple seeds, diverse opponents, frozen CS rule"
+    no_post_hoc: "thresholds frozen per round plan before launch"
+
+consequence_for_prior_adjudications:
+  - "all prior arbiter verdicts STAND as predeclared (zero wins are true zero
+    wins regardless of power); the power analysis changes future protocol
+    only, never historic results"
+  - "OBS-V2-R1 and successors predeclare tier-C sizes from this table"
