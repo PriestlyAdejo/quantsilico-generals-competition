@@ -1,0 +1,2 @@
+{"collect_s": 27.876047800004017, "decisive_share": 0.0, "entropy": 0.6655977964401245, "healthy": true, "loss": 1.175362467765808, "pg": -0.00029316346626728773, "ratio": 1.0, "transitions": 32, "update": 0, "update_s": 63.82602680003038, "vloss": 2.364623546600342}
+{"collect_s": 28.303581099957228, "decisive_share": 0.0, "entropy": 1.1999742984771729, "healthy": true, "loss": 1.35822331905365, "pg": -7.635919246240519e-06, "ratio": 1.0, "transitions": 64, "update": 1, "update_s": 65.31796110002324, "vloss": 2.7404606342315674}
