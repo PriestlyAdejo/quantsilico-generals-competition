@@ -1,0 +1,2 @@
+ROUND_COMPLETE exit=0; stopping pod b6bqvrxqga9vp4
+{"data":{"podStop":{"id":"b6bqvrxqga9vp4","desiredStatus":"EXITED"}}}

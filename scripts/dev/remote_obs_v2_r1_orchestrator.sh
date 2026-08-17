@@ -38,8 +38,8 @@ echo "=== arm table (predeclared): 2 arms seeds {20260923 20260925}, 256x128, pe
 
 failed=0
 for spec in \
-  "OBS-V2-R1-S1 20260923 __BUDGET__" \
-  "OBS-V2-R1-S2 20260925 __BUDGET__"
+  "OBS-V2-R1-S1 20260923 18612224" \
+  "OBS-V2-R1-S2 20260925 18612224"
 do
   set -- $spec
   arm=$1; seed=$2; budget=$3

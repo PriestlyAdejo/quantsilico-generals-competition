@@ -2,7 +2,7 @@
  "kind": "RUNPOD_RESOURCE_LEDGER",
  "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
  "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
- "updated_at_utc": "2026-08-17T15:55:48Z",
+ "updated_at_utc": "2026-08-17T17:13:20Z",
  "resources": [
   {
    "pod_id": "kxwtvih7ut7pj6",
@@ -197,9 +197,7 @@
    "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
   }
  ],
- "active_workloads": [
-  "b6bqvrxqga9vp4: RC_R1_BRIDGE launch-2 round (self-stop wrapper)"
- ],
+ "active_workloads": [],
  "pods": [
   {
    "id": "5p0udi7ouvs139",
@@ -219,9 +217,9 @@
    "machine_id": "0v8jcrexfvwq",
    "cost_per_hr": 0.44,
    "gpu": "NVIDIA A40",
-   "state": "RUNNING_RC_R1_BRIDGE_LAUNCH2 (fresh pod after HOST_FULL on 5p0udi7ouvs139; EV-0047 venv repair re-applied; self-stop wrapper armed; S1 complete 15:29Z, S2 executing)",
+   "state": "TERMINATED_POST_FETCH (round COMPLETE both arms exit=0; artefacts fetched + integrity verified; probe PASS; terminated per predeclared EV-0025 fresh-pod disposition)",
    "created_at_utc": "2026-08-17T14:02:00Z",
-   "updated_at_utc": "2026-08-17T15:55:48Z"
+   "updated_at_utc": "2026-08-17T17:13:20Z"
   }
  ]
 }

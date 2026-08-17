@@ -89,7 +89,7 @@ def main() -> int:
             "SCHEDULES": "rc1",
             "STATUS": "REGISTERED_PRE_LAUNCH",
             "RESULT": "REGISTERED_PRE_LAUNCH",
-            "BUDGET": "declared by predeclared rule at launch (RC-R1 TPS -> ~25M target, 90-min/arm GPU cap)",
+            "BUDGET": "FROZEN 18612224 transitions (568 updates x 32768) = largest whole-update budget within 90-min cap at measured min RC-R1 TPS 3446.76 (est 5399.9s); 95-min wall cap backstop",
             "COMMAND": (
                 "run_sh_r1_arm.py --arm-id "
                 f"{name} --num-envs 256 --rollout-len 128 --seed {seed} "

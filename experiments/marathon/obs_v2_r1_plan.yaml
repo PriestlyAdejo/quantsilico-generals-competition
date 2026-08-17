@@ -76,6 +76,17 @@ budget_rule_predeclared:
     A40 pricing; otherwise the largest budget within the 90-min cap,
     declared before launch. Exact number FROZEN at launch registration -
     not after seeing any telemetry.
+  frozen_at_utc: "2026-08-17T17:20:00Z"
+  frozen_inputs:
+    rc_r1_end_to_end_tps_s1: 3446.759550912948
+    rc_r1_end_to_end_tps_s2: 3507.8
+    min_tps_used: 3446.759550912948
+    per_update_transitions: 32768
+    cap_seconds: 5400
+  frozen_budget: "18,612,224 transitions/arm = 568 updates (floor(5400 x
+    3446.76 / 32768); estimated wall 5399.9s = 90.0 min at measured TPS);
+    ~25M target EXCEEDS the cap, so the largest-within-cap rule applied;
+    95-min orchestrator wall cap is the execution backstop"
 
 adjudication_predeclared:
   - developmental telemetry (high-N JAX parity ladder, tier A) guides
