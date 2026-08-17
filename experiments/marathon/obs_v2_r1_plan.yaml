@@ -92,5 +92,22 @@ adjudication_predeclared:
     curriculum advancement pace, developmental W/D/L ladder vs
     pass_bot/legal_random/official_expander/official_hunter/heuristic_v0/v1
 
+tier_c_arbiter_predeclared:
+  authority: EVALUATOR_POWER_ANALYSIS_V1 (n_required table; directive: OBS-V2-R1
+    predeclares tier-C sizes from the table before launch)
+  power_target: "detect a true paired advantage of delta >= 0.3 (n >= 116);
+    delta 0.2 effects remain possible UNRESOLVED at this N (declared, not
+    relaxed)"
+  candidates: [obs_v2_s1, obs_v2_s2]
+  opponents: [rc1_s1, rc1_s2, legal_random, heuristic_v0, heuristic_v1]
+  games: "4 opponents x 16 seat-swapped pairs = 128 games per candidate
+    (256 total); 1200-turn horizon; competition mode; deterministic serving"
+  matched_control: "rc1_s1/rc1_s2 head-to-head gives the direct observation
+    attribution; heuristic opponents anchor absolute competence"
+  rules: "frozen anytime-valid CS (alpha 0.05, margin 0.01); zero faults
+    required; draws at truncation are UNRESOLVED/not wins; serving sanity
+    probe PASS pre-game (EV-0034 precedent); no post-hoc relaxation"
+  mechanism: scripts/evaluation/run_marathon_paired_eval.py (local CPU)
+
 evidence_links: [EV-0071, EV-0069, KNOWN_WORKING_RECIPE_GAP_AUDIT_V1,
   KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1]
