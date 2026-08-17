@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-16T23:45:00Z",
+ "UPDATED_AT_UTC": "2026-08-17T05:07:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_5_SCALE_R1_CLOSED_NEXT_AXIS_PREDECLARATION",
- "CURRENT_TASK": "STAGE5_SCALE_R1 fully closed (EV-0061): NO_PROMOTION both seeds (CS decisive) BUT first genuine trained-candidate WIN in any marathon arbiter (S1 vs legal_random, zero faults, paired loss; S2 17 draws + 1 loss). Draw wall cracked, not broken. NEXT: predeclare STAGE5_SCALE_R2 (win-emergence replication at 8M + deeper scale) and execute",
+ "CURRENT_STAGE": "STAGE_5_SCALE_AXIS_CLOSED_TEACHER_AXIS_PREDECLARATION",
+ "CURRENT_TASK": "STAGE5_SCALE_R2 fully closed (EV-0063): NO_PROMOTION all three arms (s3 16D+2L, s4 17D+1L, 16M 17D+1L; zero faults; CS decisive). Predeclared branch (b) fires: R1's single win stands as rare noise; SCALE AXIS CLOSED after one bounded successor attempt. Aggregate scale evidence: 5 arms / 90 games = 1 WIN, 7 LOSSES, 82 DRAWS. All registry records + experiment verdict registered. NEXT: predeclare STAGE5 teacher-axis round (objective/value-structure intervention grounded in EV-0053 HunterAgent - the only demonstrated win-converting behaviour in-repo), register pre-launch, then execute",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -242,6 +242,9 @@
   ],
   "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection",
   "COMPLETED_THIS_SESSION": [
+   "STAGE5_SCALE_R2 fully closed this tick (EV-0063): sanity probe PASS pre-game (3 candidates, weights-matter + determinism); 54/54 games clean zero faults; s3 16 DRAW+2 LOSS (mean 0.444, cs_lb -0.628), s4 17 DRAW+1 LOSS, 16M 17 DRAW+1 LOSS (both mean 0.472, cs_lb -0.601) -> NO_PROMOTION all three; predeclared branch (b) fires: R1's lone win stands as rare noise, SCALE AXIS CLOSED after one bounded successor attempt; aggregate 5 arms/90 games = 1 WIN 7 LOSS 82 DRAW; 9 registry records (3 checkpoint + 3 candidate + 3 evaluation) + experiment verdict registered via scripts/dev/register_stage5_scale_r2_arbiter_eval.py; EV-0062 arm-1 OSError-5 rerun preserved as telemetry_failed_ev0062.jsonl",
+   "STAGE5_SCALE_R2 arm-1 bounded rerun (EV-0062): original run hit OSError Errno 5 (network volume I/O at telemetry flush) -> identical-config rerun on same pod (stale telemetry renamed, runner overwrite-guard honoured) -> round completed clean; programme integrity preserved without rule change",
+   "STAGE5_SCALE_R1 fully closed (EV-0061): sanity probe PASS pre-game; NO_PROMOTION both seeds (CS decisive, harness cs lower -0.573/-0.601) BUT FIRST genuine trained-candidate WIN in any marathon arbiter (S1 vs legal_random, zero faults, paired loss); S2 17 draws + 1 loss; draw wall cracked not broken; 6 registry records + experiment verdict registered; SCALE-R2 predeclared + registered pre-launch (experiment#stage5-scale-r2#7a383bb25e4f)",
    "BC-A-FULL-R1 EXECUTED on A40 fallback + ADJUDICATED VALID NEGATIVE this tick (EV-0059/EV-0060): round 14:52:45-20:24:14Z exit=0 self-stop zero idle burn; artefacts fetched billing-logged window 21:09:39-21:10:58Z; held-out top-1 ResBot 0.5394 / nanomena 0.5245 beats legal-uniform by ~0.50 margin but below majority-pass 0.701/0.710 (predeclared rule requires strictly above BOTH on >=1 player) -> NOT VIABLE at corpus scale; legal share 1.0 all splits; phase profile 0.408/0.638/0.579/0.386; train 0.970 overfitting gap recorded; checkpoint never enters funnel; run record run#bc-a-full-r1-execution#19a7e28f03f1 + experiment verdict registered",
    "STAGE5 T2 K1 gameplay arbiter EXECUTED + ADJUDICATED this tick (EV-0058): sanity probe PASS pre-game; 36/36 draws zero faults both candidates; CS lower -0.573; NO_PROMOTION both seeds vs matched control 36/36 draws (EV-0054); draw wall persists through first OPEN capacity axis; candidate + evaluation records registered",
    "SESSION TAKEOVER HANDOVER reconciled + recorded this tick (EV-0055, commit f8963d7): lease transferred operator-authorized to qoder-standalone-takeover-20260816-session2; scheduled task f5733a0c preserved (16 fires); live state zero-drift vs ACTIVE_STATE; suspected duplicate trainer/retry pairs resolved as parent-child; one accidental duplicate retry loop killed on detection",
@@ -296,11 +299,32 @@
  },
  "ACTIVE_REMOTE_PROCESSES": {
   "AUDIT_STATUS": "AUDITED_API_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-16T21:28:00Z",
+  "AUDITED_AT_UTC": "2026-08-17T05:06:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "RUNNING: 6b65w6q02z7g6m (quantisilico_stage5_scale_r1_a40, EU-SE-1, 0.44/hr) - STAGE5_SCALE_R1 arm 1/2, GPU 93%/38971MiB verified 21:26Z, self-stop armed; all other 11 pods EXITED"
+   "NONE: watchdog verdict NO_RUNNING_PODS 05:06:01Z; all pods EXITED incl. kxwtvih7ut7pj6 (SCALE-R2), 6b65w6q02z7g6m (SCALE-R1), 5pxc0rnfy34nal (BC-A-FULL); ledger experiments/marathon/runpod_resources.json active_workloads=[]"
   ],
   "OBSERVED_RESOURCES": [
+   {
+    "PROVIDER": "RUNPOD",
+    "RESOURCE_TYPE": "POD",
+    "RESOURCE_ID": "kxwtvih7ut7pj6",
+    "NAME": "quantisilico_stage5_scale_r2_a40",
+    "STATE": "EXITED_STOPPED_AFTER_SCALE_R2_ARTEFACT_FETCH (round complete self-stop; EV-0062 arm-1 rerun on same pod; ledger experiments/marathon/runpod_resources.json)"
+   },
+   {
+    "PROVIDER": "RUNPOD",
+    "RESOURCE_TYPE": "POD",
+    "RESOURCE_ID": "6b65w6q02z7g6m",
+    "NAME": "quantisilico_stage5_scale_r1_a40",
+    "STATE": "EXITED_STOPPED_AFTER_SCALE_R1_ARTEFACT_FETCH (EV-0061)"
+   },
+   {
+    "PROVIDER": "RUNPOD",
+    "RESOURCE_TYPE": "POD",
+    "RESOURCE_ID": "5pxc0rnfy34nal",
+    "NAME": "quantisilico_bc_a_full_r1_a40",
+    "STATE": "EXITED_STOPPED_AFTER_BC_ROUND_COMPLETE_SELF_STOP (EV-0059/EV-0060)"
+   },
    {
     "PROVIDER": "RUNPOD",
     "RESOURCE_TYPE": "POD",
@@ -373,7 +397,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#stage5-scale-r1#600fdb29e986 EXECUTING (run#scale-a0-8m-s1#62285c0c59e1 running; run#scale-a0-8m-s2#e7ec639079d9 queued). Closed: experiment#stage5-capacity-value-r1#f1dc01ccc86f NO_PROMOTION (EV-0057/EV-0058); experiment#bc-a-full-r1#abcfcd746ac7 VALID_NEGATIVE (EV-0060).",
+ "CURRENT_EXPERIMENT": "NONE EXECUTING. Closed this session: experiment#stage5-scale-r2#7a383bb25e4f ADJUDICATED SCALE_AXIS_CLOSED (EV-0063); experiment#stage5-scale-r1#600fdb29e986 NO_PROMOTION + FIRST WIN (EV-0061); experiment#stage5-capacity-value-r1#f1dc01ccc86f NO_PROMOTION (EV-0057/EV-0058); experiment#bc-a-full-r1#abcfcd746ac7 VALID_NEGATIVE (EV-0060).",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -393,7 +417,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) SCALE-R2 launch: retry loop resumes 6b65w6q02z7g6m (10x90s from 23:45Z, host flapping); on RUNNING: EV-0047 GUARD FIRST (re-run setup or verify .venv312/bin/python + jax gpu - container disk wipes /root on stop), git pull to R2 commit, verify ckpt_baseline_v0, launch remote_stage5_scale_r2_orchestrator.sh via self-stop wrapper, verify round log + GPU; if retry window expires -> fresh A40 pod fallback (full bootstrap + 35MB ckpt upload). (B) Round ~80 min (2 x 8M + 1 x 16M, est end ~01:40Z after launch): watchdog self-stop -> billing-logged fetch -> integrity (1024/1024 + 2048/2048 updates) -> sanity probe -> 54-game arbiter (3 candidates) -> adjudicate per stage5_scale_r2_plan.yaml predeclared per-seed + family-level branch rules -> registry + EV. (C) Zero-idle-burn throughout.",
+ "NEXT_SAFE_ACTION": "(A) Predeclare STAGE5 teacher-axis round: draft experiments/marathon/stage5_teacher_r1_plan.yaml grounded in EV-0063 consequence + EV-0053 (pinned-engine HunterAgent is the ONLY demonstrated win-converting behaviour in-repo) - objective/value-structure intervention class (e.g. teacher-guided distillation / win-signal reward objective), with predeclared adjudication rules + gameplay-arbiter gate; register experiment BEFORE launch. (B) Execute the round: local CPU dependency-safe implementation steps first (serving/eval wiring), GPU training only after smoke + guards; zero-idle-burn throughout; EV-0047 venv guard before any wrapper launch. (C) Preserve all SCALE artefacts; no restarts; no post-hoc rule changes.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

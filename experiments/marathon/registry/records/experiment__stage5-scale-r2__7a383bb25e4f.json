@@ -1,37 +1,38 @@
 {
-  "CONFIG_IDENTITY": {
-    "plan": "experiments/marathon/stage5_scale_r2_plan.yaml",
-    "plan_kind": "MARATHON_STAGE5_ROUND_PLAN",
-    "plan_sha256_12": "097ea0e0f3a9",
-    "status": "PREDECLARED"
+ "CONFIG_IDENTITY": {
+  "plan": "experiments/marathon/stage5_scale_r2_plan.yaml",
+  "plan_kind": "MARATHON_STAGE5_ROUND_PLAN",
+  "plan_sha256_12": "097ea0e0f3a9",
+  "status": "PREDECLARED"
+ },
+ "EVIDENCE_LINKS": [
+  "EV-0054",
+  "EV-0058",
+  "EV-0060",
+  "EV-0061"
+ ],
+ "ID": "experiment#stage5-scale-r2#7a383bb25e4f",
+ "KIND": "experiment",
+ "LINEAGE": {
+  "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+  "LINEAGE_HASHES": {
+   "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+   "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+   "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+   "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+   "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
   },
-  "EVIDENCE_LINKS": [
-    "EV-0054",
-    "EV-0058",
-    "EV-0060",
-    "EV-0061"
-  ],
-  "ID": "experiment#stage5-scale-r2#7a383bb25e4f",
-  "KIND": "experiment",
-  "LINEAGE": {
-    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
-    "LINEAGE_HASHES": {
-      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
-      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
-      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
-      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
-      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
-    },
-    "NAME": "competition_native_jax_v1"
-  },
-  "NAME": "STAGE5_SCALE_R2",
-  "PPO_SEMANTICS": "UNCHANGED",
-  "RECORDED_AT_UTC": "2026-08-16T23:38:39Z",
-  "SCHEMA_VERSION": "1.0.0",
-  "SEEDS": [
-    20260915,
-    20260917,
-    20260915
-  ],
-  "TRAINING_REGIME": "PERSISTENT_EPISODE_REGIME_V1"
+  "NAME": "competition_native_jax_v1"
+ },
+ "NAME": "STAGE5_SCALE_R2",
+ "PPO_SEMANTICS": "UNCHANGED",
+ "RECORDED_AT_UTC": "2026-08-16T23:38:39Z",
+ "SCHEMA_VERSION": "1.0.0",
+ "SEEDS": [
+  20260915,
+  20260917,
+  20260915
+ ],
+ "TRAINING_REGIME": "PERSISTENT_EPISODE_REGIME_V1",
+ "RESULT": "ADJUDICATED EV-0063: NO_PROMOTION all three arms per predeclared rules (cs lower -0.628/-0.601/-0.601 vs practical margin 0.01; zero faults; all games draw-or-loss). Predeclared branch (b) fires: R1's single win stands as rare noise; SCALE AXIS CLOSED after one bounded successor attempt. Aggregate scale evidence: 5 arms / 90 games = 1 WIN, 7 LOSSES, 82 DRAWS. Programme advances to objective/value-structure (teacher-class) interventions per EXECUTION_PLAN Stage 5."
 }

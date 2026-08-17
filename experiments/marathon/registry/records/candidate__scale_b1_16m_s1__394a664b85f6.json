@@ -1,0 +1,19 @@
+{
+  "CHECKPOINT_ID": "checkpoint#scale-b1-16m-s1-terminal#346f832f73a1",
+  "EVIDENCE_LINKS": [
+    "EV-0034",
+    "EV-0049",
+    "EV-0061",
+    "EV-0062",
+    "EV-0063"
+  ],
+  "ID": "candidate#scale_b1_16m_s1#394a664b85f6",
+  "KIND": "candidate",
+  "PARITY_PROOF": "tests/competition_native_jax/test_long_horizon_engine_parity.py",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "baselines/scale_b1_16m_s1/main.py",
+  "RECORDED_AT_UTC": "2026-08-17T05:06:42Z",
+  "SANITY_PROBE": "scripts/analysis/serving_sanity_probe_scale_r2.py PASS pre-game (EV-0034 precedent)",
+  "SCHEMA_VERSION": "1.0.0",
+  "SERVING_ADAPTER": "baselines/scale_r1_serving_common.py (canonical 8-plane JaxTransformerPolicy; CHECKPOINT_ROOTS resolves STAGE5-SCALE-R2)"
+}

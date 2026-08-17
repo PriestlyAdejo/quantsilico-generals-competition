@@ -1,0 +1,44 @@
+{
+  "actual_transitions": 8388608,
+  "arm_id": "SCALE-A0-8M-S2",
+  "budget_transitions": 8388608,
+  "eliminated": false,
+  "elimination": [],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-16T22:06:27Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1882431507110596,
+    "ENTROPY_LAST": 5.5929365158081055,
+    "PG_FIRST": -0.0005504650762304664,
+    "PG_LAST": 6.956654488021741e-06,
+    "RATIO_FIRST": 1.000000238418579,
+    "RATIO_LAST": 1.0,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3575210571289062,
+    "VLOSS_LAST": 2.351125478744507,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.006395578384399414
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "seed": 20260913,
+  "stop_reason": "BUDGET_REACHED",
+  "temporal_history": "off",
+  "throughput": {
+    "collect_tps": 30593.56044575956,
+    "collect_wall_s": 274.19521879032254,
+    "end_to_end_tps": 7231.131194445849,
+    "reset_pool_build_s": 75.3434654660523,
+    "total_wall_s": 1176.1669105291367,
+    "update_wall_s": 885.8733478598297
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 1024
+}
