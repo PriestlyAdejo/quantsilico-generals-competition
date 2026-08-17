@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-17T18:20:00Z",
+ "UPDATED_AT_UTC": "2026-08-17T18:32:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "RC_R1_ADJUDICATED_OBS_V2_LAUNCH_EXECUTING",
- "CURRENT_TASK": "RC-R1 ADJUDICATED EV-0072 (post-crash recovery: laptop crash killed local arbiter mid-round; resumable runner completed both candidates atomically, no rule change): branch (b) fires - 0 wins/seed (s1 16D+2L cs -0.628, s2 17D+1L cs -0.601, zero faults) -> combination INSUFFICIENT at screening scale, OBSERVATION_SCOPED_NEGATIVE (OBS-V1); curriculum never advanced (S1 2W/57L, S2 0W/42L). 6 registry records + experiment verdict + run results registered (scripts/dev/register_rc_r1_arbiter_eval.py). SUCCESSOR PREDECLARED per branch (b): ONE bounded ablation round (fragment-only + curriculum-only arms). OBS-V2-R1 launch EXECUTING via var/marathon_takeover/launch_obs_v2_r1.sh (fresh A40 EV-0025; frozen budget 18,612,224/arm).",
+ "CURRENT_STAGE": "OBS_V2_R1_ROUND_EXECUTING_ON_A40",
+ "CURRENT_TASK": "OBS-V2-R1 round STARTED 18:28Z on fresh A40 ue7k91n8kadfqa (EU-SE-1, ssh 194.68.245.208:22106): arm OBS-V2-R1-S1 GPU-verified (76%, 38963 MiB), seeds 20260923/20260925, 256x128 persistent, obs-version v2, frozen budget 18,612,224/arm (568 updates), self-stop wrapper armed (marker /workspace/obs_v2_r1.done, 95-min/arm cap); launch driver defect repaired mid-flight (opt_state.npz staging omitted -> bootstrap FileNotFoundError; uploaded + bootstrap re-PASS 3 updates; driver patched). RC-R1 adjudicated EV-0072 earlier this tick. NEXT on round completion: fetch artefacts -> integrity -> serving_sanity_probe_obs_v2_r1.py -> tier-A dev ladder (diagnostic) + tier-C arbiter (128 games/candidate vs rc1_s1/rc1_s2/legal_random/heuristic_v0/heuristic_v1, promotion authority) per obs_v2_r1_plan.yaml.",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -258,7 +258,8 @@
   ],
   "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection. 2026-08-17: teacher_r2_train.py trainer again shows TWO python PIDs (41096 .venv -> 19968 system-python child, identical CreationDate, single log stream) = parent-child pair, ONE workload; both preserved, no duplicate launch",
   "COMPLETED_THIS_SESSION": [
-   "RC_R1_BRIDGE ARBITER RESUMED + ADJUDICATED EV-0072 this tick (post-crash recovery): laptop crash killed local arbiter at rc1_s1 6/9 pairs; resumable paired-eval runner relaunched unchanged, completed both candidates atomically (no rule change, no pair recompute); s1 16D+2L cs lower -0.628 mean 0.444, s2 17D+1L cs lower -0.601 mean 0.472, zero faults, NO_PROMOTION both; predeclared branch (b) fires: bridge combination INSUFFICIENT at screening scale, OBSERVATION_SCOPED_NEGATIVE (OBS-V1); curriculum never advanced (S1 2W/57L, S2 0W/42L greedy vs legal_random at 8M); 6 registry records + experiment verdict + run results via scripts/dev/register_rc_r1_arbiter_eval.py; ablation successor PREDECLARED (fragment-only + curriculum-only); OBS-V2-R1 launch executing next; CRLF-only dirty env file normalized clean",
+   "OBS_V2_R1 LAUNCHED this tick on fresh A40 ue7k91n8kadfqa (EU-SE-1, 0.44/hr, billing-logged by driver 18:06:44Z): deploy -> setup (clone fda20cb + submodule + EV-0047 venv + CUDA JAX) -> ckpt staging -> GPU bootstrap smoke; LAUNCH DEFECT REPAIRED mid-flight: driver staged raw+ema only, bootstrap FileNotFoundError on opt_state.npz -> uploaded from local capsule ckpt, bootstrap re-PASS (3 updates GPU), driver patched; round start 18:28Z arm OBS-V2-R1-S1 (seed 20260923) GPU verified 76%/38963MiB; frozen budget 18,612,224/arm; self-stop wrapper armed (marker /workspace/obs_v2_r1.done); est round end ~21:30Z",
+   "RC_R1_BRIDGE ARBITER RESUMED + ADJUDICATED EV-0072 this tick (post-crash recovery): laptop crash killed local arbiter at rc1_s1 6/9 pairs; resumable paired-eval runner relaunched unchanged, completed both candidates atomically (no rule change, no pair recompute); s1 16D+2L cs lower -0.628 mean 0.444, s2 17D+1L cs lower -0.601 mean 0.472, zero faults, NO_PROMOTION both; predeclared branch (b) fires: bridge combination INSUFFICIENT at screening scale, OBSERVATION_SCOPED_NEGATIVE (OBS-V1); curriculum never advanced (S1 2W/57L, S2 0W/42L greedy vs legal_random at 8M); 6 registry records + experiment verdict + run results via scripts/dev/register_rc_r1_arbiter_eval.py; ablation successor PREDECLARED + REGISTERED (rc_r1_ablation_r1_plan.yaml, experiment#rc-r1-ablation-r1#1045898028bb + 2 run records); CRLF-only dirty env file normalized clean",
    "STAGE6_OPPDIST_R1 PREDECLARED + REGISTERED pre-launch this tick (experiment#stage6-oppdist-r1#c0103074d017 + run#oppdist-b0-teachopp-s1#b956cd1a9bea + run#oppdist-b0-teachopp-s2#20ac28eb3eb5): last interactive hypothesis before programme-level escalation review - asymmetric rollouts vs frozen hunting teacher clone (DISTILL-S0, checkpoint#distill-s0-transformer-bc#16a8ba80e13a, stochastic temp 1.0), trained seat warm-started from MARATHON_BASELINE_V0 (matched SCALE controls isolate the opponent variable), 2 x 8M seeds, PPO_SEMANTICS UNCHANGED, implementation constraints + CPU smoke + arbiter gate + branch rules all predeclared incl. escalation-review dossier on winless",
    "STAGE6_DISTILL_PPO_R1 FULLY CLOSED this tick (EV-0068): D1 round 09:18:24-10:04:19Z both arms exit=0 self-stop zero idle burn (resume needed 2 HOST_FULL retries); learner health CLEAN (1024/1024 both, 0 unhealthy, finite, ratio 1.0; decisive ticks re-emerge: max decisive_share 0.00061/0.00024); serving probe PASS (L1 6.2/distinct 0.336, L2 deterministic); arbiter 36/36 draws zero faults both seeds (CS lower -0.5727) -> NO_PROMOTION; predeclared branch (b) fires: passive equilibrium reasserts under on-policy dynamics despite hunting expert initialization (EV-0067) - EXPERT-INITIALIZATION LANE CLOSED; 6 registry records (2 checkpoint + 2 candidate + 2 evaluation) + experiment verdict; NEXT: opponent-distribution lane (last interactive hypothesis)",
    "STAGE6_DISTILL_PPO_R1 D1 LAUNCHED this tick: resume succeeded 09:12:20Z on retry 3 (2 HOST_FULL); EV-0047+psutil venv repair + PYTHONPATH import guard + git pull 21e47ea + D0 checkpoint files verified pre-launch; round start 09:18:24Z (DISTILL-PPO-S1 first, seed 20260915, PID 1126/1127, GPU 38965 MiB); self-stop marker /workspace/distill_d1.done; serving unit prebuilt + committed (9ddc864): distill_ppo_serving_common + distill_ppo_s1|s2 EVAL_ONLY agents + pre-game probe",
@@ -326,11 +327,18 @@
  },
  "ACTIVE_REMOTE_PROCESSES": {
   "AUDIT_STATUS": "AUDITED_API_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-17T17:19:33Z",
+  "AUDITED_AT_UTC": "2026-08-17T18:32:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE: all pods EXITED/TERMINATED; RC-R1 pod terminated post-fetch (predeclared)"
+   "ue7k91n8kadfqa quantisilico_obs_v2_r1_a40: OBS-V2-R1 round executing (arm S1 GPU-verified 18:29Z; self-stop wrapper armed)"
   ],
   "OBSERVED_RESOURCES": [
+   {
+    "PROVIDER": "RunPod",
+    "RESOURCE_TYPE": "POD",
+    "RESOURCE_ID": "ue7k91n8kadfqa",
+    "NAME": "quantisilico_obs_v2_r1_a40",
+    "STATE": "RUNNING_OBS_V2_R1_ROUND (EU-SE-1; round start 18:28Z; est end ~21:30Z; pod SELF-STOPS via wrapper)"
+   },
    {
     "PROVIDER": "RunPod",
     "RESOURCE_TYPE": "POD",
@@ -374,7 +382,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) OBS-V2-R1 launch driver var/marathon_takeover/launch_obs_v2_r1.sh EXECUTING (fresh A40 per EV-0025; frozen budget 18,612,224 transitions/arm = 568 updates; self-stop wrapper) -> verify TRAINER_UP + GPU -> monitor round -> fetch artefacts -> serving_sanity_probe_obs_v2_r1.py PASS -> tier-A dev ladder (diagnostic) + tier-C arbiter (128 games/candidate, promotion authority) per obs_v2_r1_plan.yaml. (B) In parallel, register the RC-R1 branch-(b) successor: ONE bounded ablation round plan (D1-fragment-only + D2-curriculum-only arms, same warm start/regime/budget class) BEFORE launch; launch only after OBS-V2-R1 adjudication or a dependency-safe slot.",
+ "NEXT_SAFE_ACTION": "(A) Monitor OBS-V2-R1 round on ue7k91n8kadfqa (self-stop armed; next fires: watchdog + ssh round-log check, never stop active training). On completion: fetch artefacts (scp per-arm dirs) -> integrity verify (568/568 updates both arms, exit=0) -> serving_sanity_probe_obs_v2_r1.py PASS pre-game (EV-0034) -> tier-A dev ladder (diagnostic) + tier-C arbiter 128 games/candidate vs rc1_s1/rc1_s2/legal_random/heuristic_v0/heuristic_v1 (promotion authority, frozen CS, zero faults) per obs_v2_r1_plan.yaml -> adjudicate branches (a)/(b) -> registry + EV. (B) Then RC_R1_ABLATION_R1 (registered; launch after OBS-V2 adjudication). Pod self-stops; billing protected even if this host sleeps.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

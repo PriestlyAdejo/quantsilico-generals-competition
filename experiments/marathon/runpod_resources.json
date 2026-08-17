@@ -2,7 +2,7 @@
  "kind": "RUNPOD_RESOURCE_LEDGER",
  "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
  "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
- "updated_at_utc": "2026-08-17T18:07:25Z",
+ "updated_at_utc": "2026-08-17T18:22:55Z",
  "resources": [
   {
    "pod_id": "kxwtvih7ut7pj6",
@@ -199,7 +199,7 @@
   {
    "pod_id": "ue7k91n8kadfqa",
    "name": "quantisilico_obs_v2_r1_a40",
-   "status": "RUNNING_OBS_V2_R1_LAUNCH_EXECUTING_2026-08-17T18:06:54Z",
+   "status": "RUNNING_OBS_V2_R1_ROUND_STARTED_2026-08-17T18:28:00Z (arm S1 GPU verified 76%/38963MiB; ssh 194.68.245.208:22106)",
    "owner_run": "experiment#obs-v2-r1#97f257dd096e (run#obs-v2-r1-s1, run#obs-v2-r1-s2)",
    "expected_workload": "remote_obs_v2_r1_orchestrator.sh via remote_orchestrator_with_stop.sh (2 arms x 568 updates, 95-min wall cap; pod SELF-STOPS after round exit)",
    "rate_usd_per_hr": 0.44,
