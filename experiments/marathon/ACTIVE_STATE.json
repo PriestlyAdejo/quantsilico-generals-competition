@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-17T16:47:39Z",
+ "UPDATED_AT_UTC": "2026-08-17T17:19:33Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "RC_R1_ROUND_SELF_STOPPED_FETCH_BLOCKED_HOST_FULL",
- "CURRENT_TASK": "RC-R1 round: pod b6bqvrxqga9vp4 self-stopped via wrapper ~16:15-16:30Z (S2 was 197/256 healthy at 16:03Z; completion status UNVERIFIED until artefact fetch). Artefact fetch BLOCKED: resume returns HOST_FULL (not enough free GPUs on host); 10 bounded retries failed 15:55-16:45Z; persistent retry monitor armed (5-min interval); pod EXITED = no billing, artefacts safe on /workspace volume. OBS-V2 launch remains gated on RC-R1 adjudication + S2 TPS budget freeze per predeclared plan.",
+ "CURRENT_STAGE": "RC_R1_ADJUDICATION_ARBITER_EXECUTING_PLUS_OBS_V2_LAUNCH_STAGED",
+ "CURRENT_TASK": "RC-R1 round COMPLETE + PRESERVED (239f573): both arms 256/256 exit=0, zero eliminations, valid share 1.0; curriculum never advanced (S1 2W/57L, S2 0W/42L vs legal_random). HOST_FULL resume resolved on retry; artefacts fetched + integrity verified; pod TERMINATED_POST_FETCH (billing-logged). Serving probe PASS (weights matter vs fresh+baseline; distinct; deterministic well-formed actions). 36-game arbiter EXECUTING locally (~106s/pair; first pairs draws). OBS-V2: budget FROZEN 18,612,224/arm (568 updates, min TPS 3446.76); run records updated; launch driver staged (fresh A40 deploy -> setup -> ckpt -> smoke -> self-stop wrapper).",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -325,9 +325,9 @@
  },
  "ACTIVE_REMOTE_PROCESSES": {
   "AUDIT_STATUS": "AUDITED_API_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-17T16:47:39Z",
+  "AUDITED_AT_UTC": "2026-08-17T17:19:33Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE: RC-R1 pod EXITED (wrapper self-stop); resume retry monitor armed"
+   "NONE: all pods EXITED/TERMINATED; RC-R1 pod terminated post-fetch (predeclared)"
   ],
   "OBSERVED_RESOURCES": [
    {
@@ -335,7 +335,7 @@
     "RESOURCE_TYPE": "POD",
     "RESOURCE_ID": "b6bqvrxqga9vp4",
     "NAME": "quantisilico_rc_r1_bridge_a40",
-    "STATE": "EXITED_RESUME_BLOCKED_HOST_FULL (round likely complete; artefacts on volume; billing-logged RESUME_BLOCKED_HOST_FULL; retry monitor bc71x5pq1)"
+    "STATE": "TERMINATED_POST_FETCH (round complete; artefacts preserved locally 239f573)"
    },
    {
     "PROVIDER": "RunPod",
@@ -349,7 +349,7 @@
     "RESOURCE_TYPE": "POD",
     "RESOURCE_ID": "kxwtvih7ut7pj6",
     "NAME": "quantisilico_stage5_scale_r2_a40",
-    "STATE": "EXITED_RESUME_BLOCKED_HOST_FULL (keep EXITED, no billing)"
+    "STATE": "EXITED_RESUME_BLOCKED_HOST_FULL (no billing)"
    }
   ]
  },
@@ -373,7 +373,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) On resume-monitor success (bc71x5pq1): poll ssh ready -> var/marathon_takeover/fetch_rc_r1.sh (new PORT from API) -> verify S2 completion + integrity/health/curriculum -> STOP + TERMINATE pod -> billing log -> serving_sanity_probe_rc_r1.py -> var/marathon_takeover/run_rc1_arbiter.sh -> adjudicate per rc_r1_bridge_plan.yaml branches scoped OBSERVATION_SCOPED OBS-V1 -> registry + EV. If HOST_FULL persists across fires, keep EXITED (zero billing, artefacts safe) and retry per fire; do NOT abandon the volume. (B) After adjudication: freeze OBS-V2 budget from min(S1,S2) TPS -> register -> launch.",
+ "NEXT_SAFE_ACTION": "(A) On arbiter completion: adjudicate RC-R1 per rc_r1_bridge_plan.yaml branches (CS rules, zero faults, OBSERVATION_SCOPED OBS-V1) -> registry verdicts + EV entry + results registration script. (B) Immediately after adjudication recorded: var/marathon_takeover/launch_obs_v2_r1.sh (deploys fresh A40 per EV-0025; frozen budget 18,612,224/arm) -> monitor round -> fetch -> probe (serving_sanity_probe_obs_v2_r1.py) -> tier-A dev ladder (diagnostic) + tier-C arbiter (128 games/candidate, promotion authority).",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
