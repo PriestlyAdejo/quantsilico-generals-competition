@@ -2,7 +2,7 @@
  "kind": "RUNPOD_RESOURCE_LEDGER",
  "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
  "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
- "updated_at_utc": "2026-08-17T00:21:00Z",
+ "updated_at_utc": "2026-08-17T15:55:48Z",
  "resources": [
   {
    "pod_id": "kxwtvih7ut7pj6",
@@ -198,7 +198,7 @@
   }
  ],
  "active_workloads": [
-  "5p0udi7ouvs139: STAGE6_DISTILL_PPO_R1 D0 transformer distillation (self-stop wrapper)"
+  "b6bqvrxqga9vp4: RC_R1_BRIDGE launch-2 round (self-stop wrapper)"
  ],
  "pods": [
   {
@@ -211,6 +211,17 @@
    "state": "RUNNING_DISTILL_D0_ROUND_LAUNCH2 (launched 07:35:16Z after psutil repair; self-stop wrapper armed)",
    "created_at_utc": "2026-08-17T07:21:03Z",
    "updated_at_utc": "2026-08-17T07:38:31Z"
+  },
+  {
+   "id": "b6bqvrxqga9vp4",
+   "name": "quantisilico_rc_r1_bridge_a40",
+   "data_center": "EU-SE-1",
+   "machine_id": "0v8jcrexfvwq",
+   "cost_per_hr": 0.44,
+   "gpu": "NVIDIA A40",
+   "state": "RUNNING_RC_R1_BRIDGE_LAUNCH2 (fresh pod after HOST_FULL on 5p0udi7ouvs139; EV-0047 venv repair re-applied; self-stop wrapper armed; S1 complete 15:29Z, S2 executing)",
+   "created_at_utc": "2026-08-17T14:02:00Z",
+   "updated_at_utc": "2026-08-17T15:55:48Z"
   }
  ]
 }
