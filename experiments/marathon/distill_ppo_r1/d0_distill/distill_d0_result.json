@@ -1,0 +1,72 @@
+{
+ "kind": "STAGE6_DISTILL_PPO_R1_D0_RESULT",
+ "plan": "experiments/marathon/stage6_distill_ppo_r1_plan.yaml",
+ "experiment_id": "experiment#stage6-distill-ppo-r1#543924456945",
+ "model": "canonical transformer_jax (8-plane legal obs, 3970 action head)",
+ "seed": 20260915,
+ "epochs": 40,
+ "lr": 0.0003,
+ "batch_size": 64,
+ "smoke_games": 0,
+ "decisive_games": 16,
+ "splits": {
+  "train": [
+   20260901,
+   20260902,
+   20260903,
+   20260905,
+   20260906,
+   20260907,
+   20260908,
+   20260909,
+   20260911,
+   20260913,
+   20260915,
+   20260916,
+   20260917,
+   20260918
+  ],
+  "holdout_games": [
+   20260919,
+   20260920
+  ],
+  "holdout_maps": []
+ },
+ "silent_pass_excluded": 0,
+ "train_seconds": 245.7,
+ "final_loss": 0.12105920907609906,
+ "train": {
+  "top1_accuracy": 0.96596,
+  "legal_action_share": 1.0,
+  "legal_uniform_baseline": 0.038994,
+  "majority_pass_baseline": 0.053559,
+  "n": 14806,
+  "split": "train"
+ },
+ "finished_at_utc": "2026-08-17T08:39:20Z",
+ "holdout_games": {
+  "top1_accuracy": 0.333333,
+  "legal_action_share": 1.0,
+  "legal_uniform_baseline": 0.073976,
+  "majority_pass_baseline": 0.148148,
+  "n": 486,
+  "split": "holdout_games"
+ },
+ "holdout_maps": {
+  "split": "holdout_maps",
+  "n": 0,
+  "note": "EMPTY_SPLIT_no_deterministic_seeds_assigned"
+ },
+ "screening_gate": {
+  "rule": "top1 strictly above BOTH legal_uniform AND majority_pass AND legal_share 1.0 on >=1 holdout split (EV-0060-identical)",
+  "holdout_games_pass": true,
+  "holdout_maps_pass": false,
+  "smoke": false,
+  "verdict": "PASS_GATE"
+ },
+ "checkpoint": {
+  "dir": "/workspace/distill_ppo_r1/DISTILL-S0-TRANSFORMER-BC",
+  "raw_sha256": "ca6c13112b0363bf12cd5d053a971abb92327fa3b827c35d629363f13280a89f",
+  "ema_sha256": "ca6c13112b0363bf12cd5d053a971abb92327fa3b827c35d629363f13280a89f"
+ }
+}

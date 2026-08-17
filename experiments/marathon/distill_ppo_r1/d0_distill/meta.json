@@ -1,0 +1,8 @@
+{
+  "kind": "STAGE6_DISTILL_PPO_R1_D0_CHECKPOINT",
+  "source_dataset_transcript_sha256": "ed6344232c1e23d774d4f93a5e8c61f7e307945c8bbc32366cb1c1430d8cab40",
+  "teacher_r2_result": "experiments/marathon/teacher_r2/step3_bc/teacher_r2_result.json",
+  "ema_note": "EMA = BC params (no EMA during distillation, declared)",
+  "ppo_semantics": "OFF_POLICY_AUXILIARY initialization",
+  "finished_at_utc": "2026-08-17T08:39:20Z"
+}
