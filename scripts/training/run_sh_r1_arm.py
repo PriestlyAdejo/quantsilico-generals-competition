@@ -34,8 +34,13 @@ from train.competition_native_jax.ema_jax import ema_update  # noqa: E402
 from train.competition_native_jax.gae_jax import gae_advantages_batch_jit  # noqa: E402
 from train.competition_native_jax.ppo_jax import make_optimizer, ppo_update  # noqa: E402
 from train.competition_native_jax.reward_shaping_jax import set_active_shaping  # noqa: E402
+from generals_bot.competition_native_jax.obs_v2_jax import (  # noqa: E402
+    N_GLOBAL_V2,
+    N_SPATIAL_V2,
+)
 from train.competition_native_jax.rollout_selfplay_jax import (  # noqa: E402
     collect_selfplay_batch,
+    set_obs_version,
     set_opponent_mode,
 )
 from train.competition_native_jax.curriculum_eval_jax import (  # noqa: E402
@@ -150,6 +155,19 @@ def main() -> int:
         "PPO_SEMANTICS UNCHANGED for serving.",
     )
     parser.add_argument(
+        "--obs-version",
+        default="v1",
+        choices=["v1", "v2"],
+        help="OBS_V2_R1 knob (obs_v2_r1_plan.yaml): v1 = canonical 8-plane/8-global "
+        "observation (bit-identical control path). v2 = objective-aware 14-plane/"
+        "12-global observation (legal scoreboard, cell-type identity, enemy memory; "
+        "EV-0071); warm-started from the checkpoint via DECLARED shape surgery - "
+        "patch_proj 72->126 and global_proj 8->12 keep the old rows in place, new "
+        "rows deterministic (fixed seed), opt_state re-initialised, EMA re-"
+        "initialised from new params. Incompatible with --temporal-history k1 and "
+        "only predeclared with --opponent-mode self. PPO_SEMANTICS UNCHANGED.",
+    )
+    parser.add_argument(
         "--opponent-mode",
         default="self",
         choices=["self", "teacher_frozen"],
@@ -203,6 +221,22 @@ def main() -> int:
 
     set_active_shaping(args.reward_shape, args.reward_shape_beta)
     set_temporal_history_mode(args.temporal_history)
+    if args.obs_version == "v2":
+        if args.temporal_history != "off":
+            print(
+                "obs-version v2 (14 planes) is incompatible with temporal-history k1 "
+                "(which forces 16 planes)",
+                file=sys.stderr,
+            )
+            return 2
+        if args.opponent_mode != "self":
+            print(
+                "obs-version v2 is only predeclared with --opponent-mode self "
+                "(frozen opponents are v1-shaped)",
+                file=sys.stderr,
+            )
+            return 2
+    set_obs_version(args.obs_version)
     if args.opponent_mode == "teacher_frozen":
         if args.temporal_history != "off":
             print(
@@ -249,6 +283,47 @@ def main() -> int:
         params = {**base_params, "patch_proj": params_like["patch_proj"]}
         opt_state = optimizer.init(params)
         ema = jax.tree_util.tree_map(jnp.asarray, params)
+        obs_shape_surgery = None
+    elif args.obs_version == "v2":
+        # OBS_V2_R1 warm-start shape surgery (DECLARED, obs_v2_r1_plan.yaml
+        # parity_mandate_frozen): v2 planes 0-7 / globals 0-7 are order-identical
+        # to v1, so the old patch_proj rows (72) and global_proj rows (8) are
+        # kept in place; new rows are deterministic (fixed seed 0 init); opt is
+        # re-initialised and EMA re-initialised from the new params (T2 precedent).
+        params_like = init_params(
+            jax.random.PRNGKey(0),
+            spatial_planes=N_SPATIAL_V2,
+            global_dim=N_GLOBAL_V2,
+        )
+        base_like = init_params(jax.random.PRNGKey(0))
+        base_params = load_tree(args.checkpoint / "raw.npz", base_like)
+        params = {
+            **base_params,
+            "patch_proj": jnp.concatenate(
+                [
+                    base_params["patch_proj"],
+                    params_like["patch_proj"][base_params["patch_proj"].shape[0] :],
+                ],
+                axis=0,
+            ),
+            "global_proj": jnp.concatenate(
+                [
+                    base_params["global_proj"],
+                    params_like["global_proj"][base_params["global_proj"].shape[0] :],
+                ],
+                axis=0,
+            ),
+        }
+        opt_state = optimizer.init(params)
+        ema = jax.tree_util.tree_map(jnp.asarray, params)
+        obs_shape_surgery = {
+            "patch_proj": [list(base_params["patch_proj"].shape), list(params["patch_proj"].shape)],
+            "global_proj": [list(base_params["global_proj"].shape), list(params["global_proj"].shape)],
+            "old_rows_preserved": True,
+            "new_rows_seed": 0,
+            "opt_state": "fresh",
+            "ema": "fresh_from_new_params",
+        }
     elif args.schedules == "rc1":
         # RC_R1_BRIDGE: raw/EMA continue from the warm start; opt_state fresh
         # (schedule changes optimiser semantics - declared in the plan).
@@ -256,12 +331,14 @@ def main() -> int:
         params = load_tree(args.checkpoint / "raw.npz", params_like)
         ema = load_tree(args.checkpoint / "ema.npz", params_like)
         opt_state = optimizer.init(params)
+        obs_shape_surgery = None
     else:
         params_like = init_params(jax.random.PRNGKey(0))
         opt_like = optimizer.init(params_like)
         params = load_tree(args.checkpoint / "raw.npz", params_like)
         ema = load_tree(args.checkpoint / "ema.npz", params_like)
         opt_state = load_tree(args.checkpoint / "opt_state.npz", opt_like)
+        obs_shape_surgery = None
 
     per_update = args.num_envs * args.rollout_len
     n_updates = args.budget_transitions // per_update
@@ -429,6 +506,8 @@ def main() -> int:
         "reward_shape_beta": args.reward_shape_beta,
         "episode_carry": args.episode_carry,
         "temporal_history": args.temporal_history,
+        "obs_version": args.obs_version,
+        "obs_shape_surgery": obs_shape_surgery,
         "opponent_mode": args.opponent_mode,
         "opponent_checkpoint": str(args.opponent_checkpoint) if args.opponent_checkpoint else None,
         "opponent_sha256_before": opp_hash_before,

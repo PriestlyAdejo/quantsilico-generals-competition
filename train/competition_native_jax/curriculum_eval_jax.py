@@ -26,15 +26,21 @@ from generals_bot.competition_native_jax.competition_env_jax import (
     step_batch_jax,
 )
 from generals_bot.competition_native_jax.inference_jax import sample_action
+from generals_bot.competition_native_jax.obs_v2_jax import (
+    empty_memory_v2,
+    observe_batch_v2_p0,
+    observe_batch_v2_p1,
+)
 from generals_bot.competition_native_jax.transformer_jax import forward_batch
+from train.competition_native_jax.rollout_selfplay_jax import active_obs_version
 
 sample_action_batch = jax.jit(jax.vmap(sample_action, in_axes=(0, 0, 0)))
 
 
 class EvalCarry(NamedTuple):
     states: Any
-    mem0: ObsMemoryJax
-    mem1: ObsMemoryJax
+    mem0: Any  # ObsMemoryJax (v1) or ObsMemoryV2Jax (v2)
+    mem1: Any
     key: jax.Array
     params: dict
     pool: Any
@@ -48,8 +54,12 @@ def _eval_step(carry: EvalCarry, _):
     (states, mem0, mem1, key, params, pool, pool_cursor, wins, losses, decided) = carry
     key, k1 = jax.random.split(key)
 
-    sp0, gv0, mem0 = observe_batch_p0(states, mem0)
-    sp1, gv1, mem1 = observe_batch_p1(states, mem1)
+    if active_obs_version() == "v2":
+        sp0, gv0, mem0 = observe_batch_v2_p0(states, mem0)
+        sp1, gv1, mem1 = observe_batch_v2_p1(states, mem1)
+    else:
+        sp0, gv0, mem0 = observe_batch_p0(states, mem0)
+        sp1, gv1, mem1 = observe_batch_p1(states, mem1)
     m0 = legal_mask_batch_p0(states)
     m1 = legal_mask_batch_p1(states)
 
@@ -75,16 +85,9 @@ def _eval_step(carry: EvalCarry, _):
     next_states, pool_cursor = auto_reset_from_pool(
         next_states, terminated, truncated, pool, pool_cursor
     )
-    z = jnp.zeros_like(mem0.seen_own)
     done_m = done.reshape((-1,) + (1,) * (mem0.seen_own.ndim - 1))
-    mem0 = ObsMemoryJax(
-        seen_own=jnp.where(done_m, z, mem0.seen_own),
-        last_army=jnp.where(done_m, z, mem0.last_army),
-    )
-    mem1 = ObsMemoryJax(
-        seen_own=jnp.where(done_m, z, mem1.seen_own),
-        last_army=jnp.where(done_m, z, mem1.last_army),
-    )
+    mem0 = jax.tree_util.tree_map(lambda f: jnp.where(done_m, jnp.zeros_like(f), f), mem0)
+    mem1 = jax.tree_util.tree_map(lambda f: jnp.where(done_m, jnp.zeros_like(f), f), mem1)
     return (
         EvalCarry(
             next_states, mem0, mem1, key, params, pool, pool_cursor,
@@ -117,8 +120,9 @@ def greedy_win_rate_vs_random(
     init_idx = jnp.arange(num_envs, dtype=jnp.int32)
     states = jax.tree_util.tree_map(lambda x: x[init_idx], pool)
     pool_cursor = jnp.full((num_envs,), num_envs, dtype=jnp.int32)
-    mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
-    mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
+    _empty = empty_memory_v2 if active_obs_version() == "v2" else empty_memory
+    mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), _empty())
+    mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), _empty())
     carry = EvalCarry(
         states, mem0, mem1, key, params, pool, pool_cursor,
         jnp.int32(0), jnp.int32(0), jnp.zeros((num_envs,), dtype=jnp.bool_),

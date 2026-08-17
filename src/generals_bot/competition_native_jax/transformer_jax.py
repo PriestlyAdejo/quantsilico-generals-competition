@@ -28,14 +28,21 @@ def _glorot(key: jax.Array, shape: tuple[int, ...]) -> jax.Array:
     return jax.random.uniform(key, shape, minval=-lim, maxval=lim)
 
 
-def init_params(key: jax.Array, spatial_planes: int = N_SPATIAL) -> dict[str, Any]:
-    """spatial_planes: canonical 8; STAGE5 T2 (k1 history) uses 16."""
+def init_params(
+    key: jax.Array,
+    spatial_planes: int = N_SPATIAL,
+    global_dim: int = N_GLOBAL,
+) -> dict[str, Any]:
+    """spatial_planes: canonical 8; STAGE5 T2 (k1 history) uses 16; OBS-V2 14.
+
+    global_dim: canonical 8; OBS-V2 uses 12.
+    """
     keys = jax.random.split(key, 8 + 4 * N_LAYERS)
     params: dict[str, Any] = {
         "patch_proj": _glorot(keys[0], (spatial_planes * PATCH * PATCH, EMB_DIM)),
         "cls": _glorot(keys[1], (EMB_DIM,)),
         "pos": _glorot(keys[2], (NUM_PATCHES + 1, EMB_DIM)),
-        "global_proj": _glorot(keys[3], (N_GLOBAL, EMB_DIM)),
+        "global_proj": _glorot(keys[3], (global_dim, EMB_DIM)),
         "move_head": _glorot(keys[4], (EMB_DIM, PATCH * PATCH * 8)),
         "build_head": _glorot(keys[5], (EMB_DIM, PATCH * PATCH)),
         "pass_head": _glorot(keys[6], (EMB_DIM,)),

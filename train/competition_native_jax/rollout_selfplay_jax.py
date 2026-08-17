@@ -30,6 +30,13 @@ from generals_bot.competition_native_jax.competition_env_jax import (
 from generals_bot.competition_native_jax.constants import MAX_HW
 from generals_bot.competition_native_jax.inference_jax import sample_action
 from generals_bot.competition_native_jax.obs_memory import N_SPATIAL
+from generals_bot.competition_native_jax.obs_v2_jax import (
+    N_SPATIAL_V2,
+    ObsMemoryV2Jax,
+    empty_memory_v2,
+    observe_batch_v2_p0,
+    observe_batch_v2_p1,
+)
 from generals_bot.competition_native_jax.transformer_jax import forward_batch
 from train.competition_native_jax.reward_shaping_jax import active_shaping, shape_step_rewards
 from train.competition_native_jax.temporal_history_jax import active_temporal_history
@@ -55,6 +62,22 @@ def set_opponent_mode(mode: str) -> None:
 
 def active_opponent_mode() -> str:
     return _OPPONENT_STATE["mode"]
+
+
+# OBS-V2-R1 (EV-0071): observation lineage knob. "v1" = canonical 8-plane
+# path (bit-identical control). "v2" = objective-aware 14-plane + scoreboard
+# globals (obs_v2_jax); memory threading uses the extended OBS-V2 memory.
+_OBS_STATE = {"version": "v1"}
+
+
+def set_obs_version(version: str) -> None:
+    if version not in ("v1", "v2"):
+        raise ValueError(f"unknown obs version: {version}")
+    _OBS_STATE["version"] = version
+
+
+def active_obs_version() -> str:
+    return _OBS_STATE["version"]
 
 
 class RolloutCarry(NamedTuple):
@@ -94,9 +117,11 @@ def initialise_rollout_carry(
     init_idx = jnp.arange(num_envs, dtype=jnp.int32)
     states = jax.tree_util.tree_map(lambda x: x[init_idx], pool)
     pool_cursor = jnp.full((num_envs,), num_envs, dtype=jnp.int32)
-    mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
-    mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), empty_memory())
-    prev = jnp.zeros((num_envs, N_SPATIAL, MAX_HW, MAX_HW), dtype=jnp.float32)
+    _empty = empty_memory_v2 if active_obs_version() == "v2" else empty_memory
+    mem0 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), _empty())
+    mem1 = jax.tree_util.tree_map(lambda x: jnp.stack([x] * num_envs), _empty())
+    _n_prev = N_SPATIAL_V2 if active_obs_version() == "v2" else N_SPATIAL
+    prev = jnp.zeros((num_envs, _n_prev, MAX_HW, MAX_HW), dtype=jnp.float32)
     if active_opponent_mode() == "teacher_frozen" and opp_params is None:
         raise ValueError("opponent mode teacher_frozen requires opp_params at carry init")
     return RolloutCarry(states, mem0, mem1, rk, params, pool, pool_cursor, prev, prev, opp_params)
@@ -117,8 +142,12 @@ def rollout_step(carry: RolloutCarry, _):
     (states, mem0, mem1, key, params, pool, pool_cursor, prev_sp0, prev_sp1, opp_params) = carry
     key, k0, _k1 = jax.random.split(key, 3)
 
-    sp0, gv0, mem0 = observe_batch_p0(states, mem0)
-    sp1, gv1, mem1 = observe_batch_p1(states, mem1)
+    if active_obs_version() == "v2":
+        sp0, gv0, mem0 = observe_batch_v2_p0(states, mem0)
+        sp1, gv1, mem1 = observe_batch_v2_p1(states, mem1)
+    else:
+        sp0, gv0, mem0 = observe_batch_p0(states, mem0)
+        sp1, gv1, mem1 = observe_batch_p1(states, mem1)
     m0 = legal_mask_batch_p0(states)
     m1 = legal_mask_batch_p1(states)
 
@@ -173,17 +202,10 @@ def rollout_step(carry: RolloutCarry, _):
         next_states, terminated, truncated, pool, pool_cursor
     )
 
-    # Clear memory on episode boundary
-    z = jnp.zeros_like(mem0.seen_own)
+    # Clear memory on episode boundary (works for v1 and v2 memory trees).
     done_m = done.reshape((-1,) + (1,) * (mem0.seen_own.ndim - 1))
-    mem0 = ObsMemoryJax(
-        seen_own=jnp.where(done_m, z, mem0.seen_own),
-        last_army=jnp.where(done_m, z, mem0.last_army),
-    )
-    mem1 = ObsMemoryJax(
-        seen_own=jnp.where(done_m, z, mem1.seen_own),
-        last_army=jnp.where(done_m, z, mem1.last_army),
-    )
+    mem0 = jax.tree_util.tree_map(lambda f: jnp.where(done_m, jnp.zeros_like(f), f), mem0)
+    mem1 = jax.tree_util.tree_map(lambda f: jnp.where(done_m, jnp.zeros_like(f), f), mem1)
 
     # STAGE5 T2: advance history; zero the carried frame for envs that ended.
     done_sp = done.reshape((-1,) + (1,) * (sp0.ndim - 1))
@@ -242,7 +264,10 @@ def collect_selfplay_batch(
     final_carry, traj = _run_rollout_scan(carry, rollout_len=rollout_len)
     jax.block_until_ready(traj["rewards"])
     # Bootstrap value from post-scan p0 observation (device-side; no host traj rebuild)
-    sp_b, gv_b, _ = observe_batch_p0(final_carry.states, final_carry.mem0)
+    if active_obs_version() == "v2":
+        sp_b, gv_b, _ = observe_batch_v2_p0(final_carry.states, final_carry.mem0)
+    else:
+        sp_b, gv_b, _ = observe_batch_p0(final_carry.states, final_carry.mem0)
     if active_temporal_history() == "k1":
         sp_b = jnp.concatenate([sp_b, final_carry.prev_sp0], axis=1)
     out_b = forward_batch(params, sp_b, gv_b)
