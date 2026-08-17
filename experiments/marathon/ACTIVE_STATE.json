@@ -4,8 +4,8 @@
   "UPDATED_AT_UTC": "2026-08-17T09:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ROUND_EXECUTING",
-  "CURRENT_TASK": "STAGE6_OPPDIST_R1 bounded A40 round EXECUTING on pod 5p0udi7ouvs139 (started 11:08:53Z commit 6790f35, arm OPPDIST-B0-TEACHOPP-S1 training verified PID 878 + 38.9GB GPU mem, self-stop wrapper armed, marker /workspace/oppdist_r1.done; pre-launch guards all PASS: EV-0047+psutil venv repair, IMPORT_CHAIN_OK, 4 checkpoint shas match registry/manifest; est round end ~11:55Z (<50 min GPU, <$0.40). All prior gates passed: control bit-identity vs HEAD verified, teacher_frozen CPU smoke PASS (ratio 1.0 finite, opponent-hash invariant d929240c).",
+  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ROUND_EXECUTING_PLUS_CONVERGENCE_AUDIT_LANES",
+  "CURRENT_TASK": "OPPDIST-R1 round EXECUTING unchanged (started 11:08:53Z, arm S1 ~30%, healthy). ADDITIVE amendment KNOWN_WORKING_REFERENCE_AND_WORKING_BOT_CONVERGENCE_AUDIT accepted dependency-safely: (1) external reference audits (AverageJoe arXiv:2606.23348, AGI arXiv:2507.06825) running as background research agents; (2) regime-reinterpretation audit over registry/plans/ledger running; (3) local facts gathered: policy 1,834,944 params, 4-layer w192 patch transformer, 8-plane obs + fog memory, k1 history tested only, 256x32 persistent geometry, <=16M tested. OPPDIST verdict will NOT be generalized to 'self-play does not work' (amendment sec 4); compatibility gate must precede any exhaustion claim.",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -450,7 +450,7 @@
       ]
     }
   },
-  "NEXT_SAFE_ACTION": "(A) Monitor round: arm S1 then S2 (8M each ~20 min); on wrapper ROUND_COMPLETE (marker + pod self-stop), resume pod briefly for forensic fetch: round log, summaries, telemetry, raw/ema/opt npz for both arms; verify integrity (opponent_sha256_before==after per arm, valid_share, finite). (B) Learner health adjudication incl opp_win_share + decisive_share trajectories. (C) Stop pod (zero idle burn). (D) Serving candidates (scale-style transformer serving common) + sanity probe (EV-0034) -> 36-game arbiter -> adjudicate per stage6_oppdist_r1_plan.yaml branches (a)/(b incl escalation-review dossier).",
+  "NEXT_SAFE_ACTION": "(A) OPPDIST round: monitor -> fetch (var/marathon_takeover/fetch_oppdist_r1.sh) -> learner health + opponent-hash invariance -> stop pod -> serving probe -> 36-game arbiter -> adjudicate per predeclared branches (unchanged). (B) When audit agents report: assemble docs/marathon/KNOWN_WORKING_RECIPE_GAP_AUDIT_V1.md (matrix + regime-reinterpretation table with VALID_IN_RESET_REGIME etc labels; no historic rewrites) -> KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE verdict -> if MATERIAL_GAPS_REMAIN predeclare smallest corrected-regime RC successors (frozen hypotheses, controls, no blind scale). (C) REPOSITORY_CANONICALISATION_PLAN_V1 in dependency-safe gaps (no live-file mutations).",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
