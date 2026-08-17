@@ -120,6 +120,39 @@ tier_c_arbiter_predeclared:
     probe PASS pre-game (EV-0034 precedent); no post-hoc relaxation"
   mechanism: scripts/evaluation/run_marathon_paired_eval.py (local CPU)
 
+tier_c_addendum_unit_reconciliation_v1:
+  recorded_utc: "2026-08-18T00:47:00Z"
+  recorded_before_any_tier_c_pair: true
+  authority: docs/marathon/EVALUATOR_POWER_ANALYSIS_V1.yaml
+    unit_reconciliation_v1 (EV-0074)
+  finding: >-
+    The frozen CS and the n_required power table count SEAT-SWAPPED PAIRS
+    (one CS observation per pair difference), not games. The frozen tier-C
+    spec above (5 opponents x 16 pairs = 80 pairs = 160 games per
+    candidate; the '128 games' text was a unit mislabel and is internally
+    inconsistent with the 5-name opponents list) is therefore
+    UNDERPOWERED_UNDER_CORRECT_UNIT for its own declared delta >= 0.3
+    target (80 pairs < 116 pairs required).
+  disposition: >-
+    The frozen 16-pairs-per-opponent evaluation is PRESERVED as originally
+    predeclared and classified UNDERPOWERED_UNDER_CORRECT_UNIT; its games
+    are played exactly as frozen and count toward the adjudication stream.
+    No rule is changed post hoc.
+  extension_predeclared: >-
+    Each opponent is extended from 16 to 24 seat-swapped pairs per
+    candidate (pair indices 16..23; canonical_map_seed deterministic
+    namespace -> added maps disjoint; resumable store never recomputes
+    completed pairs). Total 120 pairs = 240 games per candidate >= 116
+    pairs, restoring the declared delta >= 0.3 detection target. CS rules
+    UNCHANGED: anytime-valid alpha 0.05, margin 0.01, zero faults
+    required, draws at truncation UNRESOLVED/not wins, probe PASS pre-game.
+    Adjudication reads the CS at the full 120-pair stopping time (valid:
+    anytime-valid CS + predeclared continuation, recorded before any
+    tier-C data exists).
+  driver_change: var/marathon_takeover/run_obs_v2_arbiter.sh
+    --pairs-per-opponent 16 -> 24 ONLY (same opponents, horizon, mode,
+    run dirs, CS rules)
+
 evidence_links: [EV-0071, EV-0069, KNOWN_WORKING_RECIPE_GAP_AUDIT_V1,
   KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1]
 

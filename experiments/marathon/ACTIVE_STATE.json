@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-17T21:45:00Z",
+ "UPDATED_AT_UTC": "2026-08-18T00:58:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "OBS_V2_R1_S2_RERUN_EXECUTING_EV0073_REPAIR",
- "CURRENT_TASK": "OBS-V2-R1: S1 COMPLETE 568/568 + artefacts fetched (learner health CLEAN, 42 decisive ticks). S2 round-1 TRUNCATED 562/568 by 95-min backstop (no checkpoint; telemetry preserved telemetry_truncated_ev0073.jsonl) -> EV-0073 bounded engineering repair EXECUTING: same pod ue7k91n8kadfqa resumed (port 22126), EV-0047-class venv defect repaired (dangling uv-python symlink after container recreation; setup.sh re-run, JAX 0.11.0 gpu verified), S2 RERUN LAUNCHED 21:41:30Z (identical config/seed 20260925/frozen budget 18,612,224; ONLY backstop 5700->6300s; PID 860; self-stop wrapper armed marker obs_v2_r1_s2_rerun.done; est end ~23:25Z). NEXT on completion: fetch S2 -> integrity (568/568, exit=0) -> serving_sanity_probe_obs_v2_r1.py -> tier-A dev ladder + tier-C arbiter 128 games/candidate -> adjudicate per obs_v2_r1_plan.yaml.",
+ "CURRENT_STAGE": "OBS_V2_R1_ADJUDICATION_EVALS_EXECUTING_LOCAL_CPU",
+ "CURRENT_TASK": "OBS-V2-R1: BOTH ARMS COMPLETE + FETCHED (S2 rerun EV-0073 repair executed: 568/568, actual==frozen 18,612,224, BUDGET_REACHED exit=0 self-stop; learner health CLEAN both arms; S1 42 + S2 33 decisive ticks; pod stopped post-fetch, zero idle burn). CS UNIT RECONCILIATION EV-0074: n counts seat-swapped PAIRS (proven from code + exact power-table replication); frozen tier-C (80 pairs/160 games) PRESERVED + classified UNDERPOWERED_UNDER_CORRECT_UNIT for delta>=0.3; extension 16->24 pairs/opponent PREDECLARED before any arbiter data (120 pairs=240 games>=116 required; CS rules unchanged). Serving probe PASS pre-game (L1 4.77/4.79, L2 deterministic). LOCAL CPU evals EXECUTING: tier-A dev ladder running (~45s/pair, 60 pairs total), tier-C arbiter chained after. NEXT on completion: adjudicate branches (a)/(b) per obs_v2_r1_plan.yaml (predeclared rules only, zero faults) -> registry records + EV-0075 -> then RC_R1_ABLATION_R1 launch.",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -239,6 +239,18 @@
   {
    "COMMAND": "SH-R4-FINALIST-PROMOTION-EVAL-RERUN-V2 via var/marathon_takeover/run_sh4_promotion_eval_rerun_v2.ps1 (A0 36 pairs, A1 24 pairs, fresh run dir)",
    "RESULT": "PASS_CLEAN_ADJUDICATION_NO_PROMOTION_BOTH_FINALISTS_120_OF_120_GAMES_DRAW_AT_TRUNCATION_ZERO_FAULTS_CS_LOWER_MINUS_0.006_AND_MINUS_0.121 EV-0035"
+  },
+  {
+   "COMMAND": "OBS-V2-R1 S2 rerun integrity verification (on-pod summary + telemetry inspection)",
+   "RESULT": "PASS_568_OF_568_UPDATES_ACTUAL_EQ_FROZEN_18612224_BUDGET_REACHED_EXIT_0_LEARNER_HEALTH_CLEAN_33_DECISIVE_TICKS EV-0073"
+  },
+  {
+   "COMMAND": ".venv/Scripts/python.exe CS unit replication: AnytimeBoundedCS(alpha=0.05).interval_on_difference count=18/delta=0.0 and count=128/delta=0.3",
+   "RESULT": "PASS_EXACT_POWER_TABLE_REPLICATION_NEG_0.723_AND_POS_0.024_N_COUNTS_PAIRS EV-0074"
+  },
+  {
+   "COMMAND": ".venv/Scripts/python.exe scripts/analysis/serving_sanity_probe_obs_v2_r1.py",
+   "RESULT": "PASS_L1_WEIGHTS_MATTER_4.768_4.786_CHECKPOINTS_DISTINCT_0.213_L2_WELLFORMED_DETERMINISTIC_PRE_GAME EV-0074"
   }
  ],
  "TESTS_PENDING": [
@@ -252,12 +264,16 @@
  ],
  "ACTIVE_LOCAL_PROCESSES": {
   "AUDIT_STATUS": "AUDITED",
-  "AUDITED_AT_UTC": "2026-08-17T18:20:00Z",
+  "AUDITED_AT_UTC": "2026-08-18T00:58:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE: RC-R1 arbiter completed this tick post-crash-resume; OBS-V2 launch driver executing (pod provisioning remote)"
+   "OBS-V2-R1 tier-A dev ladder detached (bash pid 1102; log var/marathon_takeover/obs_v2_logs/dev_ladder.log; ~45s/pair; DIAGNOSTIC ONLY)",
+   "OBS-V2-R1 tier-C arbiter chained waiter (bash pid 1113; starts on ladder exit; log obs_v2_logs/arbiter.log; 5 opp x 24 pairs x 2 candidates; promotion authority)"
   ],
   "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection. 2026-08-17: teacher_r2_train.py trainer again shows TWO python PIDs (41096 .venv -> 19968 system-python child, identical CreationDate, single log stream) = parent-child pair, ONE workload; both preserved, no duplicate launch",
   "COMPLETED_THIS_SESSION": [
+   "OBS_V2_R1 S2 RERUN COMPLETE + FETCHED this tick (EV-0073 repair executed): rerun on ue7k91n8kadfqa ended 23:21:54Z exit=0 self-stop zero idle burn; 568/568 updates, actual==frozen 18,612,224, BUDGET_REACHED, seed 20260925; learner health CLEAN (0 non-finite rows, ratio 1.0, entropy 2.03->5.63 rising, 33 decisive ticks); pod resumed 23:41Z for fetch (billing-logged), artefacts scp-verified, pod STOPPED post-fetch; truncated run-1 telemetry preserved alongside",
+   "CS UNIT RECONCILIATION this tick (EV-0074, operator directive): confidence-sequence n counts SEAT-SWAPPED PAIRS not games (code run_marathon_paired_eval.py:133-139 + exact power-table replication count=18/delta=0 -> -0.723); frozen tier-C 80 pairs/160 games PRESERVED + classified UNDERPOWERED_UNDER_CORRECT_UNIT (delta 0.3 needs >=116 pairs); extension 16->24 pairs/opponent PREDECLARED before any arbiter data (120 pairs=240 games; disjoint deterministic maps; resumable store; CS rules unchanged); recorded in EVALUATOR_POWER_ANALYSIS_V1 unit_reconciliation_v1 + obs_v2_r1_plan tier_c_addendum + arbiter driver",
+   "OBS_V2_R1 ADJUDICATION EVALS LAUNCHED this tick (local CPU zero spend): serving sanity probe PASS pre-game (L1 4.768/4.786 vs surgery warm start, checkpoints distinct 0.213, L2 well-formed deterministic); tier-A dev ladder detached pid 1102 (6 opp x 5 pairs, diagnostic); tier-C arbiter chained pid 1113 (5 opp x 24 pairs x 2 candidates, 1200-turn, competition mode)",
    "OBS_V2_R1 LAUNCHED this tick on fresh A40 ue7k91n8kadfqa (EU-SE-1, 0.44/hr, billing-logged by driver 18:06:44Z): deploy -> setup (clone fda20cb + submodule + EV-0047 venv + CUDA JAX) -> ckpt staging -> GPU bootstrap smoke; LAUNCH DEFECT REPAIRED mid-flight: driver staged raw+ema only, bootstrap FileNotFoundError on opt_state.npz -> uploaded from local capsule ckpt, bootstrap re-PASS (3 updates GPU), driver patched; round start 18:28Z arm OBS-V2-R1-S1 (seed 20260923) GPU verified 76%/38963MiB; frozen budget 18,612,224/arm; self-stop wrapper armed (marker /workspace/obs_v2_r1.done); est round end ~21:30Z",
    "RC_R1_BRIDGE ARBITER RESUMED + ADJUDICATED EV-0072 this tick (post-crash recovery): laptop crash killed local arbiter at rc1_s1 6/9 pairs; resumable paired-eval runner relaunched unchanged, completed both candidates atomically (no rule change, no pair recompute); s1 16D+2L cs lower -0.628 mean 0.444, s2 17D+1L cs lower -0.601 mean 0.472, zero faults, NO_PROMOTION both; predeclared branch (b) fires: bridge combination INSUFFICIENT at screening scale, OBSERVATION_SCOPED_NEGATIVE (OBS-V1); curriculum never advanced (S1 2W/57L, S2 0W/42L greedy vs legal_random at 8M); 6 registry records + experiment verdict + run results via scripts/dev/register_rc_r1_arbiter_eval.py; ablation successor PREDECLARED + REGISTERED (rc_r1_ablation_r1_plan.yaml, experiment#rc-r1-ablation-r1#1045898028bb + 2 run records); CRLF-only dirty env file normalized clean",
    "STAGE6_OPPDIST_R1 PREDECLARED + REGISTERED pre-launch this tick (experiment#stage6-oppdist-r1#c0103074d017 + run#oppdist-b0-teachopp-s1#b956cd1a9bea + run#oppdist-b0-teachopp-s2#20ac28eb3eb5): last interactive hypothesis before programme-level escalation review - asymmetric rollouts vs frozen hunting teacher clone (DISTILL-S0, checkpoint#distill-s0-transformer-bc#16a8ba80e13a, stochastic temp 1.0), trained seat warm-started from MARATHON_BASELINE_V0 (matched SCALE controls isolate the opponent variable), 2 x 8M seeds, PPO_SEMANTICS UNCHANGED, implementation constraints + CPU smoke + arbiter gate + branch rules all predeclared incl. escalation-review dossier on winless",
@@ -327,9 +343,9 @@
  },
  "ACTIVE_REMOTE_PROCESSES": {
   "AUDIT_STATUS": "AUDITED_API_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-17T18:32:00Z",
+  "AUDITED_AT_UTC": "2026-08-18T00:50:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "ue7k91n8kadfqa quantisilico_obs_v2_r1_a40: OBS-V2-R1 round executing (arm S1 GPU-verified 18:29Z; self-stop wrapper armed)"
+   "NONE: OBS-V2-R1 round complete both arms; pod stopped post-fetch; watchdog verdict NO_RUNNING_PODS 23:39Z"
   ],
   "OBSERVED_RESOURCES": [
    {
@@ -337,7 +353,7 @@
     "RESOURCE_TYPE": "POD",
     "RESOURCE_ID": "ue7k91n8kadfqa",
     "NAME": "quantisilico_obs_v2_r1_a40",
-    "STATE": "RUNNING_OBS_V2_R1_ROUND (EU-SE-1; round start 18:28Z; est end ~21:30Z; pod SELF-STOPS via wrapper)"
+    "STATE": "EXITED_POST_FETCH (S2 rerun artefacts fetched + integrity-verified 00:42Z; pod stopped; resumable for RC_R1_ABLATION_R1 or terminate per EV-0025 disposition)"
    },
    {
     "PROVIDER": "RunPod",
@@ -362,7 +378,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#rc-r1-bridge#60729d9ef92f ADJUDICATED EV-0072 (branch b, NO_PROMOTION both seeds); experiment#obs-v2-r1#97f257dd096e REGISTERED_PRE_LAUNCH -> LAUNCH_EXECUTING; RC-R1 ablation successor PREDECLARED (plan pending registration)",
+ "CURRENT_EXPERIMENT": "experiment#obs-v2-r1#97f257dd096e BOTH ARMS COMPLETE (S1 + S2 rerun EV-0073) -> adjudication evals EXECUTING local CPU (tier-A ladder + tier-C arbiter, EV-0074 unit-corrected predeclared sizes); RC_R1_ABLATION_R1 registered, launches after OBS-V2 adjudication",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -382,7 +398,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) Monitor OBS-V2-R1 round on ue7k91n8kadfqa (self-stop armed; next fires: watchdog + ssh round-log check, never stop active training). On completion: fetch artefacts (scp per-arm dirs) -> integrity verify (568/568 updates both arms, exit=0) -> serving_sanity_probe_obs_v2_r1.py PASS pre-game (EV-0034) -> tier-A dev ladder (diagnostic) + tier-C arbiter 128 games/candidate vs rc1_s1/rc1_s2/legal_random/heuristic_v0/heuristic_v1 (promotion authority, frozen CS, zero faults) per obs_v2_r1_plan.yaml -> adjudicate branches (a)/(b) -> registry + EV. (B) Then RC_R1_ABLATION_R1 (registered; launch after OBS-V2 adjudication). Pod self-stops; billing protected even if this host sleeps.",
+ "NEXT_SAFE_ACTION": "(A) OBS-V2-R1 local CPU evals EXECUTING detached (ladder pid 1102 log var/marathon_takeover/obs_v2_logs/dev_ladder.log; arbiter chained pid 1113 log obs_v2_logs/arbiter.log; resumable pair stores per run dir): next fires = check logs/progress, never kill running evals. On arbiter completion for BOTH candidates: adjudicate per obs_v2_r1_plan.yaml branches (a)/(b) with frozen CS (alpha 0.05 margin 0.01, zero faults, draws UNRESOLVED) at the predeclared 120-pair stopping time (EV-0074) -> registry records (checkpoint/candidate/evaluation + experiment verdict) -> EV-0075 -> commit. (B) Then launch RC_R1_ABLATION_R1 (registered experiment#rc-r1-ablation-r1#1045898028bb; needs fresh or resumed A40, EV-0025 fallback). No paid pods currently RUNNING (watchdog NO_RUNNING_PODS; ue7k91n8kadfqa EXITED post-fetch).",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

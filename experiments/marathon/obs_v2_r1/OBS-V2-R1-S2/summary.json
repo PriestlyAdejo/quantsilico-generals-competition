@@ -1,0 +1,290 @@
+{
+  "actual_transitions": 18612224,
+  "arm_id": "OBS-V2-R1-S2",
+  "budget_transitions": 18612224,
+  "curriculum": "competence-spawn",
+  "curriculum_evals": [
+    {
+      "advanced": false,
+      "decided": 6,
+      "draw_share_at_cap": 0.90625,
+      "games": 64,
+      "losses": 6,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 31,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 4,
+      "draw_share_at_cap": 0.9375,
+      "games": 64,
+      "losses": 4,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 63,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 6,
+      "draw_share_at_cap": 0.90625,
+      "games": 64,
+      "losses": 6,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 95,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 8,
+      "draw_share_at_cap": 0.875,
+      "games": 64,
+      "losses": 8,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 127,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 6,
+      "draw_share_at_cap": 0.90625,
+      "games": 64,
+      "losses": 6,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 159,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 6,
+      "draw_share_at_cap": 0.90625,
+      "games": 64,
+      "losses": 6,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 191,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 4,
+      "draw_share_at_cap": 0.9375,
+      "games": 64,
+      "losses": 4,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 223,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 9,
+      "draw_share_at_cap": 0.859375,
+      "games": 64,
+      "losses": 9,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 255,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 5,
+      "draw_share_at_cap": 0.921875,
+      "games": 64,
+      "losses": 5,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 287,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 6,
+      "draw_share_at_cap": 0.90625,
+      "games": 64,
+      "losses": 6,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 319,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 5,
+      "draw_share_at_cap": 0.921875,
+      "games": 64,
+      "losses": 4,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 351,
+      "win_rate_vs_decided": 0.2,
+      "wins": 1
+    },
+    {
+      "advanced": false,
+      "decided": 3,
+      "draw_share_at_cap": 0.953125,
+      "games": 64,
+      "losses": 3,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 383,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 3,
+      "draw_share_at_cap": 0.953125,
+      "games": 64,
+      "losses": 3,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 415,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 8,
+      "draw_share_at_cap": 0.875,
+      "games": 64,
+      "losses": 8,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 447,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 5,
+      "draw_share_at_cap": 0.921875,
+      "games": 64,
+      "losses": 5,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 479,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 4,
+      "draw_share_at_cap": 0.9375,
+      "games": 64,
+      "losses": 4,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 511,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    },
+    {
+      "advanced": false,
+      "decided": 3,
+      "draw_share_at_cap": 0.953125,
+      "games": 64,
+      "losses": 3,
+      "stage_after": 0,
+      "stage_before": 0,
+      "update": 543,
+      "win_rate_vs_decided": 0.0,
+      "wins": 0
+    }
+  ],
+  "curriculum_final_stage": 0,
+  "curriculum_stages": [
+    8,
+    17
+  ],
+  "eliminated": false,
+  "elimination": [],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-17T23:21:22Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 128
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 3.0517578125e-05,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 2.0318989753723145,
+    "ENTROPY_LAST": 5.629851818084717,
+    "OPP_WIN_SHARE_FIRST": 3.0517578125e-05,
+    "OPP_WIN_SHARE_LAST": 0.0,
+    "PG_FIRST": 7.373321568593383e-05,
+    "PG_LAST": -8.136862561514135e-08,
+    "RATIO_FIRST": 1.0000003576278687,
+    "RATIO_LAST": 0.9999999403953552,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3735857009887695,
+    "VLOSS_LAST": 2.3514058589935303,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.022179841995239258
+  },
+  "min_generals_distance": 17,
+  "obs_shape_surgery": {
+    "ema": "fresh_from_new_params",
+    "global_proj": [
+      [
+        8,
+        192
+      ],
+      [
+        12,
+        192
+      ]
+    ],
+    "new_rows_seed": 0,
+    "old_rows_preserved": true,
+    "opt_state": "fresh",
+    "patch_proj": [
+      [
+        72,
+        192
+      ],
+      [
+        126,
+        192
+      ]
+    ]
+  },
+  "obs_version": "v2",
+  "opponent_checkpoint": null,
+  "opponent_mode": "self",
+  "opponent_sha256_after": null,
+  "opponent_sha256_before": null,
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "schedules": "rc1",
+  "seed": 20260925,
+  "stop_reason": "BUDGET_REACHED",
+  "temporal_history": "off",
+  "throughput": {
+    "collect_tps": 33036.331380492906,
+    "collect_wall_s": 563.3865269613452,
+    "end_to_end_tps": 3221.0731775883005,
+    "reset_pool_build_s": 101.88355656899512,
+    "total_wall_s": 5860.910100373905,
+    "update_wall_s": 5214.881452015601
+  },
+  "top_advantage_fraction": 0.25,
+  "updates": 568
+}

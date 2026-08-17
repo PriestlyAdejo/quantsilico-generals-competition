@@ -77,3 +77,50 @@ consequence_for_prior_adjudications:
     wins regardless of power); the power analysis changes future protocol
     only, never historic results"
   - "OBS-V2-R1 and successors predeclare tier-C sizes from this table"
+
+unit_reconciliation_v1:
+  reconciled_utc: "2026-08-18T00:45:00Z"
+  question: "does the confidence-sequence n (and therefore this power table)
+    count GAMES or SEAT-SWAPPED PAIRS?"
+  determination: "PAIRS. The CS stream is one observation per seat-swapped
+    pair: run_marathon_paired_eval.py builds one paired difference per
+    pair_id (candidate pair_score - baseline pair_score) and calls
+    cs.interval_on_difference(count=len(differences), ...). Each pair = 2
+    games, but the statistical unit is the pair difference in [-1,1]."
+  evidence:
+    - "code: scripts/evaluation/run_marathon_paired_eval.py lines 133-139
+      (differences list is per pair_id; count = len(differences))"
+    - "replication: AnytimeBoundedCS(alpha=0.05).interval_on_difference at
+      count=18/delta=0.0 reproduces this table's n=18 row exactly (lower
+      -0.723), and count=128/delta=0.3 reproduces the n=128 row (+0.024) -
+      the table was computed with count = PAIRS"
+    - "n_required thresholds are pair counts: delta 0.30 needs >= 116 PAIRS
+      (= 232 games); delta 0.20 needs >= 289 PAIRS (= 578 games)"
+  known_mislabels_recorded:
+    - "findings bullet 1 'the 18-game (9-pair) arbiter' conflates the RC-R1
+      arbiter (9 pairs = 18 games = CS count 9) with the table's n=18 row
+      (= 18 pairs = 36 games); the qualitative point (severe underpower at
+      screening N) is unaffected and stands"
+    - "obs_v2_r1_plan.yaml tier_c games line '4 opponents x 16 seat-swapped
+      pairs = 128 games' is internally inconsistent with its own 5-name
+      opponents list and with the frozen driver (5 opponents x 16 pairs =
+      80 pairs = 160 games); the driver header comment repeats the 128-game
+      figure"
+  obs_v2_r1_impact:
+    frozen_run: "5 opponents x 16 pairs = 80 pairs = 160 games per candidate
+      (as driven by the frozen run_obs_v2_arbiter.sh)"
+    classification: "PRESERVED as the originally predeclared evaluation;
+      UNDERPOWERED_UNDER_CORRECT_UNIT for the declared delta >= 0.3 target
+      (80 pairs < 116 pairs required; CS lower at 80 pairs/delta 0.3 is
+      -0.044, cannot clear margin 0.01)"
+    remedy_predeclared_before_any_arbiter_data: >-
+      extend each opponent from 16 to 24 seat-swapped pairs per candidate
+      (pair indices 16..23; deterministic canonical_map_seed namespace, so
+      the added maps are disjoint from the frozen 16 and no completed pair
+      is recomputed; resumable store honoured). Total 120 pairs = 240 games
+      per candidate >= 116 pairs, restoring the delta >= 0.3 detection
+      target. CS rules UNCHANGED (anytime-valid alpha 0.05, margin 0.01,
+      zero faults; anytime validity makes the predeclared continuation
+      valid at the later stopping time). This is a predeclared sample-size
+      correction, NOT a post-hoc rule change: recorded before any tier-C
+      pair is played.
