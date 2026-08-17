@@ -31,7 +31,10 @@ from generals_bot.competition_native_jax.transformer_jax import init_params  # n
 from generals_bot.observation import GameContext  # noqa: E402
 from generals_bot.policies.base import ActionDecision, PolicyState  # noqa: E402
 
-CHECKPOINT_ROOT = _REPO / "experiments/marathon/screening_runs/STAGE5-SCALE-R1"
+CHECKPOINT_ROOTS = [
+    _REPO / "experiments/marathon/screening_runs/STAGE5-SCALE-R2",
+    _REPO / "experiments/marathon/screening_runs/STAGE5-SCALE-R1",
+]
 
 
 class _ScalePolicy:
@@ -54,11 +57,19 @@ class _ScalePolicy:
 
 
 def serve(arm_id: str) -> None:
-    ckpt_dir = Path(os.environ.get("SCALE_CKPT_DIR", str(CHECKPOINT_ROOT / arm_id)))
-    weights = os.environ.get("SCALE_WEIGHTS", "raw")
-    npz = ckpt_dir / f"{weights}.npz"
-    if not npz.is_file():
-        raise SystemExit(f"SCALE checkpoint not found: {npz}")
+    override = os.environ.get("SCALE_CKPT_DIR")
+    npz = None
+    if override:
+        npz = Path(override) / f"{os.environ.get('SCALE_WEIGHTS', 'raw')}.npz"
+    else:
+        weights = os.environ.get("SCALE_WEIGHTS", "raw")
+        for root in CHECKPOINT_ROOTS:
+            candidate = root / arm_id / f"{weights}.npz"
+            if candidate.is_file():
+                npz = candidate
+                break
+    if npz is None or not npz.is_file():
+        raise SystemExit(f"SCALE checkpoint not found for arm {arm_id}")
     template = init_params(jax.random.PRNGKey(0))
     params = load_jax_checkpoint(npz, template)
     run_agent(_ScalePolicy(JaxTransformerPolicy(params), f"scale_{arm_id.lower()}"),
