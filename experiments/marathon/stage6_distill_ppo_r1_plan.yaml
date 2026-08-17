@@ -1,0 +1,112 @@
+kind: MARATHON_STAGE6_ROUND_PLAN
+plan_id: STAGE6_DISTILL_PPO_R1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-17T06:50:00Z"
+stage: STAGE_6
+ppo_semantics: UNCHANGED
+authority: >-
+  Successor axis after TEACHER-R2 closure (EV-0065 predeclared branch (b)).
+  EV-0065's scientific reading: supervised imitation of a win-converting
+  teacher transfers KNOWLEDGE (screening gate passed) but not win
+  CONVERSION under the student's own on-policy dynamics - the policy
+  reverts to the passive-equilibrium draw wall. The untested question is
+  whether a policy INITIALIZED at win-converting behaviour and then
+  refined ON-POLICY can hold/adapt it. This consumes the TEACHER-R2
+  screening-passed dataset through the BC consumption gate's predeclared
+  path ("passing checkpoint eligible only as warm-start input for a
+  separately predeclared PPO-continuation sub-experiment") with one
+  declared engineering difference: the distillation target is the
+  canonical transformer (the TEACHER-R2 small CNN cannot warm-start it).
+  EXPERT-ITERATION-CLASS intervention per EXECUTION_PLAN Stage 6. No
+  launch without registration; no post-hoc rule changes.
+
+question: >-
+  Does PPO continued from a teacher-distilled initialization convert wins
+  where every fresh-initialization line (2M-16M, all reward shapes,
+  capacity, scale) drew? The passive-equilibrium hypothesis predicts the
+  draw wall reasserts once on-policy dynamics take over; the expert-init
+  hypothesis predicts hunting behaviour persists long enough to convert
+  wins against non-hunting opponents.
+
+hypothesis_class: EXPERT_INITIALIZATION_CONTINUATION_V1 (distill -> PPO
+  continuation; distillation data OFF_POLICY_AUXILIARY; continuation
+  rollouts on-policy; served candidates EVAL_ONLY)
+
+arms_predeclared:
+  - step: STEP_D0_DISTILL
+    content: >-
+      BC distillation of the TEACHER-R2 self-play dataset (16 decisive
+      games, both-seat labels, transcript sha ed6344232c1e) into the
+      canonical transformer (transformer_jax init_params, 8-plane legal
+      observation, 3970 action head, masked cross-entropy). Single arm
+      DISTILL-S1, seed 20260915, 40 epochs, adam 3e-4, batch 64,
+      game-disjoint splits IDENTICAL to TEACHER-R2 (train 14 /
+      holdout_games 20260919+20260920 / holdout_maps empty). Compute:
+      bounded RunPod A40 round (transformer BC impractical on laptop CPU),
+      self-stop wrapper, zero idle burn.
+  - step: STEP_D1_CONTINUATION
+    content: >-
+      PPO continuation from the DISTILL-S1 checkpoint (only if the D0
+      screening gate passes): canonical geometry 256 envs x 32 rollout,
+      PERSISTENT_EPISODE_REGIME_V1, identity reward (reward-shape none),
+      budget 8388608 transitions (~1024 updates), seeds 20260915 and
+      20260917 (arms DISTILL-PPO-S1/S2). Identical recipe to SCALE-R1/R2
+      8M arms except initialization.
+  matched_controls_existing: >-
+    SCALE-R1/R2 8M baseline-warm-start arms (EV-0061/EV-0063: 1 win / 90
+    games aggregate across the scale programme) serve as the matched
+    initialization control; no recompute.
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049)
+  geometry: canonical screening geometry 256 envs x 32 rollout
+  seeds: [20260915, 20260917]
+  compute: >-
+    One bounded RunPod A40 window for D0 + D1 (prepaid credits;
+    RUNPOD-SPEND-2026-08-15 policy; EV-0047 venv guard before wrapper
+    launch; self-stop wrapper; measured SCALE throughput: ~20 min per 8M
+    arm -> round est < 90 min GPU, cost < $0.80).
+  funnel: >-
+    PREDECLARE -> REGISTER -> D0 distillation -> D0 SCREENING GATE -> D1
+    continuation -> LEARNER HEALTH (valid_share, ratio, entropy
+    non-collapse, finite) -> GAMEPLAY ARBITER for all arms completing
+    integrity (telemetry diagnostic ONLY, declared upfront).
+
+screening_gate_predeclared: >-
+  D0 gate IDENTICAL to BC-A-FULL/TEACHER-R2 (EV-0060 rule): held-out top-1
+  strictly above BOTH legal-uniform AND majority-pass on >= 1 non-empty
+  holdout split; legal_action_share must be 1.0. Failure closes the round
+  as VALID NEGATIVE (distillation into the canonical architecture does not
+  carry the teacher signal) and no continuation launches.
+
+gameplay_arbiter: >-
+  Identical fixed protocol to every prior arbiter: opponents legal_random,
+  heuristic_v0, heuristic_v1; 3 seat-swapped pairs each (18 games per
+  candidate); 1200-turn horizon UNCHANGED; competition mode; serving
+  sanity probe PASS pre-game (EV-0034 precedent); reward-hack
+  surveillance (general-capture attribution on any win); zero faults
+  required. Serving: canonical 8-plane JaxTransformerPolicy from the
+  terminal continuation checkpoints.
+
+adjudication_predeclared:
+  - per-arm promotion unchanged: strength iff win rate statistically above
+    matched controls (scale-programme aggregate) AND above zero with the
+    harness CS; draws at truncation UNRESOLVED/not wins; zero faults
+    required
+  - family-level reading (recorded, drives the NEXT predeclaration, never
+    retroactively changes this round's rules): (a) wins in BOTH seeds with
+    CS above controls -> expert initialization IS a real lever; successor
+    predeclares scaled continuation (16M) + interactive teacher lane
+    (DAgger); (b) wins in 0-1 seeds -> passive equilibrium reasserts under
+    on-policy dynamics; expert-init lane CLOSED after this bounded attempt;
+    successor predeclares the opponent-distribution lane (asymmetric
+    opponent pool during rollouts, Stage-6 population class) as the last
+    interactive hypothesis before programme-level escalation review; (c)
+    learner-health failure -> bounded repair or root-cause, no rule change
+  - no post-hoc relaxation; negatives preserved
+
+parallel_lanes_unaffected:
+  - Stage 4B silent-pass measurement (EV-0048 unblocked, diagnostic)
+
+evidence_links: [EV-0034, EV-0049, EV-0053, EV-0060, EV-0061, EV-0063,
+  EV-0065]
