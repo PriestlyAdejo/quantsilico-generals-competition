@@ -1,0 +1,107 @@
+kind: REPOSITORY_CANONICALISATION_PLAN
+version: V1
+status: AUDITED_NO_DELETIONS
+audited_utc: "2026-08-17T14:20:00Z"
+scope: >-
+  Additive amendment section 13-14. Live-tree audit of training-related paths
+  and the one-canonical-rollout-path invariant. NO deletions are authorised by
+  this plan; every proposed cleanup class requires migration + tests + the
+  dependency search listed in the amendment before execution, and only in
+  dependency-safe gaps (never while a training job uses the files).
+
+live_tree_inventory:
+  train/competition_native_jax/:
+    status: CANONICAL (active Marathon training primitives)
+    contents: rollout_selfplay_jax (END_TO_END_COMPETITION_JAX_ROLLOUT - the
+      canonical fused rollout + RolloutCarry + frozen-opponent mode), ppo_jax
+      (loss + optax update), gae_jax, ema_jax, reward_shaping_jax,
+      temporal_history_jax, top_advantage_jax, curriculum_eval_jax (RC-R1
+      diagnostic), train_jax (save/load), ppo.py + train_loop.py +
+      autotune_v4_2/v4_3a + matched_benchmarks_v4_2 + profile_v4_2
+    note: ppo.py/train_loop.py/autotune/matched_benchmarks/profile are the
+      SUPERSEDED host-bound lineage (only wsl scripts, one zero-update test,
+      and train_loop itself reference them). KEEP (historical evidence
+      dependency); migrate-or-archive candidate only after the invariant guard
+      below exists.
+  scripts/training/:
+    status: CANONICAL (thin CLI/orchestration entrypoints)
+    contents: run_sh_r1_arm.py (the screening/round runner), bc_a_train_pilot,
+      bc_a_train_full, teacher_r1_train, teacher_r2_train, distill_ppo_d0_train,
+      gpu_smoke
+  src/generals_bot/competition_native_jax/:
+    status: CANONICAL (environment/model/inference primitives; includes the
+      pinned-adjacent engine bindings) - target location per amendment where
+      compatible with current code; rollout/ppo primitives remain under
+      train/competition_native_jax today and moving them is a future migration
+      task, not a correctness blocker
+  src/generals_bot/training/:
+    status: HISTORICAL_LINEAGE (torch-era learner stack, 30 modules)
+    imported_by: dashboard/backend/app/routes/api.py, tests/unit
+      (test_ppo_action_support, test_persistent_actor), phase9f-era scripts
+    note: NOT the active Marathon training path. KEEP; dashboard/test
+      dependencies must be migrated first before any archive action.
+  training/:
+    status: EMPTY_SCAFFOLD (configs/, curriculum/, opponents/, population/ all
+      empty)
+    class: DELETE_CANDIDATE after the 10-point dependency search confirms zero
+      references (currently none found); requires its own bounded commit.
+  configs/training/:
+    status: HISTORICAL (phase9e/draw_conversion pilot configs) - KEEP for
+      provenance
+  dist/:
+    status: LEGACY_MOVED (README_MOVED.md -> submission/ is canonical package
+      root; dist retains evidence/legacy_mislabelled_upload_ready/rejected/
+      research_candidates/roles/upload_ready snapshots)
+    class: KEEP (historical package manifests + submitted-package evidence are
+      protected classes per amendment section 14)
+  submission/:
+    status: CANONICAL package root (manual-upload lifecycle; fallback heuristic
+      upload records intact per amendment section 12)
+  third_party/generals-bots:
+    status: PINNED ENGINE (9e3b9d1) - never modified
+
+canonical_invariant:
+  statement: >-
+    ONE canonical rollout/episode-semantics implementation:
+    train/competition_native_jax/rollout_selfplay_jax.py (RolloutCarry,
+    per-env pool resets, episode continuity, obs/memory threading, old-logprob
+    capture, RNG advancement). Experiment runners CONFIGURE these semantics
+    (run_sh_r1_arm.py knobs: episode-carry, opponent-mode, curriculum,
+    schedules); they MUST NOT implement private copies. This invariant exists
+    because the screening runner previously bypassed RolloutCarry and
+    reintroduced reset-per-update training (EV-0048).
+  guard_status: >-
+    STATIC GUARD TEST NOT YET WRITTEN - predeclared as the next
+    dependency-safe implementation item (a tests/competition_native_jax test
+    asserting: (a) no module outside train/competition_native_jax defines a
+    scan-based self-play step over step_batch_jax (grep-style AST guard), and
+    (b) run_sh_r1_arm persistent mode threads the carry across >= 2 updates
+    with episode state continuity). To be added in a dependency-safe gap;
+    must not run against live-training files.
+
+stage6_family_classification_amendment_sec9:
+  opponent_distribution: "TESTED_AND_FAILED at screening scale (EV-0070; frozen-teacher probe winless) - family partially re-opened at population scale only via earned RC successors"
+  dagger: "STILL_OPEN (never executed)"
+  continual_expert_supervised_anchoring: "TESTED_AND_FAILED as pure imitation (EV-0060/65); continual DURING PPO not tested - STILL_OPEN variant"
+  belief_state_modelling: "BLOCKED_SCAFFOLD_ONLY - belief/ infrastructure exists but is NOT consumed by the canonical JAX learner (only legacy torch actors reference it); surfaced per amendment section 8"
+  successor_value_supervision: "STILL_OPEN (never executed)"
+  counterfactual_supervision: "STILL_OPEN (never executed)"
+  neural_reranking: "STILL_OPEN (action head is flat 3970 legal-masked; factorised/candidate-rerank variants are successor hypotheses, no evidence yet)"
+  residual_heuristic_policy: "STILL_OPEN (never executed)"
+  mpc_expert_iteration: "STILL_OPEN (expert INITIALIZATION tested and failed EV-0068; expert ITERATION loop never executed)"
+  castle_specific_counterfactuals: "STILL_OPEN"
+  safety_masks: "STILL_OPEN (legal mask is environment semantics, not a strategic intervention)"
+  strategic_control_risk_governors: "STILL_OPEN"
+  ranking_directive: >-
+    Given the binding evidence (terminal signal/reachability under the current
+    recipe; gate MATERIAL_GAPS_REMAIN), the RC ladder (curriculum + horizon +
+    schedules + advantage filtering coherent combination) outranks all listed
+    Stage-6 families; DAgger/expert-iteration rank next if RC-R1 shows a
+    learning signal; PID-style control experiments rank lowest until terminal
+    exposure improves.
+
+action_sequence_dependency_safe:
+  - "write the canonical-rollout static guard test (no live-file mutation)"
+  - "training/ empty-scaffold deletion ONLY after the guard test lands and the 10-point dependency search is recorded (separate bounded commit)"
+  - "legacy v4_2 + torch-stack archive decisions deferred: require dashboard/test migration first"
+  - "no deletion of evidence ledger, registry, plans, results, failed-experiment artefacts, package manifests, or submitted packages at any point"

@@ -1,0 +1,41 @@
+kind: UPLOADABLE_CANDIDATE_LIFECYCLE
+version: V1
+status: ACTIVE_CONTRACT
+recorded_utc: "2026-08-17T14:30:00Z"
+authority: additive amendment sections 11-12; programme completion guarantee
+
+lifecycle_states:
+  - TRAINED
+  - EVALUATED
+  - CHALLENGER
+  - "promotion/qualification gate (gameplay arbiter is promotion authority; CS above matched controls + zero faults)"
+  - CHAMPION (only where canonically justified)
+  - PACKAGED
+  - "Linux parity"
+  - UPLOAD_READY
+
+packaging_rules:
+  - "submission/ is the ONLY canonical package root; no competing packages under dist/"
+  - "architecture reconstructed from versioned config; checkpoint hash frozen; source/checkpoint parity validated"
+  - "official CPU inference measured: p50/p95/p99 latency, peak RAM"
+  - "100% legal actions verified; zero protocol faults; offline/no-network runtime verified"
+  - "ZIP/file-count/unpacked-size constraints enforced; Windows package validation + Linux parity"
+  - "unique versioned ZIP + package manifest + SHA-256 record + validation report + role pointer update + outbox entry + manual upload instructions + blank upload record"
+
+hard_boundaries:
+  - "NEVER automatic portal upload; stops at UPLOAD_READY with operator package (recommended ZIP, SHA-256, lineage, qualification evidence, alternatives)"
+  - "currently submitted heuristic package preserved until the operator manually replaces it"
+
+population_vs_submission_separation_amendment_sec11:
+  internal_population: "Stage-7 training/evaluation construct: versioned manifest, immutable member hashes, payoff matrix, PFSP/broad-opponent sampling ONLY after a measured fixed mixture earns it; failed scientific candidates may enter as OPPONENTS, never as champions"
+  upload_generation: "separate system, fires only after promotion/qualification gate passes"
+
+final_deliverable_guarantee_amendment_sec12:
+  option_A_learned_success: "qualified learned/hybrid/student candidate with UPLOAD_READY + complete evidence"
+  option_B_learned_research_failure: "NO manufactured champion: preserve + re-verify the strongest qualified heuristic package, report exactly why learned promotion failed, retain all research artefacts for a successor programme"
+  prohibition: "the Marathon may not end with ambiguous 'research complete' without naming the exact uploadable bot"
+
+current_pointer_state:
+  submitted_package: "heuristic lineage (submission/ upload records; MANUAL_UPLOAD.md et al. intact)"
+  learned_candidates_qualified: []
+  rc_ladder_status: "RC_R1_BRIDGE executing; no learned candidate exists yet"

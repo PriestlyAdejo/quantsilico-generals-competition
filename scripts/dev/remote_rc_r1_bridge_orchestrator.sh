@@ -30,15 +30,16 @@ for required in "$BASELINE/raw.npz" "$BASELINE/ema.npz"; do
     exit 3
   fi
 done
-echo "=== arm table (predeclared): 2 x 8M seeds {20260919 20260921}, 256x128, persistent, reward none, warm-start MARATHON_BASELINE_V0, topadv 0.25, curriculum competence-spawn [8,17], schedules rc1 (fresh opt_state)" >> "$ROUND_LOG"
+echo "=== arm table (predeclared): 2 x 8M seeds {20260919 20260921}, 256x128, persistent, reward none, warm-start MARATHON_BASELINE_V0, topadv 0.25, curriculum competence-spawn [8,17], schedules rc1 (fresh opt_state), accumulate-minibatches 8 (OOM repair, single-step semantics)" >> "$ROUND_LOG"
 
+failed=0
 for spec in \
   "RC-R1-BRIDGE-S1 20260919 8388608" \
   "RC-R1-BRIDGE-S2 20260921 8388608"
 do
   set -- $spec
   arm=$1; seed=$2; budget=$3
-  echo "=== ${arm} (256x128 seed=${seed} carry=persistent budget=${budget} topadv=0.25 curriculum=competence-spawn schedules=rc1) start $(stamp)" >> "$ROUND_LOG"
+  echo "=== ${arm} (256x128 seed=${seed} carry=persistent budget=${budget} topadv=0.25 curriculum=competence-spawn schedules=rc1 accumulate=8) start $(stamp)" >> "$ROUND_LOG"
   timeout 3600 "$PY" scripts/training/run_sh_r1_arm.py \
     --arm-id "$arm" \
     --num-envs 256 \
@@ -51,6 +52,7 @@ do
     --top-advantage-fraction 0.25 \
     --curriculum competence-spawn \
     --schedules rc1 \
+    --accumulate-minibatches 8 \
     --out-dir "$OUT_ROOT/$arm" >> "$ROUND_LOG" 2>&1
   code=$?
   if [ "$code" -eq 124 ]; then
@@ -58,6 +60,10 @@ do
   else
     echo "=== ${arm} exit=${code} $(stamp)" >> "$ROUND_LOG"
   fi
+  if [ "$code" -ne 0 ]; then
+    failed=1
+  fi
 done
 
 echo "=== RC-R1 BRIDGE round end $(stamp)" >> "$ROUND_LOG"
+exit $failed

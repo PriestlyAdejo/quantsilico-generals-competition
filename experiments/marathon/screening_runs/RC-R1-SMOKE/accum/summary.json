@@ -1,0 +1,57 @@
+{
+  "actual_transitions": 256,
+  "arm_id": "RC1-SMOKE-ACCUM",
+  "budget_transitions": 512,
+  "curriculum": "none",
+  "curriculum_evals": [],
+  "curriculum_final_stage": null,
+  "curriculum_stages": null,
+  "eliminated": true,
+  "elimination": [
+    "NO_VLOSS_REDUCTION"
+  ],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-17T14:37:52Z",
+  "geometry": {
+    "num_envs": 16,
+    "rollout_len": 8
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 0.7328583598136902,
+    "ENTROPY_LAST": 1.5250517129898071,
+    "OPP_WIN_SHARE_FIRST": 0.0,
+    "OPP_WIN_SHARE_LAST": 0.0,
+    "PG_FIRST": -0.0002925977751147002,
+    "PG_LAST": -0.00026837026234716177,
+    "RATIO_FIRST": 1.0,
+    "RATIO_LAST": 0.9999999403953552,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3580446243286133,
+    "VLOSS_LAST": 2.4001212120056152,
+    "VLOSS_REDUCTION_OVER_ROUND": -0.04207658767700195
+  },
+  "min_generals_distance": 17,
+  "opponent_checkpoint": null,
+  "opponent_mode": "self",
+  "opponent_sha256_after": null,
+  "opponent_sha256_before": null,
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "schedules": "rc1",
+  "seed": 20260919,
+  "stop_reason": "BUDGET_REACHED",
+  "temporal_history": "off",
+  "throughput": {
+    "collect_tps": 6.308121966999766,
+    "collect_wall_s": 40.58260149997659,
+    "end_to_end_tps": 2.974896491673405,
+    "reset_pool_build_s": 221.42261790001066,
+    "total_wall_s": 89.97176839999156,
+    "update_wall_s": 45.47081269999035
+  },
+  "top_advantage_fraction": 0.25,
+  "updates": 2
+}

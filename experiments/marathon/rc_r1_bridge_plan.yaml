@@ -103,3 +103,21 @@ adjudication_predeclared:
 evidence_links: [EV-0049, EV-0061, EV-0063, EV-0068,
   KNOWN_WORKING_RECIPE_GAP_AUDIT_V1, KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1,
   "AverageJoe pin 25163875a3354a913fcee2139c1c4294e59335f7"]
+
+engineering_repair_note_launch_1:
+  incident: >-
+    Launch 1 (pod b6bqvrxqga9vp4, 14:08:12Z) OOM'd on the first PPO update of
+    both arms: the 128-fragment batch is 32,768 transitions and the vmap
+    full-batch forward exceeded A40 VRAM (RESOURCE_EXHAUSTED, 441MiB alloc
+    failure). Wrapper self-stopped correctly (zero idle burn). OOM is an
+    infrastructure defect, NOT a scientific negative (amendment sec 18/31).
+  repair: >-
+    Bounded repair: --accumulate-minibatches 8 (ppo_update canonical
+    accumulation path: mean gradients over 8 static shards via lax.scan, then
+    EXACTLY ONE optimiser step; parameters unchanged between shards). The
+    single-step mean-gradient update semantics are unchanged - only float
+    summation order differs vs a hypothetical full-batch grad. All four
+    frozen scientific deltas and the adjudication rules are UNTOUCHED.
+  orchestrator_fix: arm failures now propagate to a nonzero round exit code.
+  prelaunch_verification: local CPU smoke of the accumulate path required
+    before relaunch (2 updates, ratio ~1.0, finite).

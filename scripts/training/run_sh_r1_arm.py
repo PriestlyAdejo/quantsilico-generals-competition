@@ -189,6 +189,16 @@ def main() -> int:
         "the stage and regenerates the reset pool. none = fixed min_generals_distance "
         "(control path). PPO_SEMANTICS UNCHANGED for serving.",
     )
+    parser.add_argument(
+        "--accumulate-minibatches",
+        type=int,
+        default=None,
+        help="ENGINEERING MEMORY KNOB (RC-R1 OOM repair): accumulate mean gradients "
+        "over this many static shards with lax.scan, then apply exactly ONE optimiser "
+        "step (ppo_update canonical semantics; parameters unchanged between shards). "
+        "None = single full-batch grad (control path). No scientific-semantics change: "
+        "same single-step mean-gradient update, different float-summation order.",
+    )
     args = parser.parse_args()
 
     set_active_shaping(args.reward_shape, args.reward_shape_beta)
@@ -328,7 +338,8 @@ def main() -> int:
             else:
                 ent_t = 0.01
             params, opt_state, metrics = ppo_update(
-                params, opt_state, optimizer, flat, ent_coef=ent_t
+                params, opt_state, optimizer, flat, ent_coef=ent_t,
+                accumulate_minibatches=args.accumulate_minibatches,
             )
             jax.block_until_ready(jax.tree_util.tree_leaves(params))
             update_wall += time.perf_counter() - update_started
