@@ -77,7 +77,9 @@ def logits_for(params: dict) -> np.ndarray:
 
 def one_action(main_py: Path) -> str | None:
     env = dict(os.environ)
-    env["PYTHONPATH"] = f"{REPO}{os.pathsep}{REPO / 'src'}"
+    env["PYTHONPATH"] = (
+        f"{REPO}{os.pathsep}{REPO / 'src'}{os.pathsep}{REPO / 'third_party' / 'generals-bots'}"
+    )
     proc = subprocess.Popen(
         [sys.executable, "-u", str(main_py)],
         stdin=subprocess.PIPE,
