@@ -1,0 +1,112 @@
+kind: MARATHON_STAGE5_ROUND_PLAN
+plan_id: STAGE5_TEACHER_R2
+status: PREDECLARED
+predeclared_at_utc: "2026-08-17T05:27:00Z"
+stage: STAGE_5
+ppo_semantics: UNCHANGED
+authority: >-
+  TEACHER-R1 successor per its own predeclared fallback (EV-0064): the
+  hunter-vs-hunter SELF-PLAY trajectory lane. R1 showed the pinned-engine
+  HunterAgent win-converts vs passive opponents (EV-0053) but is only
+  15/20 vs the expanding heuristic_v0 - the teacher must therefore be
+  evaluated in a regime where win-conversion is exercised against an
+  equally win-converting opponent. Self-play of the same teacher policy
+  produces exactly that: both seats hunt the opposing general, and every
+  decisive game is a genuine win-conversion trajectory. MPC/expert-lane
+  invariant honoured (EXECUTION_PLAN 12): data-generation lane only, no
+  policy integration. No launch without registration; no post-hoc rule
+  changes.
+
+question: >-
+  Can imitation of win-converting teacher trajectories from
+  hunter-vs-hunter self-play transfer win conversion to the competition
+  policy? R1 (EV-0064) ruled out distilling a teacher that loses to the
+  baseline-class heuristic; this round tests the self-consistent teacher
+  distribution instead.
+
+hypothesis_class: TEACHER_DATA_GENERATION_LANE_V2 (BC distillation from
+  synthetic teacher SELF-PLAY trajectories; OFF_POLICY_AUXILIARY data, never
+  enters on-policy PPO; produced checkpoint is a fresh EVAL_ONLY candidate)
+
+arms_predeclared:
+  - step: STEP1_SELPLAY_GENERATION
+    content: >-
+      pinned-engine HunterAgent vs HunterAgent (same policy both seats) via
+      the TEACHER-R1 recorded-transcript generator (mirrors match.py;
+      deterministic-replay verification mandatory), 20 games, fixed
+      predeclared map seeds 20260901..20260920 (same range as R1 for
+      comparability), 1200-turn cap, competition rules. GATE (hard,
+      predeclared): >= 16/20 games DECISIVE (a winner within the horizon,
+      not draw-at-truncation) with zero engine faults and all transcripts
+      replay-verified. If the gate fails (mirror self-play mostly draws),
+      the round closes as SELF_PLAY_TEACHER_DRAW_WALL and the next
+      predeclaration is the EXECUTION_PLAN Stage-5 critic-axis pivot
+      (T3 HL-Gauss / value-structure) - the only untested Stage-5 axis.
+  - step: STEP2_LABEL_EXTRACTION
+    content: >-
+      BOTH seats labelled (the teacher is the identical policy in both
+      seats; each seat's fog-of-war legal POV is tracked separately through
+      the canonical legal observation path); only decisive games contribute
+      labels, WINNER seat + LOSER seat both kept (loser trajectories carry
+      defensive signal; predeclared, not a post-hoc choice); silent-pass
+      labels excluded (action outside legal_mask_one_jax); provenance seal
+      with pinned-engine SHA.
+  - step: STEP3_BC_TRAINING
+    content: >-
+      single arm TEACHER-R2-BC-S1: canonical legal-observation BC recipe
+      identical to TEACHER-R1/BC-A (scripts/training/bc_a_train_pilot.py
+      small CNN, 40 epochs, adam 3e-3, batch 64), seed 20260915. Dataset
+      split by game (game-disjoint): train 14 / holdout_games 3 /
+      holdout_maps 3, same deterministic seed assignment as R1.
+  matched_controls_existing: >-
+    MARATHON_BASELINE_V0 arbiter results (EV-0019/0054), BC-A-FULL
+    screening verdict (EV-0060), and TEACHER-R1 gate outcome (EV-0064)
+    serve as matched comparisons; no recompute.
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049) - applies to
+    any screening context; this round is offline BC (no RL rollouts)
+  compute: LOCAL CPU ONLY - zero RunPod spend predeclared for this round
+  funnel: >-
+    PREDECLARE -> REGISTER -> STEP1 self-play generation + hard
+    decisive-game gate -> STEP2 provenance-sealed both-seat labels ->
+    STEP3 BC training -> SCREENING GATE -> GAMEPLAY ARBITER (only if the
+    screening gate passes).
+
+screening_gate_predeclared: >-
+  Identical rule to BC-A-FULL (EV-0060) and TEACHER-R1: held-out top-1
+  accuracy must be STRICTLY ABOVE BOTH the legal-uniform baseline AND the
+  majority-pass baseline on >= 1 holdout split. No post-hoc relaxation.
+  Failure closes the round as VALID NEGATIVE and the checkpoint never
+  enters the arbiter.
+
+gameplay_arbiter: >-
+  Only if the screening gate passes. Identical fixed protocol to every
+  prior arbiter: opponents legal_random, heuristic_v0, heuristic_v1; 3
+  seat-swapped pairs each (18 games); 1200-turn horizon UNCHANGED;
+  competition mode; serving sanity probe PASS pre-game (EV-0034
+  precedent); reward-hack surveillance; zero faults required. Serving
+  adapter: canonical BC-checkpoint protocol agent (EVAL_ONLY).
+
+adjudication_predeclared:
+  - promotion unchanged: arbiter wins statistically above matched controls
+    AND above zero under the harness anytime-valid CS; draws at truncation
+    UNRESOLVED/not wins; zero faults required
+  - family-level reading (recorded, drives the NEXT predeclaration, never
+    retroactively changes this round's rules): (a) screening gate passes
+    AND arbiter records >= 1 decisive win with CS above controls ->
+    teacher self-play distillation is a REAL lever; successor scales
+    teacher data + predeclares DAgger-style interactive lane (Stage 6);
+    (b) screening gate passes but arbiter winless -> imitation transfers
+    knowledge but not win conversion; teacher-data lane CLOSED after this
+    bounded successor and programme pivots to T3 critic-axis (value
+    structure); (c) screening gate fails -> teacher imitation lane CLOSED;
+    same T3 pivot; (d) STEP1 gate fails (mirror self-play draws) ->
+    SELF_PLAY_TEACHER_DRAW_WALL recorded; same T3 pivot
+  - no post-hoc relaxation; negatives preserved
+
+parallel_lanes_unaffected:
+  - Stage 4B silent-pass measurement (EV-0048 unblocked, diagnostic)
+
+evidence_links: [EV-0034, EV-0042, EV-0045, EV-0049, EV-0053, EV-0054,
+  EV-0060, EV-0063, EV-0064]

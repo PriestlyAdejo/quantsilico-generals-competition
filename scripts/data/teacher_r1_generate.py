@@ -36,7 +36,10 @@ OPPONENT = REPO / "baselines/heuristic_v0/main.py"
 OUT_ROOT = REPO / "experiments/marathon/teacher_r1/step1_generation"
 
 
-def play_recorded(seed: int, max_turns: int = 1200) -> dict:
+def play_recorded(seed: int, agent0: Path | None = None, agent1: Path | None = None,
+                  max_turns: int = 1200) -> dict:
+    agent0 = agent0 or HUNTER
+    agent1 = agent1 or OPPONENT
     protocol = _load_engine_protocol()
     decode_action = protocol.decode_action
     encode_handshake = protocol.encode_handshake
@@ -70,8 +73,8 @@ def play_recorded(seed: int, max_turns: int = 1200) -> dict:
         proc.stdin.flush()
         return proc
 
-    p0 = spawn(HUNTER, 0)
-    p1 = spawn(OPPONENT, 1)
+    p0 = spawn(agent0, 0)
+    p1 = spawn(agent1, 1)
     faults = [0, 0]
     crashed = [False, False]
     stderr_tails = ["", ""]
