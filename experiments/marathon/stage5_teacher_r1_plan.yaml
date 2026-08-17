@@ -1,0 +1,115 @@
+kind: MARATHON_STAGE5_ROUND_PLAN
+plan_id: STAGE5_TEACHER_R1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-17T05:15:00Z"
+stage: STAGE_5
+ppo_semantics: UNCHANGED
+authority: >-
+  Successor axis after SCALE AXIS closure (EV-0063 predeclared branch (b):
+  "programme advances to objective/value-structure interventions (Stage-6
+  class with declared semantics)"). First bounded intervention in that
+  class: a teacher data-generation lane using the pinned-engine HunterAgent
+  - the ONLY demonstrated win-converting behaviour in-repo (EV-0053: 4/4
+  wins by general capture, zero faults). EXECUTION_PLAN section 12
+  invariant honoured: MPC/expert lanes BEGIN as data-generation lanes
+  before any policy integration. No launch without registration; no
+  post-hoc rule changes.
+
+question: >-
+  Can imitation of a teacher that demonstrably converts wins (general
+  targeting) transfer win-conversion behaviour to the competition policy,
+  where elite-replay imitation (EV-0060) and every RL screening axis to
+  date (EV-0035/0038/0039/0043/0054/0058/0061/0063) could not? The draw
+  wall is a win-conversion deficit (EV-0053 scientific reading); this
+  round tests whether the deficit is an imitation-data problem or a
+  policy-learning problem.
+
+hypothesis_class: TEACHER_DATA_GENERATION_LANE_V1 (BC distillation from
+  synthetic teacher trajectories; OFF_POLICY_AUXILIARY data, never enters
+  on-policy PPO; produced checkpoint is a fresh EVAL_ONLY candidate)
+
+arms_predeclared:
+  - step: STEP1_TEACHER_GAME_GENERATION
+    content: >-
+      pinned-engine HunterAgent (baselines/official_hunter, EV-0053
+      fixture) vs heuristic_v0 via the pinned-engine match runner
+      (src/generals_bot/evaluation/match.py), 20 games, fixed predeclared
+      map seeds 20260901..20260920, 1200-turn cap, competition rules.
+      GATE (hard, predeclared): hunter must WIN >= 16/20 games with zero
+      engine faults BEFORE any labels are extracted. If the gate fails
+      (hunter cannot beat an expanding opponent), the round closes as
+      TEACHER_INAPPLICABLE vs active opponents and the next predeclaration
+      is hunter-vs-hunter self-play trajectories instead.
+  - step: STEP2_LABEL_EXTRACTION
+    content: >-
+      teacher-side (hunter POV) actions only; engine-verified action
+      derivation per EV-0045 (OWNERS_ONLY-verified pairs); HARD fog-of-war
+      legal-POV gate per ELITE_REPLAY_AUGMENTATION charter
+      (scripts/data/replay_legal_pov.py semantics); silent-pass actions
+      excluded; provenance-sealed dataset with pinned-engine SHA
+      (EV-0042 standing rules).
+  - step: STEP3_BC_TRAINING
+    content: >-
+      single arm TEACHER-BC-S1: canonical legal-observation BC recipe from
+      BC-A-FULL (scripts/training/bc_a_train_full.py family; small CNN,
+      CPU), seed 20260915. Dataset split by game (game-disjoint,
+      anti-overfit): train 70%, holdout-games 15%, holdout-maps 15%.
+      Control comparison reuses existing BC-A-FULL evidence (EV-0060) -
+      no recompute.
+  matched_controls_existing: >-
+    MARATHON_BASELINE_V0 arbiter results (EV-0019/0054) and BC-A-FULL
+    screening verdict (EV-0060) serve as matched comparisons; no recompute.
+
+protocol:
+  regime: PERSISTENT_EPISODE_REGIME_V1 (canonical, EV-0049) - applies to
+    any screening context; this round is offline BC (no RL rollouts)
+  compute: >-
+    LOCAL CPU ONLY - zero RunPod spend predeclared for this round
+    (generation ~20 pinned-engine games, BC training matches the
+    BC-A-FULL CPU recipe, arbiter matches prior local CPU runtimes).
+  funnel: >-
+    PREDECLARE -> REGISTER -> STEP1 generation + hard win-rate gate ->
+    STEP2 provenance-sealed labels -> STEP3 BC training -> SCREENING GATE
+    -> GAMEPLAY ARBITER (only if screening gate passes).
+
+screening_gate_predeclared: >-
+  Identical rule to BC-A-FULL (EV-0060): held-out top-1 accuracy must be
+  STRICTLY ABOVE BOTH the legal-uniform baseline AND the majority-pass
+  baseline on >= 1 holdout split. No post-hoc relaxation. Failure closes
+  the round as VALID NEGATIVE (teacher signal does not survive
+  generalisation) and the checkpoint never enters the arbiter.
+
+gameplay_arbiter: >-
+  Only if the screening gate passes. Identical fixed protocol to every
+  prior arbiter: opponents legal_random, heuristic_v0, heuristic_v1; 3
+  seat-swapped pairs each (18 games); 1200-turn horizon UNCHANGED;
+  competition mode; serving sanity probe PASS pre-game (EV-0034
+  precedent); reward-hack surveillance; zero faults required. Serving
+  adapter: canonical BC-checkpoint protocol agent (EVAL_ONLY), built
+  under the baselines/ serving convention.
+
+adjudication_predeclared:
+  - promotion unchanged: arbiter wins statistically above matched controls
+    AND above zero under the harness anytime-valid CS; draws at truncation
+    UNRESOLVED/not wins; zero faults required
+  - family-level reading (recorded, drives the NEXT predeclaration, never
+    retroactively changes this round's rules): (a) screening gate passes
+    AND arbiter records >= 1 decisive win with CS above controls ->
+    teacher-data lane is a REAL lever; successor predeclares scaled
+    teacher data + DAgger-style interactive teacher lane (Stage 6); (b)
+    screening gate passes but arbiter winless -> imitation transfers
+    knowledge but not win conversion; successor predeclares teacher
+    interactive-training integration (DAgger/Expert Iteration with
+    declared PPO_SEMANTICS); (c) screening gate fails -> teacher
+    imitation at this data scale is a valid negative; successor
+    predeclares scaled/diverse teacher generation or pivots to
+    value-structure (critic-axis T3 HL-Gauss, untested)
+  - no post-hoc relaxation; negatives preserved
+
+parallel_lanes_unaffected:
+  - Stage 4B silent-pass measurement (EV-0048 unblocked, diagnostic)
+  - BC dataset V02 union (consumed only by future BC rounds; this round
+    uses synthetic teacher data exclusively)
+
+evidence_links: [EV-0034, EV-0042, EV-0045, EV-0049, EV-0053, EV-0054,
+  EV-0060, EV-0063]
