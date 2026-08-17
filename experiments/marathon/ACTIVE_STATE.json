@@ -4,8 +4,8 @@
   "UPDATED_AT_UTC": "2026-08-17T09:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ROUND_COMPLETE_LEARNER_HEALTH_PASS_ARBITER_PENDING",
-  "CURRENT_TASK": "OPPDIST-R1 arbiter EXECUTING (36 games: oppdist_s1/s2 vs legal_random/heuristic_v0/heuristic_v1, 3 seat-swapped pairs, 1200-turn horizon, competition mode; venv python per EV-0066 psutil requirement; probe PASS preceded). Round evidence committed (d9adab7): learner health PASS both arms; diagnostic: decisive ticks re-emerge but nearly all teacher-opponent wins. RC-R1: knobs + orchestrator ready; schedules smoke PASS; curriculum smoke deferred until arbiter completes (CPU contention). Pod 5p0udi7ouvs139 EXITED zero burn.",
+  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ADJUDICATED_RC_R1_BRIDGE_LAUNCHING",
+  "CURRENT_TASK": "STAGE6_OPPDIST_R1 ADJUDICATED (EV-0070): branch (b) fires - both arms winless (s1 16D+2L, s2 18D, zero faults, CS -0.628/-0.573) -> programme-level escalation review RECORDED (docs/marathon/PROGRAMME_ESCALATION_REVIEW_V1.yaml, gate-informed recipe-scoped). Registry: 2 checkpoint + 2 candidate + 2 evaluation records + experiment verdict. NEXT per escalation review ranked options: RC_R1_BRIDGE launching on 5p0udi7ouvs139 (venv repair + pull + guards + self-stop wrapper).",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -430,7 +430,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#stage6-oppdist-r1#c0103074d017 EXECUTING; experiment#rc-r1-bridge#60729d9ef92f REGISTERED_PRE_LAUNCH",
+  "CURRENT_EXPERIMENT": "experiment#stage6-oppdist-r1#c0103074d017 ADJUDICATED NO_PROMOTION (EV-0070); experiment#rc-r1-bridge#60729d9ef92f LAUNCHING",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -450,7 +450,7 @@
       ]
     }
   },
-  "NEXT_SAFE_ACTION": "(A) Arbiter completes -> adjudicate per stage6_oppdist_r1_plan.yaml branches: (a) wins both seeds above controls -> opponent-pool successor; (b) winless -> escalation-review dossier NOW INFORMED BY EV-0069 gate (recipe-scoped interpretation; RC-R1 bridge is the predeclared high-value successor already registered). Register checkpoint/candidate/evaluation records + EV entry. (B) RC-R1: CPU curriculum smoke (small envs/horizon eval-scan trace check) -> bounded A40 round via remote_rc_r1_bridge_orchestrator.sh -> arbiter. (C) Dependency-safe gaps: canonicalisation plan, Stage-6 family classification.",
+  "NEXT_SAFE_ACTION": "(A) Launch RC-R1 bridge round: resume pod -> venv repair -> git pull -> import-chain guard -> checkpoint verify -> self-stop wrapper with remote_rc_r1_bridge_orchestrator.sh (2 x 8M seeds 20260919/20260921, 256x128, topadv 0.25, competence curriculum, rc1 schedules; est <70 min GPU <$0.55). (B) On completion: fetch -> integrity + learner health + curriculum telemetry (stage transitions, greedy-vs-random win rates) -> stop pod -> serving probe -> 36-game arbiter -> adjudicate per rc_r1_bridge_plan.yaml branches (a) bridge works -> attribution ablations + RC-R2 predeclare + earned budget escalation / (b) winless -> ONE bounded ablation round predeclared. (C) Dependency-safe gaps: canonicalisation plan, Stage-6 family classification, population design.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

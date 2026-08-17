@@ -1,0 +1,32 @@
+{
+  "ARTEFACT_HASHES": {
+    "raw.npz": "e4834c6493f7b96842eb5f231151d0d5d9874b74ff12fce83434f2ce4801800d"
+  },
+  "ARTEFACT_LOCATIONS": [
+    "experiments/marathon/screening_runs/STAGE6-OPPDIST-R1/OPPDIST-B0-TEACHOPP-S1/raw.npz (npz gitignored)"
+  ],
+  "ID": "checkpoint#oppdist-b0-teachopp-s1-terminal#38a7599e61a5",
+  "KIND": "checkpoint",
+  "LINEAGE": {
+    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+    "LINEAGE_HASHES": {
+      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
+    },
+    "NAME": "competition_native_jax_v1"
+  },
+  "NAME": "OPPDIST-B0-TEACHOPP-S1-TERMINAL",
+  "OPPONENT_HASH_INVARIANT": true,
+  "PPO_SEMANTICS": "UNCHANGED",
+  "RECORDED_AT_UTC": "2026-08-17T13:24:26Z",
+  "RUN_ID": "run#oppdist-b0-teachopp-s1#b956cd1a9bea",
+  "SCHEMA_VERSION": "1.0.0",
+  "SEEDS": [
+    20260915
+  ],
+  "TRAINING_REGIME": "PERSISTENT_EPISODE_REGIME_V1",
+  "TRANSITIONS": 8388608
+}

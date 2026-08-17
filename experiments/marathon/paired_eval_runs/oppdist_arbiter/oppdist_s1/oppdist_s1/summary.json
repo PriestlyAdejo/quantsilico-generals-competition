@@ -1,0 +1,29 @@
+{
+  "candidate_id": "oppdist_s1",
+  "confidence_sequence": {
+    "confidence": 0.95,
+    "configured_method": "ANYTIME_VALID_EMPIRICAL_BERNSTEIN_CONFIDENCE_SEQUENCE",
+    "lower": -0.62829034418063,
+    "method": "ANYTIME_VALID_BOUNDED_MIXTURE_CONFIDENCE_SEQUENCE",
+    "upper": 1.0
+  },
+  "eval_namespace": "marathon-eval-v1",
+  "finished_at_utc": "2026-08-17T12:55:23Z",
+  "incumbent_id": null,
+  "kind": "MARATHON_PAIRED_EVAL_SUMMARY",
+  "matchup_metrics": {
+    "BOTTOM_QUARTILE_MATCHUP_SCORE": 0.4166666666666667,
+    "PAIR_COUNT": 9.0,
+    "STD_MATCHUP_SCORE": 0.0392837100659193,
+    "WORST_MATCHUP_SCORE": 0.4166666666666667
+  },
+  "mean_difference": 0.4444444444444444,
+  "pairs_completed": 9,
+  "promotion": {
+    "pathway": "NO_PROMOTION",
+    "practical_margin": 0.01,
+    "promoted": false,
+    "reason": "CS lower bound -0.62829 does not exceed practical margin 0.01000 and robustness criteria are not met"
+  },
+  "wall_seconds": 1839.4696657999884
+}

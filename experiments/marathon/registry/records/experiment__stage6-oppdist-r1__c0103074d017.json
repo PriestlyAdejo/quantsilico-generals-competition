@@ -29,7 +29,8 @@
   },
   "NAME": "STAGE6_OPPDIST_R1",
   "PPO_SEMANTICS": "UNCHANGED",
-  "RECORDED_AT_UTC": "2026-08-17T10:37:40Z",
+  "RECORDED_AT_UTC": "2026-08-17T13:27:30Z",
+  "RESULT": "ADJUDICATED: NO_PROMOTION both seeds per predeclared rules (s1 16D+2L, s2 18D, 0 wins, zero faults; CS lower -0.628/-0.573 vs practical margin 0.01). Predeclared branch (b) fires: programme-level escalation review recorded (docs/marathon/PROGRAMME_ESCALATION_REVIEW_V1.yaml), informed by EV-0069 compatibility gate (MATERIAL_GAPS_REMAIN) - recipe-scoped interpretation, NOT a method-class exhaustion claim. Successor RC_R1_BRIDGE (experiment#rc-r1-bridge#60729d9ef92f) executes next. Rollout diagnostic: decisive ticks re-emerged under frozen-teacher pressure but were almost all teacher-opponent wins; trained seat never won in-rollout.",
   "SCHEMA_VERSION": "1.0.0",
   "SEEDS": [
     20260915,

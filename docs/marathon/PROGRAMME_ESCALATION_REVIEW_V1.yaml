@@ -1,0 +1,73 @@
+kind: PROGRAMME_LEVEL_ESCALATION_REVIEW
+version: V1
+status: RECORDED
+recorded_utc: "2026-08-17T13:35:00Z"
+trigger: >-
+  stage6_oppdist_r1_plan.yaml predeclared branch (b): wins in 0-1 seeds ->
+  programme-level escalation review. Fired by OPPDIST-R1 adjudication
+  (both arms winless, zero faults).
+
+accumulated_evidence_dossier:
+  interactive_hypotheses_exhausted_at_screening_scale:
+    - "self-play mirror at all tested scales 2M-16M (EV-0061/0063): 1 arbiter win in 90 games across the scale programme"
+    - "capacity (T2 k1 history, EV-0057/58): 36/36 arbiter draws"
+    - "elite imitation (BC-A/TEACHER-R2, EV-0060/65): corpus escapes majority-pass ceiling but 18/18 arbiter draws"
+    - "win-converting-teacher imitation (TEACHER-R1, EV-0064): teacher gate fail; lane inapplicable"
+    - "expert initialization + on-policy continuation (DISTILL-PPO, EV-0067/68): 36/36 arbiter draws"
+    - "opponent distribution - frozen hunting teacher (OPPDIST-R1, this entry): s1 16D+2L, s2 18D, 0 wins, zero faults; in-rollout decisive ticks re-emerge but are almost all teacher-opponent wins"
+  representational_capacity_proven:
+    - "CAN_REPRESENT_EXPERT_ACTIONS: YES (D0 transformer BC top-1 0.333, EV-0067; BC screening EV-0060)"
+    - "CAN_MAINTAIN_OR_IMPROVE_UNDER_RL: NOT DEMONSTRATED (every on-policy continuation reverts to draw wall)"
+    - "HAS_ENOUGH_MEMORY_OR_CAPACITY: UNTESTED (1.83M params vs reference order-larger; family name is not a capacity experiment)"
+  method_class_not_impugned: >-
+    Per KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1 (EV-0069): the 2026
+    superhuman reference (AverageJoe @ 2516387) demonstrates PURE MIRROR
+    SELF-PLAY reaches superhuman strength on standard Generals at adequate
+    scale, curriculum, history and capacity. The draw wall is a property of
+    the CURRENT recipe, not of self-play PPO as a method.
+
+what_the_draw_wall_evidence_supports:
+  - "the CURRENT small recipe (32-step fragments, no curriculum, 8-plane obs, 1.83M params, <=16M transitions, constant schedules) enters a passive equilibrium in competition mode"
+  - "decisive terminal signal EXISTS under persistent regime but never converts externally at screening scale"
+  - "supervised/expert knowledge transfers INTO the net but not THROUGH on-policy continuation"
+what_it_does_NOT_support:
+  - "any claim that self-play PPO fundamentally fails on Generals"
+  - "any claim that transition scale is irrelevant (reference runs ~1800x our max budget)"
+  - "any claim that curriculum/history/capacity have been adequately tested (all are material gaps per the gate)"
+
+bounded_options_ranked:
+  - option: RC_R1_BRIDGE (EXECUTING NEXT - predeclared + registered)
+    content: >-
+      Coherent known-working-style recipe combination under persistent
+      competition regime: fragment 128, competence spawn-distance curriculum
+      [8,17], topadv 0.25, rc1 entropy/LR schedules; 2 x 8M seeds vs matched
+      SCALE controls. Tests whether the recipe combination learns at all.
+    cost: bounded (<70 min GPU, <$0.55)
+  - option: attribution ablations + RC-R2 capacity/history teacher
+    content: conditional on RC-R1 signal per predeclared branches; larger
+      research teacher permitted (Stage-7 distillation resolves deployment)
+    cost: evidence-earned
+  - option: population/PSRO lane per Stage 7
+    content: warranted after a working recipe exists; the reference shows a
+      giant league is not automatically required (pure mirror sufficed there)
+    cost: deferred until justified
+  - option: deep scale beyond 16M with teacher-opponent mix
+    content: only after working-recipe proof; no blind high-scale runs
+    cost: evidence-earned
+  - option: operator decision point
+    content: >-
+      If RC-R1 branch (b) fires (combination also winless) and bounded
+      ablations fail to isolate a learning signal, surface an explicit
+      decision point with this dossier: continue with earned bounded
+      successors, or accept the strongest qualified heuristic package as the
+      final deliverable (amendment sec 12 option B) with all research
+      artefacts preserved.
+
+deliverable_guarantee_unaffected: >-
+  Regardless of research outcome, the programme ends with either an
+  UPLOAD_READY learned candidate or the verified strongest heuristic package
+  plus an explicit learned-failure report. Current fallback lineage preserved
+  in submission/ (heuristic upload records intact).
+
+evidence_links: [EV-0061, EV-0063, EV-0057, EV-0058, EV-0060, EV-0064, EV-0065,
+  EV-0067, EV-0068, EV-0069, KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1]
