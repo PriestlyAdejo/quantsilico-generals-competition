@@ -122,3 +122,26 @@ tier_c_arbiter_predeclared:
 
 evidence_links: [EV-0071, EV-0069, KNOWN_WORKING_RECIPE_GAP_AUDIT_V1,
   KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1]
+
+engineering_repair_note_s2_rerun:
+  incident: >-
+    Round 1 (pod ue7k91n8kadfqa): the 95-min per-arm execution backstop
+    (timeout 5700) proved too tight for the FROZEN 568-update budget.
+    Measured end-to-end pace was ~10.0-10.1 s/update (vs the 9.51 s/update
+    RC-R1 TPS the budget was computed from): S1 completed its final update
+    seconds inside the cap (568/568, checkpoints saved, exit label
+    WALL_CAP_95MIN is a post-completion timeout artifact), but S2 was
+    killed at 562/568 with NO checkpoint saved (EV-0073). Truncation is an
+    infrastructure defect, not a scientific negative (amendment sec 18/31).
+  preserved: >-
+    S2 truncated telemetry preserved as
+    experiments/marathon/obs_v2_r1/OBS-V2-R1-S2/telemetry_truncated_ev0073.jsonl
+    (562 updates, healthy throughout, pace 10.14 s/update).
+  repair: >-
+    Rerun arm OBS-V2-R1-S2 with IDENTICAL config, seed 20260925 and the
+    UNCHANGED frozen budget (18,612,224 transitions); the ONLY change is
+    the protective backstop timeout 5700 -> 6300 s (105 min). The trainer
+    still self-terminates at exactly 568 updates. All scientific knobs,
+    matched controls, and adjudication rules are UNTOUCHED.
+  orchestrator: scripts/dev/remote_obs_v2_r1_s2_rerun_orchestrator.sh
+    (overwrite guard refuses a non-clean S2 out-dir).
