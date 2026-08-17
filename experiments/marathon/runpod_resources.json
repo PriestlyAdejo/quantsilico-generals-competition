@@ -2,8 +2,23 @@
   "kind": "RUNPOD_RESOURCE_LEDGER",
   "invariant": "RUNPOD-ZERO-IDLE-BURN-2026-08-15",
   "rule": "A paid GPU may be RUNNING only while it has a verified active workload or is within a short bounded startup/setup window.",
-  "updated_at_utc": "2026-08-16T23:08:00Z",
+  "updated_at_utc": "2026-08-17T00:21:00Z",
   "resources": [
+    {
+      "pod_id": "kxwtvih7ut7pj6",
+      "name": "quantisilico_stage5_scale_r2_a40",
+      "status": "RUNNING_SCALE_R2_ROUND_STARTED_2026-08-17T00:18:25Z",
+      "owner_run": "experiment#stage5-scale-r2#7a383bb25e4f (run#scale-b0-8m-s3#aed30a22da8e, run#scale-b0-8m-s4#5692ce2c0bbe, run#scale-b1-16m-s1#d3803488fb31)",
+      "expected_workload": "remote_stage5_scale_r2_orchestrator.sh via remote_orchestrator_with_stop.sh (3 arms: 2x8M + 1x16M, 60-min wall cap/arm; pod SELF-STOPS after round exit)",
+      "rate_usd_per_hr": 0.44,
+      "data_center": "EU-SE-1",
+      "machine_id": "qk97anl9bsje",
+      "ssh": "root@194.68.245.57 -p 22186",
+      "started_at_utc": "2026-08-17T00:04:41Z",
+      "round_start_utc": "2026-08-17T00:18:25Z",
+      "verified_active": "2026-08-17T00:21Z wrapper + trainer PIDs alive, round log commit 513cfbc, 38967MiB allocated (util ramping)",
+      "provision_note": "FRESH-POD FALLBACK (predeclared EV-0061-successor fallback; billing-logged POD_CREATE): 6b65w6q02z7g6m resume retry expired 10/10 HOST_FULL at 00:03Z on machine yulnj7cypb3b; CA-MTL-1 no resources -> EU-SE-1 new host. Setup PASS (clone 513cfbc, submodule, Python 3.12.14 EV-0047 guard fresh-container, JAX 0.11.0 gpu); ckpt_baseline_v0 uploaded 35MB. Est round end ~01:40Z; est cost <0.70 USD."
+    },
     {
       "pod_id": "6b65w6q02z7g6m",
       "name": "quantisilico_stage5_scale_r1_a40",
@@ -182,5 +197,11 @@
       "prior_state_preserved": "/workspace: quantsilico-generals 126MB, quantsilico-runtime 1.0GB (cloud_assisted_deadline_salvage_v1, cloud_gpu_last_push_v1), transfers 59MB; inventoried EV-0028"
     }
   ],
-  "active_workloads": []
+  "active_workloads": [
+    {
+      "pod_id": "kxwtvih7ut7pj6",
+      "verified_at_utc": "2026-08-17T00:21:00Z",
+      "evidence": "wrapper + run_sh_r1_arm PIDs alive; round log SCALE-B0-8M-S3 started 00:18:25Z commit 513cfbc; 38967MiB allocated"
+    }
+  ]
 }
