@@ -5,7 +5,7 @@
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
   "STATUS": "PARTIAL",
   "CURRENT_STAGE": "RC_R1_BRIDGE_ROUND_EXECUTING_LAUNCH2_PLUS_OBS_V2_PREDECLARED",
-  "CURRENT_TASK": "RC_R1_BRIDGE launch-2 EXECUTING (pod b6bqvrxqga9vp4, arm S1 started 14:46:04Z, accumulate=8 OOM repair, self-stop armed). OBSERVATION_INFORMATION_AUDIT_V1 verdict OBSERVATION_GAP_CONFIRMED_MAJOR (EV-0071): policy discards legal scoreboard + cell-type identity + all enemy memory. OBS-V2-R1 PREDECLARED + REGISTERED pre-launch (experiment#obs-v2-r1#97f257dd096e + 2 runs) as highest-priority successor; executes AFTER RC-R1 adjudication (RC-R1 = matched control + recipe baseline). Evaluator power analysis + developmental tier + learned-package path queued per amendment #2.",
+  "CURRENT_TASK": "RC_R1_BRIDGE launch-2 HEALTHY (16/256 updates S1 ~15:05Z; accumulate=8 holds 39GB VRAM; ratio ~1.0 finite; ent schedule live 0.05 -> 0.0287; decisive tick ALREADY appeared at update 0 under close-spawn curriculum (3e-5) - competence curriculum producing terminal exposure as designed). Amendment #2 dependency-safe items landed: OBS audit CONFIRMED_MAJOR (EV-0071) + OBS-V2-R1 predeclared/registered; evaluator power analysis + tier design recorded; submission builder audited (no learned-checkpoint builder - queued); canonicalisation plan + rollout guard tests committed.",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",

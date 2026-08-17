@@ -266,3 +266,78 @@ policy_capability_separation_amendment_sec8:
   CAN_REPRESENT_EXPERT_ACTIONS: "YES (proven) - D0 transformer BC top-1 0.333 vs CNN 0.187, EV-0067; BC screening PASS EV-0060"
   CAN_MAINTAIN_IMPROVE_UNDER_RL: "NOT YET DEMONSTRATED - every on-policy continuation reverts to draw-wall behaviour (EV-0061/63/68); OPPDIST-R1 executing"
   HAS_ENOUGH_MEMORY_CAPACITY_FOR_STRATEGIC_PLAY: "UNTESTED - 1.83M params / 4 layers / 8 planes / k1 history vs reference ~order-larger net with 38 channels + 512-step temporal encoder; network family name is not a capacity experiment"
+
+evidence_scope_reconciliation_amendment2_sec30:
+  recorded_utc: "2026-08-17T15:00:00Z"
+  principle: >-
+    No historic verdict is rewritten. Scope labels are appended. All rounds
+    through EV-0070 trained on observation lineage OBS-V1 (canonical 8-plane);
+    negatives therefore additionally carry OBSERVATION_SCOPED_NEGATIVE scope
+    after EV-0071 confirmed the major gap.
+  rows:
+    - family: SCALE-R1/R2
+      ids: [stage5-scale-r1#600fdb29e986, stage5-scale-r2#7a383bb25e4f]
+      observation_version: OBS-V1
+      regime: PERSISTENT
+      labels: [VALID_IN_PERSISTENT_REGIME, NO_PROMOTION, OBSERVATION_SCOPED_NEGATIVE]
+      interpretation: "scaling the OBS-V1 current recipe 2M->16M did not promote; not a statement about transition scale in general nor about corrected-recipe scale"
+    - family: SH-R1..R4 horizon screens
+      ids: [sh-r1#796c4d71603c, sh-r2#653b291f0ef0, sh-r3#2a98430be4d7, sh-r4#f4a79a0412e9]
+      observation_version: OBS-V1
+      regime: RESET
+      labels: [VALID_IN_RESET_REGIME, OBSERVATION_SCOPED_NEGATIVE]
+      interpretation: "horizon conclusions remain reset-regime scoped; RC-R1 is the first persistent fragment-length test"
+    - family: spawn-distance curriculum
+      ids: [spawn-distance-curriculum-r1#c9255f18cd8f]
+      observation_version: OBS-V1
+      regime: RESET
+      labels: [VALID_IN_RESET_REGIME, OBSERVATION_SCOPED_NEGATIVE]
+      interpretation: "fixed-arm comparison; RC-R1 competence curriculum is the first corrected-regime test"
+    - family: TOPADV fractions
+      ids: [top-advantage-fractions-r1#5166e1a5d9db]
+      observation_version: OBS-V1
+      regime: RESET
+      labels: [VALID_IN_RESET_REGIME, OBSERVATION_SCOPED_NEGATIVE]
+      interpretation: "RC-R1 treats topadv 0.25 as one combined delta; attribution deferred to predeclared ablations"
+    - family: RAW-vs-EMA
+      ids: [raw_vs_ema_r1]
+      observation_version: OBS-V1
+      regime: RESET-checkpoint EVAL_ONLY
+      labels: [VALID_IN_RESET_REGIME]
+      interpretation: "EMA remains serving default; persistent-regime comparison never run"
+    - family: REWARD-SHAPING R1/R2
+      ids: [reward-shaping-r1#39ce1360218e, reward-shaping-r2#9172336619e7]
+      observation_version: OBS-V1
+      regime: RESET
+      labels: [VALID_IN_RESET_REGIME, VOID_SIGNAL_VACUOUS(R1), TELEMETRY_ONLY(R2)]
+      interpretation: "one matched shaping retest permitted later only if amended sec 19 conditions hold"
+    - family: STAGE5 T2 k1 history
+      ids: [stage5-capacity-value-r1 runs]
+      observation_version: OBS-V1+k1
+      regime: PERSISTENT
+      labels: [VALID_IN_PERSISTENT_REGIME, NO_PROMOTION, OBSERVATION_SCOPED_NEGATIVE]
+      interpretation: "NOT a capacity or long-history test (amendment2 sec 6); k1 single-frame only"
+    - family: TEACHER-R1/R2 BC lanes
+      ids: [stage5-teacher-r1#153b464617b7, stage5-teacher-r2#8ab7def9c575]
+      observation_version: OBS-V1
+      regime: n/a (BC)
+      labels: [VALID_GENERAL_RESULT, OBSERVATION_SCOPED_NEGATIVE(for gameplay conversion)]
+      interpretation: "representation absorption proven; conversion under OBS-V1 RL winless; BC parked per amendment2 sec 20 until corrected recipe exists"
+    - family: DISTILL-PPO D0/D1
+      ids: [stage6-distill-ppo-r1#543924456945]
+      observation_version: OBS-V1
+      regime: PERSISTENT
+      labels: [VALID_GENERAL_RESULT(D0), NO_PROMOTION(D1), OBSERVATION_SCOPED_NEGATIVE(D1)]
+      interpretation: "expert initialization not maintained by the then-current OBS-V1 recipe; not a universal expert-init negative"
+    - family: OPPDIST-R1
+      ids: [stage6-oppdist-r1#c0103074d017]
+      observation_version: OBS-V1
+      regime: PERSISTENT
+      labels: [VALID_GENERAL_RESULT, NO_PROMOTION, OBSERVATION_SCOPED_NEGATIVE]
+      interpretation: "one frozen stochastic teacher tested; NOT a population-diversity negative (amendment2 sec 17)"
+  closed_claims_review:
+    SCALE_AXIS_CLOSED: "scope corrected to the OBS-V1 current recipe at <=16M; preserved as recorded"
+    TEACHER_DATA_CLOSED: "imitation-under-OBS-V1 closed; corpus/data-plane retained"
+    EXPERT_INITIALIZATION_CLOSED: "scope corrected to OBS-V1 recipe continuation; preserved as recorded"
+    CAPACITY_CLOSED: "reclassified - T2 was NOT a capacity experiment; capacity remains UNTESTED (see gap matrix)"
+
