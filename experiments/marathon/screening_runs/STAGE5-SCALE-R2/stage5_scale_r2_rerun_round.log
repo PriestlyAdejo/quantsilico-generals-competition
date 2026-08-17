@@ -1,0 +1,5 @@
+=== STAGE5 SCALE R2 arm-1 RERUN start 2026-08-17T02:36:51Z commit a5217b4 (repair for OSError-5 flush failure 00:38:32Z)
+=== SCALE-B0-8M-S3-RERUN (256x32 seed=20260915 carry=persistent budget=8388608) start 2026-08-17T02:36:51Z
+refusing to overwrite existing telemetry: /workspace/screening_runs_stage5_scale_r2/SCALE-B0-8M-S3/telemetry.jsonl
+=== SCALE-B0-8M-S3-RERUN exit=2 2026-08-17T02:37:07Z
+=== STAGE5 SCALE R2 arm-1 RERUN end 2026-08-17T02:37:07Z
