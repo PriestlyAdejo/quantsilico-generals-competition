@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-17T15:45:33Z",
+ "UPDATED_AT_UTC": "2026-08-17T15:53:48Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
  "CURRENT_STAGE": "RC_R1_ROUND_S2_EXECUTING_S1_COMPLETE_PLUS_OBS_V2_IMPLEMENTED_READY",
- "CURRENT_TASK": "RC-R1 launch-2: S1 COMPLETE 256/256 updates exit=0 (VALID_LEARNING_SHARE 1.0, ratio ~1.0, vloss 2.3627->2.3515, entropy 1.95->5.33, decisive ticks at update 0; curriculum NEVER advanced: 8 evals vs legal_random = 2 wins total, ~7-9 losses, ~88% draws-at-cap - competence not reached at 8M). S2 executing (~58/256 at 15:47Z, ETA ~16:15Z). OBS-V2-R1 implementation COMPLETE this fire: runner knob --obs-version + declared warm-start shape surgery (patch_proj 72->126/global_proj 8->12 old rows preserved, opt+EMA fresh), rollout+curriculum-eval lineage branches, parity fixture 4/4 PASS vs official engine protocol encoder, CPU smoke PASS, serving adapter + sanity probe + serve-smoke PASS, tier-C arbiter PREDECLARED (128 games/candidate vs rc1+heuristics), tier-A ladder frozen (60 games/candidate diagnostic). Canonicalisation: empty training/ scaffold removed (2ea72ab) with recorded dependency search. S1 throughput measured: end-to-end 3446.76 TPS (budget-freeze input).",
+ "CURRENT_TASK": "RC-R1 launch-2: S1 COMPLETE healthy; S2 executing (~132/256 at 16:06Z, ETA ~16:35Z; monitor armed). OBS-V2-R1 implementation COMPLETE (parity 4/4, smoke PASS, serving + probe ready, tier-C 128 games/candidate predeclared, tier-A 60 games/candidate frozen). LEARNED-CHECKPOINT PACKAGE BUILDER LANDED (abd4121, amendment #2 sec 14): build_learned_jax_package v1+v2 E2E verified (PACKAGED 7.1MB/78 files; unzipped package serves well-formed deterministic actions over stdio; load_params_npz byte-exact vs train_jax.load_tree). Canonicalisation scaffold removal DONE (2ea72ab). All remaining work this round blocked on S2 completion.",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -373,7 +373,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) On RC-R1 S2 round end: fetch via var/marathon_takeover/fetch_rc_r1.sh (PORT/IP from API; port rotates on resume) -> integrity + learner health + curriculum telemetry -> STOP + TERMINATE pod -> billing log -> serving_sanity_probe_rc_r1.py (checkpoints at experiments/marathon/rc_r1_bridge/<ARM>/raw.npz) -> var/marathon_takeover/run_rc1_arbiter.sh (18 games/candidate vs legal_random/heuristic_v0/v1) -> adjudicate per rc_r1_bridge_plan.yaml branches, OBSERVATION_SCOPED to OBS-V1 (amendment #2 sec 7) -> registry + EV. (B) Freeze OBS-V2-R1 budget per predeclared rule from min(S1,S2) end-to-end TPS (S1=3446.76; ~567 updates x 32768 = 18,579,456 within 90-min cap) -> register_obs_v2_r1_runs.py with frozen budget -> launch round on pod via remote_obs_v2_r1_orchestrator.sh (self-stop wrapper; EV-0047 guard) -> probe -> tier-A developmental ladder (diagnostic) + tier-C arbiter (128 games/candidate, promotion authority). (C) Learned-checkpoint package builder (amendment #2 sec 14) in dependency-safe gaps.",
+ "NEXT_SAFE_ACTION": "(A) On RC-R1 round end (monitor b7bjvbiwz): var/marathon_takeover/fetch_rc_r1.sh (PORT/IP via API - port rotates on resume) -> integrity/health/curriculum review -> STOP+TERMINATE pod + billing log -> serving_sanity_probe_rc_r1.py -> var/marathon_takeover/run_rc1_arbiter.sh (18 games/candidate) -> adjudicate per rc_r1_bridge_plan.yaml scoped OBSERVATION_SCOPED OBS-V1 -> registry verdicts + EV entry. (B) Freeze OBS-V2 budget from min(S1,S2) TPS (S1=3446.76 -> ~567 updates=18,579,456 within 90-min cap), update register_obs_v2_r1_runs.py BUDGET field, register, launch via remote_obs_v2_r1_orchestrator.sh with self-stop wrapper + EV-0047 guard; on round end: probe -> tier-A dev ladder (diagnostic) + tier-C arbiter (promotion authority).",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
