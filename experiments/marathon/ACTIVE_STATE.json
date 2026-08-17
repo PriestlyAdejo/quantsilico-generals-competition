@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-17T05:25:00Z",
+ "UPDATED_AT_UTC": "2026-08-17T05:45:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "STAGE_5_TEACHER_R1_CLOSED_VALID_NEGATIVE_SUCCESSOR_PREDECLARATION",
- "CURRENT_TASK": "STAGE5_TEACHER_R1 closed VALID NEGATIVE this tick (EV-0064): STEP1 predeclared hard gate FAILED - HunterAgent won 15/20 vs heuristic_v0 (needed >=16; 4 losses + 1 draw-at-truncation), zero engine faults, 20/20 transcripts deterministic-replay-verified; STEP2/STEP3 not executed per predeclaration; no rule relaxation. Scientific reading: the only in-repo win-converter is map/opponent-dependent, not a general dominance signal. NEXT: predeclare successor per plan fallback - hunter-vs-hunter self-play trajectory lane (teacher distribution that win-converts against itself) or pivot to untested critic-axis T3 (value structure); register before launch",
+ "CURRENT_STAGE": "STAGE_5_TEACHER_R2_STEP2_STEP3_EXECUTING_LOCAL_CPU",
+ "CURRENT_TASK": "STAGE5_TEACHER_R2 executing: STEP1 self-play generation GATE PASS (16/20 decisive, draws seeds 20260904/910/912/914, zero faults, 20/20 replay-verified, transcript sha ed6344232c1e, commit a7a187a); STEP2+STEP3 both-seat BC training RUNNING detached local CPU (PID 1111, log var/marathon_takeover/teacher_r2_train.log, output experiments/marathon/teacher_r2/step3_bc/teacher_r2_result.json; splits train=14 games / holdout_games=2 (918,919) / holdout_maps=1 (920); est complete ~06:30Z). TEACHER-R1 closed VALID NEGATIVE prior this tick (EV-0064). NEXT on completion: adjudicate EV-0060-identical screening gate -> if PASS: serving adapter + sanity probe + 54-game gameplay arbiter; if FAIL: VALID NEGATIVE + T3 critic-axis pivot per plan branch (c)",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -244,12 +244,13 @@
  ],
  "ACTIVE_LOCAL_PROCESSES": {
   "AUDIT_STATUS": "AUDITED",
-  "AUDITED_AT_UTC": "2026-08-16T12:46:00Z",
+  "AUDITED_AT_UTC": "2026-08-17T05:45:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE: BC-A-FULL-R1 round complete + adjudicated (EV-0060); T2 arbiter complete (EV-0058); all local eval/training workloads finished"
+   "RUNNING: TEACHER-R2 STEP2+STEP3 BC training (teacher_r2_train.py, detached PID 1111, local CPU, log var/marathon_takeover/teacher_r2_train.log) - feature extraction then 40-epoch BC on 16 decisive self-play games; est complete ~06:30Z"
   ],
-  "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection",
+  "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection. 2026-08-17: teacher_r2_train.py trainer again shows TWO python PIDs (41096 .venv -> 19968 system-python child, identical CreationDate, single log stream) = parent-child pair, ONE workload; both preserved, no duplicate launch",
   "COMPLETED_THIS_SESSION": [
+   "STAGE5_TEACHER_R2 PREDECLARED + REGISTERED + STEP1 EXECUTED this tick: plan stage5_teacher_r2_plan.yaml + experiment#stage5-teacher-r2#8ab7def9c575 + 3 run records registered pre-launch (commit 4dd1713); hunter-vs-hunter self-play generation LOCAL CPU 20 games seeds 20260901..20260920 -> GATE PASS 16/20 decisive (draws-at-truncation seeds ...904/910/912/914), zero engine faults, 20/20 deterministic replay matches, transcript sha ed6344232c1e (commit a7a187a); STEP2+STEP3 both-seat BC training launched detached (PID 1111) - self-play teacher distribution demonstrably win-converts against itself, unlike R1's regime",
    "STAGE5_TEACHER_R1 executed + ADJUDICATED VALID NEGATIVE this tick (EV-0064): plan PREDECLARED + REGISTERED pre-launch (commit 77b50c2); STEP1 generation ran LOCAL CPU only (zero RunPod spend) - 20 games HunterAgent vs heuristic_v0 seeds 20260901..20260920, generator mirrors match.py + verifies every transcript by deterministic replay; RESULT 15 wins / 4 losses (seeds ...911-914) / 1 draw-at-truncation (seed ...918), zero engine faults, 20/20 replay_match, transcript_sha256 38607e1d474d; predeclared hard gate (>=16/20 wins) FAILED on win count -> STEP2 labels + STEP3 BC NOT executed per predeclaration; round CLOSED as TEACHER_INAPPLICABLE vs active opponents; registry verdicts updated; trainer scripts/training/teacher_r1_train.py built + preserved unrun; no rule relaxation",
    "STAGE5_SCALE_R2 fully closed this tick (EV-0063): sanity probe PASS pre-game (3 candidates, weights-matter + determinism); 54/54 games clean zero faults; s3 16 DRAW+2 LOSS (mean 0.444, cs_lb -0.628), s4 17 DRAW+1 LOSS, 16M 17 DRAW+1 LOSS (both mean 0.472, cs_lb -0.601) -> NO_PROMOTION all three; predeclared branch (b) fires: R1's lone win stands as rare noise, SCALE AXIS CLOSED after one bounded successor attempt; aggregate 5 arms/90 games = 1 WIN 7 LOSS 82 DRAW; 9 registry records (3 checkpoint + 3 candidate + 3 evaluation) + experiment verdict registered via scripts/dev/register_stage5_scale_r2_arbiter_eval.py; EV-0062 arm-1 OSError-5 rerun preserved as telemetry_failed_ev0062.jsonl",
    "STAGE5_SCALE_R2 arm-1 bounded rerun (EV-0062): original run hit OSError Errno 5 (network volume I/O at telemetry flush) -> identical-config rerun on same pod (stale telemetry renamed, runner overwrite-guard honoured) -> round completed clean; programme integrity preserved without rule change",
@@ -406,7 +407,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "NONE EXECUTING. Closed this session: experiment#stage5-teacher-r1#153b464617b7 ADJUDICATED VALID_NEGATIVE STEP1_GATE_FAIL (EV-0064); experiment#stage5-scale-r2#7a383bb25e4f ADJUDICATED SCALE_AXIS_CLOSED (EV-0063); experiment#stage5-scale-r1#600fdb29e986 NO_PROMOTION + FIRST WIN (EV-0061); experiment#stage5-capacity-value-r1#f1dc01ccc86f NO_PROMOTION (EV-0057/EV-0058); experiment#bc-a-full-r1#abcfcd746ac7 VALID_NEGATIVE (EV-0060).",
+ "CURRENT_EXPERIMENT": "experiment#stage5-teacher-r2#8ab7def9c575 EXECUTING (run#teacher-r2-step1-selfplay#f5efc92dc774 COMPLETED_GATE_PASS; run#teacher-r2-step2-labels#dd1e555435a9 + run#teacher-r2-step3-bc#f5852fd43034 executing via teacher_r2_train.py local CPU). Closed this session: experiment#stage5-teacher-r1#153b464617b7 ADJUDICATED VALID_NEGATIVE STEP1_GATE_FAIL (EV-0064); experiment#stage5-scale-r2#7a383bb25e4f ADJUDICATED SCALE_AXIS_CLOSED (EV-0063); experiment#stage5-scale-r1#600fdb29e986 NO_PROMOTION + FIRST WIN (EV-0061); experiment#stage5-capacity-value-r1#f1dc01ccc86f NO_PROMOTION (EV-0057/EV-0058); experiment#bc-a-full-r1#abcfcd746ac7 VALID_NEGATIVE (EV-0060).",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -426,7 +427,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) Predeclare the TEACHER-R1 successor per plan fallback (EV-0064): choose between (i) hunter-vs-hunter SELF-PLAY trajectory lane - teacher distribution that win-converts against itself, same BC recipe + EV-0060-identical screening gate, or (ii) pivot to untested critic-axis T3 (HL-Gauss / value-structure) per EXECUTION_PLAN Stage 5. Draft plan yaml + register experiment BEFORE launch; local CPU dependency-safe implementation first. (B) Execute: generation + hard gate -> labels -> BC -> screening gate -> gameplay arbiter only on gate pass. Zero-idle-burn; no post-hoc relaxation; negatives preserved. (C) Preserve all TEACHER-R1 artefacts (transcripts + trainer).",
+ "NEXT_SAFE_ACTION": "(A) Poll var/marathon_takeover/teacher_r2_train.log for PASS_GATE/VALID_NEGATIVE verdict + experiments/marathon/teacher_r2/step3_bc/teacher_r2_result.json (est complete ~06:30Z; if process died mid-run, diagnose from log and re-run - deterministic seed, identical config). (B) On PASS_GATE: build EVAL_ONLY serving adapter for the BC checkpoint (baselines/teacher_r2_bc_s1/main.py, canonical legal-obs protocol agent), serving sanity probe pre-game (EV-0034 precedent), then the predeclared 54-game gameplay arbiter (legal_random/heuristic_v0/heuristic_v1, 3 seat-swapped pairs, 1200-turn horizon), adjudicate per plan. (C) On VALID_NEGATIVE: register verdicts, EV entry, predeclare T3 critic-axis pivot per plan branch (c). (D) Zero-idle-burn throughout (no RunPod involved this round).",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
