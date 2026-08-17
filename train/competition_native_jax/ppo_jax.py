@@ -77,6 +77,7 @@ def ppo_update(
     batch: dict[str, jax.Array],
     *,
     accumulate_minibatches: int | None = None,
+    ent_coef: float = 0.01,
 ) -> tuple[dict, Any, dict]:
     """One logical full-batch Optax update (canonical systems semantics).
 
@@ -96,6 +97,7 @@ def ppo_update(
                 batch["old_logp"],
                 batch["advantages"],
                 batch["returns"],
+                ent_coef=ent_coef,
             )
             return loss, metrics
 
@@ -126,6 +128,7 @@ def ppo_update(
                 shards["old_logp"][i],
                 shards["advantages"][i],
                 shards["returns"][i],
+                ent_coef=ent_coef,
             )
             return loss, metrics
 

@@ -1,0 +1,50 @@
+{
+  "actual_transitions": 8388608,
+  "arm_id": "OPPDIST-B0-TEACHOPP-S1",
+  "budget_transitions": 8388608,
+  "eliminated": false,
+  "elimination": [],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-17T11:31:41Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1974718570709229,
+    "ENTROPY_LAST": 5.371930122375488,
+    "OPP_WIN_SHARE_FIRST": 0.0,
+    "OPP_WIN_SHARE_LAST": 0.0,
+    "PG_FIRST": -0.0005720242625102401,
+    "PG_LAST": -8.502100536134094e-05,
+    "RATIO_FIRST": 0.9999949932098389,
+    "RATIO_LAST": 1.0000004768371582,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.35762357711792,
+    "VLOSS_LAST": 2.351487636566162,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.0061359405517578125
+  },
+  "min_generals_distance": 17,
+  "opponent_checkpoint": "/workspace/distill_ppo_r1/DISTILL-S0-TRANSFORMER-BC",
+  "opponent_mode": "teacher_frozen",
+  "opponent_sha256_after": "d929240c08d8ab6ce40872084076121dfbdf724bf98a7272aeebe2bc41f1b9db",
+  "opponent_sha256_before": "d929240c08d8ab6ce40872084076121dfbdf724bf98a7272aeebe2bc41f1b9db",
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "seed": 20260915,
+  "stop_reason": "BUDGET_REACHED",
+  "temporal_history": "off",
+  "throughput": {
+    "collect_tps": 28975.081922586785,
+    "collect_wall_s": 289.5111055220477,
+    "end_to_end_tps": 6863.433223830908,
+    "reset_pool_build_s": 96.74274880089797,
+    "total_wall_s": 1249.0984646119177,
+    "update_wall_s": 932.7063658847474
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 1024
+}

@@ -1,0 +1,57 @@
+{
+  "actual_transitions": 256,
+  "arm_id": "RC1-SMOKE-SCHED",
+  "budget_transitions": 512,
+  "curriculum": "none",
+  "curriculum_evals": [],
+  "curriculum_final_stage": null,
+  "curriculum_stages": null,
+  "eliminated": true,
+  "elimination": [
+    "NO_VLOSS_REDUCTION"
+  ],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-17T11:58:37Z",
+  "geometry": {
+    "num_envs": 16,
+    "rollout_len": 8
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 0.732858419418335,
+    "ENTROPY_LAST": 1.5250515937805176,
+    "OPP_WIN_SHARE_FIRST": 0.0,
+    "OPP_WIN_SHARE_LAST": 0.0,
+    "PG_FIRST": -0.00029259780421853065,
+    "PG_LAST": -0.0002683709026314318,
+    "RATIO_FIRST": 1.0,
+    "RATIO_LAST": 1.0,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3580446243286133,
+    "VLOSS_LAST": 2.400120973587036,
+    "VLOSS_REDUCTION_OVER_ROUND": -0.04207634925842285
+  },
+  "min_generals_distance": 17,
+  "opponent_checkpoint": null,
+  "opponent_mode": "self",
+  "opponent_sha256_after": null,
+  "opponent_sha256_before": null,
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "schedules": "rc1",
+  "seed": 20260919,
+  "stop_reason": "BUDGET_REACHED",
+  "temporal_history": "off",
+  "throughput": {
+    "collect_tps": 10.293824762657554,
+    "collect_wall_s": 24.86927900003502,
+    "end_to_end_tps": 3.400748139349576,
+    "reset_pool_build_s": 112.2557021000539,
+    "total_wall_s": 79.21229910000693,
+    "update_wall_s": 50.40827449999051
+  },
+  "top_advantage_fraction": 0.25,
+  "updates": 2
+}

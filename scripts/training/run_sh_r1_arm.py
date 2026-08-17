@@ -24,6 +24,7 @@ sys.path.insert(0, str(REPO))
 import jax  # noqa: E402
 import jax.numpy as jnp  # noqa: E402
 import numpy as np  # noqa: E402
+import optax  # noqa: E402
 
 from generals_bot.competition_native_jax.competition_env_jax import (  # noqa: E402
     build_competition_reset_pool,
@@ -36,6 +37,9 @@ from train.competition_native_jax.reward_shaping_jax import set_active_shaping  
 from train.competition_native_jax.rollout_selfplay_jax import (  # noqa: E402
     collect_selfplay_batch,
     set_opponent_mode,
+)
+from train.competition_native_jax.curriculum_eval_jax import (  # noqa: E402
+    greedy_win_rate_vs_random,
 )
 from train.competition_native_jax.temporal_history_jax import (  # noqa: E402
     set_temporal_history_mode,
@@ -163,6 +167,28 @@ def main() -> int:
         help="STAGE6_OPPDIST_R1: directory containing raw.npz of the frozen opponent "
         "(required when --opponent-mode teacher_frozen).",
     )
+    parser.add_argument(
+        "--schedules",
+        default="none",
+        choices=["none", "rc1"],
+        help="RC_R1_BRIDGE knob (rc_r1_bridge_plan.yaml delta D4): rc1 applies the "
+        "predeclared frozen power-law schedules - ent_coef_t = max(0.05/(t+1)^0.2, "
+        "0.001) and lr_t = clip(4.5e-3/(t+1)^1.1, 5e-6, 1e-4) (reference power-law "
+        "shape, amplitude matched to ~1e-5 terminal LR at 256 updates); opt_state is "
+        "re-initialised under rc1 (schedule changes optimiser semantics; EMA still "
+        "continues from checkpoint). none = canonical constant ent 0.01 / LR 3e-4 "
+        "(control path). PPO_SEMANTICS UNCHANGED for serving.",
+    )
+    parser.add_argument(
+        "--curriculum",
+        default="none",
+        choices=["none", "competence-spawn"],
+        help="RC_R1_BRIDGE knob (delta D2): competence-spawn runs spawn-distance "
+        "stages [8, 17] starting at 8; every 32 updates a greedy-vs-legal_random "
+        "diagnostic eval (64 envs, 1200-turn cap) is run; win rate >= 0.6 advances "
+        "the stage and regenerates the reset pool. none = fixed min_generals_distance "
+        "(control path). PPO_SEMANTICS UNCHANGED for serving.",
+    )
     args = parser.parse_args()
 
     set_active_shaping(args.reward_shape, args.reward_shape_beta)
@@ -193,7 +219,17 @@ def main() -> int:
         print(f"refusing to overwrite existing telemetry: {telemetry_path}", file=sys.stderr)
         return 2
 
-    optimizer = make_optimizer(LR)
+    if args.schedules == "rc1":
+        # RC_R1_BRIDGE D4 (frozen): lr_t = clip(4.5e-3/(t+1)^1.1, 5e-6, 1e-4).
+        def rc1_lr(step):
+            return jnp.clip(4.5e-3 / jnp.power(step + 1.0, 1.1), 5e-6, 1e-4)
+
+        optimizer = optax.chain(
+            optax.clip_by_global_norm(1.0),
+            optax.inject_hyperparams(optax.adam)(learning_rate=rc1_lr),
+        )
+    else:
+        optimizer = make_optimizer(LR)
     if args.temporal_history == "k1":
         # STAGE5 T2: shared layers warm-started from the checkpoint; patch_proj
         # is shape-forced fresh (8 -> 16 input planes); opt/EMA re-initialised.
@@ -203,6 +239,13 @@ def main() -> int:
         params = {**base_params, "patch_proj": params_like["patch_proj"]}
         opt_state = optimizer.init(params)
         ema = jax.tree_util.tree_map(jnp.asarray, params)
+    elif args.schedules == "rc1":
+        # RC_R1_BRIDGE: raw/EMA continue from the warm start; opt_state fresh
+        # (schedule changes optimiser semantics - declared in the plan).
+        params_like = init_params(jax.random.PRNGKey(0))
+        params = load_tree(args.checkpoint / "raw.npz", params_like)
+        ema = load_tree(args.checkpoint / "ema.npz", params_like)
+        opt_state = optimizer.init(params)
     else:
         params_like = init_params(jax.random.PRNGKey(0))
         opt_like = optimizer.init(params_like)
@@ -223,6 +266,16 @@ def main() -> int:
     collect_wall = 0.0
     update_wall = 0.0
     rollout_carry = None  # EPISODE_CONTINUITY knob: threaded only when persistent
+    # RC_R1_BRIDGE D2 (frozen): competence-spawn stages, start at the easy
+    # (close-spawn) stage; advancement rule lives in the update loop below.
+    curriculum_stage = None
+    curriculum_stages = None
+    curriculum_evals = []
+    eff_min_distance = args.min_generals_distance
+    if args.curriculum == "competence-spawn":
+        curriculum_stages = [8, 17]
+        curriculum_stage = 0
+        eff_min_distance = curriculum_stages[0]
     # Build the reset pool ONCE and reuse it across updates (ladder pattern,
     # EV-0029): reconstructing boards per collect dominated wall-time.
     # Environment initialisation only; PPO_SEMANTICS unchanged.
@@ -230,7 +283,7 @@ def main() -> int:
     reset_pool = build_competition_reset_pool(
         jax.random.PRNGKey(args.seed),
         RESET_POOL_SIZE,
-        min_generals_distance=args.min_generals_distance,
+        min_generals_distance=eff_min_distance,
     )
     jax.block_until_ready(jax.tree_util.tree_leaves(reset_pool))
     pool_wall = time.perf_counter() - pool_started
@@ -269,10 +322,47 @@ def main() -> int:
                     flat["advantages"], args.top_advantage_fraction
                 )
             update_started = time.perf_counter()
-            params, opt_state, metrics = ppo_update(params, opt_state, optimizer, flat)
+            if args.schedules == "rc1":
+                # RC_R1_BRIDGE D4 (frozen): ent_coef_t = max(0.05/(t+1)^0.2, 0.001)
+                ent_t = max(0.05 / ((index + 1) ** 0.2), 0.001)
+            else:
+                ent_t = 0.01
+            params, opt_state, metrics = ppo_update(
+                params, opt_state, optimizer, flat, ent_coef=ent_t
+            )
             jax.block_until_ready(jax.tree_util.tree_leaves(params))
             update_wall += time.perf_counter() - update_started
             ema = ema_update(ema, params)
+            # RC_R1_BRIDGE D2 (frozen advancement rule): diagnostic greedy-vs-
+            # legal_random eval every 32 updates; win rate >= 0.6 advances the
+            # spawn-distance stage and regenerates the reset pool.
+            curriculum_eval = None
+            if args.curriculum == "competence-spawn" and (index + 1) % 32 == 0:
+                curriculum_eval = greedy_win_rate_vs_random(
+                    params, reset_pool, num_envs=64, horizon=1200,
+                    seed=args.seed + index,
+                )
+                curriculum_eval["update"] = index
+                curriculum_eval["stage_before"] = curriculum_stage
+                advanced = (
+                    curriculum_eval["win_rate_vs_decided"] >= 0.6
+                    and curriculum_stage < len(curriculum_stages) - 1
+                )
+                if advanced:
+                    curriculum_stage += 1
+                    eff_min_distance = curriculum_stages[curriculum_stage]
+                    reset_pool = build_competition_reset_pool(
+                        jax.random.PRNGKey(args.seed),
+                        RESET_POOL_SIZE,
+                        min_generals_distance=eff_min_distance,
+                    )
+                    jax.block_until_ready(jax.tree_util.tree_leaves(reset_pool))
+                    # Curriculum boundary: episodes restart from the new pool
+                    # (declared; mirrors reference pool regeneration).
+                    rollout_carry = None
+                curriculum_eval["stage_after"] = curriculum_stage
+                curriculum_eval["advanced"] = bool(advanced)
+                curriculum_evals.append(curriculum_eval)
             record = {
                 "update": index,
                 "transitions": (index + 1) * per_update,
@@ -280,6 +370,8 @@ def main() -> int:
                 "update_s": update_wall,
                 "decisive_share": float(jnp.mean(batch["terminals"])),
                 "opp_win_share": float(jnp.mean((batch["rewards1"] > 0.5) * batch["terminals"])),
+                "ent_coef": ent_t,
+                **({"curriculum": curriculum_eval} if curriculum_eval is not None else {}),
                 **{key: float(value) for key, value in metrics.items()},
             }
             record["healthy"] = healthy(metrics)
@@ -330,6 +422,11 @@ def main() -> int:
         "opponent_checkpoint": str(args.opponent_checkpoint) if args.opponent_checkpoint else None,
         "opponent_sha256_before": opp_hash_before,
         "opponent_sha256_after": opp_hash_after,
+        "schedules": args.schedules,
+        "curriculum": args.curriculum,
+        "curriculum_stages": curriculum_stages,
+        "curriculum_final_stage": curriculum_stage,
+        "curriculum_evals": curriculum_evals,
         "budget_transitions": args.budget_transitions,
         "actual_transitions": transitions,
         "updates": len(records),

@@ -4,8 +4,8 @@
   "UPDATED_AT_UTC": "2026-08-17T09:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ROUND_EXECUTING_PLUS_CONVERGENCE_AUDIT_COMPLETE_RC_R1_PREDECLARED",
-  "CURRENT_TASK": "CONVERGENCE_AUDIT COMPLETE (EV-0069): external refs pinned (AverageJoe @ 2516387, arXiv:2507.06825), gap audit + regime reinterpretation table + compatibility gate MATERIAL_GAPS_REMAIN committed; RC_R1_BRIDGE PREDECLARED + REGISTERED pre-launch (experiment#rc-r1-bridge#60729d9ef92f + 2 runs; exactly four frozen deltas: fragment 128, competence curriculum [8,17], topadv 0.25, entropy/LR schedules) - executes after OPPDIST adjudication. OPPDIST-R1 round still executing unchanged (arm S1 exit=0 1024/1024; S2 ~33% at 11:41Z).",
+  "CURRENT_STAGE": "STAGE_6_OPPDIST_R1_ROUND_COMPLETE_LEARNER_HEALTH_PASS_ARBITER_PENDING",
+  "CURRENT_TASK": "OPPDIST-R1 round COMPLETE: both arms exit=0 1024/1024 updates (11:08:53-11:55:26Z, 47 min GPU), learner health CLEAN (valid_share 1.0, ratio ~1.0, entropy non-collapse, vloss reduced; opponent-hash invariance d929240c per arm; pod self-stopped, fetch window complete, zero idle burn). DIAGNOSTIC: decisive ticks re-emerge (211/182 updates with terminals) but are almost ALL teacher-opponent wins (opp_win_share == decisive_share); trained seat never wins in-rollout. Serving sanity probe executing; arbiter next (promotion authority). RC-R1 knobs implemented + schedules smoke PASS (ent_coef 0.05->0.0435 frozen values exact, ratio 1.0 finite).",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -450,7 +450,7 @@
       ]
     }
   },
-  "NEXT_SAFE_ACTION": "(A) OPPDIST: await round completion -> fetch (var/marathon_takeover/fetch_oppdist_r1.sh) -> verify integrity (opponent hash invariance per arm) + learner health -> stop pod -> serving probe -> 36-game arbiter -> predeclared adjudication. (B) Then implement RC-R1 knobs (fragment already knob; add topadv wiring exists; ADD entropy/LR schedules + competence curriculum module) -> CPU smoke -> bounded A40 round -> arbiter -> adjudicate branches. (C) Dependency-safe gaps: REPOSITORY_CANONICALISATION_PLAN_V1, Stage-6 family classification, Stage-7 population design.",
+  "NEXT_SAFE_ACTION": "(A) Serving probe PASS -> 36-game arbiter (var/marathon_takeover/run_oppdist_arbiter.sh pattern: run_marathon_paired_eval.py --pairs-per-opponent 3 --max-turns 1200, opponents legal_random/heuristic_v0/heuristic_v1) -> adjudicate per stage6_oppdist_r1_plan.yaml branches (a)/(b incl escalation-review dossier - now informed by EV-0069 gate: any winless verdict records recipe-scoped interpretation, not method-class exhaustion). (B) Register checkpoint/candidate/evaluation records + EV entry. (C) Then RC-R1: CPU curriculum smoke -> bounded A40 round -> arbiter.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
