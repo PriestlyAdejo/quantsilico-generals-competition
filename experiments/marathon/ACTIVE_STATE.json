@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-17T15:53:48Z",
+ "UPDATED_AT_UTC": "2026-08-17T16:47:39Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "RC_R1_ROUND_S2_EXECUTING_S1_COMPLETE_PLUS_OBS_V2_IMPLEMENTED_READY",
- "CURRENT_TASK": "RC-R1 launch-2: S1 COMPLETE healthy; S2 executing (~132/256 at 16:06Z, ETA ~16:35Z; monitor armed). OBS-V2-R1 implementation COMPLETE (parity 4/4, smoke PASS, serving + probe ready, tier-C 128 games/candidate predeclared, tier-A 60 games/candidate frozen). LEARNED-CHECKPOINT PACKAGE BUILDER LANDED (abd4121, amendment #2 sec 14): build_learned_jax_package v1+v2 E2E verified (PACKAGED 7.1MB/78 files; unzipped package serves well-formed deterministic actions over stdio; load_params_npz byte-exact vs train_jax.load_tree). Canonicalisation scaffold removal DONE (2ea72ab). All remaining work this round blocked on S2 completion.",
+ "CURRENT_STAGE": "RC_R1_ROUND_SELF_STOPPED_FETCH_BLOCKED_HOST_FULL",
+ "CURRENT_TASK": "RC-R1 round: pod b6bqvrxqga9vp4 self-stopped via wrapper ~16:15-16:30Z (S2 was 197/256 healthy at 16:03Z; completion status UNVERIFIED until artefact fetch). Artefact fetch BLOCKED: resume returns HOST_FULL (not enough free GPUs on host); 10 bounded retries failed 15:55-16:45Z; persistent retry monitor armed (5-min interval); pod EXITED = no billing, artefacts safe on /workspace volume. OBS-V2 launch remains gated on RC-R1 adjudication + S2 TPS budget freeze per predeclared plan.",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -325,27 +325,27 @@
  },
  "ACTIVE_REMOTE_PROCESSES": {
   "AUDIT_STATUS": "AUDITED_API_VERIFIED",
-  "AUDITED_AT_UTC": "2026-08-17T15:45:33Z",
+  "AUDITED_AT_UTC": "2026-08-17T16:47:39Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "b6bqvrxqga9vp4 RUNNING RC_R1_BRIDGE launch-2 (trainer verified alive; S1 done 15:29Z; S2 executing; self-stop wrapper armed; EU-SE-1 $0.44/hr; billing-logged)"
+   "NONE: RC-R1 pod EXITED (wrapper self-stop); resume retry monitor armed"
   ],
   "OBSERVED_RESOURCES": [
    {
-    "PROVIDER": "RUNPOD",
+    "PROVIDER": "RunPod",
     "RESOURCE_TYPE": "POD",
     "RESOURCE_ID": "b6bqvrxqga9vp4",
     "NAME": "quantisilico_rc_r1_bridge_a40",
-    "STATE": "RUNNING_RC_R1_LAUNCH2_S2 (fresh pod deployed after HOST_FULL on 5p0udi7ouvs139; EV-0047 venv repair re-applied after container wipe)"
+    "STATE": "EXITED_RESUME_BLOCKED_HOST_FULL (round likely complete; artefacts on volume; billing-logged RESUME_BLOCKED_HOST_FULL; retry monitor bc71x5pq1)"
    },
    {
-    "PROVIDER": "RUNPOD",
+    "PROVIDER": "RunPod",
     "RESOURCE_TYPE": "POD",
     "RESOURCE_ID": "5p0udi7ouvs139",
     "NAME": "quantisilico_stage6_distill_d0_a40",
-    "STATE": "EXITED (D1 artefacts fetched; keep EXITED, no billing)"
+    "STATE": "EXITED (D1 fetched; no billing)"
    },
    {
-    "PROVIDER": "RUNPOD",
+    "PROVIDER": "RunPod",
     "RESOURCE_TYPE": "POD",
     "RESOURCE_ID": "kxwtvih7ut7pj6",
     "NAME": "quantisilico_stage5_scale_r2_a40",
@@ -373,7 +373,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) On RC-R1 round end (monitor b7bjvbiwz): var/marathon_takeover/fetch_rc_r1.sh (PORT/IP via API - port rotates on resume) -> integrity/health/curriculum review -> STOP+TERMINATE pod + billing log -> serving_sanity_probe_rc_r1.py -> var/marathon_takeover/run_rc1_arbiter.sh (18 games/candidate) -> adjudicate per rc_r1_bridge_plan.yaml scoped OBSERVATION_SCOPED OBS-V1 -> registry verdicts + EV entry. (B) Freeze OBS-V2 budget from min(S1,S2) TPS (S1=3446.76 -> ~567 updates=18,579,456 within 90-min cap), update register_obs_v2_r1_runs.py BUDGET field, register, launch via remote_obs_v2_r1_orchestrator.sh with self-stop wrapper + EV-0047 guard; on round end: probe -> tier-A dev ladder (diagnostic) + tier-C arbiter (promotion authority).",
+ "NEXT_SAFE_ACTION": "(A) On resume-monitor success (bc71x5pq1): poll ssh ready -> var/marathon_takeover/fetch_rc_r1.sh (new PORT from API) -> verify S2 completion + integrity/health/curriculum -> STOP + TERMINATE pod -> billing log -> serving_sanity_probe_rc_r1.py -> var/marathon_takeover/run_rc1_arbiter.sh -> adjudicate per rc_r1_bridge_plan.yaml branches scoped OBSERVATION_SCOPED OBS-V1 -> registry + EV. If HOST_FULL persists across fires, keep EXITED (zero billing, artefacts safe) and retry per fire; do NOT abandon the volume. (B) After adjudication: freeze OBS-V2 budget from min(S1,S2) TPS -> register -> launch.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",
