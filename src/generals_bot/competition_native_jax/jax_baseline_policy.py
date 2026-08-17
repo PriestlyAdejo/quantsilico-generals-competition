@@ -18,7 +18,12 @@ from generals_bot.action import Action
 from generals_bot.competition_native_jax.action_codec import index_to_action
 from generals_bot.competition_native_jax.inference_jax import infer
 from generals_bot.competition_native_jax.legal_mask import legal_mask_from_observation
-from generals_bot.competition_native_jax.obs_memory import ObsMemory, encode_observation
+from generals_bot.competition_native_jax.obs_memory import (
+    ObsMemory,
+    ObsMemoryV2,
+    encode_observation,
+    encode_observation_v2,
+)
 from generals_bot.observation import Observation
 from generals_bot.policies.base import ActionDecision, PolicyState
 
@@ -136,3 +141,41 @@ class JaxTransformerProtocolPolicy:
             new_state=state,
             policy_id=self.policy_id,
         )
+
+
+class JaxTransformerObsV2Policy:
+    """OBS_V2_R1 serving variant: objective-aware 14-plane/12-global observation
+    (EVAL_ONLY).
+
+    Uses encode_observation_v2 + ObsMemoryV2, exactly matching the training
+    rollout convention (obs_v2_jax); training/serving parity is proven by
+    tests/competition_native_jax/test_obs_v2_parity.py. Only the observation
+    encoding changes; action selection semantics are unchanged.
+    """
+
+    policy_id = "marathon_jax_obs_v2"
+
+    def __init__(self, params: dict, *, seed: int = 0) -> None:
+        self.params = params
+        self.memory = ObsMemoryV2()
+        self.seed = seed
+        self._key = jax.random.PRNGKey(seed)
+
+    def reset(self, height: int, width: int) -> None:
+        self.memory.reset(height, width)
+
+    def act(self, observation: Observation, *, deterministic: bool = True) -> Action:
+        spatial, global_vec = encode_observation_v2(observation, self.memory)
+        mask = legal_mask_from_observation(observation)
+        key = None
+        if not deterministic:
+            self._key = jax.random.fold_in(self._key, int(observation.turn))
+            key = self._key
+        idx, _logp, _out = _jit_infer(
+            self.params,
+            jnp.asarray(spatial),
+            jnp.asarray(global_vec),
+            jnp.asarray(mask),
+            key,
+        )
+        return index_to_action(int(np.asarray(idx)))
