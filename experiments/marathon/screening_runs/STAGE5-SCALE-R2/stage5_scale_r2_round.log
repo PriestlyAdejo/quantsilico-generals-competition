@@ -1,0 +1,145 @@
+=== STAGE5 SCALE R2 round start 2026-08-17T00:18:25Z commit 513cfbc
+=== SCALE-R2 arm table (predeclared): 8M x seeds {20260915 20260917} + 16M x seed 20260915, 256x32, persistent, reward none
+=== SCALE-B0-8M-S3 (256x32 seed=20260915 carry=persistent budget=8388608) start 2026-08-17T00:18:25Z
+Traceback (most recent call last):
+  File "/workspace/repo/scripts/training/run_sh_r1_arm.py", line 238, in main
+    telemetry_file.flush()
+OSError: [Errno 5] Input/output error
+
+During handling of the above exception, another exception occurred:
+
+OSError: [Errno 5] Input/output error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/repo/scripts/training/run_sh_r1_arm.py", line 318, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/repo/scripts/training/run_sh_r1_arm.py", line 243, in main
+    telemetry_file.close()
+OSError: [Errno 5] Input/output error
+=== SCALE-B0-8M-S3 exit=1 2026-08-17T00:38:32Z
+=== SCALE-B0-8M-S4 (256x32 seed=20260917 carry=persistent budget=8388608) start 2026-08-17T00:38:32Z
+E0817 00:39:37.840253    5251 slow_operation_alarm.cc:73] Constant folding an instruction is taking > 1s:
+
+  %negate = f32[] negate(%constant.37)
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+E0817 00:40:06.845689    4890 slow_operation_alarm.cc:140] The operation took 30.005570264s
+Constant folding an instruction is taking > 1s:
+
+  %negate = f32[] negate(%constant.37)
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+E0817 00:40:17.722773    5251 slow_operation_alarm.cc:73] Constant folding an instruction is taking > 2s:
+
+  %convert_element_type.11 = s32[] convert(%constant.2350), metadata={op_name="jit(_fn)/vmap(jit(generate_grid))/convert_element_type" stack_frame_id=228}
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+E0817 00:40:26.027119    4890 slow_operation_alarm.cc:140] The operation took 10.304495728s
+Constant folding an instruction is taking > 2s:
+
+  %convert_element_type.11 = s32[] convert(%constant.2350), metadata={op_name="jit(_fn)/vmap(jit(generate_grid))/convert_element_type" stack_frame_id=228}
+
+This isn't necessarily a bug; constant-folding is inherently a trade-off between compilation time and speed at runtime. XLA has some guards that attempt to keep constant folding from taking too long, but fundamentally you'll always be able to come up with an input program that takes a long time.
+
+If you'd like to file a bug, run with envvar XLA_FLAGS=--xla_dump_to=/tmp/foo and attach the results.
+{
+  "actual_transitions": 8388608,
+  "arm_id": "SCALE-B0-8M-S4",
+  "budget_transitions": 8388608,
+  "eliminated": false,
+  "elimination": [],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-17T01:04:06Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1831151247024536,
+    "ENTROPY_LAST": 5.24674654006958,
+    "PG_FIRST": -0.000567640527151525,
+    "PG_LAST": 6.167402716528159e-06,
+    "RATIO_FIRST": 1.0000038146972656,
+    "RATIO_LAST": 0.9999966025352478,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.357621192932129,
+    "VLOSS_LAST": 2.3511252403259277,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.006495952606201172
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "seed": 20260917,
+  "stop_reason": "BUDGET_REACHED",
+  "temporal_history": "off",
+  "throughput": {
+    "collect_tps": 29371.99922498602,
+    "collect_wall_s": 285.59880911558867,
+    "end_to_end_tps": 6580.174542713425,
+    "reset_pool_build_s": 118.26994963362813,
+    "total_wall_s": 1314.1369227580726,
+    "update_wall_s": 989.2318121008575
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 1024
+}
+=== SCALE-B0-8M-S4 exit=0 2026-08-17T01:04:13Z
+=== SCALE-B1-16M-S1 (256x32 seed=20260915 carry=persistent budget=16777216) start 2026-08-17T01:04:13Z
+{
+  "actual_transitions": 16777216,
+  "arm_id": "SCALE-B1-16M-S1",
+  "budget_transitions": 16777216,
+  "eliminated": false,
+  "elimination": [],
+  "episode_carry": "persistent",
+  "finished_at_utc": "2026-08-17T01:48:36Z",
+  "geometry": {
+    "num_envs": 256,
+    "rollout_len": 32
+  },
+  "kind": "SH_R1_ARM_SUMMARY",
+  "metrics": {
+    "DECISIVE_SHARE_FIRST": 0.0,
+    "DECISIVE_SHARE_LAST": 0.0,
+    "ENTROPY_FIRST": 1.1977577209472656,
+    "ENTROPY_LAST": 5.842126846313477,
+    "PG_FIRST": -0.0005688916426151991,
+    "PG_LAST": 1.2938907900661434e-07,
+    "RATIO_FIRST": 0.9999957084655762,
+    "RATIO_LAST": 0.9999990463256836,
+    "VALID_LEARNING_SHARE": 1.0,
+    "VLOSS_FIRST": 2.3576202392578125,
+    "VLOSS_LAST": 2.351121425628662,
+    "VLOSS_REDUCTION_OVER_ROUND": 0.006498813629150391
+  },
+  "min_generals_distance": 17,
+  "reward_shape": "none",
+  "reward_shape_beta": 0.0,
+  "seed": 20260915,
+  "stop_reason": "BUDGET_REACHED",
+  "temporal_history": "off",
+  "throughput": {
+    "collect_tps": 31910.759051740904,
+    "collect_wall_s": 525.7542126402259,
+    "end_to_end_tps": 7061.26936559096,
+    "reset_pool_build_s": 108.49041774868965,
+    "total_wall_s": 2440.4200807884336,
+    "update_wall_s": 1850.1948032341897
+  },
+  "top_advantage_fraction": 1.0,
+  "updates": 2048
+}
+=== SCALE-B1-16M-S1 exit=0 2026-08-17T01:48:43Z
+=== STAGE5 SCALE R2 round end 2026-08-17T01:48:43Z
