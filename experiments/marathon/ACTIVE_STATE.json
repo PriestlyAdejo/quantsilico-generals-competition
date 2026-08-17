@@ -4,8 +4,8 @@
   "UPDATED_AT_UTC": "2026-08-17T09:55:00Z",
   "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
   "STATUS": "PARTIAL",
-  "CURRENT_STAGE": "RC_R1_BRIDGE_ROUND_EXECUTING",
-  "CURRENT_TASK": "RC_R1_BRIDGE bounded A40 round EXECUTING on fresh pod b6bqvrxqga9vp4 (EU-SE-1; started 14:08:12Z commit 2b9393c; arm S1 256x128 seed 20260919 topadv 0.25 curriculum competence-spawn schedules rc1; self-stop wrapper armed, marker /workspace/rc_r1_bridge.done). All prelaunch guards PASS: bootstrap clone + pinned submodule 9e3b9d1 + venv repair + IMPORT_CHAIN_OK + baseline shas match. Est round end ~15:25Z (<$0.60).",
+  "CURRENT_STAGE": "RC_R1_BRIDGE_ROUND_EXECUTING_LAUNCH2_PLUS_OBS_V2_PREDECLARED",
+  "CURRENT_TASK": "RC_R1_BRIDGE launch-2 EXECUTING (pod b6bqvrxqga9vp4, arm S1 started 14:46:04Z, accumulate=8 OOM repair, self-stop armed). OBSERVATION_INFORMATION_AUDIT_V1 verdict OBSERVATION_GAP_CONFIRMED_MAJOR (EV-0071): policy discards legal scoreboard + cell-type identity + all enemy memory. OBS-V2-R1 PREDECLARED + REGISTERED pre-launch (experiment#obs-v2-r1#97f257dd096e + 2 runs) as highest-priority successor; executes AFTER RC-R1 adjudication (RC-R1 = matched control + recipe baseline). Evaluator power analysis + developmental tier + learned-package path queued per amendment #2.",
   "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
   "HEAD_COMMIT": "SELF",
   "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -430,7 +430,7 @@
       }
     ]
   },
-  "CURRENT_EXPERIMENT": "experiment#stage6-oppdist-r1#c0103074d017 ADJUDICATED NO_PROMOTION (EV-0070); experiment#rc-r1-bridge#60729d9ef92f LAUNCHING",
+  "CURRENT_EXPERIMENT": "experiment#rc-r1-bridge#60729d9ef92f EXECUTING (launch 2); experiment#obs-v2-r1#97f257dd096e REGISTERED_PRE_LAUNCH",
   "CURRENT_CHECKPOINT": {
     "ACTIVE": null,
     "HISTORICAL_STAGE_1_REFERENCE": {
@@ -450,7 +450,7 @@
       ]
     }
   },
-  "NEXT_SAFE_ACTION": "(A) Monitor round: verify first telemetry (ratio ~1.0, finite, ent_coef schedule values, curriculum eval at update 31/63/...). (B) On ROUND_COMPLETE: resume pod briefly -> fetch round log/summaries/telemetry/checkpoints -> verify integrity + learner health + curriculum stage transitions -> stop pod (zero idle burn; TERMINATE fresh pod to avoid recurring charges once artefacts secured). (C) Serving probe -> 36-game arbiter -> adjudicate per rc_r1_bridge_plan.yaml branches (a) bridge works -> attribution ablations + RC-R2 + earned scale / (b) winless -> ONE bounded ablation round. (D) Dependency-safe gaps: canonicalisation plan, Stage-6 family classification, population design.",
+  "NEXT_SAFE_ACTION": "(A) RC-R1: monitor (~70-80 min) -> fetch -> integrity + learner health + curriculum telemetry -> stop + TERMINATE fresh pod after fetch -> serving probe -> 36-game arbiter -> adjudicate scoped to observation lineage OBS-V1 (amendment #2 sec 7). (B) Freeze OBS-V2-R1 budget from RC-R1 measured TPS (predeclared rule: ~25M target within 90-min/arm GPU cap) -> implement OBS-V2 encoder with parity fixture tests -> launch. (C) Evaluator power analysis (CS at n=18..1024) + developmental tier A design + learned-checkpoint package path audit (submission builder) in dependency-safe gaps.",
   "BLOCKERS": [
     {
       "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

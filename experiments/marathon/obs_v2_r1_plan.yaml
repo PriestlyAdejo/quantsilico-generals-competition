@@ -1,0 +1,96 @@
+kind: MARATHON_OBS_ROUND_PLAN
+plan_id: OBS_V2_R1
+status: PREDECLARED
+predeclared_at_utc: "2026-08-17T15:00:00Z"
+stage: OBS_LADDER (highest-priority learner successor per EV-0071; additive amendment #2 sec 3-6)
+ppo_semantics: UNCHANGED
+authority: >-
+  OBSERVATION_INFORMATION_AUDIT_V1 verdict OBSERVATION_GAP_CONFIRMED_MAJOR
+  (EV-0071): the canonical policy discards legally available objective
+  information - the entire scoreboard, cell-type identity (generals, castles,
+  fog, structures-in-fog) and ALL enemy-side memory. OBS-V2-R1 tests the
+  central objective-awareness hypothesis with minimal confounding: same
+  recipe as the validated persistent bridge, observation as the ONLY axis.
+  Executes AFTER RC-R1 adjudication (RC-R1 = matched control + recipe
+  baseline + throughput reference; RC-R1 runs UNCHANGED and its result is
+  scoped to observation lineage OBS-V1).
+
+question: >-
+  Does providing the policy with the legally available strategic/objective
+  information it currently lacks materially improve learning and gameplay
+  conversion under the corrected persistent training recipe?
+
+feature_classification_frozen:
+  ESSENTIAL_NOW_OBS_V2_R1:
+    spatial_planes_added:
+      - "P8 fog mask (TYPE_FOG cells)"
+      - "P9 visible enemy general (single cell, current tick)"
+      - "P10 visible castles (all visible castle cells, either owner)"
+      - "P11 structures-in-fog (TYPE_STRUCTURE_IN_FOG cells)"
+      - "P12 revealed-enemy-general memory (persistent single cell: set when legally observed, held until episode reset)"
+      - "P13 enemy-seen memory (cells ever observed enemy-owned; no ageing in R1)"
+    globals_added:
+      - "own land / 441"
+      - "own army / 441"
+      - "opponent land / 441 (legal scoreboard value incl. fogged cells)"
+      - "opponent army / 441"
+  SEPARATE_FOLLOWUP_not_in_R1: [last-enemy-army value + age, k-frame army
+    deltas, k-frame land deltas, long 512-step scoreboard history, move
+    history, coordinate features beyond learned pos-emb]
+  REJECT: [any privileged/hidden information (none); blind copy of external
+    38-channel sets (competition mechanics differ)]
+  NOT_CHANGED: [own general/castle representation (plane-7 price field
+    already information-equivalent per EV-0071); model capacity; PPO; reward;
+    curriculum rule; opponent semantics; action space]
+
+parity_mandate_frozen:
+  - identical encoder semantics in JAX training (competition_env_jax) and
+    protocol serving (obs_memory.encode_observation); frozen fixture tests
+    prove equivalent protocol/engine sequences yield identical model inputs
+  - memory carry: extended ObsMemory fields (seen_enemy, enemy_general_revealed)
+    with defined episode-reset/done-reset/checkpoint semantics; zeroed at
+    episode boundaries exactly like existing memory
+  - old 8-plane path preserved as control and regression target
+    (--obs-version {v1,v2} knob; v1 bit-identical control)
+  - warm-start shape surgery declared: patch_proj 72 -> 126 input dims and
+    global_proj 8 -> 12 preserve the old weights in-place (old rows/cols
+    unchanged); new parameters initialised deterministically from a fixed
+    seed; opt_state re-initialised; EMA re-initialised from new params
+    (T2 precedent); lineage recorded in the checkpoint meta
+
+arms_predeclared:
+  - arm: OBS-V2-R1-S1
+    content: RC-R1 bridge recipe (256 envs x 128 persistent, topadv 0.25,
+      competence-spawn curriculum, rc1 schedules, accumulate-minibatches 8)
+      with obs-version v2; seed 20260923
+  - arm: OBS-V2-R1-S2
+    content: identical, seed 20260925.
+  matched_control: >-
+    the RC-R1 bridge arms themselves (identical recipe, obs-version v1); no
+    recompute. Attribution clean: observation is the only axis.
+
+budget_rule_predeclared:
+  method: >-
+    computed from RC-R1 measured end-to-end TPS after its round completes:
+    diagnostic target ~25M transitions/arm where GPU wall <= 90 min/arm at
+    A40 pricing; otherwise the largest budget within the 90-min cap,
+    declared before launch. Exact number FROZEN at launch registration -
+    not after seeing any telemetry.
+
+adjudication_predeclared:
+  - developmental telemetry (high-N JAX parity ladder, tier A) guides
+    continuation only; promotion still requires the canonical arbiter
+    (tier C) with predeclared CS rules; zero faults
+  - branch (a): arbiter wins above controls with CS -> OBS-V2 lineage adopted
+    as the canonical observation; successor predeclares capacity + earned
+    scale on the corrected recipe
+  - branch (b): winless -> result recorded OBSERVATION_SCOPED; successor
+    options predeclared (deeper objective memory/history, curriculum floor,
+    predecessor pool) ranked by the developmental telemetry; no post-hoc
+    relaxation
+  - telemetry diagnostics predeclared: decisive_share, opp-win diagnostics,
+    curriculum advancement pace, developmental W/D/L ladder vs
+    pass_bot/legal_random/official_expander/official_hunter/heuristic_v0/v1
+
+evidence_links: [EV-0071, EV-0069, KNOWN_WORKING_RECIPE_GAP_AUDIT_V1,
+  KNOWN_WORKING_RECIPE_COMPATIBILITY_GATE_V1]
