@@ -1,0 +1,28 @@
+{
+  "ARTEFACT_HASHES": {
+    "raw.npz": "31d14162ba9c6f236a32e0c368016c0c20e2ef8333810500b2e6507781680b66"
+  },
+  "ARTEFACT_LOCATIONS": [
+    "experiments/marathon/rc_r1_bridge/RC-R1-BRIDGE-S2/raw.npz (npz gitignored)"
+  ],
+  "ID": "checkpoint#rc-r1-bridge-s2-terminal#cc80267335cb",
+  "KIND": "checkpoint",
+  "LINEAGE": {
+    "IMPLEMENTATION_FINGERPRINT": "505e0a15bde44fdb",
+    "LINEAGE_HASHES": {
+      "env_implementation_hash": "e043ca7547a49e62c8f922082359d27ce6597a32087cf054bac22ea31bfc5472",
+      "env_semantics_hash": "f77e9e2c1235bebf4724f2472772dd4ad85d8630c92a5401056868bcff2c1682",
+      "learner_implementation_hash": "505e0a15bde44fdb257f2f12d2fa0594c8528ae9e28a73fb87d81d0fccf25258",
+      "performance_programme": "END_TO_END_JAX_V4_2_MAX_UTILISATION",
+      "performance_programme_hash": "583ef54f5e611e127175d57ac39d5b8aee8314340fc5b89d0057e8f65cd169fe"
+    },
+    "NAME": "competition_native_jax_v1"
+  },
+  "NAME": "RC-R1-BRIDGE-S2-TERMINAL",
+  "PPO_SEMANTICS": "UNCHANGED",
+  "RECORDED_AT_UTC": "2026-08-17T18:04:31Z",
+  "RUN_ID": "run#rc-r1-bridge-s2#6c705ce0a7bf",
+  "SCHEMA_VERSION": "1.0.0",
+  "TRAINING_REGIME": "PERSISTENT_EPISODE_REGIME_V1",
+  "TRANSITIONS": 8388608
+}

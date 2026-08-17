@@ -1,11 +1,11 @@
 {
  "SCHEMA_VERSION": "1.2.0",
  "PLAN_ID": "MARATHON_REDESIGN_LOCKED_V1",
- "UPDATED_AT_UTC": "2026-08-17T17:19:33Z",
+ "UPDATED_AT_UTC": "2026-08-17T18:20:00Z",
  "OWNER_ROLE": "QODER_AGENT_LEAD_MARATHON_EXECUTOR (qoder-standalone-takeover-20260816-session2; operator-authorized handover from qoder-quest-979999d1, EV-0055; lease + scheduled task f5733a0c ownership transferred, task preserved)",
  "STATUS": "PARTIAL",
- "CURRENT_STAGE": "RC_R1_ADJUDICATION_ARBITER_EXECUTING_PLUS_OBS_V2_LAUNCH_STAGED",
- "CURRENT_TASK": "RC-R1 round COMPLETE + PRESERVED (239f573): both arms 256/256 exit=0, zero eliminations, valid share 1.0; curriculum never advanced (S1 2W/57L, S2 0W/42L vs legal_random). HOST_FULL resume resolved on retry; artefacts fetched + integrity verified; pod TERMINATED_POST_FETCH (billing-logged). Serving probe PASS (weights matter vs fresh+baseline; distinct; deterministic well-formed actions). 36-game arbiter EXECUTING locally (~106s/pair; first pairs draws). OBS-V2: budget FROZEN 18,612,224/arm (568 updates, min TPS 3446.76); run records updated; launch driver staged (fresh A40 deploy -> setup -> ckpt -> smoke -> self-stop wrapper).",
+ "CURRENT_STAGE": "RC_R1_ADJUDICATED_OBS_V2_LAUNCH_EXECUTING",
+ "CURRENT_TASK": "RC-R1 ADJUDICATED EV-0072 (post-crash recovery: laptop crash killed local arbiter mid-round; resumable runner completed both candidates atomically, no rule change): branch (b) fires - 0 wins/seed (s1 16D+2L cs -0.628, s2 17D+1L cs -0.601, zero faults) -> combination INSUFFICIENT at screening scale, OBSERVATION_SCOPED_NEGATIVE (OBS-V1); curriculum never advanced (S1 2W/57L, S2 0W/42L). 6 registry records + experiment verdict + run results registered (scripts/dev/register_rc_r1_arbiter_eval.py). SUCCESSOR PREDECLARED per branch (b): ONE bounded ablation round (fragment-only + curriculum-only arms). OBS-V2-R1 launch EXECUTING via var/marathon_takeover/launch_obs_v2_r1.sh (fresh A40 EV-0025; frozen budget 18,612,224/arm).",
  "BASE_COMMIT": "b26b61a3b2c5fee904bb5b582ce74b77cda815aa",
  "HEAD_COMMIT": "SELF",
  "WORKTREE": "C:\\Users\\pries\\Documents\\Projects\\quantsilico-generals-competition",
@@ -252,12 +252,13 @@
  ],
  "ACTIVE_LOCAL_PROCESSES": {
   "AUDIT_STATUS": "AUDITED",
-  "AUDITED_AT_UTC": "2026-08-17T09:55:00Z",
+  "AUDITED_AT_UTC": "2026-08-17T18:20:00Z",
   "ACTIVE_PROJECT_WORKLOADS": [
-   "NONE: DISTILL-PPO arbiter complete (EV-0068); all local eval/training workloads finished"
+   "NONE: RC-R1 arbiter completed this tick post-crash-resume; OBS-V2 launch driver executing (pod provisioning remote)"
   ],
   "TAKEOVER_NOTES": "EV-0055: suspected duplicate trainer/retry pairs resolved as parent-child (Win32 ancestry); one duplicate retry loop (PID 39720/37672) was spawned by the new executor on a false exit-read (MSYS tasklist filter mangling) and KILLED immediately after detecting original PID 39532 still alive - no double start requests persisted beyond detection. 2026-08-17: teacher_r2_train.py trainer again shows TWO python PIDs (41096 .venv -> 19968 system-python child, identical CreationDate, single log stream) = parent-child pair, ONE workload; both preserved, no duplicate launch",
   "COMPLETED_THIS_SESSION": [
+   "RC_R1_BRIDGE ARBITER RESUMED + ADJUDICATED EV-0072 this tick (post-crash recovery): laptop crash killed local arbiter at rc1_s1 6/9 pairs; resumable paired-eval runner relaunched unchanged, completed both candidates atomically (no rule change, no pair recompute); s1 16D+2L cs lower -0.628 mean 0.444, s2 17D+1L cs lower -0.601 mean 0.472, zero faults, NO_PROMOTION both; predeclared branch (b) fires: bridge combination INSUFFICIENT at screening scale, OBSERVATION_SCOPED_NEGATIVE (OBS-V1); curriculum never advanced (S1 2W/57L, S2 0W/42L greedy vs legal_random at 8M); 6 registry records + experiment verdict + run results via scripts/dev/register_rc_r1_arbiter_eval.py; ablation successor PREDECLARED (fragment-only + curriculum-only); OBS-V2-R1 launch executing next; CRLF-only dirty env file normalized clean",
    "STAGE6_OPPDIST_R1 PREDECLARED + REGISTERED pre-launch this tick (experiment#stage6-oppdist-r1#c0103074d017 + run#oppdist-b0-teachopp-s1#b956cd1a9bea + run#oppdist-b0-teachopp-s2#20ac28eb3eb5): last interactive hypothesis before programme-level escalation review - asymmetric rollouts vs frozen hunting teacher clone (DISTILL-S0, checkpoint#distill-s0-transformer-bc#16a8ba80e13a, stochastic temp 1.0), trained seat warm-started from MARATHON_BASELINE_V0 (matched SCALE controls isolate the opponent variable), 2 x 8M seeds, PPO_SEMANTICS UNCHANGED, implementation constraints + CPU smoke + arbiter gate + branch rules all predeclared incl. escalation-review dossier on winless",
    "STAGE6_DISTILL_PPO_R1 FULLY CLOSED this tick (EV-0068): D1 round 09:18:24-10:04:19Z both arms exit=0 self-stop zero idle burn (resume needed 2 HOST_FULL retries); learner health CLEAN (1024/1024 both, 0 unhealthy, finite, ratio 1.0; decisive ticks re-emerge: max decisive_share 0.00061/0.00024); serving probe PASS (L1 6.2/distinct 0.336, L2 deterministic); arbiter 36/36 draws zero faults both seeds (CS lower -0.5727) -> NO_PROMOTION; predeclared branch (b) fires: passive equilibrium reasserts under on-policy dynamics despite hunting expert initialization (EV-0067) - EXPERT-INITIALIZATION LANE CLOSED; 6 registry records (2 checkpoint + 2 candidate + 2 evaluation) + experiment verdict; NEXT: opponent-distribution lane (last interactive hypothesis)",
    "STAGE6_DISTILL_PPO_R1 D1 LAUNCHED this tick: resume succeeded 09:12:20Z on retry 3 (2 HOST_FULL); EV-0047+psutil venv repair + PYTHONPATH import guard + git pull 21e47ea + D0 checkpoint files verified pre-launch; round start 09:18:24Z (DISTILL-PPO-S1 first, seed 20260915, PID 1126/1127, GPU 38965 MiB); self-stop marker /workspace/distill_d1.done; serving unit prebuilt + committed (9ddc864): distill_ppo_serving_common + distill_ppo_s1|s2 EVAL_ONLY agents + pre-game probe",
@@ -353,7 +354,7 @@
    }
   ]
  },
- "CURRENT_EXPERIMENT": "experiment#rc-r1-bridge#60729d9ef92f EXECUTING (launch 2); experiment#obs-v2-r1#97f257dd096e REGISTERED_PRE_LAUNCH",
+ "CURRENT_EXPERIMENT": "experiment#rc-r1-bridge#60729d9ef92f ADJUDICATED EV-0072 (branch b, NO_PROMOTION both seeds); experiment#obs-v2-r1#97f257dd096e REGISTERED_PRE_LAUNCH -> LAUNCH_EXECUTING; RC-R1 ablation successor PREDECLARED (plan pending registration)",
  "CURRENT_CHECKPOINT": {
   "ACTIVE": null,
   "HISTORICAL_STAGE_1_REFERENCE": {
@@ -373,7 +374,7 @@
    ]
   }
  },
- "NEXT_SAFE_ACTION": "(A) On arbiter completion: adjudicate RC-R1 per rc_r1_bridge_plan.yaml branches (CS rules, zero faults, OBSERVATION_SCOPED OBS-V1) -> registry verdicts + EV entry + results registration script. (B) Immediately after adjudication recorded: var/marathon_takeover/launch_obs_v2_r1.sh (deploys fresh A40 per EV-0025; frozen budget 18,612,224/arm) -> monitor round -> fetch -> probe (serving_sanity_probe_obs_v2_r1.py) -> tier-A dev ladder (diagnostic) + tier-C arbiter (128 games/candidate, promotion authority).",
+ "NEXT_SAFE_ACTION": "(A) OBS-V2-R1 launch driver var/marathon_takeover/launch_obs_v2_r1.sh EXECUTING (fresh A40 per EV-0025; frozen budget 18,612,224 transitions/arm = 568 updates; self-stop wrapper) -> verify TRAINER_UP + GPU -> monitor round -> fetch artefacts -> serving_sanity_probe_obs_v2_r1.py PASS -> tier-A dev ladder (diagnostic) + tier-C arbiter (128 games/candidate, promotion authority) per obs_v2_r1_plan.yaml. (B) In parallel, register the RC-R1 branch-(b) successor: ONE bounded ablation round plan (D1-fragment-only + D2-curriculum-only arms, same warm start/regime/budget class) BEFORE launch; launch only after OBS-V2-R1 adjudication or a dependency-safe slot.",
  "BLOCKERS": [
   {
    "ID": "CURSOR_AGENT_CLI_UNAVAILABLE",

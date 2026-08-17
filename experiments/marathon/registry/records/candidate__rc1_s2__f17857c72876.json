@@ -1,0 +1,18 @@
+{
+  "CHECKPOINT_ID": "checkpoint#rc-r1-bridge-s2-terminal#cc80267335cb",
+  "EVIDENCE_LINKS": [
+    "EV-0034",
+    "EV-0049",
+    "EV-0069",
+    "EV-0072"
+  ],
+  "ID": "candidate#rc1_s2#f17857c72876",
+  "KIND": "candidate",
+  "PARITY_PROOF": "tests/competition_native_jax/test_long_horizon_engine_parity.py",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "baselines/rc1_s2/main.py",
+  "RECORDED_AT_UTC": "2026-08-17T18:04:31Z",
+  "SANITY_PROBE": "scripts/analysis/serving_sanity_probe_rc_r1.py PASS pre-game (EV-0034 precedent)",
+  "SCHEMA_VERSION": "1.0.0",
+  "SERVING_ADAPTER": "baselines/rc1_serving_common.py (canonical 8-plane JaxTransformerPolicy; all four frozen RC-R1 deltas are training-time only)"
+}
