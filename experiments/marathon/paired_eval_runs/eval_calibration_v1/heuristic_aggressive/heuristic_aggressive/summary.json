@@ -1,0 +1,29 @@
+{
+  "candidate_id": "heuristic_aggressive",
+  "confidence_sequence": {
+    "confidence": 0.95,
+    "configured_method": "ANYTIME_VALID_EMPIRICAL_BERNSTEIN_CONFIDENCE_SEQUENCE",
+    "lower": -1.0,
+    "method": "ANYTIME_VALID_BOUNDED_MIXTURE_CONFIDENCE_SEQUENCE",
+    "upper": 1.0
+  },
+  "eval_namespace": "marathon-eval-v1",
+  "finished_at_utc": "2026-08-16T09:14:58Z",
+  "incumbent_id": null,
+  "kind": "MARATHON_PAIRED_EVAL_SUMMARY",
+  "matchup_metrics": {
+    "BOTTOM_QUARTILE_MATCHUP_SCORE": 0.5,
+    "PAIR_COUNT": 2.0,
+    "STD_MATCHUP_SCORE": 0.0,
+    "WORST_MATCHUP_SCORE": 0.5
+  },
+  "mean_difference": 0.5,
+  "pairs_completed": 2,
+  "promotion": {
+    "pathway": "NO_PROMOTION",
+    "practical_margin": 0.01,
+    "promoted": false,
+    "reason": "CS lower bound -1.00000 does not exceed practical margin 0.01000 and robustness criteria are not met"
+  },
+  "wall_seconds": 198.5809498000308
+}
