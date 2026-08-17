@@ -44,6 +44,16 @@ tier_design_predeclared:
       draw-prone pass-family opponents (amendment sec 11)"
     implementation: "bulk JAX evaluator where parity is proven; otherwise
       protocol subprocess ladder at reduced turn caps for telemetry rounds"
+    obs_v2_r1_instantiation_frozen:
+      mechanism: "scripts/evaluation/run_marathon_paired_eval.py (protocol
+        subprocess ladder; all opponents exist as baselines/ serving units)"
+      opponents: [pass_bot, legal_random, official_expander, official_hunter,
+        heuristic_v0, heuristic_v1]
+      games: "5 seat-swapped pairs per opponent (10 games each, 60 games per
+        candidate; 1200-turn horizon; competition mode)"
+      semantics: "DIAGNOSTIC ONLY per obs_v2_r1_plan.yaml adjudication -
+        guides continuation and ranks successor options; promotion authority
+        remains the tier-C arbiter with frozen CS rules"
   tier_b_shipping_smoke:
     purpose: "reject catastrophically broken candidates; prove legal play;
       smaller than final promotion"

@@ -105,3 +105,19 @@ action_sequence_dependency_safe:
   - "training/ empty-scaffold deletion ONLY after the guard test lands and the 10-point dependency search is recorded (separate bounded commit)"
   - "legacy v4_2 + torch-stack archive decisions deferred: require dashboard/test migration first"
   - "no deletion of evidence ledger, registry, plans, results, failed-experiment artefacts, package manifests, or submitted packages at any point"
+
+execution_log:
+  - action: canonical-rollout static guard test
+    status: DONE
+    evidence: "commit 371f29b tests/competition_native_jax/test_canonical_rollout_guard.py (3 guards PASS, re-verified 2026-08-17 after OBS-V2 wiring)"
+  - action: training/ empty-scaffold deletion
+    status: DONE
+    evidence: >-
+      commit 2ea72ab (2026-08-17). Dependency search recorded: git ls-files
+      training/ showed only 4 .gitkeep; repo-wide grep for
+      training/(configs|curriculum|opponents|population) and quoted
+      "training/" paths found no consumers (dashboard 'training/' is a UI
+      route string; scripts/emergency_rolling_bootstrap_phase_a.py creates
+      training/ subtrees under the RUNTIME root, not the repo tree;
+      scripts/verify_repository.py has no training/ expectation). Guard test
+      prerequisite landed first per the predeclared order.
