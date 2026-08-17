@@ -1,0 +1,18 @@
+{
+  "CHECKPOINT_ID": "checkpoint#distill-ppo-s1-terminal#271db5fa2094",
+  "EVIDENCE_LINKS": [
+    "EV-0034",
+    "EV-0049",
+    "EV-0065",
+    "EV-0067"
+  ],
+  "ID": "candidate#distill_ppo_s1#16bec54eec96",
+  "KIND": "candidate",
+  "PARITY_PROOF": "tests/competition_native_jax/test_long_horizon_engine_parity.py",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "baselines/distill_ppo_s1/main.py",
+  "RECORDED_AT_UTC": "2026-08-17T10:14:38Z",
+  "SANITY_PROBE": "scripts/analysis/serving_sanity_probe_distill_ppo.py PASS pre-game (EV-0034 precedent)",
+  "SCHEMA_VERSION": "1.0.0",
+  "SERVING_ADAPTER": "baselines/distill_ppo_serving_common.py (canonical 8-plane JaxTransformerPolicy)"
+}
