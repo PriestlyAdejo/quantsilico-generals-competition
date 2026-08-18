@@ -1,0 +1,19 @@
+{
+  "CHECKPOINT_ID": "checkpoint#obs-v2-r1-s2-terminal#658c694db540",
+  "EVIDENCE_LINKS": [
+    "EV-0034",
+    "EV-0071",
+    "EV-0073",
+    "EV-0074",
+    "EV-0075"
+  ],
+  "ID": "candidate#obs_v2_s2#441176ed37bb",
+  "KIND": "candidate",
+  "PARITY_PROOF": "frozen fixture tests proving training/serving encoder equivalence (obs_v2_r1_plan parity_mandate_frozen)",
+  "PPO_SEMANTICS": "EVAL_ONLY",
+  "PROTOCOL_AGENT": "baselines/obs_v2_s2/main.py",
+  "RECORDED_AT_UTC": "2026-08-18T04:05:19Z",
+  "SANITY_PROBE": "scripts/analysis/serving_sanity_probe_obs_v2_r1.py PASS pre-game (L1 4.768/4.786, L2 deterministic; EV-0034 precedent)",
+  "SCHEMA_VERSION": "1.0.0",
+  "SERVING_ADAPTER": "baselines/obs_v2_serving_common.py (OBS-V2 encode_observation path; EMA weights)"
+}
