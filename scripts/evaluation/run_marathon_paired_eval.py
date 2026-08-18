@@ -21,7 +21,10 @@ sys.path.insert(0, str(REPO / "src"))
 
 from generals_bot.marathon_eval.confidence_sequence import AnytimeBoundedCS  # noqa: E402
 from generals_bot.marathon_eval.pairing import pair_schedule  # noqa: E402
-from generals_bot.marathon_eval.promotion import decide_promotion  # noqa: E402
+from generals_bot.marathon_eval.promotion import (  # noqa: E402
+    PromotionDecision,
+    decide_promotion,
+)
 from generals_bot.marathon_eval.runner import run_evaluation  # noqa: E402
 from generals_bot.marathon_eval.store import PairedEvalStore  # noqa: E402
 
@@ -142,6 +145,7 @@ def main() -> int:
         return 1
     lower, upper = interval
     store = PairedEvalStore(args.run_dir / args.candidate_id)
+    has_incumbent = bool(args.incumbent_id and args.incumbent_main)
     decision = decide_promotion(
         lower_bound=lower,
         practical_margin=float(promotion_cfg["practical_margin"]),
@@ -153,6 +157,20 @@ def main() -> int:
         worst_matchup_threshold=float(promotion_cfg["worst_matchup_improvement"]),
         integrity_latency_fault_gates_pass=store.matchup_metrics()["PAIR_COUNT"] > 0,
     )
+    if not has_incumbent and decision.promoted:
+        # Without an incumbent the differences are raw pair scores against a
+        # zero baseline, so a CS lower above the margin measures absolute
+        # score, not strength: never promotion evidence (EV-0075 guard).
+        decision = PromotionDecision(
+            promoted=False,
+            pathway="NO_PROMOTION",
+            reason=(
+                "NO_INCUMBENT_BASELINE: raw-score CS is not strength "
+                f"evidence (un-guarded lower {lower:.5f})"
+            ),
+            lower_bound=lower,
+            practical_margin=decision.practical_margin,
+        )
     summary = {
         "kind": "MARATHON_PAIRED_EVAL_SUMMARY",
         "finished_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
